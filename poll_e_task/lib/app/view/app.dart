@@ -8,10 +8,18 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        appBarTheme: const AppBarTheme(color: Color(0xFF13B9FF)),
-        colorScheme: ColorScheme.fromSwatch(
-          accentColor: const Color(0xFF13B9FF),
+      theme: ThemeData.light(
+        useMaterial3: true,
+      ).copyWith(
+        colorScheme: const ColorScheme.light().copyWith(
+          primary: Colors.purple,
+        ),
+      ),
+      darkTheme: ThemeData.dark(
+        useMaterial3: true,
+      ).copyWith(
+        colorScheme: const ColorScheme.dark().copyWith(
+          primary: Colors.purple,
         ),
       ),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
