@@ -8,12 +8,15 @@ environment:
 
 dependencies:
   bloc: ^8.1.1
+  collapsible_sidebar: ^2.0.3+3
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.2
   flutter_localizations:
     sdk: flutter
   intl: ^0.17.0
+  jiffy: ^5.0.0
+  sidebarx: ^0.15.0
 
 dev_dependencies:
   bloc_test: ^9.1.1
