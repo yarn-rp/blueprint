@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:poll_e_task/app/presentation/pages/intial_page.dart';
 import 'package:poll_e_task/l10n/l10n.dart';
-import 'package:poll_e_task/tasks/domain/entities/entities.dart';
-import 'package:poll_e_task/tasks/presentation/pages/tasks_page.dart';
-import 'package:poll_e_task/utils/color/hex_color_extension.dart';
+import 'package:poll_e_task/tickets/presentation/pages/tickets_page.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -25,29 +23,8 @@ class App extends StatelessWidget {
           NavigationPageData(
             text: 'Tasks',
             icon: Icons.task_sharp,
-            page: TasksPage(
-              tasks: [
-                TaskEntity(
-                  id: '1',
-                  project: Project(
-                    '1',
-                    'Zelfio App',
-                    JiraProvider(
-                      id: '1',
-                      name: 'Provider 1',
-                      description: 'Description 1',
-                    ),
-                  ),
-                  title: 'Replace all the variables in the assessment messages',
-                  description: 'Description 1',
-                  dueDate: DateTime.now(),
-                  isCompleted: false,
-                  status: TaskStatus(
-                    'TO-DO',
-                    Theme.of(context).colorScheme.secondary.toHex(),
-                  ),
-                ),
-              ],
+            page: const TicketsPage(
+              tasks: [],
             ),
           ),
           NavigationPageData(

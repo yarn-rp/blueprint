@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:jiffy/jiffy.dart';
-import 'package:poll_e_task/tasks/domain/entities/entities.dart';
+import 'package:poll_e_task/tickets/domain/entities/ticket.dart';
 import 'package:poll_e_task/utils/color/hex_color_extension.dart';
 
-class TasksPage extends StatelessWidget {
-  const TasksPage({
+class TicketsPage extends StatelessWidget {
+  const TicketsPage({
     super.key,
     required this.tasks,
   });
-  final List<TaskEntity> tasks;
+  final List<Ticket> tasks;
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +21,8 @@ class TasksPage extends StatelessWidget {
         child: ListView(
           children: tasks
               .map(
-                (task) => TaskTile(
-                  task: task,
+                (ticket) => TicketTile(
+                  ticket: ticket,
                 ),
               )
               .toList(),
@@ -32,12 +32,12 @@ class TasksPage extends StatelessWidget {
   }
 }
 
-class TaskTile extends StatelessWidget {
-  const TaskTile({
-    required this.task,
+class TicketTile extends StatelessWidget {
+  const TicketTile({
+    required this.ticket,
     super.key,
   });
-  final TaskEntity task;
+  final Ticket ticket;
 
   @override
   Widget build(BuildContext context) {
@@ -45,19 +45,19 @@ class TaskTile extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: ListTile(
-          leading: Checkbox(value: task.isCompleted, onChanged: (v) {}),
-          title: Text(task.title),
+          leading: Checkbox(value: ticket.isCompleted, onChanged: (v) {}),
+          title: Text(ticket.title),
           subtitle: Row(
             children: [
-              // A Badge with the status of the task
+              // A Badge with the status of the ticket
               Container(
                 padding: const EdgeInsets.all(4),
                 decoration: BoxDecoration(
-                  color: HexColor.fromHex(task.status.hexColor),
+                  color: HexColor.fromHex(ticket.status.hexColor),
                   borderRadius: BorderRadius.circular(4),
                 ),
                 child: Text(
-                  task.status.status,
+                  ticket.status.status,
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
               ),
@@ -65,11 +65,11 @@ class TaskTile extends StatelessWidget {
                 width: 16,
               ),
               Text(
-                '${task.project.name} - ',
+                '${ticket.project.name} - ',
                 style: Theme.of(context).textTheme.bodySmall,
               ),
               Text(
-                Jiffy(task.dueDate).MMMMEEEEd,
+                Jiffy(ticket.dueDate).MMMMEEEEd,
                 style: Theme.of(context).textTheme.bodySmall,
               ),
             ],
