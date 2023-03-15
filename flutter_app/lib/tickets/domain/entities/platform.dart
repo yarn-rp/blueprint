@@ -6,7 +6,7 @@ abstract class Platform {
   Platform({
     required this.id,
     required this.displayName,
-    required this.howToIntegrateGuide,
+    this.howToIntegrateGuide,
     this.iconUrl,
   });
 
@@ -17,7 +17,7 @@ abstract class Platform {
   final String displayName;
 
   /// The explanation of how to integrate the platform to kick off.
-  final HowToIntegrateGuide howToIntegrateGuide;
+  final HowToIntegrateGuide? howToIntegrateGuide;
 
   /// The URL of the icon for the platform.
   ///
@@ -32,7 +32,7 @@ class JiraPlatform extends Platform {
   /// {@macro platform}
   JiraPlatform({
     required super.id,
-    required super.howToIntegrateGuide,
+    super.howToIntegrateGuide,
   }) : super(
           displayName: 'Jira',
           iconUrl:
@@ -47,7 +47,7 @@ class GithubPlatform extends Platform {
   /// {@macro platform}
   GithubPlatform({
     required super.id,
-    required super.howToIntegrateGuide,
+    super.howToIntegrateGuide,
   }) : super(
           displayName: 'Github',
           iconUrl:
@@ -62,7 +62,7 @@ class TrelloPlatform extends Platform {
   /// {@macro platform}
   TrelloPlatform({
     required super.id,
-    required super.howToIntegrateGuide,
+    super.howToIntegrateGuide,
   }) : super(
           displayName: 'Trello',
           iconUrl:
@@ -77,7 +77,7 @@ class AsanaPlatform extends Platform {
   /// {@macro platform}
   AsanaPlatform({
     required super.id,
-    required super.howToIntegrateGuide,
+    super.howToIntegrateGuide,
   }) : super(
           displayName: 'Asana',
           iconUrl:

@@ -13,6 +13,7 @@ class Project {
     required this.name,
     required this.description,
     required this.members,
+    required this.colorHex,
     this.iconUrl,
   });
 
@@ -39,4 +40,7 @@ class Project {
 
   /// An array of users who are members of the project.
   final List<User> members;
+
+  /// The color of the project.
+  final String colorHex;
 }

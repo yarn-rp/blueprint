@@ -5,7 +5,7 @@
 /// different.
 /// {@endtemplate}
 class User {
-  User(
+  const User(
     this.platformUrl,
     this.displayName,
     this.avatarUrl,
