@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:poll_e_task/tasks/domain/entities/entities.dart';
+import 'package:poll_e_task/tasks/entities/entities.dart';
 import 'package:poll_e_task/utils/color/hex_color_extension.dart';
 import 'package:url_launcher/url_launcher.dart';
 

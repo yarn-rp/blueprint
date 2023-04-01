@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jiffy/jiffy.dart';
-import 'package:poll_e_task/tasks/domain/entities/entities.dart';
+import 'package:poll_e_task/tasks/entities/entities.dart';
 import 'package:poll_e_task/tasks/presentation/widgets/priority_widget.dart';
 import 'package:poll_e_task/tasks/presentation/widgets/project_chip.dart';
 import 'package:poll_e_task/tasks/presentation/widgets/status_chip.dart';
