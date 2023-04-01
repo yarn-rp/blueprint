@@ -1,4 +1,4 @@
-part of 'projects_cubit.dart';
+part of 'projects_bloc.dart';
 
 @immutable
 abstract class ProjectsState {}
