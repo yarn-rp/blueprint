@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:poll_e_task/app/presentation/pages/intial_page.dart';
 import 'package:poll_e_task/l10n/l10n.dart';
-import 'package:poll_e_task/tickets/domain/entities/entities.dart';
-import 'package:poll_e_task/tickets/presentation/pages/tickets_page.dart';
+import 'package:poll_e_task/tasks/domain/entities/entities.dart';
+import 'package:poll_e_task/tasks/presentation/pages/projects.dart';
+import 'package:poll_e_task/tasks/presentation/pages/tickets_page.dart';
 // Dummy data
 
 const yanJiraMember = User(
@@ -18,15 +19,16 @@ const javierJiraMember = User(
 final jiraProject = Project(
   id: 'some-unique-id',
   platformId: 'some-unique-id',
-  platformURL: Uri.dataFromString('https://www.google.com'),
+  platformURL: Uri.parse(
+    'https://zelfio.atlassian.net/jira/software/projects/ZAD/boards/1',
+  ),
   platform: JiraPlatform(
     id: 'the jira id',
   ),
-  name: 'Jira Project',
-  description: 'A project on Jira',
+  name: 'Zelfio',
+  description: 'Zelfio project description',
   members: [yanJiraMember, javierJiraMember],
-  // Nice amber material color
-  colorHex: '#FFC107',
+  colorHex: '#228B22',
 );
 
 class App extends StatelessWidget {
@@ -51,7 +53,7 @@ class App extends StatelessWidget {
             icon: Icons.task_sharp,
             page: TicketsPage(
               tasks: [
-                Ticket(
+                Task(
                   createdAt: DateTime.now().subtract(const Duration(days: 1)),
                   updatedAt: DateTime.now().subtract(const Duration(days: 1)),
                   id: 'some-unique-id',
@@ -73,19 +75,39 @@ The app should be responsive and optimized for different screen sizes 🖥️�
                   dueDate: DateTime.now().add(const Duration(days: 1)),
                   estimatedTime: const Duration(days: 2),
                   loggedTime: const Duration(hours: 12),
-                  assigned: [yanJiraMember],
+                  assigned: [
+                    yanJiraMember,
+                    javierJiraMember,
+                    yanJiraMember,
+                    javierJiraMember,
+                    yanJiraMember,
+                    javierJiraMember,
+                    yanJiraMember,
+                    javierJiraMember,
+                    yanJiraMember,
+                    javierJiraMember,
+                  ],
                   creator: javierJiraMember,
                   isCompleted: false,
                   status: Status('In Progress', '#FF0000'),
-                  priority: 0.75,
+                  priority: 1,
                 ),
               ],
             ),
           ),
           NavigationPageData(
-            text: 'Another one',
-            icon: Icons.list,
+            text: 'Integrations',
+            icon: Icons.integration_instructions,
             page: Container(),
+          ),
+          NavigationPageData(
+            text: 'Projects',
+            icon: Icons.work,
+            page: ProjectsPage(
+              projects: [
+                jiraProject,
+              ],
+            ),
           ),
         ],
       ),

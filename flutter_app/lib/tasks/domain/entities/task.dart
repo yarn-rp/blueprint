@@ -1,13 +1,13 @@
-import 'package:poll_e_task/tickets/domain/entities/entities.dart';
+import 'package:poll_e_task/tasks/domain/entities/entities.dart';
 
 /// {@template ticket}
 /// A ticket is a task that is assigned to a user
 /// It has a title, description, start date, due date, estimated time, logged
 /// time, assigned users, creator, isCompleted, status, priority
 /// {@endtemplate}
-class Ticket {
+class Task {
   /// {@macro ticket}
-  Ticket({
+  Task({
     required this.createdAt,
     required this.updatedAt,
     required this.id,

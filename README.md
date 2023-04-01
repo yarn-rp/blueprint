@@ -71,7 +71,7 @@ class Project {
 
 
 
-export class Ticket {
+export class Task {
   // Kick off creation date
   createdAt: Date;
 

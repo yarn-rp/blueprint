@@ -1,4 +1,4 @@
-import 'package:poll_e_task/tickets/domain/entities/entities.dart';
+import 'package:poll_e_task/tasks/domain/entities/entities.dart';
 
 /// {@template project}
 /// A project that can be defined in a platform.

@@ -1,5 +1,5 @@
 export 'platform.dart';
 export 'project.dart';
 export 'status.dart';
-export 'ticket.dart';
+export 'task.dart';
 export 'user.dart';

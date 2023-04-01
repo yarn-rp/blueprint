@@ -7,7 +7,7 @@ abstract class Platform {
     required this.id,
     required this.displayName,
     this.howToIntegrateGuide,
-    this.iconUrl,
+    required this.iconUrl,
   });
 
   /// The kick-off id.
@@ -20,9 +20,8 @@ abstract class Platform {
   final HowToIntegrateGuide? howToIntegrateGuide;
 
   /// The URL of the icon for the platform.
-  ///
-  /// If not provided, a default icon will be used.
-  final String? iconUrl;
+
+  final String iconUrl;
 }
 
 /// {@template jira_platform}
@@ -35,8 +34,7 @@ class JiraPlatform extends Platform {
     super.howToIntegrateGuide,
   }) : super(
           displayName: 'Jira',
-          iconUrl:
-              'https://1000logos.net/wp-content/uploads/2021/05/Atlassian-Logo-2010s1.png',
+          iconUrl: 'https://cdn-icons-png.flaticon.com/512/5968/5968875.png',
         );
 }
 
