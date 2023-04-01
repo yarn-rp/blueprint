@@ -72,7 +72,7 @@ The app should be responsive and optimized for different screen sizes 🖥️�
                   startDate: DateTime.now(),
                   dueDate: DateTime.now().add(const Duration(days: 1)),
                   estimatedTime: const Duration(days: 2),
-                  loggedTime: const Duration(minutes: 10),
+                  loggedTime: const Duration(hours: 12),
                   assigned: [yanJiraMember],
                   creator: javierJiraMember,
                   isCompleted: false,

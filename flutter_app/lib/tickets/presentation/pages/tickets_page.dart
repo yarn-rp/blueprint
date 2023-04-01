@@ -20,9 +20,6 @@ class _TicketsPageState extends State<TicketsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('All Tasks'),
-      ),
       body: Row(
         children: [
           Expanded(
@@ -49,6 +46,16 @@ class _TicketsPageState extends State<TicketsPage> {
             ),
           ),
           AnimatedContainer(
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.2),
+                  spreadRadius: 1,
+                  blurRadius: 10,
+                  offset: const Offset(-5, 0), // changes position of shadow
+                ),
+              ],
+            ),
             alignment: Alignment.centerRight,
             curve: Curves.fastLinearToSlowEaseIn,
             duration: const Duration(milliseconds: 1200),

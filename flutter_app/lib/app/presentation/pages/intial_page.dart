@@ -1,4 +1,5 @@
 import 'package:collapsible_sidebar/collapsible_sidebar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class NavigationPageData {
@@ -39,6 +40,43 @@ class _InitialPageState extends State<InitialPage> {
       builder: (context) {
         final isSmallScreen = MediaQuery.of(context).size.width < 600;
         return Scaffold(
+          appBar: AppBar(
+            leading: Row(
+              children: [
+                if (isSmallScreen)
+                  IconButton(
+                    icon: const Icon(Icons.menu),
+                    onPressed: () => _key.currentState!.openDrawer(),
+                  ),
+                const SizedBox(width: 8),
+                const Text('Poll-e'),
+              ],
+            ),
+            actions: [
+              // Settings
+              IconButton(
+                icon: const Icon(Icons.settings),
+                onPressed: () {},
+              ),
+              const SizedBox(width: 8),
+              const Icon(
+                Icons.notifications,
+              ),
+              const SizedBox(width: 8),
+              // Profile
+              IconButton(
+                icon: const Icon(Icons.person),
+                onPressed: () {},
+              ),
+            ],
+            centerTitle: true,
+            title: Container(
+              constraints: const BoxConstraints(
+                maxWidth: 600,
+              ),
+              child: const CupertinoSearchTextField(),
+            ),
+          ),
           body: SidebarPage(
             navigationPages: widget.navigationPages,
           ),
