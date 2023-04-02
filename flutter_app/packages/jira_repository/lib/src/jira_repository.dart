@@ -114,11 +114,12 @@ class JiraRepository {
 
     // Create the API wrapper from the http client
     final jira = Jira.JiraPlatformApi(client);
+    final myUser = await jira.myself.getCurrentUser();
 
     // Communicate with the APIs..
-
     final results = await jira.issueSearch.searchForIssuesUsingJql(
-      jql: 'project=${project.platformId}',
+      jql: 'project=${project.platformId} AND assignee=${myUser.accountId}',
+      maxResults: 1000,
     );
 
     final tasks = results.issues.map((issue) {

@@ -23,7 +23,7 @@ class TasksCubit extends Cubit<TasksState> {
 
     emit(const TasksLoading([]));
     try {
-      final tasksStream = _projectRepository.getAllTasks();
+      final tasksStream = _projectRepository.getAllMyTasks();
 
       _tasksSubscription = tasksStream.listen(
         (tasks) {

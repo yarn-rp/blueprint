@@ -106,6 +106,7 @@ class Mappers {
     );
   }
 
+  /// Maps a Map<String,dynamic> with the data of the jira api to a [User].
   static User? fromJiraApiUserToUser(Map<String, dynamic>? user) {
     if (user == null) {
       return null;
@@ -121,6 +122,7 @@ class Mappers {
     );
   }
 
+  /// Maps a Map<String,dynamic> with the data of the jira api to a [Status].
   static Status fromJiraApiStatusToStatus(Map<String, dynamic>? status) {
     if (status == null) {
       return Status('No Status', '#FFC107');

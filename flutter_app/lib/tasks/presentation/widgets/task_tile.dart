@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:jiffy/jiffy.dart';
 import 'package:poll_e_task/projects/presentation/widgets/project_chip.dart';
 import 'package:poll_e_task/tasks/presentation/widgets/priority_widget.dart';
 import 'package:poll_e_task/tasks/presentation/widgets/status_chip.dart';
@@ -50,14 +49,6 @@ class TaskTile extends StatelessWidget {
                   TaskStatusChip(task: task),
                   const SizedBox(
                     width: 8,
-                  ),
-                  Chip(
-                    label: Text(
-                      'Due date - ${Jiffy(
-                        task.dueDate,
-                      ).fromNow()}',
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
                   ),
                 ],
               ),

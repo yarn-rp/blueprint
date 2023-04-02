@@ -35,7 +35,8 @@ class ProjectRepository {
   }
 
   /// Returns all the tasks the user has in the app.
-  Stream<List<Task>> getAllTasks() => getProjects().asyncMap((projects) async {
+  Stream<List<Task>> getAllMyTasks() =>
+      getProjects().asyncMap((projects) async {
         final allTasksFromProjects = await Future.wait(
           projects.map(
             getProjectTasks,
