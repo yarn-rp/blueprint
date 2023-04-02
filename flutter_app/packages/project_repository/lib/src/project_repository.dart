@@ -8,6 +8,7 @@ class ProjectRepository {
   /// {@macro project_repository}
   const ProjectRepository(this._integrationsRepository);
 
+  /// An instance of [IntegrationsRepository] to manage integrations.
   final IntegrationsRepository _integrationsRepository;
 
   /// Returns the stream of all projects that are integrated with the app.
@@ -27,4 +28,19 @@ class ProjectRepository {
           .toList();
     });
   }
+
+  /// Return all the tasks that are linked to a specific [project].
+  Future<List<Task>> getProjectTasks(Project project) {
+    return _integrationsRepository.getProjectTasks(project);
+  }
+
+  /// Returns all the tasks the user has in the app.
+  Stream<List<Task>> getAllTasks() => getProjects().asyncMap((projects) async {
+        final allTasksFromProjects = await Future.wait(
+          projects.map(
+            getProjectTasks,
+          ),
+        );
+        return allTasksFromProjects.expand((tasks) => tasks).toList();
+      });
 }

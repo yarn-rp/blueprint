@@ -2,21 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:markdown/markdown.dart' as md;
+import 'package:poll_e_task/projects/presentation/widgets/project_chip.dart';
 import 'package:poll_e_task/tasks/presentation/widgets/priority_widget.dart';
-import 'package:poll_e_task/tasks/presentation/widgets/project_chip.dart';
 import 'package:poll_e_task/tasks/presentation/widgets/status_chip.dart';
 import 'package:poll_e_task/tasks/presentation/widgets/user_tile.dart';
 import 'package:project_repository/project_repository.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class TicketDetails extends StatelessWidget {
-  const TicketDetails({
-    required this.ticket,
+class TaskDetails extends StatelessWidget {
+  const TaskDetails({
+    required this.task,
     required this.onClose,
     this.padding = 32,
     super.key,
   });
-  final Task ticket;
+  final Task task;
   final VoidCallback onClose;
   final double padding;
 
@@ -67,7 +67,7 @@ class TicketDetails extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  ticket.title,
+                  task.title,
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 const SizedBox(
@@ -76,7 +76,7 @@ class TicketDetails extends StatelessWidget {
                 Row(
                   children: [
                     FilledButton.icon(
-                      onPressed: () => launchUrl(ticket.ticketURL),
+                      onPressed: () => launchUrl(task.taskURL),
                       icon: const Icon(Icons.add),
                       label: const Text('Add to Today'),
                     ),
@@ -84,10 +84,10 @@ class TicketDetails extends StatelessWidget {
                       width: 8,
                     ),
                     FilledButton.tonalIcon(
-                      onPressed: () => launchUrl(ticket.ticketURL),
+                      onPressed: () => launchUrl(task.taskURL),
                       icon: const Icon(Icons.link),
                       label: Text(
-                        'View in ${ticket.project.integration.platform.displayName}',
+                        'View in ${task.project.integration.platform.displayName}',
                       ),
                     )
                   ],
@@ -122,7 +122,7 @@ class TicketDetails extends StatelessWidget {
                           padding: const EdgeInsets.all(24),
                           child: MarkdownBody(
                             selectable: true,
-                            data: ticket.description,
+                            data: task.description,
                             extensionSet: md.ExtensionSet(
                               md.ExtensionSet.commonMark.blockSyntaxes,
                               [
@@ -145,9 +145,9 @@ class TicketDetails extends StatelessWidget {
                         ),
                         // Use jiffy to format the date
                         Text(
-                          ticket.estimatedTime.inHours > 0
-                              ? '${ticket.estimatedTime.inHours}h ${ticket.estimatedTime.inMinutes % 60}m'
-                              : '${ticket.estimatedTime.inMinutes % 60}m',
+                          task.estimatedTime.inHours > 0
+                              ? '${task.estimatedTime.inHours}h ${task.estimatedTime.inMinutes % 60}m'
+                              : '${task.estimatedTime.inMinutes % 60}m',
                           style: Theme.of(context).textTheme.bodySmall,
                         ),
                       ],
@@ -193,11 +193,11 @@ class TicketDetails extends StatelessWidget {
 
                                 Row(
                                   children: [
-                                    ProjectChip(project: ticket.project),
+                                    ProjectChip(project: task.project),
                                     const SizedBox(
                                       width: 16,
                                     ),
-                                    TicketStatusChip(ticket: ticket),
+                                    TaskStatusChip(task: task),
                                   ],
                                 ),
                                 const SizedBox(
@@ -214,10 +214,9 @@ class TicketDetails extends StatelessWidget {
                                     Column(
                                       children: [
                                         LinearProgressIndicator(
-                                          value:
-                                              ticket.loggedTime.inMilliseconds /
-                                                  ticket.estimatedTime
-                                                      .inMilliseconds,
+                                          value: task
+                                                  .loggedTime.inMilliseconds /
+                                              task.estimatedTime.inMilliseconds,
                                           valueColor:
                                               AlwaysStoppedAnimation<Color>(
                                             Theme.of(context)
@@ -237,14 +236,14 @@ class TicketDetails extends StatelessWidget {
                                         Row(
                                           children: [
                                             Text(
-                                              '${ticket.loggedTime.inHours}h ${ticket.loggedTime.inMinutes % 60}m',
+                                              '${task.loggedTime.inHours}h ${task.loggedTime.inMinutes % 60}m',
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .bodySmall,
                                             ),
                                             const Spacer(),
                                             Text(
-                                              '${ticket.estimatedTime.inHours}h ${ticket.estimatedTime.inMinutes % 60}m',
+                                              '${task.estimatedTime.inHours}h ${task.estimatedTime.inMinutes % 60}m',
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .bodySmall,
@@ -255,7 +254,7 @@ class TicketDetails extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-                                // Starting date and due date of the ticket
+                                // Starting date and due date of the task
                                 const SizedBox(
                                   height: 32,
                                 ),
@@ -271,7 +270,7 @@ class TicketDetails extends StatelessWidget {
                                         ),
                                         // Use jiffy to format the date
                                         Text(
-                                          Jiffy(ticket.startDate)
+                                          Jiffy(task.startDate)
                                               .format('dd MMM yyyy hh:mm a'),
                                           style: Theme.of(context)
                                               .textTheme
@@ -292,7 +291,7 @@ class TicketDetails extends StatelessWidget {
                                           children: [
                                             Text(
                                               Jiffy(
-                                                ticket.dueDate,
+                                                task.dueDate,
                                               ).fromNow(),
                                               style: Theme.of(context)
                                                   .textTheme
@@ -304,7 +303,7 @@ class TicketDetails extends StatelessWidget {
                                             ),
                                             const Text(' -'),
                                             Text(
-                                              Jiffy(ticket.dueDate).format(
+                                              Jiffy(task.dueDate).format(
                                                 'dd MMM yyyy hh:mm a',
                                               ),
                                               style: Theme.of(context)
@@ -318,7 +317,7 @@ class TicketDetails extends StatelessWidget {
                                   ],
                                 ),
 
-                                // Priority of the ticket
+                                // Priority of the task
                                 const SizedBox(
                                   height: 32,
                                 ),
@@ -330,7 +329,7 @@ class TicketDetails extends StatelessWidget {
                                       height: 16,
                                     ),
                                     PriorityWidget.label(
-                                      priority: ticket.priority,
+                                      priority: task.priority,
                                     )
                                   ],
                                 ),
@@ -350,7 +349,7 @@ class TicketDetails extends StatelessWidget {
                                             height: 16,
                                           ),
                                           UserTile(
-                                            user: ticket.creator,
+                                            user: task.creator,
                                           ),
                                         ],
                                       ),
@@ -367,7 +366,7 @@ class TicketDetails extends StatelessWidget {
                                           const SizedBox(
                                             height: 16,
                                           ),
-                                          ...ticket.assigned
+                                          ...task.assigned
                                               .map((e) => UserTile(user: e)),
                                         ],
                                       ),
@@ -386,7 +385,7 @@ class TicketDetails extends StatelessWidget {
                     const SizedBox(
                       height: 16,
                     ),
-                    // Updated at and created at of the ticket
+                    // Updated at and created at of the task
                     // Use jiffy to format the date
                     Expanded(
                       child: Column(
@@ -395,7 +394,7 @@ class TicketDetails extends StatelessWidget {
                           Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              'Created at ${Jiffy(ticket.createdAt).format('dd MMM yyyy hh:mm a')}',
+                              'Created at ${Jiffy(task.createdAt).format('dd MMM yyyy hh:mm a')}',
                               style: Theme.of(context).textTheme.bodySmall,
                             ),
                           ),
@@ -405,7 +404,7 @@ class TicketDetails extends StatelessWidget {
                           Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              'Updated at ${Jiffy(ticket.updatedAt).format('dd MMM yyyy hh:mm a')}',
+                              'Updated at ${Jiffy(task.updatedAt).format('dd MMM yyyy hh:mm a')}',
                               style: Theme.of(context).textTheme.bodySmall,
                             ),
                           ),

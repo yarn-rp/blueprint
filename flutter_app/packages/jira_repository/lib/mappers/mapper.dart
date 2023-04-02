@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:atlassian_apis/jira_platform.dart' as Jira;
 import 'package:integrations_repository/integrations_repository.dart';
 import 'package:project_repository/project_repository.dart';
 
 class Mappers {
+  /// Maps a [Jira.Project] to a [Project].
   static Project fromJiraApiProjectToProject(
     Jira.Project jiraProject,
     Integration integration,
@@ -41,6 +44,15 @@ class Mappers {
       integration: integration,
       iconUrl: iconUrl,
     );
+  }
+
+  /// Maps a [Jira.IssueBean] to a [Task].
+  static Task fromJiraApiIssueToTask(
+    Jira.IssueBean jiraIssue,
+    Project project,
+  ) {
+    log('Issue ${jiraIssue.toJson()}');
+    throw UnimplementedError();
   }
 }
 

@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:jiffy/jiffy.dart';
+import 'package:poll_e_task/projects/presentation/widgets/project_chip.dart';
 import 'package:poll_e_task/tasks/presentation/widgets/priority_widget.dart';
-import 'package:poll_e_task/tasks/presentation/widgets/project_chip.dart';
 import 'package:poll_e_task/tasks/presentation/widgets/status_chip.dart';
 import 'package:project_repository/project_repository.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class TicketTile extends StatelessWidget {
-  const TicketTile({
-    required this.ticket,
+class TaskTile extends StatelessWidget {
+  const TaskTile({
+    required this.task,
     super.key,
     required this.onDetails,
   });
-  final Task ticket;
+  final Task task;
   final VoidCallback onDetails;
 
   @override
@@ -24,8 +24,8 @@ class TicketTile extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(16),
           child: ListTile(
-            leading: PriorityWidget(priority: ticket.priority),
-            title: Text(ticket.title),
+            leading: PriorityWidget(priority: task.priority),
+            title: Text(task.title),
             trailing: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -34,7 +34,7 @@ class TicketTile extends StatelessWidget {
                   icon: const Icon(Icons.add),
                 ),
                 IconButton(
-                  onPressed: () => launchUrl(ticket.ticketURL),
+                  onPressed: () => launchUrl(task.taskURL),
                   icon: const Icon(Icons.link),
                 ),
               ],
@@ -43,18 +43,18 @@ class TicketTile extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 8),
               child: Row(
                 children: [
-                  ProjectChip(project: ticket.project),
+                  ProjectChip(project: task.project),
                   const SizedBox(
                     width: 8,
                   ),
-                  TicketStatusChip(ticket: ticket),
+                  TaskStatusChip(task: task),
                   const SizedBox(
                     width: 8,
                   ),
                   Chip(
                     label: Text(
                       'Due date - ${Jiffy(
-                        ticket.dueDate,
+                        task.dueDate,
                       ).fromNow()}',
                       style: Theme.of(context).textTheme.bodySmall,
                     ),

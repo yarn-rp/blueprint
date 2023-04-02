@@ -1,23 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:poll_e_task/tasks/presentation/pages/ticket_details.dart';
-import 'package:poll_e_task/tasks/presentation/widgets/ticket_tile.dart';
+import 'package:poll_e_task/tasks/presentation/pages/task_details.dart';
+import 'package:poll_e_task/tasks/presentation/widgets/task_tile.dart';
 import 'package:project_repository/project_repository.dart';
 
-class TicketsPage extends StatefulWidget {
-  const TicketsPage({
+class TasksPage extends StatefulWidget {
+  const TasksPage({
     super.key,
-    required this.tasks,
   });
-  final List<Task> tasks;
 
   @override
-  State<TicketsPage> createState() => _TicketsPageState();
+  State<TasksPage> createState() => TasksPageState();
 }
 
-class _TicketsPageState extends State<TicketsPage> {
-  Task? activeTicket;
+class TasksPageState extends State<TasksPage> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final tasks = <Task>[];
     return Scaffold(
       body: Row(
         children: [
@@ -28,9 +31,9 @@ class _TicketsPageState extends State<TicketsPage> {
               duration: const Duration(milliseconds: 1200),
               child: ListView(
                 children: [
-                  ...widget.tasks.map(
-                    (ticket) => TicketTile(
-                      ticket: ticket,
+                  ...tasks.map(
+                    (task) => TaskTile(
+                      task: task,
                       onDetails: () async {
                         await showDialog(
                           context: context,
@@ -40,11 +43,9 @@ class _TicketsPageState extends State<TicketsPage> {
                               child: SizedBox(
                                 width:
                                     MediaQuery.of(context).size.width * 3 / 4,
-                                child: TicketDetails(
-                                  ticket: ticket,
-                                  onClose: () {
-                                    Navigator.of(context).pop();
-                                  },
+                                child: TaskDetails(
+                                  task: task,
+                                  onClose: () => Navigator.of(context).pop(),
                                 ),
                               ),
                             );

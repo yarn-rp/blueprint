@@ -1,6 +1,4 @@
-import 'package:integrations_repository/integrations_repository.dart';
-
-import 'entities.dart';
+import 'package:project_repository/src/entities/entities.dart';
 
 /// {@template ticket}
 /// A ticket is a task that is assigned to a user
@@ -14,7 +12,7 @@ class Task {
     required this.updatedAt,
     required this.id,
     required this.project,
-    required this.ticketURL,
+    required this.taskURL,
     required this.title,
     required this.description,
     required this.startDate,
@@ -41,7 +39,7 @@ class Task {
   final Project project;
 
   /// The url of the ticket in the platform
-  final Uri ticketURL;
+  final Uri taskURL;
 
   /// Title of the ticket
   final String title;

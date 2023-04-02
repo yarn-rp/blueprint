@@ -6,9 +6,9 @@ import 'package:poll_e_task/app/presentation/pages/intial_page.dart';
 import 'package:poll_e_task/integrations/presentation/integrations_page.dart';
 import 'package:poll_e_task/integrations/state_management/cubit/integrations_cubit.dart';
 import 'package:poll_e_task/l10n/l10n.dart';
-import 'package:poll_e_task/tasks/presentation/pages/projects.dart';
+import 'package:poll_e_task/projects/presentation/pages/projects.dart';
+import 'package:poll_e_task/projects/state_management/projects_bloc/projects_bloc.dart';
 import 'package:poll_e_task/tasks/presentation/pages/tickets_page.dart';
-import 'package:poll_e_task/tasks/state_management/bloc/projects_bloc.dart';
 import 'package:project_repository/project_repository.dart';
 
 /// Injects all the repositories into the widget tree.
@@ -86,9 +86,7 @@ class App extends StatelessWidget {
               NavigationPageData(
                 text: 'Tasks',
                 icon: Icons.task_sharp,
-                page: const TicketsPage(
-                  tasks: [],
-                ),
+                page: const TasksPage(),
               ),
               NavigationPageData(
                 text: 'Integrations',

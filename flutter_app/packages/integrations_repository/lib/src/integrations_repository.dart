@@ -29,4 +29,11 @@ class IntegrationsRepository {
     //TODO: handle more integrations
     throw Exception('Unsupported integration');
   }
+
+  Future<List<Task>> getProjectTasks(Project project) {
+    if (project.integration is JiraIntegration) {
+      return jiraRepository.getProjectTasks(project);
+    }
+    throw Exception('Unsupported integration');
+  }
 }

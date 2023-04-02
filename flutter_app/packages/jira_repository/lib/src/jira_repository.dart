@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:atlassian_apis/jira_platform.dart' as Jira;
 import 'package:flutter/foundation.dart';
 import 'package:integrations_repository/integrations_repository.dart';
@@ -64,12 +62,12 @@ class JiraRepository {
 
     final projects = Future.wait(
       pageBeanProject.values.map((jiraProject) async {
-        final results = await jira.issueSearch.searchForIssuesUsingJql(
-          jql: 'project=${jiraProject.id}',
-        );
-        for (final issue in results.issues) {
-          log('issue: ${issue.toJson()}');
-        }
+        // final results = await jira.issueSearch.searchForIssuesUsingJql(
+        //   jql: 'project=${jiraProject.id}',
+        // );
+        // for (final issue in results.issues) {
+        //   log('issue: ${issue.toJson()}');
+        // }
 
         return Mappers.fromJiraApiProjectToProject(jiraProject, integration);
       }).toList(),
@@ -79,13 +77,64 @@ class JiraRepository {
     client.close();
     return projects;
   }
+
+  /// Returns all the tasks that are linked to a jira project.
+  Future<List<Task>> getProjectTasks(Project project) {
+    if (project.integration is JiraBasicAuthIntegration) {
+      return getProjectTasksFromJiraBasicAuthIntegration(project);
+    }
+    if (project.integration is JiraOAuthIntegration) {
+      return getProjectTasksFromJiraOAuthIntegration(project);
+    }
+    throw Exception('Unsupported Jira integration');
+  }
+
+  /// Returns all the tasks that are linked to a jira project with OAuth
+  Future<List<Task>> getProjectTasksFromJiraOAuthIntegration(
+    Project project,
+  ) {
+    throw UnimplementedError();
+  }
+
+  /// Returns all the tasks that are linked to a jira project with Basic Auth
+  Future<List<Task>> getProjectTasksFromJiraBasicAuthIntegration(
+    Project project,
+  ) async {
+    final integration = project.integration as JiraBasicAuthIntegration;
+    final user = integration.username;
+    final apiToken = integration.password;
+    final url = integration.url;
+
+    // Create an authenticated http client.
+    final client = Jira.ApiClient.basicAuthentication(
+      Uri.https(url, ''),
+      user: user,
+      apiToken: apiToken,
+    );
+
+    // Create the API wrapper from the http client
+    final jira = Jira.JiraPlatformApi(client);
+
+    // Communicate with the APIs..
+    final results = await jira.issueSearch.searchForIssuesUsingJql(
+      jql: 'project=${project.id}',
+    );
+
+    final tasks = results.issues.map((issue) {
+      return Mappers.fromJiraApiIssueToTask(issue, project);
+    }).toList();
+
+    // Close the client to quickly terminate the process
+    client.close();
+    return tasks;
+  }
 }
 
 final List<Integration> integrations = [
   JiraBasicAuthIntegration(
     username: 'yrodriguez@createthrive.com',
     password:
-        'ATATT3xFfGF0ROm4PXsExTla0DCAxYJvcyJorJLpfxBsxAzStl0c-VyKiUtxAbQte33JDbymAkBLYVZeyEHiWMAFZPMrM3TzC6-dakF4JXFMfMHRwvxqjbnGVTfWhgGbJGm-GqrYAkb1gALE0iDksLgKDptWSOwmVQeaJcU-Y8ODifK4iQ9Ch2I=7363C57A',
+        'ATATT3xFfGF0vWVTGDI0FxAWu-K8WfKbNfFw8SMqG1lTrB_lUKRSzNYm-llYIgQRiFUD8XbZqxWxzn8bza1jZtXWdKqwbQsJzIjXAjBBD5lZaX9XNXxxiJfTWLf-fl4xSiMjGs8XyFvq65JIQTYSZeV83UDm6g4G7Trj7vkw_gooc6JEX5rvizA=F85A2173',
     url: 'zelfio.atlassian.net',
   ),
 ];

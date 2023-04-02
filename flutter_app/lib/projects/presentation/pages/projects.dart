@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:poll_e_task/tasks/presentation/widgets/project.dart';
-import 'package:poll_e_task/tasks/state_management/bloc/projects_bloc.dart';
+import 'package:poll_e_task/projects/presentation/widgets/project.dart';
+import 'package:poll_e_task/projects/state_management/projects_bloc/projects_bloc.dart';
 
 class ProjectsPage extends StatelessWidget {
   const ProjectsPage({super.key});
