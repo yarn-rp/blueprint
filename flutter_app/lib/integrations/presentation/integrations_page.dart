@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:poll_e_task/integrations/entities/integration.dart';
+import 'package:integrations_repository/integrations_repository.dart';
 import 'package:poll_e_task/integrations/state_management/cubit/integrations_cubit.dart';
 
 class IntegrationsPage extends StatefulWidget {

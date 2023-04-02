@@ -2,14 +2,13 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:poll_e_task/tasks/entities/entities.dart';
-import 'package:poll_e_task/tasks/repositories/projects_repository.dart';
+import 'package:project_repository/project_repository.dart';
 
 part 'projects_bloc.freezed.dart';
 part 'projects_event.dart';
 part 'projects_state.dart';
 
-/// The [ProjectsBloc] is responsible for managing the state of the projects
+/// The [ProjectsCubit] is responsible for managing the state of the projects
 /// page.
 ///
 /// Reacts to the following events:

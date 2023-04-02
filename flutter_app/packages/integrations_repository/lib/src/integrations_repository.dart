@@ -1,6 +1,7 @@
 import 'package:integrations_repository/src/entities/entities.dart';
 import 'package:jira_repository/entities/jira_integration.dart';
 import 'package:jira_repository/jira_repository.dart';
+import 'package:project_repository/project_repository.dart';
 
 /// {@template integrations_repository}
 /// A Very Good Project created by Very Good CLI.

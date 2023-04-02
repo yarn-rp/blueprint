@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:poll_e_task/tasks/entities/task.dart';
 import 'package:poll_e_task/utils/color/hex_color_extension.dart';
+import 'package:project_repository/project_repository.dart';
 
 class TicketStatusChip extends StatelessWidget {
   const TicketStatusChip({

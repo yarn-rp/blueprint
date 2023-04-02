@@ -13,6 +13,8 @@ dependencies:
     sdk: flutter
   integrations_repository:
     path: ../integrations_repository
+  project_repository:
+    path: ../project_repository
 
 dev_dependencies:
   flutter_test:

@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:integrations_repository/integrations_repository.dart';
 import 'package:jira_repository/entities/jira_integration.dart';
 import 'package:jira_repository/mappers/mapper.dart';
+import 'package:project_repository/project_repository.dart';
 
 /// {@template jira_repository}
 /// Repository in charge of managing Jira integrations.

@@ -1,4 +1,4 @@
-export 'platform.dart';
+export 'project.dart';
 export 'project.dart';
 export 'status.dart';
 export 'task.dart';

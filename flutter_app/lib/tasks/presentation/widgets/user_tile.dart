@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:poll_e_task/tasks/entities/entities.dart';
+import 'package:project_repository/project_repository.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class UserTile extends StatelessWidget {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:poll_e_task/tasks/entities/task.dart';
 import 'package:poll_e_task/tasks/presentation/pages/ticket_details.dart';
 import 'package:poll_e_task/tasks/presentation/widgets/ticket_tile.dart';
+import 'package:project_repository/project_repository.dart';
 
 class TicketsPage extends StatefulWidget {
   const TicketsPage({

@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:integrations_repository/integrations_repository.dart';
+import 'package:jira_repository/jira_repository.dart';
 import 'package:poll_e_task/app/presentation/pages/intial_page.dart';
 import 'package:poll_e_task/integrations/presentation/integrations_page.dart';
-import 'package:poll_e_task/integrations/repositories/integration_repositories.dart';
 import 'package:poll_e_task/integrations/state_management/cubit/integrations_cubit.dart';
 import 'package:poll_e_task/l10n/l10n.dart';
 import 'package:poll_e_task/tasks/presentation/pages/projects.dart';
 import 'package:poll_e_task/tasks/presentation/pages/tickets_page.dart';
-import 'package:poll_e_task/tasks/repositories/projects_repository.dart';
 import 'package:poll_e_task/tasks/state_management/bloc/projects_bloc.dart';
+import 'package:project_repository/project_repository.dart';
 
 /// Injects all the repositories into the widget tree.
 class RepositoriesProvider extends StatelessWidget {
@@ -20,8 +21,9 @@ class RepositoriesProvider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final integrationRepository = IntegrationRepository();
-    final projectRepository = ProjectRepository(integrationRepository);
+    const jiraRepository = JiraRepository();
+    const integrationRepository = IntegrationsRepository(jiraRepository);
+    const projectRepository = ProjectRepository(integrationRepository);
 
     return MultiRepositoryProvider(
       providers: [
@@ -53,7 +55,7 @@ class BlocsProvider extends StatelessWidget {
         ),
         BlocProvider.value(
           value: IntegrationsCubit(
-            context.read<IntegrationRepository>(),
+            context.read<IntegrationsRepository>(),
           ),
         ),
       ],

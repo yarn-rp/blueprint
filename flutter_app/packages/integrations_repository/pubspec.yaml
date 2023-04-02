@@ -12,6 +12,8 @@ dependencies:
     sdk: flutter
   jira_repository:
     path: ../jira_repository
+  project_repository:
+    path: ../project_repository
 
 dev_dependencies:
   flutter_test:

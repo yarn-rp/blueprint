@@ -1,5 +1,6 @@
 import 'package:atlassian_apis/jira_platform.dart' as Jira;
 import 'package:integrations_repository/integrations_repository.dart';
+import 'package:project_repository/project_repository.dart';
 
 class Mappers {
   static Project fromJiraApiProjectToProject(

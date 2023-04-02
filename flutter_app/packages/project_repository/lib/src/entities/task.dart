@@ -1,4 +1,6 @@
-import 'package:poll_e_task/tasks/entities/entities.dart';
+import 'package:integrations_repository/integrations_repository.dart';
+
+import 'entities.dart';
 
 /// {@template ticket}
 /// A ticket is a task that is assigned to a user
