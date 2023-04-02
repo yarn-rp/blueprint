@@ -87,7 +87,7 @@ class TicketDetails extends StatelessWidget {
                       onPressed: () => launchUrl(ticket.ticketURL),
                       icon: const Icon(Icons.link),
                       label: Text(
-                        'View in ${ticket.project.platform.displayName}',
+                        'View in ${ticket.project.integration.platform.displayName}',
                       ),
                     )
                   ],

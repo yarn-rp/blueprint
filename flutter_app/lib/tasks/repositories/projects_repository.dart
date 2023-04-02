@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:atlassian_apis/jira_platform.dart' as Jira;
 import 'package:flutter/material.dart';
 import 'package:poll_e_task/integrations/entities/integration.dart';
@@ -29,7 +31,7 @@ class ProjectRepository {
   }
 
   Future<List<Project>> getProjectsFromIntegration(Integration integration) {
-    if (integration is JiraBasicAuthIntegration) {
+    if (integration is JiraIntegration) {
       return getProjectsFromJiraIntegration(integration);
     }
     //TODO: handle more integrations
@@ -38,42 +40,59 @@ class ProjectRepository {
 
   @visibleForTesting
   Future<List<Project>> getProjectsFromJiraIntegration(
+    JiraIntegration integration,
+  ) async {
+    if (integration is JiraBasicAuthIntegration) {
+      return getProjectsFromJiraBasicAuthIntegration(integration);
+    }
+    if (integration is JiraOAuthIntegration) {
+      return getProjectsFromJiraOAuthIntegration(integration);
+    }
+    throw Exception('Unsupported Jira integration');
+  }
+
+  Future<List<Project>> getProjectsFromJiraOAuthIntegration(
+    JiraOAuthIntegration integration,
+  ) {
+    throw UnimplementedError();
+  }
+
+  @visibleForTesting
+  Future<List<Project>> getProjectsFromJiraBasicAuthIntegration(
     JiraBasicAuthIntegration integration,
   ) async {
-    try {
-      // This example uses API Token authentication.
-      // Alternatively, you can use OAuth.
-      final user = integration.username;
-      final apiToken = integration.password;
-      final url = integration.url;
+    final user = integration.username;
+    final apiToken = integration.password;
+    final url = integration.url;
 
-      print('user: $user');
-      print('apiToken: $apiToken');
-      print('url: $url');
+    // Create an authenticated http client.
+    final client = Jira.ApiClient.basicAuthentication(
+      Uri.https(url, ''),
+      user: user,
+      apiToken: apiToken,
+    );
 
-      // Create an authenticated http client.
-      final client = Jira.ApiClient.basicAuthentication(
-        Uri.https(url, ''),
-        user: user,
-        apiToken: apiToken,
-      );
+    // Create the API wrapper from the http client
+    final jira = Jira.JiraPlatformApi(client);
 
-      // Create the API wrapper from the http client
-      final jira = Jira.JiraPlatformApi(client);
+    // Communicate with the APIs..
+    final pageBeanProject = await jira.projects.searchProjects();
 
-      // Communicate with the APIs..
-      final pageBeanProject = await jira.projects.searchProjects();
+    final projects = Future.wait(
+      pageBeanProject.values.map((jiraProject) async {
+        final results = await jira.issueSearch.searchForIssuesUsingJql(
+          jql: 'project=${jiraProject.id}',
+        );
+        for (final issue in results.issues) {
+          log('issue: ${issue.toJson()}');
+        }
 
-      final projects = pageBeanProject.values
-          .map(Mappers.fromJiraApiProjectToProject)
-          .toList();
+        return Mappers.fromJiraApiProjectToProject(jiraProject, integration);
+      }).toList(),
+    );
 
-      // Close the client to quickly terminate the process
-      client.close();
-      return projects;
-    } catch (e, stackTrace) {
-      print('error $e, $stackTrace');
-      rethrow;
-    }
+    // Close the client to quickly terminate the process
+    client.close();
+    return projects;
   }
 }

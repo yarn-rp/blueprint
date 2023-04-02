@@ -1,3 +1,4 @@
+import 'package:poll_e_task/integrations/entities/integration.dart';
 import 'package:poll_e_task/tasks/entities/entities.dart';
 
 /// {@template project}
@@ -9,7 +10,7 @@ class Project {
     required this.id,
     required this.platformId,
     required this.platformURL,
-    required this.platform,
+    required this.integration,
     required this.name,
     required this.description,
     required this.members,
@@ -26,8 +27,8 @@ class Project {
   /// Platform-specific URL for the project (ex: Jira URL).
   final Uri platformURL;
 
-  /// The platform of the project.
-  final Platform platform;
+  /// The integration way of the project.
+  final Integration integration;
 
   /// The name of the project.
   final String name;

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:poll_e_task/app/presentation/pages/intial_page.dart';
+import 'package:poll_e_task/integrations/presentation/integrations_page.dart';
 import 'package:poll_e_task/integrations/repositories/integration_repositories.dart';
+import 'package:poll_e_task/integrations/state_management/cubit/integrations_cubit.dart';
 import 'package:poll_e_task/l10n/l10n.dart';
 import 'package:poll_e_task/tasks/presentation/pages/projects.dart';
 import 'package:poll_e_task/tasks/presentation/pages/tickets_page.dart';
@@ -49,6 +51,11 @@ class BlocsProvider extends StatelessWidget {
             context.read<ProjectRepository>(),
           ),
         ),
+        BlocProvider.value(
+          value: IntegrationsCubit(
+            context.read<IntegrationRepository>(),
+          ),
+        ),
       ],
       child: child,
     );
@@ -84,7 +91,7 @@ class App extends StatelessWidget {
               NavigationPageData(
                 text: 'Integrations',
                 icon: Icons.integration_instructions,
-                page: Container(),
+                page: const IntegrationsPage(),
               ),
               NavigationPageData(
                 text: 'Projects',
