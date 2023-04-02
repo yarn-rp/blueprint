@@ -3,7 +3,7 @@
 /// {@endtemplate}
 abstract class Platform {
   /// {@macro platform}
-  Platform({
+  const Platform({
     required this.id,
     required this.displayName,
     this.howToIntegrateGuide,
@@ -29,7 +29,7 @@ abstract class Platform {
 /// {@endtemplate}
 class JiraPlatform extends Platform {
   /// {@macro platform}
-  JiraPlatform({
+  const JiraPlatform({
     required super.id,
     super.howToIntegrateGuide,
   }) : super(
@@ -43,7 +43,7 @@ class JiraPlatform extends Platform {
 /// {@endtemplate}
 class GithubPlatform extends Platform {
   /// {@macro platform}
-  GithubPlatform({
+  const GithubPlatform({
     required super.id,
     super.howToIntegrateGuide,
   }) : super(
@@ -58,7 +58,7 @@ class GithubPlatform extends Platform {
 /// {@endtemplate}
 class TrelloPlatform extends Platform {
   /// {@macro platform}
-  TrelloPlatform({
+  const TrelloPlatform({
     required super.id,
     super.howToIntegrateGuide,
   }) : super(
@@ -73,7 +73,7 @@ class TrelloPlatform extends Platform {
 /// {@endtemplate}
 class AsanaPlatform extends Platform {
   /// {@macro platform}
-  AsanaPlatform({
+  const AsanaPlatform({
     required super.id,
     super.howToIntegrateGuide,
   }) : super(
@@ -87,3 +87,8 @@ class AsanaPlatform extends Platform {
 /// This documentation can include information on how to install or use a
 /// specific platform related aspects of the integration.
 abstract class HowToIntegrateGuide {}
+
+const jira = JiraPlatform(id: 'jira');
+const github = GithubPlatform(id: 'github');
+const trello = TrelloPlatform(id: 'trello');
+const asana = AsanaPlatform(id: 'asana');

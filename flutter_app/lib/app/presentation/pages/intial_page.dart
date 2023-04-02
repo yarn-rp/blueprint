@@ -27,10 +27,10 @@ class InitialPage extends StatefulWidget {
 
 class _InitialPageState extends State<InitialPage> {
   final _key = GlobalKey<ScaffoldState>();
-  late bool extended;
+  late int currentIndex;
   @override
   void initState() {
-    extended = false;
+    currentIndex = 0;
     super.initState();
   }
 
@@ -40,18 +40,25 @@ class _InitialPageState extends State<InitialPage> {
       builder: (context) {
         final isSmallScreen = MediaQuery.of(context).size.width < 600;
         return Scaffold(
+          bottomNavigationBar: isSmallScreen
+              ? BottomNavigationBar(
+                  currentIndex: currentIndex,
+                  onTap: (index) {
+                    setState(() {
+                      currentIndex = index;
+                    });
+                  },
+                  items: widget.navigationPages
+                      .map(
+                        (e) => BottomNavigationBarItem(
+                          icon: Icon(e.icon),
+                          label: e.text,
+                        ),
+                      )
+                      .toList(),
+                )
+              : null,
           appBar: AppBar(
-            leading: Row(
-              children: [
-                if (isSmallScreen)
-                  IconButton(
-                    icon: const Icon(Icons.menu),
-                    onPressed: () => _key.currentState!.openDrawer(),
-                  ),
-                const SizedBox(width: 8),
-                const Text('Poll-e'),
-              ],
-            ),
             actions: [
               // Settings
               IconButton(
@@ -77,9 +84,12 @@ class _InitialPageState extends State<InitialPage> {
               child: const CupertinoSearchTextField(),
             ),
           ),
-          body: SidebarPage(
-            navigationPages: widget.navigationPages,
-          ),
+          body: isSmallScreen
+              ? widget.navigationPages[currentIndex].page
+              : SidebarPage(
+                  navigationPages: widget.navigationPages,
+                  initialPage: currentIndex,
+                ),
         );
       },
     );
@@ -87,8 +97,13 @@ class _InitialPageState extends State<InitialPage> {
 }
 
 class SidebarPage extends StatefulWidget {
-  const SidebarPage({super.key, required this.navigationPages});
+  const SidebarPage({
+    super.key,
+    required this.navigationPages,
+    required this.initialPage,
+  });
   final List<NavigationPageData> navigationPages;
+  final int initialPage;
 
   @override
   _SidebarPageState createState() => _SidebarPageState();

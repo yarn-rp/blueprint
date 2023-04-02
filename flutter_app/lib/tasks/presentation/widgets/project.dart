@@ -16,7 +16,7 @@ class ProjectCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            height: 120,
+            height: 80,
             decoration: BoxDecoration(
               color: HexColor.fromHex(
                 project.colorHex,
@@ -43,13 +43,14 @@ class ProjectCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  project.description,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+                if (project.description.isNotEmpty)
+                  Text(
+                    project.description,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
                 const SizedBox(height: 8),
                 Row(
                   children: [
