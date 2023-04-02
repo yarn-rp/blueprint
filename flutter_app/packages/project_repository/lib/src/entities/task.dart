@@ -48,16 +48,16 @@ class Task {
   final String description;
 
   /// start date of the ticket
-  final DateTime startDate;
+  final DateTime? startDate;
 
   /// due date of the ticket
-  final DateTime dueDate;
+  final DateTime? dueDate;
 
   /// estimated time to complete the ticket
-  final Duration estimatedTime;
+  final Duration? estimatedTime;
 
   /// time logged in the ticket
-  final Duration loggedTime;
+  final Duration? loggedTime;
 
   /// assigned users including me
   final List<User> assigned;
@@ -72,7 +72,7 @@ class Task {
   final Status status;
 
   /// The priority of the ticket
-  /// This is a double from 0-1, where 0 is the lowest priority and 1 is the
-  /// highest
-  final double priority;
+  /// This is an int between 1 and 5. 1 being the highest priority and 5 being
+  /// the lowest priority.
+  final int priority;
 }

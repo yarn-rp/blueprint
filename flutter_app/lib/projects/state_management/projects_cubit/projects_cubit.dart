@@ -5,17 +5,10 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:project_repository/project_repository.dart';
 
 part 'projects_bloc.freezed.dart';
-part 'projects_event.dart';
 part 'projects_state.dart';
 
 /// The [ProjectsCubit] is responsible for managing the state of the projects
 /// page.
-///
-/// Reacts to the following events:
-/// - [LoadProjects] - Loads all the projects from the repository.
-/// - [CreateProject] - Creates a new project.
-/// - [UpdateProject] - Updates an existing project.
-/// - [DeleteProject] - Deletes an existing project.
 ///
 /// Emits the following states:
 /// - [ProjectsInitial] - The initial state of the bloc.

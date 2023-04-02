@@ -116,8 +116,9 @@ class JiraRepository {
     final jira = Jira.JiraPlatformApi(client);
 
     // Communicate with the APIs..
+
     final results = await jira.issueSearch.searchForIssuesUsingJql(
-      jql: 'project=${project.id}',
+      jql: 'project=${project.platformId}',
     );
 
     final tasks = results.issues.map((issue) {

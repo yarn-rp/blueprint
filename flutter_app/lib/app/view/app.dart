@@ -7,8 +7,9 @@ import 'package:poll_e_task/integrations/presentation/integrations_page.dart';
 import 'package:poll_e_task/integrations/state_management/cubit/integrations_cubit.dart';
 import 'package:poll_e_task/l10n/l10n.dart';
 import 'package:poll_e_task/projects/presentation/pages/projects.dart';
-import 'package:poll_e_task/projects/state_management/projects_bloc/projects_bloc.dart';
+import 'package:poll_e_task/projects/state_management/projects_cubit/projects_cubit.dart';
 import 'package:poll_e_task/tasks/presentation/pages/tickets_page.dart';
+import 'package:poll_e_task/tasks/state_management/cubit/tasks_cubit.dart';
 import 'package:project_repository/project_repository.dart';
 
 /// Injects all the repositories into the widget tree.
@@ -50,6 +51,11 @@ class BlocsProvider extends StatelessWidget {
       providers: [
         BlocProvider.value(
           value: ProjectsCubit(
+            context.read<ProjectRepository>(),
+          ),
+        ),
+        BlocProvider.value(
+          value: TasksCubit(
             context.read<ProjectRepository>(),
           ),
         ),

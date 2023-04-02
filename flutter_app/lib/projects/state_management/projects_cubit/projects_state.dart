@@ -1,4 +1,4 @@
-part of 'projects_bloc.dart';
+part of 'projects_cubit.dart';
 
 @freezed
 class ProjectsState with _$ProjectsState {

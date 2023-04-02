@@ -69,6 +69,8 @@ class TaskDetails extends StatelessWidget {
                 Text(
                   task.title,
                   style: Theme.of(context).textTheme.titleLarge,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(
                   height: 8,
@@ -136,22 +138,23 @@ class TaskDetails extends StatelessWidget {
                     const SizedBox(
                       height: 32,
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text('Original estimation'),
-                        const SizedBox(
-                          height: 16,
-                        ),
-                        // Use jiffy to format the date
-                        Text(
-                          task.estimatedTime.inHours > 0
-                              ? '${task.estimatedTime.inHours}h ${task.estimatedTime.inMinutes % 60}m'
-                              : '${task.estimatedTime.inMinutes % 60}m',
-                          style: Theme.of(context).textTheme.bodySmall,
-                        ),
-                      ],
-                    ),
+                    if (task.estimatedTime != null)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text('Original estimation'),
+                          const SizedBox(
+                            height: 16,
+                          ),
+                          // Use jiffy to format the date
+                          Text(
+                            task.estimatedTime!.inHours > 0
+                                ? '${task.estimatedTime!.inHours}h ${task.estimatedTime!.inMinutes % 60}m'
+                                : '${task.estimatedTime!.inMinutes % 60}m',
+                            style: Theme.of(context).textTheme.bodySmall,
+                          ),
+                        ],
+                      ),
                   ],
                 ),
               ),
@@ -211,54 +214,63 @@ class TaskDetails extends StatelessWidget {
                                       height: 16,
                                     ),
                                     // A percentage bar showing the time logged
-                                    Column(
-                                      children: [
-                                        LinearProgressIndicator(
-                                          value: task
-                                                  .loggedTime.inMilliseconds /
-                                              task.estimatedTime.inMilliseconds,
-                                          valueColor:
-                                              AlwaysStoppedAnimation<Color>(
-                                            Theme.of(context)
+                                    if (task.loggedTime != null &&
+                                        task.estimatedTime != null)
+                                      Column(
+                                        children: [
+                                          LinearProgressIndicator(
+                                            value: task.loggedTime!
+                                                    .inMilliseconds /
+                                                task.estimatedTime!
+                                                    .inMilliseconds,
+                                            valueColor:
+                                                AlwaysStoppedAnimation<Color>(
+                                              Theme.of(context)
+                                                  .colorScheme
+                                                  .primary,
+                                            ),
+                                            backgroundColor: Theme.of(context)
                                                 .colorScheme
-                                                .primary,
+                                                .primary
+                                                .withOpacity(
+                                                  0.3,
+                                                ),
                                           ),
-                                          backgroundColor: Theme.of(context)
-                                              .colorScheme
-                                              .primary
-                                              .withOpacity(
-                                                0.3,
-                                              ),
-                                        ),
-                                        const SizedBox(
-                                          height: 8,
-                                        ),
-                                        Row(
-                                          children: [
-                                            Text(
-                                              '${task.loggedTime.inHours}h ${task.loggedTime.inMinutes % 60}m',
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodySmall,
-                                            ),
-                                            const Spacer(),
-                                            Text(
-                                              '${task.estimatedTime.inHours}h ${task.estimatedTime.inMinutes % 60}m',
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodySmall,
-                                            ),
-                                          ],
-                                        )
-                                      ],
-                                    ),
+                                          const SizedBox(
+                                            height: 8,
+                                          ),
+                                          if (task.loggedTime != null &&
+                                              task.estimatedTime != null)
+                                            Row(
+                                              children: [
+                                                if (task.loggedTime != null)
+                                                  Text(
+                                                    '${task.loggedTime!.inHours}h ${task.loggedTime!.inMinutes % 60}m',
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodySmall,
+                                                  ),
+                                                const Spacer(),
+                                                if (task.estimatedTime != null)
+                                                  Text(
+                                                    '${task.estimatedTime!.inHours}h ${task.estimatedTime!.inMinutes % 60}m',
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodySmall,
+                                                  ),
+                                              ],
+                                            )
+                                        ],
+                                      ),
                                   ],
                                 ),
                                 // Starting date and due date of the task
                                 const SizedBox(
                                   height: 32,
                                 ),
-                                Row(
+                                Wrap(
+                                  spacing: 16,
+                                  runSpacing: 16,
                                   children: [
                                     Column(
                                       crossAxisAlignment:
@@ -278,7 +290,6 @@ class TaskDetails extends StatelessWidget {
                                         ),
                                       ],
                                     ),
-                                    const Spacer(),
                                     Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -301,14 +312,18 @@ class TaskDetails extends StatelessWidget {
                                                         .highlightColor,
                                                   ),
                                             ),
-                                            const Text(' -'),
-                                            Text(
-                                              Jiffy(task.dueDate).format(
-                                                'dd MMM yyyy hh:mm a',
+                                            const Text(' - '),
+                                            Expanded(
+                                              child: Text(
+                                                Jiffy(task.dueDate).format(
+                                                  'dd MMM yyyy hh:mm a',
+                                                ),
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodySmall,
                                               ),
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodySmall,
                                             ),
                                           ],
                                         ),
@@ -336,8 +351,9 @@ class TaskDetails extends StatelessWidget {
                                 const SizedBox(
                                   height: 16,
                                 ),
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                Wrap(
+                                  runSpacing: 8,
+                                  spacing: 8,
                                   children: [
                                     Expanded(
                                       child: Column(

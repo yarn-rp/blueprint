@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 class PriorityWidget extends StatelessWidget {
   const PriorityWidget({
-    required double priority,
+    required int priority,
   }) : this._(
           priority: priority,
           showText: false,
         );
 
   factory PriorityWidget.label({
-    required double priority,
+    required int priority,
   }) {
     return PriorityWidget._(
       priority: priority,
@@ -18,51 +18,52 @@ class PriorityWidget extends StatelessWidget {
   }
 
   const PriorityWidget._({required this.priority, required this.showText});
-  final double priority;
+  final int priority;
   final bool showText;
 
   @override
   Widget build(BuildContext context) {
-    final priorityLevel = (priority * 5).ceil();
+    final priorityLevel = priority;
 
     late Icon priorityIcon;
     late String priorityText;
 
     switch (priorityLevel) {
-      case 5:
-        priorityText = 'Highest';
+      // handle cases from 1-5, 1 being the highest priority
+      case 1:
         priorityIcon = const Icon(
           Icons.keyboard_double_arrow_up,
-          color: Colors.redAccent,
+          color: Colors.red,
         );
-        break;
-      case 4:
-        priorityText = 'High';
-        priorityIcon = const Icon(
-          Icons.keyboard_arrow_up,
-          color: Colors.orangeAccent,
-        );
-        break;
-      case 3:
-        priorityText = 'Medium';
-        priorityIcon = const Icon(
-          Icons.remove,
-          color: Colors.yellowAccent,
-        );
+        priorityText = 'Highest';
         break;
       case 2:
-        priorityText = 'Low';
+        priorityIcon = const Icon(
+          Icons.keyboard_arrow_up,
+          color: Colors.orange,
+        );
+        priorityText = 'High';
+        break;
+      case 3:
+        priorityIcon = const Icon(
+          Icons.remove,
+          color: Colors.yellow,
+        );
+        priorityText = 'Medium';
+        break;
+      case 4:
         priorityIcon = const Icon(
           Icons.keyboard_arrow_down,
-          color: Colors.greenAccent,
+          color: Colors.green,
         );
+        priorityText = 'Low';
         break;
-      case 1:
-        priorityText = 'Lowest';
+      case 5:
         priorityIcon = const Icon(
           Icons.keyboard_double_arrow_down,
-          color: Colors.tealAccent,
+          color: Colors.blue,
         );
+        priorityText = 'Lowest';
         break;
     }
     final avatar = CircleAvatar(
