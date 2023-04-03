@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:integrations_repository/integrations_repository.dart';
 import 'package:jira_repository/jira_repository.dart';
 import 'package:poll_e_task/app/presentation/pages/intial_page.dart';
-import 'package:poll_e_task/integrations/presentation/integrations_page.dart';
+import 'package:poll_e_task/integrations/presentation/pages/integrations_page.dart';
 import 'package:poll_e_task/integrations/state_management/cubit/integrations_cubit.dart';
 import 'package:poll_e_task/l10n/l10n.dart';
 import 'package:poll_e_task/projects/presentation/pages/projects.dart';
@@ -22,9 +22,9 @@ class RepositoriesProvider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const jiraRepository = JiraRepository();
-    const integrationRepository = IntegrationsRepository(jiraRepository);
-    const projectRepository = ProjectRepository(integrationRepository);
+    final jiraRepository = JiraRepository();
+    final integrationRepository = IntegrationsRepository(jiraRepository);
+    final projectRepository = ProjectRepository(integrationRepository);
 
     return MultiRepositoryProvider(
       providers: [
@@ -81,7 +81,7 @@ class App extends StatelessWidget {
           theme: ThemeData.light(
             useMaterial3: true,
           ),
-          themeMode: ThemeMode.dark,
+          themeMode: ThemeMode.light,
           darkTheme: ThemeData.dark(
             useMaterial3: true,
           ),

@@ -19,4 +19,15 @@ class IntegrationsCubit extends Cubit<IntegrationsState> {
       emit(IntegrationsState.error(state.integrations, e.toString()));
     }
   }
+
+  Future<void> addIntegration(Integration integration) async {
+    emit(IntegrationsState.loading(state.integrations));
+    try {
+      await integrationRepository.addIntegration(integration);
+      final integrations = await integrationRepository.getIntegrations().first;
+      emit(IntegrationsState.loaded(integrations));
+    } catch (e) {
+      emit(IntegrationsState.error(state.integrations, e.toString()));
+    }
+  }
 }

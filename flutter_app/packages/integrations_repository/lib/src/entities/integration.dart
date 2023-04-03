@@ -1,3 +1,4 @@
+import 'package:equatable/equatable.dart';
 import 'package:integrations_repository/src/entities/platform.dart';
 
 /// {@template integration}
@@ -5,9 +6,9 @@ import 'package:integrations_repository/src/entities/platform.dart';
 /// Platform-specific integrations should extend this class with the proper
 /// [platform] and additional properties.
 /// {@endtemplate}
-abstract class Integration {
+abstract class Integration extends Equatable {
   /// {@macro integration}
-  Integration(this.platform);
+  const Integration(this.platform);
 
   /// The platform of the integration.
   final Platform platform;

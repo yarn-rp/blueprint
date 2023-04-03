@@ -85,7 +85,7 @@ export class Task {
   project: Project;
 
   // The url of the ticket in the platform
-  ticketURL: URL;
+  taskURL: URL;
 
   // Title of the ticket
   title: string;

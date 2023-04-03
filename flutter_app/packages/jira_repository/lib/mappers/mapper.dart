@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:atlassian_apis/jira_platform.dart' as Jira;
 import 'package:integrations_repository/integrations_repository.dart';
+import 'package:jira_repository/jira_repository.dart';
 import 'package:project_repository/project_repository.dart';
 
 class Mappers {
@@ -169,6 +170,28 @@ class Mappers {
     }
 
     return description;
+  }
+
+  /// Maps a [JiraIntegration] to a Map<String,dynamic>.
+  static Map<String, dynamic> fromIntegrationToJson(
+    JiraIntegration integration,
+  ) {
+    if (integration is JiraBasicAuthIntegration) {
+      return integration.toJson();
+    }
+
+    throw Exception('Integration not supported');
+  }
+
+  /// Maps a Map<String,dynamic> to a [JiraIntegration].
+  /// The map must contain the key 'type' with the value 'basic_auth'.
+  static JiraIntegration fromJsonToIntegration(Map<String, dynamic> json) {
+    final type = json['type'] as String? ?? '';
+    if (type == 'basic_auth') {
+      return JiraBasicAuthIntegration.fromJson(json);
+    }
+
+    throw Exception('Integration not supported');
   }
 }
 

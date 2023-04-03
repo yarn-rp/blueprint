@@ -1,5 +1,4 @@
 import 'package:integrations_repository/src/entities/entities.dart';
-import 'package:jira_repository/entities/jira_integration.dart';
 import 'package:jira_repository/jira_repository.dart';
 import 'package:project_repository/project_repository.dart';
 
@@ -30,9 +29,18 @@ class IntegrationsRepository {
     throw Exception('Unsupported integration');
   }
 
+  /// Returns all the tasks that are linked to an specific [project].
   Future<List<Task>> getProjectTasks(Project project) {
     if (project.integration is JiraIntegration) {
       return jiraRepository.getProjectTasks(project);
+    }
+    throw Exception('Unsupported integration');
+  }
+
+  /// Adds a new [integration] to the repository.
+  Future<void> addIntegration(Integration integration) {
+    if (integration is JiraIntegration) {
+      return jiraRepository.addJiraIntegration(integration);
     }
     throw Exception('Unsupported integration');
   }

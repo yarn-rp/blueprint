@@ -6,7 +6,6 @@ abstract class Platform {
   const Platform({
     required this.id,
     required this.displayName,
-    this.howToIntegrateGuide,
     required this.iconUrl,
   });
 
@@ -15,9 +14,6 @@ abstract class Platform {
 
   /// The display name of the platform.
   final String displayName;
-
-  /// The explanation of how to integrate the platform to kick off.
-  final HowToIntegrateGuide? howToIntegrateGuide;
 
   /// The URL of the icon for the platform.
 
@@ -31,9 +27,8 @@ class JiraPlatform extends Platform {
   /// {@macro platform}
   const JiraPlatform({
     required super.id,
-    super.howToIntegrateGuide,
   }) : super(
-          displayName: 'Jira',
+          displayName: 'Jira Atlassian',
           iconUrl: 'https://cdn-icons-png.flaticon.com/512/5968/5968875.png',
         );
 }
@@ -45,11 +40,10 @@ class GithubPlatform extends Platform {
   /// {@macro platform}
   const GithubPlatform({
     required super.id,
-    super.howToIntegrateGuide,
   }) : super(
           displayName: 'Github',
           iconUrl:
-              'https://1000logos.net/wp-content/uploads/2021/05/GitHub-logo.png',
+              'https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png',
         );
 }
 
@@ -60,11 +54,10 @@ class TrelloPlatform extends Platform {
   /// {@macro platform}
   const TrelloPlatform({
     required super.id,
-    super.howToIntegrateGuide,
   }) : super(
           displayName: 'Trello',
           iconUrl:
-              'https://1000logos.net/wp-content/uploads/2021/05/Trello-logo.png',
+              'https://cdn2.iconfinder.com/data/icons/social-icons-33/128/Trello-512.png',
         );
 }
 
@@ -75,20 +68,29 @@ class AsanaPlatform extends Platform {
   /// {@macro platform}
   const AsanaPlatform({
     required super.id,
-    super.howToIntegrateGuide,
   }) : super(
           displayName: 'Asana',
           iconUrl:
-              'https://1000logos.net/wp-content/uploads/2021/05/Asana-logo.png',
+              'https://orstx.org/wp-content/uploads/2020/09/asana-icon.jpg',
         );
 }
 
-/// An explanation of how to integrate the platform to kick off (rich-text).
-/// This documentation can include information on how to install or use a
-/// specific platform related aspects of the integration.
-abstract class HowToIntegrateGuide {}
+/// {@template asana_platform}
+/// The Asana platform.
+/// {@endtemplate}
+class OpenAIPlatform extends Platform {
+  /// {@macro platform}
+  const OpenAIPlatform({
+    required super.id,
+  }) : super(
+          displayName: 'OpenAI',
+          iconUrl:
+              'https://ih1.redbubble.net/image.4839005887.4100/st,small,507x507-pad,600x600,f8f8f8.jpg',
+        );
+}
 
 const jira = JiraPlatform(id: 'jira');
+const openAI = OpenAIPlatform(id: 'openai');
 const github = GithubPlatform(id: 'github');
 const trello = TrelloPlatform(id: 'trello');
 const asana = AsanaPlatform(id: 'asana');
