@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:integrations_repository/integrations_repository.dart';
 import 'package:jira_repository/jira_repository.dart';
 import 'package:poll_e_task/integrations/presentation/widgets/add_integration_card.dart';
+import 'package:poll_e_task/integrations/presentation/widgets/create_integration_modals/create_integration_modals.dart';
 import 'package:poll_e_task/integrations/state_management/cubit/integrations_cubit.dart';
 
 class IntegrationsPage extends StatefulWidget {
@@ -15,7 +16,6 @@ class IntegrationsPage extends StatefulWidget {
 class _IntegrationsPageState extends State<IntegrationsPage> {
   @override
   void initState() {
-    context.read<IntegrationsCubit>().getIntegrations();
     super.initState();
   }
 

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:atlassian_apis/jira_platform.dart' as Jira;
 import 'package:integrations_repository/integrations_repository.dart';
 import 'package:jira_repository/jira_repository.dart';
@@ -130,7 +128,7 @@ class Mappers {
     }
     final name = status['name'] as String? ?? '';
     final colorName = status['statusCategory']['colorName'] as String? ?? '';
-    log('colorName: $colorName');
+
     final color = coolColors[colorName] ?? '#FFC107';
 
     return Status(name, color);
@@ -159,7 +157,7 @@ class Mappers {
       description = '';
     } else {
       final descriptionContent = descriptionField['content'] as List;
-      log('Description content not null: $descriptionContent');
+
       description = descriptionContent.map((e) {
         final content = e['content'] as List?;
         if (content == null) {

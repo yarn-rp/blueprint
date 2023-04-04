@@ -44,25 +44,6 @@ class CreateAsanaBasicAuthIntegrationCard
   }
 }
 
-class CreateJiraBasicAuthIntegrationCard
-    extends CreateIntegrationCard<JiraBasicAuthIntegration> {
-  const CreateJiraBasicAuthIntegrationCard({
-    required super.onIntegrationCreated,
-    super.key,
-  }) : super(
-          platform: jira,
-          integrationName: 'Jira (Basic Auth)',
-          description: 'Connect to Jira using your username and password',
-        );
-
-  @override
-  Future<JiraBasicAuthIntegration?> showCreateIntegrationModal(
-    BuildContext context,
-  ) async {
-    return null;
-  }
-}
-
 class CreateOpenAIIntegrationCard
     extends CreateIntegrationCard<JiraBasicAuthIntegration> {
   const CreateOpenAIIntegrationCard({

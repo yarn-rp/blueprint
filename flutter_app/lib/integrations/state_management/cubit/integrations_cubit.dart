@@ -7,18 +7,12 @@ part 'integrations_state.dart';
 
 class IntegrationsCubit extends Cubit<IntegrationsState> {
   IntegrationsCubit(this.integrationRepository)
-      : super(const IntegrationsState.initial([]));
-  final IntegrationsRepository integrationRepository;
-
-  Future<void> getIntegrations() async {
-    emit(IntegrationsState.loading(state.integrations));
-    try {
-      final integrations = await integrationRepository.getIntegrations().first;
+      : super(const IntegrationsState.initial([])) {
+    integrationRepository.getIntegrations().listen((integrations) {
       emit(IntegrationsState.loaded(integrations));
-    } catch (e) {
-      emit(IntegrationsState.error(state.integrations, e.toString()));
-    }
+    });
   }
+  final IntegrationsRepository integrationRepository;
 
   Future<void> addIntegration(Integration integration) async {
     emit(IntegrationsState.loading(state.integrations));

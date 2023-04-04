@@ -24,12 +24,14 @@ class JiraIntegrationsStorage {
 
   /// Stores the given [integrations] in the secure storage.
   Future<void> storeIntegrations(List<JiraIntegration> integrations) async {
-    final itemsStorables =
-        integrations.map(Mappers.fromIntegrationToJson).toList();
+    final itemsStorables = integrations.map((integration) {
+      final map = Mappers.fromIntegrationToJson(integration);
+      return json.encode(map);
+    }).toList();
 
     await _storage.write(
       key: 'jira_integrations',
-      value: itemsStorables.toString(),
+      value: json.encode(itemsStorables),
     );
 
     refresh();
@@ -50,15 +52,17 @@ class JiraIntegrationsStorage {
 
   /// Returns the stored integrations.
   Future<List<JiraIntegration>> _getAllIntegrations() async {
+    // await _storage.deleteAll();
     final jsonString = await _storage.read(key: 'jira_integrations');
     if (jsonString == null) {
       return [];
     }
     final integrationsDecoded = json.decode(jsonString);
 
-    final integrations = (integrationsDecoded as List)
-        .map((e) => Mappers.fromJsonToIntegration(e as Map<String, dynamic>))
-        .toList();
+    final integrations = (integrationsDecoded as List).map((e) {
+      final json = jsonDecode(e as String);
+      return Mappers.fromJsonToIntegration(json as Map<String, dynamic>);
+    }).toList();
 
     return integrations;
   }

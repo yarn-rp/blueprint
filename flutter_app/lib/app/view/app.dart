@@ -81,7 +81,7 @@ class App extends StatelessWidget {
           theme: ThemeData.light(
             useMaterial3: true,
           ),
-          themeMode: ThemeMode.light,
+          themeMode: ThemeMode.dark,
           darkTheme: ThemeData.dark(
             useMaterial3: true,
           ),
