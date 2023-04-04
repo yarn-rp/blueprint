@@ -4,15 +4,23 @@ version: 0.1.0+1
 publish_to: none
 
 environment:
-  sdk: ">=2.18.0 <3.0.0"
+  sdk: '>=2.18.0 <3.0.0'
   flutter: 3.3.0
 
 dependencies:
   flutter:
     sdk: flutter
+  flutter_secure_storage: ^8.0.0
+  integrations_repository:
+    path: ../integrations_repository
+  json_annotation: ^4.8.0
+  project_repository:
+    path: ../project_repository
 
 dev_dependencies:
+  build_runner: ^2.3.3
   flutter_test:
     sdk: flutter
+  json_serializable: ^6.6.0
   mocktail: ^0.3.0
   very_good_analysis: ^3.1.0
