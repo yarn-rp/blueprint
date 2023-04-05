@@ -7,13 +7,15 @@ part of 'github_token_auth_integration.dart';
 // **************************************************************************
 
 GithubTokenAuthIntegration _$GithubTokenAuthIntegrationFromJson(
-        Map<String, dynamic> json) =>
+  Map<String, dynamic> json,
+) =>
     GithubTokenAuthIntegration(
       token: json['token'] as String,
     );
 
 Map<String, dynamic> _$GithubTokenAuthIntegrationToJson(
-        GithubTokenAuthIntegration instance) =>
+  GithubTokenAuthIntegration instance,
+) =>
     <String, dynamic>{
       'token': instance.token,
     };

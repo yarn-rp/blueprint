@@ -11,6 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_secure_storage: ^8.0.0
+  github: ^9.11.0
   integrations_repository:
     path: ../integrations_repository
   json_annotation: ^4.8.0
