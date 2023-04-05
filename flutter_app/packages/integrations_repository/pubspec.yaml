@@ -11,6 +11,7 @@ dependencies:
   equatable: ^2.0.0
   flutter:
     sdk: flutter
+  flutter_secure_storage: ^8.0.0
   jira_repository:
     path: ../jira_repository
   project_repository:
