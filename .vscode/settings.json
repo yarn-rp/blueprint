@@ -2,5 +2,6 @@
     "cSpell.words": [
         "Asana",
         "endtemplate"
-    ]
+    ],
+    "formatOnSave": true,
 }
