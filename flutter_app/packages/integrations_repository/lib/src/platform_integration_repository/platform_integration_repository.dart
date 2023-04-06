@@ -28,10 +28,12 @@ abstract class PlatformIntegrationRepository<PlatformType extends Platform,
     IntegrationType extends Integration> {
   /// Creates a new [PlatformIntegrationRepository] instance.
   PlatformIntegrationRepository({
+    required this.platform,
     required PlatformIntegrationStorage<PlatformType, IntegrationType> storage,
   }) : _storage = storage;
 
   final PlatformIntegrationStorage<PlatformType, IntegrationType> _storage;
+  final PlatformType platform;
 
   /// Returns all the tasks that are linked to an specific [project] and are
   /// related to the current user. There are multiple reasons why a task can be
