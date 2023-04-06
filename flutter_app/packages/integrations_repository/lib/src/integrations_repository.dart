@@ -1,10 +1,8 @@
 import 'dart:collection/collection.dart';
 
 import 'package:async/async.dart' show StreamGroup;
-import 'package:integrations_repository/src/entities/entities.dart';
 import 'package:integrations_repository/src/exceptions/exceptions.dart';
-import 'package:integrations_repository/src/platform_integration_repository/platform_integration_repository.dart';
-import 'package:project_repository/project_repository.dart';
+import 'package:platform_integration_repository/platform_integration_repository.dart';
 
 /// {@template integrations_repository}
 /// A Very Good Project created by Very Good CLI.

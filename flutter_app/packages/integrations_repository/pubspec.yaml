@@ -8,16 +8,13 @@ environment:
   flutter: 3.3.0
 
 dependencies:
-  async: ^2.11.0
-  collection: ^1.17.1
+  async: ^2.10.0
+  collection: ^1.17.0
   equatable: ^2.0.0
   flutter:
     sdk: flutter
-  flutter_secure_storage: ^8.0.0
-  jira_repository:
-    path: ../jira_repository
-  project_repository:
-    path: ../project_repository
+  platform_integration_repository:
+    path: ../platform_integration_repository
 
 dev_dependencies:
   flutter_test:

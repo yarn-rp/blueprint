@@ -1,5 +1,4 @@
-
-import 'package:integrations_repository/src/entities/entities.dart';
+import 'package:platform_integration_repository/src/entities/entities.dart';
 
 /// {@template platform_integration_mapper}
 /// Class in charge of mapping the [Integration] class to a json and viceversa.

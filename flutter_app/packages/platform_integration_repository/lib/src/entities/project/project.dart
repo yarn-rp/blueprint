@@ -1,4 +1,4 @@
-import 'package:integrations_repository/src/entities/entities.dart';
+import 'package:platform_integration_repository/src/entities/entities.dart';
 
 /// {@template project}
 /// A project that can be defined in a platform.

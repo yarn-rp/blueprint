@@ -1,4 +1,6 @@
-import 'package:project_repository/src/entities/entities.dart';
+import 'package:platform_integration_repository/src/entities/project/project.dart';
+import 'package:platform_integration_repository/src/entities/task/status.dart';
+import 'package:platform_integration_repository/src/entities/user/user.dart';
 
 /// {@template ticket}
 /// A ticket is a task that is assigned to a user

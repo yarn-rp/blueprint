@@ -1,11 +1,9 @@
-
 import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
-import 'package:integrations_repository/src/entities/entities.dart';
-import 'package:integrations_repository/src/platform_integration_repository/mapper/platform_integration_mapper.dart';
+import 'package:platform_integration_repository/src/entities/entities.dart';
+import 'package:platform_integration_repository/src/mapper/platform_integration_mapper.dart';
 
 /// {@template platform_integration_storage}
 /// Base class to implement new integrations storage for a given [PlatformType].

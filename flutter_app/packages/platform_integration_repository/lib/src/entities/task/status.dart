@@ -1,5 +1,6 @@
 /// Represents the status of the ticket.
 class Status {
+  /// Create a new instance of [Status]
   Status(
     this.status,
     this.hexColor,

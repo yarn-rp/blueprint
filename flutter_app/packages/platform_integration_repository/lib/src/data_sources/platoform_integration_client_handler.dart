@@ -1,7 +1,6 @@
-
 import 'dart:collection';
 
-import 'package:integrations_repository/src/entities/entities.dart';
+import 'package:platform_integration_repository/src/entities/entities.dart';
 
 /// {@template integration_clients}
 /// Base class to implement new integration clients for a given [PlatformType].

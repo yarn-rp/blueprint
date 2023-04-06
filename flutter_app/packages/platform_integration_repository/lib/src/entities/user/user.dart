@@ -5,6 +5,7 @@
 /// different.
 /// {@endtemplate}
 class User {
+  /// {@macro project_user}
   const User(
     this.platformUrl,
     this.displayName,

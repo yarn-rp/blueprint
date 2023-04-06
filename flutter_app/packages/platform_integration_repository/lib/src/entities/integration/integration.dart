@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:integrations_repository/src/entities/platform.dart';
+import 'package:platform_integration_repository/src/entities/platform/platform.dart';
 
 /// {@template integration}
 /// Base class for integration with a third-party service.

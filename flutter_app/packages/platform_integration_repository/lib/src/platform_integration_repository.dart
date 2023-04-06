@@ -1,7 +1,6 @@
 import 'dart:async';
-import 'package:integrations_repository/src/entities/entities.dart';
-import 'package:integrations_repository/src/platform_integration_repository/data_sources/platform_integration_storage.dart';
-import 'package:project_repository/project_repository.dart';
+import 'package:platform_integration_repository/src/data_sources/platform_integration_storage.dart';
+import 'package:platform_integration_repository/src/entities/entities.dart';
 
 /// {@template platform_integration_repository}
 /// Base class to implement new integrations for a given [PlatformType].
@@ -33,6 +32,8 @@ abstract class PlatformIntegrationRepository<PlatformType extends Platform,
   }) : _storage = storage;
 
   final PlatformIntegrationStorage<PlatformType, IntegrationType> _storage;
+
+  /// The platform that reporesents the repository
   final PlatformType platform;
 
   /// Returns all the tasks that are linked to an specific [project] and are
