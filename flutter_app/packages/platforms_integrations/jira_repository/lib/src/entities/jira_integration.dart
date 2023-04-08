@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:integrations_repository/integrations_repository.dart';
+
+import 'package:platform_integration_repository/platform_integration_repository.dart';
 
 /// An integration with Jira (https://www.atlassian.com/software/jira).
 /// software.

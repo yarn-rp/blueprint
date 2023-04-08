@@ -1,9 +1,8 @@
 import 'package:atlassian_apis/jira_platform.dart' as Jira;
-import 'package:integrations_repository/integrations_repository.dart';
 import 'package:jira_repository/jira_repository.dart';
-import 'package:project_repository/project_repository.dart';
+import 'package:platform_integration_repository/platform_integration_repository.dart';
 
-class Mappers {
+class Mappers extends PlatformIntegrationMapper<JiraIntegration> {
   /// Maps a [Jira.Project] to a [Project].
   static Project fromJiraApiProjectToProject(
     Jira.Project jiraProject,
@@ -190,6 +189,18 @@ class Mappers {
     }
 
     throw Exception('Integration not supported');
+  }
+
+  @override
+  Integration fromJson(Map<String, dynamic> json) {
+    // TODO: implement fromJson
+    throw UnimplementedError();
+  }
+
+  @override
+  Map<String, dynamic> toJson(Integration integration) {
+    // TODO: implement toJson
+    throw UnimplementedError();
   }
 }
 

@@ -1,11 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:integrations_repository/integrations_repository.dart';
 import 'package:jira_repository/mappers/mapper.dart';
 import 'package:jira_repository/src/data_sources/local_datasources/jira_integrations_storage.dart';
 import 'package:jira_repository/src/data_sources/remote_datasources/jira_platform_apis.dart';
 import 'package:jira_repository/src/entities/entities.dart';
-import 'package:project_repository/project_repository.dart';
+import 'package:platform_integration_repository/platform_integration_repository.dart';
 
 final _defaultStorage = JiraIntegrationsStorage(const FlutterSecureStorage());
 final _defaultApis = JiraPlatformApis();

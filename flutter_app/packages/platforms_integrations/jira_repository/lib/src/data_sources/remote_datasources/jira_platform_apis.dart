@@ -1,8 +1,8 @@
 import 'dart:collection';
 
 import 'package:atlassian_apis/jira_platform.dart' as Jira;
-import 'package:integrations_repository/integrations_repository.dart';
 import 'package:jira_repository/jira_repository.dart';
+import 'package:platform_integration_repository/platform_integration_repository.dart';
 
 /// {@template jira_integration_clients}
 /// A class that holds jira clients for each jira integration.
