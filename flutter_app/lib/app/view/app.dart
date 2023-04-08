@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:integrations_repository/integrations_repository.dart';
 import 'package:jira_repository/jira_repository.dart';
 import 'package:poll_e_task/app/presentation/pages/intial_page.dart';
@@ -10,7 +11,6 @@ import 'package:poll_e_task/projects/presentation/pages/projects.dart';
 import 'package:poll_e_task/projects/state_management/projects_cubit/projects_cubit.dart';
 import 'package:poll_e_task/tasks/presentation/pages/tickets_page.dart';
 import 'package:poll_e_task/tasks/state_management/cubit/tasks_cubit.dart';
-import 'package:project_repository/project_repository.dart';
 
 /// Injects all the repositories into the widget tree.
 class RepositoriesProvider extends StatelessWidget {
@@ -22,17 +22,19 @@ class RepositoriesProvider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final jiraRepository = JiraRepository();
-    final integrationRepository = IntegrationsRepository(jiraRepository);
-    final projectRepository = ProjectRepository(integrationRepository);
+    final jiraRepository =
+        JiraRepository(secureStorage: const FlutterSecureStorage());
+
+    final integrationRepository = IntegrationsRepository(
+      repositories: [
+        jiraRepository,
+      ],
+    );
 
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider.value(
           value: integrationRepository,
-        ),
-        RepositoryProvider.value(
-          value: projectRepository,
         ),
       ],
       child: child,
@@ -51,12 +53,12 @@ class BlocsProvider extends StatelessWidget {
       providers: [
         BlocProvider.value(
           value: ProjectsCubit(
-            context.read<ProjectRepository>(),
+            context.read<IntegrationsRepository>(),
           ),
         ),
         BlocProvider.value(
           value: TasksCubit(
-            context.read<ProjectRepository>(),
+            context.read<IntegrationsRepository>(),
           ),
         ),
         BlocProvider.value(

@@ -1,44 +1,49 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:jira_repository/mappers/mapper.dart';
+import 'package:jira_repository/jira_repository.dart';
 import 'package:jira_repository/src/data_sources/local_datasources/jira_integrations_storage.dart';
 import 'package:jira_repository/src/data_sources/remote_datasources/jira_platform_apis.dart';
-import 'package:jira_repository/src/entities/entities.dart';
+import 'package:jira_repository/src/entities/jira_platform.dart';
+import 'package:jira_repository/src/mappers/mapper.dart';
 import 'package:platform_integration_repository/platform_integration_repository.dart';
-
-final _defaultStorage = JiraIntegrationsStorage(const FlutterSecureStorage());
-final _defaultApis = JiraPlatformApis();
 
 /// {@template jira_repository}
 /// Repository in charge of managing Jira integrations.
 /// {@endtemplate}
-class JiraRepository {
+class JiraRepository
+    extends PlatformIntegrationRepository<JiraPlatform, JiraIntegration> {
   /// {@macro jira_repository}
   JiraRepository({
-    JiraIntegrationsStorage? storage,
+    required FlutterSecureStorage secureStorage,
+    String? storageKey,
+    JiraPlatform? platform,
     JiraPlatformApis? apis,
-  }) {
-    _storage = storage ?? _defaultStorage;
-    _apis = apis ?? _defaultApis;
+    JiraIntegrationMapper mapper = const JiraIntegrationMapper(),
+  })  : _apis = apis ?? JiraPlatformApis(),
+        _integrationMapper = mapper,
+        super(
+          platform: platform ?? jiraPlatform,
+          storage: JiraIntegrationsStorage(
+            storageKey: storageKey ?? 'jira_integrations',
+            storage: secureStorage,
+            mapper: mapper,
+          ),
+        );
+  final JiraIntegrationMapper _integrationMapper;
+  final JiraPlatformApis _apis;
+
+  @override
+  Future<List<Task>> getProjectTasksRelatedToMe(Project project) {
+    if (project.integration is JiraBasicAuthIntegration) {
+      return getProjectTasksFromJiraBasicAuthIntegration(project);
+    }
+    throw Exception('Unsupported Jira integration');
   }
 
-  late final JiraIntegrationsStorage _storage;
-
-  /// Clients used to interact with the Jira API.
-  late final JiraPlatformApis _apis;
-
-  /// Returns a stream of all projects, reacting to project changes.
-  Stream<List<Integration>> getJiraIntegrations() =>
-      _storage.integrationsStream;
-
-  /// Adds a new [integration] to the repository.
-  Future<void> addJiraIntegration(JiraIntegration integration) async =>
-      _storage.storeIntegrations([integration]);
-
-  /// Returns all the projects that are linked to a Jira integration.
-  Future<List<Project>> getProjectsIntegration(
+  @override
+  Future<List<Project>> getProjectsFromIntegration(
     JiraIntegration integration,
-  ) async {
+  ) {
     if (integration is JiraBasicAuthIntegration) {
       return getProjectsFromJiraBasicAuthIntegration(integration);
     }
@@ -60,21 +65,17 @@ class JiraRepository {
     final pageBeanProject = await jira.projects.searchProjects();
 
     final projects = pageBeanProject.values.map((jiraProject) {
-      return Mappers.fromJiraApiProjectToProject(jiraProject, integration);
+      return _integrationMapper.fromJiraApiProjectToProject(
+        jiraProject,
+        integration,
+      );
     }).toList();
 
     return projects;
   }
 
-  /// Returns all the tasks that are linked to a jira project.
-  Future<List<Task>> getProjectTasks(Project project) {
-    if (project.integration is JiraBasicAuthIntegration) {
-      return getProjectTasksFromJiraBasicAuthIntegration(project);
-    }
-    throw Exception('Unsupported Jira integration');
-  }
-
   /// Returns all the tasks that are linked to a jira project with Basic Auth
+  @visibleForTesting
   Future<List<Task>> getProjectTasksFromJiraBasicAuthIntegration(
     Project project,
   ) async {
@@ -92,7 +93,7 @@ class JiraRepository {
     );
 
     final tasks = results.issues.map((issue) {
-      return Mappers.fromJiraApiIssueToTask(issue, project);
+      return _integrationMapper.fromJiraApiIssueToTask(issue, project);
     }).toList();
 
     return tasks;

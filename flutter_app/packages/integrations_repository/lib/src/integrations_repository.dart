@@ -24,8 +24,13 @@ class IntegrationsRepository {
 
   /// Returns a stream of all integrations from all sources. This stream reacts
   /// to changes in the integrations, like additions or removals.
-  Stream<Iterable<Integration>> getIntegrations() => StreamGroup.merge(
+  Stream<Iterable<Integration>> getAllIntegrations() => StreamGroup.merge(
         _platformMap.values.map(_getRepositoryIntegrations),
+      );
+
+  /// Returns a stream of all integrations from all repositories.
+  Stream<Iterable<Platform>> getAllPlatforms() => getAllIntegrations().map(
+        (integrations) => integrations.map((e) => e.platform),
       );
 
   /// Returns a stream of all thhe projects that are linked to the app

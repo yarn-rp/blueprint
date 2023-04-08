@@ -2,17 +2,17 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:project_repository/project_repository.dart';
+import 'package:integrations_repository/integrations_repository.dart';
 
 part 'tasks_cubit.freezed.dart';
 part 'tasks_state.dart';
 
 class TasksCubit extends Cubit<TasksState> {
-  TasksCubit(this._projectRepository) : super(const TasksInitial([]));
+  TasksCubit(this._projectRepository) : super(const TasksState.initial([]));
 
   /// The subscription to the stream of Tasks. This is used to cancel the
   /// subscription when the bloc is closed.
-  StreamSubscription<List<Task>>? _tasksSubscription;
+  StreamSubscription<Iterable<Task>>? _tasksSubscription;
 
   Future<void> loadTasks() async {
     if (_tasksSubscription != null) {
@@ -23,7 +23,7 @@ class TasksCubit extends Cubit<TasksState> {
 
     emit(const TasksLoading([]));
     try {
-      final tasksStream = _projectRepository.getAllMyTasks();
+      final tasksStream = _projectRepository.getAllTasksRelatedToMe();
 
       _tasksSubscription = tasksStream.listen(
         (tasks) {
@@ -44,5 +44,5 @@ class TasksCubit extends Cubit<TasksState> {
     return super.close();
   }
 
-  final ProjectRepository _projectRepository;
+  final IntegrationsRepository _projectRepository;
 }

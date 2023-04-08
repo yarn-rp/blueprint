@@ -50,7 +50,7 @@ class _ProjectsPageState extends State<_ProjectsPage> {
                     ),
                   );
                 }
-                final project = projects[index];
+                final project = projects.elementAt(index);
 
                 return ProjectCard(
                   project: project,

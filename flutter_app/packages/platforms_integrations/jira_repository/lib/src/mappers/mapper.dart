@@ -1,12 +1,16 @@
-import 'package:atlassian_apis/jira_platform.dart' as Github;
-import 'package:github_repository/src/entities/entities.dart';
-import 'package:integrations_repository/integrations_repository.dart';
-import 'package:project_repository/project_repository.dart';
+import 'package:atlassian_apis/jira_platform.dart' as Jira;
+import 'package:jira_repository/jira_repository.dart';
+import 'package:platform_integration_repository/platform_integration_repository.dart';
 
-class Mappers {
-  /// Maps a [Github.Project] to a [Project].
-  static Project fromGithubApiProjectToProject(
-    Github.Project jiraProject,
+/// {@template jira_integration_mapper}
+/// Mapper in charge of mapping Jira entities to platform integration entities.
+/// {@endtemplate}
+class JiraIntegrationMapper extends PlatformIntegrationMapper<JiraIntegration> {
+  const JiraIntegrationMapper();
+
+  /// Maps a [Jira.Project] to a [Project].
+  Project fromJiraApiProjectToProject(
+    Jira.Project jiraProject,
     Integration integration,
   ) {
     final projectId = jiraProject.id;
@@ -45,9 +49,9 @@ class Mappers {
     );
   }
 
-  /// Maps a [Github.IssueBean] to a [Task].
-  static Task fromGithubApiIssueToTask(
-    Github.IssueBean jiraIssue,
+  /// Maps a [Jira.IssueBean] to a [Task].
+  Task fromJiraApiIssueToTask(
+    Jira.IssueBean jiraIssue,
     Project project,
   ) {
     if (jiraIssue.fields == null) {
@@ -60,7 +64,7 @@ class Mappers {
     final updatedAt = fields['updated'] as String;
     final taskURL = fields['self'] as String? ?? '';
     final title = fields['summary'] as String? ?? '';
-    final description = fromGithubApiDescriptionToString(
+    final description = fromJiraApiDescriptionToString(
       fields['description'] as Map<String, dynamic>?,
     );
     final startDate = fields['startDate'] as String?;
@@ -71,18 +75,17 @@ class Mappers {
     final creator = fields['creator'];
     final isCompleted = fields['status']['statusCategory']['key'] == 'done';
     final status =
-        fromGithubApiStatusToStatus(fields['status'] as Map<String, dynamic>?);
-    final priority = fromGithubApiPriorityToPriority(
+        fromJiraApiStatusToStatus(fields['status'] as Map<String, dynamic>?);
+    final priority = fromJiraApiPriorityToPriority(
       fields['priority'] as Map<String, dynamic>?,
     );
 
-    final userCreator =
-        fromGithubApiUserToUser(creator as Map<String, dynamic>?);
+    final userCreator = fromJiraApiUserToUser(creator as Map<String, dynamic>?);
     if (userCreator == null) {
       throw Exception('User creator is null');
     }
     final userAssigned =
-        fromGithubApiUserToUser(assigned as Map<String, dynamic>?);
+        fromJiraApiUserToUser(assigned as Map<String, dynamic>?);
 
     return Task(
       id: issueId!,
@@ -107,7 +110,7 @@ class Mappers {
   }
 
   /// Maps a Map<String,dynamic> with the data of the jira api to a [User].
-  static User? fromGithubApiUserToUser(Map<String, dynamic>? user) {
+  User? fromJiraApiUserToUser(Map<String, dynamic>? user) {
     if (user == null) {
       return null;
     }
@@ -123,7 +126,7 @@ class Mappers {
   }
 
   /// Maps a Map<String,dynamic> with the data of the jira api to a [Status].
-  static Status fromGithubApiStatusToStatus(Map<String, dynamic>? status) {
+  Status fromJiraApiStatusToStatus(Map<String, dynamic>? status) {
     if (status == null) {
       return Status('No Status', '#FFC107');
     }
@@ -135,7 +138,7 @@ class Mappers {
     return Status(name, color);
   }
 
-  static int fromGithubApiPriorityToPriority(Map<String, dynamic>? priority) {
+  int fromJiraApiPriorityToPriority(Map<String, dynamic>? priority) {
     if (priority == null) {
       return 0;
     }
@@ -149,8 +152,8 @@ class Mappers {
     return priorityInt;
   }
 
-  /// Maps a [Github.IssueBean] description to a [String].
-  static String fromGithubApiDescriptionToString(
+  /// Maps a [Jira.IssueBean] description to a [String].
+  String fromJiraApiDescriptionToString(
     Map<String, dynamic>? descriptionField,
   ) {
     late final String description;
@@ -171,26 +174,38 @@ class Mappers {
     return description;
   }
 
-  /// Maps a [GithubIntegration] to a Map<String,dynamic>.
-  static Map<String, dynamic> fromIntegrationToJson(
-    GithubIntegration integration,
+  /// Maps a [JiraIntegration] to a Map<String,dynamic>.
+  Map<String, dynamic> fromIntegrationToJson(
+    JiraIntegration integration,
   ) {
-    if (integration is GithubBasicAuthIntegration) {
+    if (integration is JiraBasicAuthIntegration) {
       return integration.toJson();
     }
 
     throw Exception('Integration not supported');
   }
 
-  /// Maps a Map<String,dynamic> to a [GithubIntegration].
+  /// Maps a Map<String,dynamic> to a [JiraIntegration].
   /// The map must contain the key 'type' with the value 'basic_auth'.
-  static GithubIntegration fromJsonToIntegration(Map<String, dynamic> json) {
+  JiraIntegration fromJsonToIntegration(Map<String, dynamic> json) {
     final type = json['type'] as String? ?? '';
     if (type == 'basic_auth') {
-      return GithubBasicAuthIntegration.fromJson(json);
+      return JiraBasicAuthIntegration.fromJson(json);
     }
 
     throw Exception('Integration not supported');
+  }
+
+  @override
+  JiraIntegration fromJson(Map<String, dynamic> json) {
+    // TODO: implement fromJson
+    throw UnimplementedError();
+  }
+
+  @override
+  Map<String, dynamic> toJson(Integration integration) {
+    // TODO: implement toJson
+    throw UnimplementedError();
   }
 }
 

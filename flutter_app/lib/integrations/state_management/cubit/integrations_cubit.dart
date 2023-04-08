@@ -8,9 +8,11 @@ part 'integrations_state.dart';
 class IntegrationsCubit extends Cubit<IntegrationsState> {
   IntegrationsCubit(this.integrationRepository)
       : super(const IntegrationsState.initial([])) {
-    integrationRepository.getIntegrations().listen((integrations) {
-      emit(IntegrationsState.loaded(integrations));
-    });
+    integrationRepository.getAllIntegrations().listen(
+          (integrations) => emit(
+            IntegrationsState.loaded(integrations),
+          ),
+        );
   }
   final IntegrationsRepository integrationRepository;
 
@@ -18,8 +20,6 @@ class IntegrationsCubit extends Cubit<IntegrationsState> {
     emit(IntegrationsState.loading(state.integrations));
     try {
       await integrationRepository.addIntegration(integration);
-      final integrations = await integrationRepository.getIntegrations().first;
-      emit(IntegrationsState.loaded(integrations));
     } catch (e) {
       emit(IntegrationsState.error(state.integrations, e.toString()));
     }

@@ -324,7 +324,7 @@ packages:
     source: hosted
     version: "0.6.14"
   flutter_secure_storage:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: flutter_secure_storage
       sha256: "98352186ee7ad3639ccc77ad7924b773ff6883076ab952437d20f18a61f0a7c5"
@@ -479,7 +479,7 @@ packages:
   jira_repository:
     dependency: "direct main"
     description:
-      path: "packages/jira_repository"
+      path: "packages/platforms_integrations/jira_repository"
       relative: true
     source: path
     version: "0.1.0+1"
@@ -667,6 +667,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.0"
+  platform_integration_repository:
+    dependency: transitive
+    description:
+      path: "packages/platform_integration_repository"
+      relative: true
+    source: path
+    version: "0.1.0+1"
   plugin_platform_interface:
     dependency: transitive
     description:
@@ -691,13 +698,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.2.4"
-  project_repository:
-    dependency: "direct main"
-    description:
-      path: "packages/project_repository"
-      relative: true
-    source: path
-    version: "0.1.0+1"
   provider:
     dependency: transitive
     description:

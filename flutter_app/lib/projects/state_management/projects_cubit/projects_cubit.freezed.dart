@@ -16,35 +16,36 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$ProjectsState {
-  List<Project> get projects => throw _privateConstructorUsedError;
+  Iterable<Project> get projects => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Project> projects) initial,
-    required TResult Function(List<Project> projects) loading,
-    required TResult Function(List<Project> projects, Project projectModifying)
+    required TResult Function(Iterable<Project> projects) initial,
+    required TResult Function(Iterable<Project> projects) loading,
+    required TResult Function(
+            Iterable<Project> projects, Project projectModifying)
         modifyingProject,
-    required TResult Function(List<Project> projects) loaded,
-    required TResult Function(List<Project> projects, String message) error,
+    required TResult Function(Iterable<Project> projects) loaded,
+    required TResult Function(Iterable<Project> projects, String message) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Project> projects)? initial,
-    TResult? Function(List<Project> projects)? loading,
-    TResult? Function(List<Project> projects, Project projectModifying)?
+    TResult? Function(Iterable<Project> projects)? initial,
+    TResult? Function(Iterable<Project> projects)? loading,
+    TResult? Function(Iterable<Project> projects, Project projectModifying)?
         modifyingProject,
-    TResult? Function(List<Project> projects)? loaded,
-    TResult? Function(List<Project> projects, String message)? error,
+    TResult? Function(Iterable<Project> projects)? loaded,
+    TResult? Function(Iterable<Project> projects, String message)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Project> projects)? initial,
-    TResult Function(List<Project> projects)? loading,
-    TResult Function(List<Project> projects, Project projectModifying)?
+    TResult Function(Iterable<Project> projects)? initial,
+    TResult Function(Iterable<Project> projects)? loading,
+    TResult Function(Iterable<Project> projects, Project projectModifying)?
         modifyingProject,
-    TResult Function(List<Project> projects)? loaded,
-    TResult Function(List<Project> projects, String message)? error,
+    TResult Function(Iterable<Project> projects)? loaded,
+    TResult Function(Iterable<Project> projects, String message)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -88,7 +89,7 @@ abstract class $ProjectsStateCopyWith<$Res> {
           ProjectsState value, $Res Function(ProjectsState) then) =
       _$ProjectsStateCopyWithImpl<$Res, ProjectsState>;
   @useResult
-  $Res call({List<Project> projects});
+  $Res call({Iterable<Project> projects});
 }
 
 /// @nodoc
@@ -110,7 +111,7 @@ class _$ProjectsStateCopyWithImpl<$Res, $Val extends ProjectsState>
       projects: null == projects
           ? _value.projects
           : projects // ignore: cast_nullable_to_non_nullable
-              as List<Project>,
+              as Iterable<Project>,
     ) as $Val);
   }
 }
@@ -123,7 +124,7 @@ abstract class _$$ProjectsInitialCopyWith<$Res>
       __$$ProjectsInitialCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<Project> projects});
+  $Res call({Iterable<Project> projects});
 }
 
 /// @nodoc
@@ -141,9 +142,9 @@ class __$$ProjectsInitialCopyWithImpl<$Res>
   }) {
     return _then(_$ProjectsInitial(
       null == projects
-          ? _value._projects
+          ? _value.projects
           : projects // ignore: cast_nullable_to_non_nullable
-              as List<Project>,
+              as Iterable<Project>,
     ));
   }
 }
@@ -151,15 +152,10 @@ class __$$ProjectsInitialCopyWithImpl<$Res>
 /// @nodoc
 
 class _$ProjectsInitial implements ProjectsInitial {
-  const _$ProjectsInitial(final List<Project> projects) : _projects = projects;
+  const _$ProjectsInitial(this.projects);
 
-  final List<Project> _projects;
   @override
-  List<Project> get projects {
-    if (_projects is EqualUnmodifiableListView) return _projects;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_projects);
-  }
+  final Iterable<Project> projects;
 
   @override
   String toString() {
@@ -171,12 +167,12 @@ class _$ProjectsInitial implements ProjectsInitial {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ProjectsInitial &&
-            const DeepCollectionEquality().equals(other._projects, _projects));
+            const DeepCollectionEquality().equals(other.projects, projects));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_projects));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(projects));
 
   @JsonKey(ignore: true)
   @override
@@ -187,12 +183,13 @@ class _$ProjectsInitial implements ProjectsInitial {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Project> projects) initial,
-    required TResult Function(List<Project> projects) loading,
-    required TResult Function(List<Project> projects, Project projectModifying)
+    required TResult Function(Iterable<Project> projects) initial,
+    required TResult Function(Iterable<Project> projects) loading,
+    required TResult Function(
+            Iterable<Project> projects, Project projectModifying)
         modifyingProject,
-    required TResult Function(List<Project> projects) loaded,
-    required TResult Function(List<Project> projects, String message) error,
+    required TResult Function(Iterable<Project> projects) loaded,
+    required TResult Function(Iterable<Project> projects, String message) error,
   }) {
     return initial(projects);
   }
@@ -200,12 +197,12 @@ class _$ProjectsInitial implements ProjectsInitial {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Project> projects)? initial,
-    TResult? Function(List<Project> projects)? loading,
-    TResult? Function(List<Project> projects, Project projectModifying)?
+    TResult? Function(Iterable<Project> projects)? initial,
+    TResult? Function(Iterable<Project> projects)? loading,
+    TResult? Function(Iterable<Project> projects, Project projectModifying)?
         modifyingProject,
-    TResult? Function(List<Project> projects)? loaded,
-    TResult? Function(List<Project> projects, String message)? error,
+    TResult? Function(Iterable<Project> projects)? loaded,
+    TResult? Function(Iterable<Project> projects, String message)? error,
   }) {
     return initial?.call(projects);
   }
@@ -213,12 +210,12 @@ class _$ProjectsInitial implements ProjectsInitial {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Project> projects)? initial,
-    TResult Function(List<Project> projects)? loading,
-    TResult Function(List<Project> projects, Project projectModifying)?
+    TResult Function(Iterable<Project> projects)? initial,
+    TResult Function(Iterable<Project> projects)? loading,
+    TResult Function(Iterable<Project> projects, Project projectModifying)?
         modifyingProject,
-    TResult Function(List<Project> projects)? loaded,
-    TResult Function(List<Project> projects, String message)? error,
+    TResult Function(Iterable<Project> projects)? loaded,
+    TResult Function(Iterable<Project> projects, String message)? error,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -269,11 +266,11 @@ class _$ProjectsInitial implements ProjectsInitial {
 }
 
 abstract class ProjectsInitial implements ProjectsState {
-  const factory ProjectsInitial(final List<Project> projects) =
+  const factory ProjectsInitial(final Iterable<Project> projects) =
       _$ProjectsInitial;
 
   @override
-  List<Project> get projects;
+  Iterable<Project> get projects;
   @override
   @JsonKey(ignore: true)
   _$$ProjectsInitialCopyWith<_$ProjectsInitial> get copyWith =>
@@ -288,7 +285,7 @@ abstract class _$$ProjectsLoadingCopyWith<$Res>
       __$$ProjectsLoadingCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<Project> projects});
+  $Res call({Iterable<Project> projects});
 }
 
 /// @nodoc
@@ -306,9 +303,9 @@ class __$$ProjectsLoadingCopyWithImpl<$Res>
   }) {
     return _then(_$ProjectsLoading(
       null == projects
-          ? _value._projects
+          ? _value.projects
           : projects // ignore: cast_nullable_to_non_nullable
-              as List<Project>,
+              as Iterable<Project>,
     ));
   }
 }
@@ -316,15 +313,10 @@ class __$$ProjectsLoadingCopyWithImpl<$Res>
 /// @nodoc
 
 class _$ProjectsLoading implements ProjectsLoading {
-  const _$ProjectsLoading(final List<Project> projects) : _projects = projects;
+  const _$ProjectsLoading(this.projects);
 
-  final List<Project> _projects;
   @override
-  List<Project> get projects {
-    if (_projects is EqualUnmodifiableListView) return _projects;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_projects);
-  }
+  final Iterable<Project> projects;
 
   @override
   String toString() {
@@ -336,12 +328,12 @@ class _$ProjectsLoading implements ProjectsLoading {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ProjectsLoading &&
-            const DeepCollectionEquality().equals(other._projects, _projects));
+            const DeepCollectionEquality().equals(other.projects, projects));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_projects));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(projects));
 
   @JsonKey(ignore: true)
   @override
@@ -352,12 +344,13 @@ class _$ProjectsLoading implements ProjectsLoading {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Project> projects) initial,
-    required TResult Function(List<Project> projects) loading,
-    required TResult Function(List<Project> projects, Project projectModifying)
+    required TResult Function(Iterable<Project> projects) initial,
+    required TResult Function(Iterable<Project> projects) loading,
+    required TResult Function(
+            Iterable<Project> projects, Project projectModifying)
         modifyingProject,
-    required TResult Function(List<Project> projects) loaded,
-    required TResult Function(List<Project> projects, String message) error,
+    required TResult Function(Iterable<Project> projects) loaded,
+    required TResult Function(Iterable<Project> projects, String message) error,
   }) {
     return loading(projects);
   }
@@ -365,12 +358,12 @@ class _$ProjectsLoading implements ProjectsLoading {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Project> projects)? initial,
-    TResult? Function(List<Project> projects)? loading,
-    TResult? Function(List<Project> projects, Project projectModifying)?
+    TResult? Function(Iterable<Project> projects)? initial,
+    TResult? Function(Iterable<Project> projects)? loading,
+    TResult? Function(Iterable<Project> projects, Project projectModifying)?
         modifyingProject,
-    TResult? Function(List<Project> projects)? loaded,
-    TResult? Function(List<Project> projects, String message)? error,
+    TResult? Function(Iterable<Project> projects)? loaded,
+    TResult? Function(Iterable<Project> projects, String message)? error,
   }) {
     return loading?.call(projects);
   }
@@ -378,12 +371,12 @@ class _$ProjectsLoading implements ProjectsLoading {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Project> projects)? initial,
-    TResult Function(List<Project> projects)? loading,
-    TResult Function(List<Project> projects, Project projectModifying)?
+    TResult Function(Iterable<Project> projects)? initial,
+    TResult Function(Iterable<Project> projects)? loading,
+    TResult Function(Iterable<Project> projects, Project projectModifying)?
         modifyingProject,
-    TResult Function(List<Project> projects)? loaded,
-    TResult Function(List<Project> projects, String message)? error,
+    TResult Function(Iterable<Project> projects)? loaded,
+    TResult Function(Iterable<Project> projects, String message)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -434,11 +427,11 @@ class _$ProjectsLoading implements ProjectsLoading {
 }
 
 abstract class ProjectsLoading implements ProjectsState {
-  const factory ProjectsLoading(final List<Project> projects) =
+  const factory ProjectsLoading(final Iterable<Project> projects) =
       _$ProjectsLoading;
 
   @override
-  List<Project> get projects;
+  Iterable<Project> get projects;
   @override
   @JsonKey(ignore: true)
   _$$ProjectsLoadingCopyWith<_$ProjectsLoading> get copyWith =>
@@ -453,7 +446,7 @@ abstract class _$$ProjectsModifyingProjectCopyWith<$Res>
       __$$ProjectsModifyingProjectCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<Project> projects, Project projectModifying});
+  $Res call({Iterable<Project> projects, Project projectModifying});
 }
 
 /// @nodoc
@@ -472,9 +465,9 @@ class __$$ProjectsModifyingProjectCopyWithImpl<$Res>
   }) {
     return _then(_$ProjectsModifyingProject(
       null == projects
-          ? _value._projects
+          ? _value.projects
           : projects // ignore: cast_nullable_to_non_nullable
-              as List<Project>,
+              as Iterable<Project>,
       null == projectModifying
           ? _value.projectModifying
           : projectModifying // ignore: cast_nullable_to_non_nullable
@@ -486,18 +479,10 @@ class __$$ProjectsModifyingProjectCopyWithImpl<$Res>
 /// @nodoc
 
 class _$ProjectsModifyingProject implements ProjectsModifyingProject {
-  const _$ProjectsModifyingProject(
-      final List<Project> projects, this.projectModifying)
-      : _projects = projects;
+  const _$ProjectsModifyingProject(this.projects, this.projectModifying);
 
-  final List<Project> _projects;
   @override
-  List<Project> get projects {
-    if (_projects is EqualUnmodifiableListView) return _projects;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_projects);
-  }
-
+  final Iterable<Project> projects;
   @override
   final Project projectModifying;
 
@@ -511,14 +496,14 @@ class _$ProjectsModifyingProject implements ProjectsModifyingProject {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ProjectsModifyingProject &&
-            const DeepCollectionEquality().equals(other._projects, _projects) &&
+            const DeepCollectionEquality().equals(other.projects, projects) &&
             (identical(other.projectModifying, projectModifying) ||
                 other.projectModifying == projectModifying));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType,
-      const DeepCollectionEquality().hash(_projects), projectModifying);
+      const DeepCollectionEquality().hash(projects), projectModifying);
 
   @JsonKey(ignore: true)
   @override
@@ -531,12 +516,13 @@ class _$ProjectsModifyingProject implements ProjectsModifyingProject {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Project> projects) initial,
-    required TResult Function(List<Project> projects) loading,
-    required TResult Function(List<Project> projects, Project projectModifying)
+    required TResult Function(Iterable<Project> projects) initial,
+    required TResult Function(Iterable<Project> projects) loading,
+    required TResult Function(
+            Iterable<Project> projects, Project projectModifying)
         modifyingProject,
-    required TResult Function(List<Project> projects) loaded,
-    required TResult Function(List<Project> projects, String message) error,
+    required TResult Function(Iterable<Project> projects) loaded,
+    required TResult Function(Iterable<Project> projects, String message) error,
   }) {
     return modifyingProject(projects, projectModifying);
   }
@@ -544,12 +530,12 @@ class _$ProjectsModifyingProject implements ProjectsModifyingProject {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Project> projects)? initial,
-    TResult? Function(List<Project> projects)? loading,
-    TResult? Function(List<Project> projects, Project projectModifying)?
+    TResult? Function(Iterable<Project> projects)? initial,
+    TResult? Function(Iterable<Project> projects)? loading,
+    TResult? Function(Iterable<Project> projects, Project projectModifying)?
         modifyingProject,
-    TResult? Function(List<Project> projects)? loaded,
-    TResult? Function(List<Project> projects, String message)? error,
+    TResult? Function(Iterable<Project> projects)? loaded,
+    TResult? Function(Iterable<Project> projects, String message)? error,
   }) {
     return modifyingProject?.call(projects, projectModifying);
   }
@@ -557,12 +543,12 @@ class _$ProjectsModifyingProject implements ProjectsModifyingProject {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Project> projects)? initial,
-    TResult Function(List<Project> projects)? loading,
-    TResult Function(List<Project> projects, Project projectModifying)?
+    TResult Function(Iterable<Project> projects)? initial,
+    TResult Function(Iterable<Project> projects)? loading,
+    TResult Function(Iterable<Project> projects, Project projectModifying)?
         modifyingProject,
-    TResult Function(List<Project> projects)? loaded,
-    TResult Function(List<Project> projects, String message)? error,
+    TResult Function(Iterable<Project> projects)? loaded,
+    TResult Function(Iterable<Project> projects, String message)? error,
     required TResult orElse(),
   }) {
     if (modifyingProject != null) {
@@ -614,11 +600,11 @@ class _$ProjectsModifyingProject implements ProjectsModifyingProject {
 
 abstract class ProjectsModifyingProject implements ProjectsState {
   const factory ProjectsModifyingProject(
-          final List<Project> projects, final Project projectModifying) =
+          final Iterable<Project> projects, final Project projectModifying) =
       _$ProjectsModifyingProject;
 
   @override
-  List<Project> get projects;
+  Iterable<Project> get projects;
   Project get projectModifying;
   @override
   @JsonKey(ignore: true)
@@ -634,7 +620,7 @@ abstract class _$$ProjectsLoadedCopyWith<$Res>
       __$$ProjectsLoadedCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<Project> projects});
+  $Res call({Iterable<Project> projects});
 }
 
 /// @nodoc
@@ -652,9 +638,9 @@ class __$$ProjectsLoadedCopyWithImpl<$Res>
   }) {
     return _then(_$ProjectsLoaded(
       null == projects
-          ? _value._projects
+          ? _value.projects
           : projects // ignore: cast_nullable_to_non_nullable
-              as List<Project>,
+              as Iterable<Project>,
     ));
   }
 }
@@ -662,15 +648,10 @@ class __$$ProjectsLoadedCopyWithImpl<$Res>
 /// @nodoc
 
 class _$ProjectsLoaded implements ProjectsLoaded {
-  const _$ProjectsLoaded(final List<Project> projects) : _projects = projects;
+  const _$ProjectsLoaded(this.projects);
 
-  final List<Project> _projects;
   @override
-  List<Project> get projects {
-    if (_projects is EqualUnmodifiableListView) return _projects;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_projects);
-  }
+  final Iterable<Project> projects;
 
   @override
   String toString() {
@@ -682,12 +663,12 @@ class _$ProjectsLoaded implements ProjectsLoaded {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ProjectsLoaded &&
-            const DeepCollectionEquality().equals(other._projects, _projects));
+            const DeepCollectionEquality().equals(other.projects, projects));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_projects));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(projects));
 
   @JsonKey(ignore: true)
   @override
@@ -698,12 +679,13 @@ class _$ProjectsLoaded implements ProjectsLoaded {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Project> projects) initial,
-    required TResult Function(List<Project> projects) loading,
-    required TResult Function(List<Project> projects, Project projectModifying)
+    required TResult Function(Iterable<Project> projects) initial,
+    required TResult Function(Iterable<Project> projects) loading,
+    required TResult Function(
+            Iterable<Project> projects, Project projectModifying)
         modifyingProject,
-    required TResult Function(List<Project> projects) loaded,
-    required TResult Function(List<Project> projects, String message) error,
+    required TResult Function(Iterable<Project> projects) loaded,
+    required TResult Function(Iterable<Project> projects, String message) error,
   }) {
     return loaded(projects);
   }
@@ -711,12 +693,12 @@ class _$ProjectsLoaded implements ProjectsLoaded {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Project> projects)? initial,
-    TResult? Function(List<Project> projects)? loading,
-    TResult? Function(List<Project> projects, Project projectModifying)?
+    TResult? Function(Iterable<Project> projects)? initial,
+    TResult? Function(Iterable<Project> projects)? loading,
+    TResult? Function(Iterable<Project> projects, Project projectModifying)?
         modifyingProject,
-    TResult? Function(List<Project> projects)? loaded,
-    TResult? Function(List<Project> projects, String message)? error,
+    TResult? Function(Iterable<Project> projects)? loaded,
+    TResult? Function(Iterable<Project> projects, String message)? error,
   }) {
     return loaded?.call(projects);
   }
@@ -724,12 +706,12 @@ class _$ProjectsLoaded implements ProjectsLoaded {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Project> projects)? initial,
-    TResult Function(List<Project> projects)? loading,
-    TResult Function(List<Project> projects, Project projectModifying)?
+    TResult Function(Iterable<Project> projects)? initial,
+    TResult Function(Iterable<Project> projects)? loading,
+    TResult Function(Iterable<Project> projects, Project projectModifying)?
         modifyingProject,
-    TResult Function(List<Project> projects)? loaded,
-    TResult Function(List<Project> projects, String message)? error,
+    TResult Function(Iterable<Project> projects)? loaded,
+    TResult Function(Iterable<Project> projects, String message)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -780,10 +762,11 @@ class _$ProjectsLoaded implements ProjectsLoaded {
 }
 
 abstract class ProjectsLoaded implements ProjectsState {
-  const factory ProjectsLoaded(final List<Project> projects) = _$ProjectsLoaded;
+  const factory ProjectsLoaded(final Iterable<Project> projects) =
+      _$ProjectsLoaded;
 
   @override
-  List<Project> get projects;
+  Iterable<Project> get projects;
   @override
   @JsonKey(ignore: true)
   _$$ProjectsLoadedCopyWith<_$ProjectsLoaded> get copyWith =>
@@ -798,7 +781,7 @@ abstract class _$$ProjectsErrorCopyWith<$Res>
       __$$ProjectsErrorCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<Project> projects, String message});
+  $Res call({Iterable<Project> projects, String message});
 }
 
 /// @nodoc
@@ -817,9 +800,9 @@ class __$$ProjectsErrorCopyWithImpl<$Res>
   }) {
     return _then(_$ProjectsError(
       null == projects
-          ? _value._projects
+          ? _value.projects
           : projects // ignore: cast_nullable_to_non_nullable
-              as List<Project>,
+              as Iterable<Project>,
       null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -831,17 +814,10 @@ class __$$ProjectsErrorCopyWithImpl<$Res>
 /// @nodoc
 
 class _$ProjectsError implements ProjectsError {
-  const _$ProjectsError(final List<Project> projects, this.message)
-      : _projects = projects;
+  const _$ProjectsError(this.projects, this.message);
 
-  final List<Project> _projects;
   @override
-  List<Project> get projects {
-    if (_projects is EqualUnmodifiableListView) return _projects;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_projects);
-  }
-
+  final Iterable<Project> projects;
   @override
   final String message;
 
@@ -855,13 +831,13 @@ class _$ProjectsError implements ProjectsError {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ProjectsError &&
-            const DeepCollectionEquality().equals(other._projects, _projects) &&
+            const DeepCollectionEquality().equals(other.projects, projects) &&
             (identical(other.message, message) || other.message == message));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_projects), message);
+      runtimeType, const DeepCollectionEquality().hash(projects), message);
 
   @JsonKey(ignore: true)
   @override
@@ -872,12 +848,13 @@ class _$ProjectsError implements ProjectsError {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Project> projects) initial,
-    required TResult Function(List<Project> projects) loading,
-    required TResult Function(List<Project> projects, Project projectModifying)
+    required TResult Function(Iterable<Project> projects) initial,
+    required TResult Function(Iterable<Project> projects) loading,
+    required TResult Function(
+            Iterable<Project> projects, Project projectModifying)
         modifyingProject,
-    required TResult Function(List<Project> projects) loaded,
-    required TResult Function(List<Project> projects, String message) error,
+    required TResult Function(Iterable<Project> projects) loaded,
+    required TResult Function(Iterable<Project> projects, String message) error,
   }) {
     return error(projects, message);
   }
@@ -885,12 +862,12 @@ class _$ProjectsError implements ProjectsError {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Project> projects)? initial,
-    TResult? Function(List<Project> projects)? loading,
-    TResult? Function(List<Project> projects, Project projectModifying)?
+    TResult? Function(Iterable<Project> projects)? initial,
+    TResult? Function(Iterable<Project> projects)? loading,
+    TResult? Function(Iterable<Project> projects, Project projectModifying)?
         modifyingProject,
-    TResult? Function(List<Project> projects)? loaded,
-    TResult? Function(List<Project> projects, String message)? error,
+    TResult? Function(Iterable<Project> projects)? loaded,
+    TResult? Function(Iterable<Project> projects, String message)? error,
   }) {
     return error?.call(projects, message);
   }
@@ -898,12 +875,12 @@ class _$ProjectsError implements ProjectsError {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Project> projects)? initial,
-    TResult Function(List<Project> projects)? loading,
-    TResult Function(List<Project> projects, Project projectModifying)?
+    TResult Function(Iterable<Project> projects)? initial,
+    TResult Function(Iterable<Project> projects)? loading,
+    TResult Function(Iterable<Project> projects, Project projectModifying)?
         modifyingProject,
-    TResult Function(List<Project> projects)? loaded,
-    TResult Function(List<Project> projects, String message)? error,
+    TResult Function(Iterable<Project> projects)? loaded,
+    TResult Function(Iterable<Project> projects, String message)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -955,10 +932,10 @@ class _$ProjectsError implements ProjectsError {
 
 abstract class ProjectsError implements ProjectsState {
   const factory ProjectsError(
-      final List<Project> projects, final String message) = _$ProjectsError;
+      final Iterable<Project> projects, final String message) = _$ProjectsError;
 
   @override
-  List<Project> get projects;
+  Iterable<Project> get projects;
   String get message;
   @override
   @JsonKey(ignore: true)

@@ -22,7 +22,10 @@ class PlatformIntegrationStorage<PlatformType extends Platform,
   })  : _storageKey = storageKey ?? PlatformType.runtimeType.toString(),
         _storage = storage,
         _mapper = mapper,
-        _streamController = StreamController<List<IntegrationType>>.broadcast();
+        _streamController =
+            StreamController<List<IntegrationType>>.broadcast() {
+    refresh();
+  }
 
   /// The storage used to store the integrations in the device.
   /// This is a singleton, so it will be the same instance for all the

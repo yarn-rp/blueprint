@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:integrations_repository/integrations_repository.dart';
 import 'package:poll_e_task/utils/color/hex_color_extension.dart';
-import 'package:project_repository/project_repository.dart';
 
 class TaskStatusChip extends StatelessWidget {
   const TaskStatusChip({

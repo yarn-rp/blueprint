@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
+import 'package:jira_repository/src/entities/jira_platform.dart';
 import 'package:platform_integration_repository/platform_integration_repository.dart';
 
 /// An integration with Jira (https://www.atlassian.com/software/jira).
@@ -9,7 +10,7 @@ class JiraIntegration extends Integration {
   const JiraIntegration({
     required this.url,
     required this.user,
-  }) : super(jira);
+  }) : super(jiraPlatform);
 
   /// The url of the Jira instance.
   final String url;

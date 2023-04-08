@@ -16,29 +16,29 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$TasksState {
-  List<Task> get tasks => throw _privateConstructorUsedError;
+  Iterable<Task> get tasks => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Task> tasks) initial,
-    required TResult Function(List<Task> tasks) loading,
-    required TResult Function(List<Task> tasks) loaded,
-    required TResult Function(List<Task> tasks, String message) error,
+    required TResult Function(Iterable<Task> tasks) initial,
+    required TResult Function(Iterable<Task> tasks) loading,
+    required TResult Function(Iterable<Task> tasks) loaded,
+    required TResult Function(Iterable<Task> tasks, String message) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Task> tasks)? initial,
-    TResult? Function(List<Task> tasks)? loading,
-    TResult? Function(List<Task> tasks)? loaded,
-    TResult? Function(List<Task> tasks, String message)? error,
+    TResult? Function(Iterable<Task> tasks)? initial,
+    TResult? Function(Iterable<Task> tasks)? loading,
+    TResult? Function(Iterable<Task> tasks)? loaded,
+    TResult? Function(Iterable<Task> tasks, String message)? error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Task> tasks)? initial,
-    TResult Function(List<Task> tasks)? loading,
-    TResult Function(List<Task> tasks)? loaded,
-    TResult Function(List<Task> tasks, String message)? error,
+    TResult Function(Iterable<Task> tasks)? initial,
+    TResult Function(Iterable<Task> tasks)? loading,
+    TResult Function(Iterable<Task> tasks)? loaded,
+    TResult Function(Iterable<Task> tasks, String message)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -79,7 +79,7 @@ abstract class $TasksStateCopyWith<$Res> {
           TasksState value, $Res Function(TasksState) then) =
       _$TasksStateCopyWithImpl<$Res, TasksState>;
   @useResult
-  $Res call({List<Task> tasks});
+  $Res call({Iterable<Task> tasks});
 }
 
 /// @nodoc
@@ -101,7 +101,7 @@ class _$TasksStateCopyWithImpl<$Res, $Val extends TasksState>
       tasks: null == tasks
           ? _value.tasks
           : tasks // ignore: cast_nullable_to_non_nullable
-              as List<Task>,
+              as Iterable<Task>,
     ) as $Val);
   }
 }
@@ -114,7 +114,7 @@ abstract class _$$TasksInitialCopyWith<$Res>
       __$$TasksInitialCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<Task> tasks});
+  $Res call({Iterable<Task> tasks});
 }
 
 /// @nodoc
@@ -132,9 +132,9 @@ class __$$TasksInitialCopyWithImpl<$Res>
   }) {
     return _then(_$TasksInitial(
       null == tasks
-          ? _value._tasks
+          ? _value.tasks
           : tasks // ignore: cast_nullable_to_non_nullable
-              as List<Task>,
+              as Iterable<Task>,
     ));
   }
 }
@@ -142,15 +142,10 @@ class __$$TasksInitialCopyWithImpl<$Res>
 /// @nodoc
 
 class _$TasksInitial implements TasksInitial {
-  const _$TasksInitial(final List<Task> tasks) : _tasks = tasks;
+  const _$TasksInitial(this.tasks);
 
-  final List<Task> _tasks;
   @override
-  List<Task> get tasks {
-    if (_tasks is EqualUnmodifiableListView) return _tasks;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_tasks);
-  }
+  final Iterable<Task> tasks;
 
   @override
   String toString() {
@@ -162,12 +157,12 @@ class _$TasksInitial implements TasksInitial {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TasksInitial &&
-            const DeepCollectionEquality().equals(other._tasks, _tasks));
+            const DeepCollectionEquality().equals(other.tasks, tasks));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_tasks));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(tasks));
 
   @JsonKey(ignore: true)
   @override
@@ -178,10 +173,10 @@ class _$TasksInitial implements TasksInitial {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Task> tasks) initial,
-    required TResult Function(List<Task> tasks) loading,
-    required TResult Function(List<Task> tasks) loaded,
-    required TResult Function(List<Task> tasks, String message) error,
+    required TResult Function(Iterable<Task> tasks) initial,
+    required TResult Function(Iterable<Task> tasks) loading,
+    required TResult Function(Iterable<Task> tasks) loaded,
+    required TResult Function(Iterable<Task> tasks, String message) error,
   }) {
     return initial(tasks);
   }
@@ -189,10 +184,10 @@ class _$TasksInitial implements TasksInitial {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Task> tasks)? initial,
-    TResult? Function(List<Task> tasks)? loading,
-    TResult? Function(List<Task> tasks)? loaded,
-    TResult? Function(List<Task> tasks, String message)? error,
+    TResult? Function(Iterable<Task> tasks)? initial,
+    TResult? Function(Iterable<Task> tasks)? loading,
+    TResult? Function(Iterable<Task> tasks)? loaded,
+    TResult? Function(Iterable<Task> tasks, String message)? error,
   }) {
     return initial?.call(tasks);
   }
@@ -200,10 +195,10 @@ class _$TasksInitial implements TasksInitial {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Task> tasks)? initial,
-    TResult Function(List<Task> tasks)? loading,
-    TResult Function(List<Task> tasks)? loaded,
-    TResult Function(List<Task> tasks, String message)? error,
+    TResult Function(Iterable<Task> tasks)? initial,
+    TResult Function(Iterable<Task> tasks)? loading,
+    TResult Function(Iterable<Task> tasks)? loaded,
+    TResult Function(Iterable<Task> tasks, String message)? error,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -251,10 +246,10 @@ class _$TasksInitial implements TasksInitial {
 }
 
 abstract class TasksInitial implements TasksState {
-  const factory TasksInitial(final List<Task> tasks) = _$TasksInitial;
+  const factory TasksInitial(final Iterable<Task> tasks) = _$TasksInitial;
 
   @override
-  List<Task> get tasks;
+  Iterable<Task> get tasks;
   @override
   @JsonKey(ignore: true)
   _$$TasksInitialCopyWith<_$TasksInitial> get copyWith =>
@@ -269,7 +264,7 @@ abstract class _$$TasksLoadingCopyWith<$Res>
       __$$TasksLoadingCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<Task> tasks});
+  $Res call({Iterable<Task> tasks});
 }
 
 /// @nodoc
@@ -287,9 +282,9 @@ class __$$TasksLoadingCopyWithImpl<$Res>
   }) {
     return _then(_$TasksLoading(
       null == tasks
-          ? _value._tasks
+          ? _value.tasks
           : tasks // ignore: cast_nullable_to_non_nullable
-              as List<Task>,
+              as Iterable<Task>,
     ));
   }
 }
@@ -297,15 +292,10 @@ class __$$TasksLoadingCopyWithImpl<$Res>
 /// @nodoc
 
 class _$TasksLoading implements TasksLoading {
-  const _$TasksLoading(final List<Task> tasks) : _tasks = tasks;
+  const _$TasksLoading(this.tasks);
 
-  final List<Task> _tasks;
   @override
-  List<Task> get tasks {
-    if (_tasks is EqualUnmodifiableListView) return _tasks;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_tasks);
-  }
+  final Iterable<Task> tasks;
 
   @override
   String toString() {
@@ -317,12 +307,12 @@ class _$TasksLoading implements TasksLoading {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TasksLoading &&
-            const DeepCollectionEquality().equals(other._tasks, _tasks));
+            const DeepCollectionEquality().equals(other.tasks, tasks));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_tasks));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(tasks));
 
   @JsonKey(ignore: true)
   @override
@@ -333,10 +323,10 @@ class _$TasksLoading implements TasksLoading {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Task> tasks) initial,
-    required TResult Function(List<Task> tasks) loading,
-    required TResult Function(List<Task> tasks) loaded,
-    required TResult Function(List<Task> tasks, String message) error,
+    required TResult Function(Iterable<Task> tasks) initial,
+    required TResult Function(Iterable<Task> tasks) loading,
+    required TResult Function(Iterable<Task> tasks) loaded,
+    required TResult Function(Iterable<Task> tasks, String message) error,
   }) {
     return loading(tasks);
   }
@@ -344,10 +334,10 @@ class _$TasksLoading implements TasksLoading {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Task> tasks)? initial,
-    TResult? Function(List<Task> tasks)? loading,
-    TResult? Function(List<Task> tasks)? loaded,
-    TResult? Function(List<Task> tasks, String message)? error,
+    TResult? Function(Iterable<Task> tasks)? initial,
+    TResult? Function(Iterable<Task> tasks)? loading,
+    TResult? Function(Iterable<Task> tasks)? loaded,
+    TResult? Function(Iterable<Task> tasks, String message)? error,
   }) {
     return loading?.call(tasks);
   }
@@ -355,10 +345,10 @@ class _$TasksLoading implements TasksLoading {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Task> tasks)? initial,
-    TResult Function(List<Task> tasks)? loading,
-    TResult Function(List<Task> tasks)? loaded,
-    TResult Function(List<Task> tasks, String message)? error,
+    TResult Function(Iterable<Task> tasks)? initial,
+    TResult Function(Iterable<Task> tasks)? loading,
+    TResult Function(Iterable<Task> tasks)? loaded,
+    TResult Function(Iterable<Task> tasks, String message)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -406,10 +396,10 @@ class _$TasksLoading implements TasksLoading {
 }
 
 abstract class TasksLoading implements TasksState {
-  const factory TasksLoading(final List<Task> tasks) = _$TasksLoading;
+  const factory TasksLoading(final Iterable<Task> tasks) = _$TasksLoading;
 
   @override
-  List<Task> get tasks;
+  Iterable<Task> get tasks;
   @override
   @JsonKey(ignore: true)
   _$$TasksLoadingCopyWith<_$TasksLoading> get copyWith =>
@@ -424,7 +414,7 @@ abstract class _$$TasksLoadedCopyWith<$Res>
       __$$TasksLoadedCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<Task> tasks});
+  $Res call({Iterable<Task> tasks});
 }
 
 /// @nodoc
@@ -442,9 +432,9 @@ class __$$TasksLoadedCopyWithImpl<$Res>
   }) {
     return _then(_$TasksLoaded(
       null == tasks
-          ? _value._tasks
+          ? _value.tasks
           : tasks // ignore: cast_nullable_to_non_nullable
-              as List<Task>,
+              as Iterable<Task>,
     ));
   }
 }
@@ -452,15 +442,10 @@ class __$$TasksLoadedCopyWithImpl<$Res>
 /// @nodoc
 
 class _$TasksLoaded implements TasksLoaded {
-  const _$TasksLoaded(final List<Task> tasks) : _tasks = tasks;
+  const _$TasksLoaded(this.tasks);
 
-  final List<Task> _tasks;
   @override
-  List<Task> get tasks {
-    if (_tasks is EqualUnmodifiableListView) return _tasks;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_tasks);
-  }
+  final Iterable<Task> tasks;
 
   @override
   String toString() {
@@ -472,12 +457,12 @@ class _$TasksLoaded implements TasksLoaded {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TasksLoaded &&
-            const DeepCollectionEquality().equals(other._tasks, _tasks));
+            const DeepCollectionEquality().equals(other.tasks, tasks));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_tasks));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(tasks));
 
   @JsonKey(ignore: true)
   @override
@@ -488,10 +473,10 @@ class _$TasksLoaded implements TasksLoaded {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Task> tasks) initial,
-    required TResult Function(List<Task> tasks) loading,
-    required TResult Function(List<Task> tasks) loaded,
-    required TResult Function(List<Task> tasks, String message) error,
+    required TResult Function(Iterable<Task> tasks) initial,
+    required TResult Function(Iterable<Task> tasks) loading,
+    required TResult Function(Iterable<Task> tasks) loaded,
+    required TResult Function(Iterable<Task> tasks, String message) error,
   }) {
     return loaded(tasks);
   }
@@ -499,10 +484,10 @@ class _$TasksLoaded implements TasksLoaded {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Task> tasks)? initial,
-    TResult? Function(List<Task> tasks)? loading,
-    TResult? Function(List<Task> tasks)? loaded,
-    TResult? Function(List<Task> tasks, String message)? error,
+    TResult? Function(Iterable<Task> tasks)? initial,
+    TResult? Function(Iterable<Task> tasks)? loading,
+    TResult? Function(Iterable<Task> tasks)? loaded,
+    TResult? Function(Iterable<Task> tasks, String message)? error,
   }) {
     return loaded?.call(tasks);
   }
@@ -510,10 +495,10 @@ class _$TasksLoaded implements TasksLoaded {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Task> tasks)? initial,
-    TResult Function(List<Task> tasks)? loading,
-    TResult Function(List<Task> tasks)? loaded,
-    TResult Function(List<Task> tasks, String message)? error,
+    TResult Function(Iterable<Task> tasks)? initial,
+    TResult Function(Iterable<Task> tasks)? loading,
+    TResult Function(Iterable<Task> tasks)? loaded,
+    TResult Function(Iterable<Task> tasks, String message)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -561,10 +546,10 @@ class _$TasksLoaded implements TasksLoaded {
 }
 
 abstract class TasksLoaded implements TasksState {
-  const factory TasksLoaded(final List<Task> tasks) = _$TasksLoaded;
+  const factory TasksLoaded(final Iterable<Task> tasks) = _$TasksLoaded;
 
   @override
-  List<Task> get tasks;
+  Iterable<Task> get tasks;
   @override
   @JsonKey(ignore: true)
   _$$TasksLoadedCopyWith<_$TasksLoaded> get copyWith =>
@@ -579,7 +564,7 @@ abstract class _$$TasksErrorCopyWith<$Res>
       __$$TasksErrorCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<Task> tasks, String message});
+  $Res call({Iterable<Task> tasks, String message});
 }
 
 /// @nodoc
@@ -598,9 +583,9 @@ class __$$TasksErrorCopyWithImpl<$Res>
   }) {
     return _then(_$TasksError(
       null == tasks
-          ? _value._tasks
+          ? _value.tasks
           : tasks // ignore: cast_nullable_to_non_nullable
-              as List<Task>,
+              as Iterable<Task>,
       null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -612,16 +597,10 @@ class __$$TasksErrorCopyWithImpl<$Res>
 /// @nodoc
 
 class _$TasksError implements TasksError {
-  const _$TasksError(final List<Task> tasks, this.message) : _tasks = tasks;
+  const _$TasksError(this.tasks, this.message);
 
-  final List<Task> _tasks;
   @override
-  List<Task> get tasks {
-    if (_tasks is EqualUnmodifiableListView) return _tasks;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_tasks);
-  }
-
+  final Iterable<Task> tasks;
   @override
   final String message;
 
@@ -635,13 +614,13 @@ class _$TasksError implements TasksError {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TasksError &&
-            const DeepCollectionEquality().equals(other._tasks, _tasks) &&
+            const DeepCollectionEquality().equals(other.tasks, tasks) &&
             (identical(other.message, message) || other.message == message));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_tasks), message);
+      runtimeType, const DeepCollectionEquality().hash(tasks), message);
 
   @JsonKey(ignore: true)
   @override
@@ -652,10 +631,10 @@ class _$TasksError implements TasksError {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Task> tasks) initial,
-    required TResult Function(List<Task> tasks) loading,
-    required TResult Function(List<Task> tasks) loaded,
-    required TResult Function(List<Task> tasks, String message) error,
+    required TResult Function(Iterable<Task> tasks) initial,
+    required TResult Function(Iterable<Task> tasks) loading,
+    required TResult Function(Iterable<Task> tasks) loaded,
+    required TResult Function(Iterable<Task> tasks, String message) error,
   }) {
     return error(tasks, message);
   }
@@ -663,10 +642,10 @@ class _$TasksError implements TasksError {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Task> tasks)? initial,
-    TResult? Function(List<Task> tasks)? loading,
-    TResult? Function(List<Task> tasks)? loaded,
-    TResult? Function(List<Task> tasks, String message)? error,
+    TResult? Function(Iterable<Task> tasks)? initial,
+    TResult? Function(Iterable<Task> tasks)? loading,
+    TResult? Function(Iterable<Task> tasks)? loaded,
+    TResult? Function(Iterable<Task> tasks, String message)? error,
   }) {
     return error?.call(tasks, message);
   }
@@ -674,10 +653,10 @@ class _$TasksError implements TasksError {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Task> tasks)? initial,
-    TResult Function(List<Task> tasks)? loading,
-    TResult Function(List<Task> tasks)? loaded,
-    TResult Function(List<Task> tasks, String message)? error,
+    TResult Function(Iterable<Task> tasks)? initial,
+    TResult Function(Iterable<Task> tasks)? loading,
+    TResult Function(Iterable<Task> tasks)? loaded,
+    TResult Function(Iterable<Task> tasks, String message)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -725,11 +704,11 @@ class _$TasksError implements TasksError {
 }
 
 abstract class TasksError implements TasksState {
-  const factory TasksError(final List<Task> tasks, final String message) =
+  const factory TasksError(final Iterable<Task> tasks, final String message) =
       _$TasksError;
 
   @override
-  List<Task> get tasks;
+  Iterable<Task> get tasks;
   String get message;
   @override
   @JsonKey(ignore: true)

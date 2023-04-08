@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:project_repository/project_repository.dart';
+import 'package:integrations_repository/integrations_repository.dart';
 
-part 'projects_bloc.freezed.dart';
+part 'projects_cubit.freezed.dart';
 part 'projects_state.dart';
 
 /// The [ProjectsCubit] is responsible for managing the state of the projects
@@ -18,11 +18,12 @@ part 'projects_state.dart';
 /// - [ProjectsError] - The state when the bloc has encountered an error.
 ///
 class ProjectsCubit extends Cubit<ProjectsState> {
-  ProjectsCubit(this._projectRepository) : super(const ProjectsInitial([]));
+  ProjectsCubit(this._projectRepository)
+      : super(const ProjectsState.initial([]));
 
   /// The subscription to the stream of projects. This is used to cancel the
   /// subscription when the bloc is closed.
-  StreamSubscription<List<Project>>? _projectsSubscription;
+  StreamSubscription<Iterable<Project>>? _projectsSubscription;
 
   Future<void> loadProjects() async {
     if (_projectsSubscription != null) {
@@ -31,9 +32,9 @@ class ProjectsCubit extends Cubit<ProjectsState> {
       return;
     }
 
-    emit(const ProjectsLoading([]));
+    emit(const ProjectsState.loading([]));
     try {
-      final projects = _projectRepository.getProjects();
+      final projects = _projectRepository.getAllProjects();
 
       _projectsSubscription = projects.listen(
         (projects) {
@@ -54,5 +55,5 @@ class ProjectsCubit extends Cubit<ProjectsState> {
     return super.close();
   }
 
-  final ProjectRepository _projectRepository;
+  final IntegrationsRepository _projectRepository;
 }

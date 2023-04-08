@@ -16,30 +16,32 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$IntegrationsState {
-  List<Integration> get integrations => throw _privateConstructorUsedError;
+  Iterable<Integration> get integrations => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Integration> integrations) initial,
-    required TResult Function(List<Integration> integrations) loading,
-    required TResult Function(List<Integration> integrations) loaded,
-    required TResult Function(List<Integration> integrations, String message)
+    required TResult Function(Iterable<Integration> integrations) initial,
+    required TResult Function(Iterable<Integration> integrations) loading,
+    required TResult Function(Iterable<Integration> integrations) loaded,
+    required TResult Function(
+            Iterable<Integration> integrations, String message)
         error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Integration> integrations)? initial,
-    TResult? Function(List<Integration> integrations)? loading,
-    TResult? Function(List<Integration> integrations)? loaded,
-    TResult? Function(List<Integration> integrations, String message)? error,
+    TResult? Function(Iterable<Integration> integrations)? initial,
+    TResult? Function(Iterable<Integration> integrations)? loading,
+    TResult? Function(Iterable<Integration> integrations)? loaded,
+    TResult? Function(Iterable<Integration> integrations, String message)?
+        error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Integration> integrations)? initial,
-    TResult Function(List<Integration> integrations)? loading,
-    TResult Function(List<Integration> integrations)? loaded,
-    TResult Function(List<Integration> integrations, String message)? error,
+    TResult Function(Iterable<Integration> integrations)? initial,
+    TResult Function(Iterable<Integration> integrations)? loading,
+    TResult Function(Iterable<Integration> integrations)? loaded,
+    TResult Function(Iterable<Integration> integrations, String message)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -80,7 +82,7 @@ abstract class $IntegrationsStateCopyWith<$Res> {
           IntegrationsState value, $Res Function(IntegrationsState) then) =
       _$IntegrationsStateCopyWithImpl<$Res, IntegrationsState>;
   @useResult
-  $Res call({List<Integration> integrations});
+  $Res call({Iterable<Integration> integrations});
 }
 
 /// @nodoc
@@ -102,7 +104,7 @@ class _$IntegrationsStateCopyWithImpl<$Res, $Val extends IntegrationsState>
       integrations: null == integrations
           ? _value.integrations
           : integrations // ignore: cast_nullable_to_non_nullable
-              as List<Integration>,
+              as Iterable<Integration>,
     ) as $Val);
   }
 }
@@ -115,7 +117,7 @@ abstract class _$$IntegrationsInitialCopyWith<$Res>
       __$$IntegrationsInitialCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<Integration> integrations});
+  $Res call({Iterable<Integration> integrations});
 }
 
 /// @nodoc
@@ -133,9 +135,9 @@ class __$$IntegrationsInitialCopyWithImpl<$Res>
   }) {
     return _then(_$IntegrationsInitial(
       null == integrations
-          ? _value._integrations
+          ? _value.integrations
           : integrations // ignore: cast_nullable_to_non_nullable
-              as List<Integration>,
+              as Iterable<Integration>,
     ));
   }
 }
@@ -143,16 +145,10 @@ class __$$IntegrationsInitialCopyWithImpl<$Res>
 /// @nodoc
 
 class _$IntegrationsInitial implements IntegrationsInitial {
-  const _$IntegrationsInitial(final List<Integration> integrations)
-      : _integrations = integrations;
+  const _$IntegrationsInitial(this.integrations);
 
-  final List<Integration> _integrations;
   @override
-  List<Integration> get integrations {
-    if (_integrations is EqualUnmodifiableListView) return _integrations;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_integrations);
-  }
+  final Iterable<Integration> integrations;
 
   @override
   String toString() {
@@ -165,12 +161,12 @@ class _$IntegrationsInitial implements IntegrationsInitial {
         (other.runtimeType == runtimeType &&
             other is _$IntegrationsInitial &&
             const DeepCollectionEquality()
-                .equals(other._integrations, _integrations));
+                .equals(other.integrations, integrations));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_integrations));
+      runtimeType, const DeepCollectionEquality().hash(integrations));
 
   @JsonKey(ignore: true)
   @override
@@ -182,10 +178,11 @@ class _$IntegrationsInitial implements IntegrationsInitial {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Integration> integrations) initial,
-    required TResult Function(List<Integration> integrations) loading,
-    required TResult Function(List<Integration> integrations) loaded,
-    required TResult Function(List<Integration> integrations, String message)
+    required TResult Function(Iterable<Integration> integrations) initial,
+    required TResult Function(Iterable<Integration> integrations) loading,
+    required TResult Function(Iterable<Integration> integrations) loaded,
+    required TResult Function(
+            Iterable<Integration> integrations, String message)
         error,
   }) {
     return initial(integrations);
@@ -194,10 +191,11 @@ class _$IntegrationsInitial implements IntegrationsInitial {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Integration> integrations)? initial,
-    TResult? Function(List<Integration> integrations)? loading,
-    TResult? Function(List<Integration> integrations)? loaded,
-    TResult? Function(List<Integration> integrations, String message)? error,
+    TResult? Function(Iterable<Integration> integrations)? initial,
+    TResult? Function(Iterable<Integration> integrations)? loading,
+    TResult? Function(Iterable<Integration> integrations)? loaded,
+    TResult? Function(Iterable<Integration> integrations, String message)?
+        error,
   }) {
     return initial?.call(integrations);
   }
@@ -205,10 +203,10 @@ class _$IntegrationsInitial implements IntegrationsInitial {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Integration> integrations)? initial,
-    TResult Function(List<Integration> integrations)? loading,
-    TResult Function(List<Integration> integrations)? loaded,
-    TResult Function(List<Integration> integrations, String message)? error,
+    TResult Function(Iterable<Integration> integrations)? initial,
+    TResult Function(Iterable<Integration> integrations)? loading,
+    TResult Function(Iterable<Integration> integrations)? loaded,
+    TResult Function(Iterable<Integration> integrations, String message)? error,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -256,11 +254,11 @@ class _$IntegrationsInitial implements IntegrationsInitial {
 }
 
 abstract class IntegrationsInitial implements IntegrationsState {
-  const factory IntegrationsInitial(final List<Integration> integrations) =
+  const factory IntegrationsInitial(final Iterable<Integration> integrations) =
       _$IntegrationsInitial;
 
   @override
-  List<Integration> get integrations;
+  Iterable<Integration> get integrations;
   @override
   @JsonKey(ignore: true)
   _$$IntegrationsInitialCopyWith<_$IntegrationsInitial> get copyWith =>
@@ -275,7 +273,7 @@ abstract class _$$IntegrationsLoadingCopyWith<$Res>
       __$$IntegrationsLoadingCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<Integration> integrations});
+  $Res call({Iterable<Integration> integrations});
 }
 
 /// @nodoc
@@ -293,9 +291,9 @@ class __$$IntegrationsLoadingCopyWithImpl<$Res>
   }) {
     return _then(_$IntegrationsLoading(
       null == integrations
-          ? _value._integrations
+          ? _value.integrations
           : integrations // ignore: cast_nullable_to_non_nullable
-              as List<Integration>,
+              as Iterable<Integration>,
     ));
   }
 }
@@ -303,16 +301,10 @@ class __$$IntegrationsLoadingCopyWithImpl<$Res>
 /// @nodoc
 
 class _$IntegrationsLoading implements IntegrationsLoading {
-  const _$IntegrationsLoading(final List<Integration> integrations)
-      : _integrations = integrations;
+  const _$IntegrationsLoading(this.integrations);
 
-  final List<Integration> _integrations;
   @override
-  List<Integration> get integrations {
-    if (_integrations is EqualUnmodifiableListView) return _integrations;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_integrations);
-  }
+  final Iterable<Integration> integrations;
 
   @override
   String toString() {
@@ -325,12 +317,12 @@ class _$IntegrationsLoading implements IntegrationsLoading {
         (other.runtimeType == runtimeType &&
             other is _$IntegrationsLoading &&
             const DeepCollectionEquality()
-                .equals(other._integrations, _integrations));
+                .equals(other.integrations, integrations));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_integrations));
+      runtimeType, const DeepCollectionEquality().hash(integrations));
 
   @JsonKey(ignore: true)
   @override
@@ -342,10 +334,11 @@ class _$IntegrationsLoading implements IntegrationsLoading {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Integration> integrations) initial,
-    required TResult Function(List<Integration> integrations) loading,
-    required TResult Function(List<Integration> integrations) loaded,
-    required TResult Function(List<Integration> integrations, String message)
+    required TResult Function(Iterable<Integration> integrations) initial,
+    required TResult Function(Iterable<Integration> integrations) loading,
+    required TResult Function(Iterable<Integration> integrations) loaded,
+    required TResult Function(
+            Iterable<Integration> integrations, String message)
         error,
   }) {
     return loading(integrations);
@@ -354,10 +347,11 @@ class _$IntegrationsLoading implements IntegrationsLoading {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Integration> integrations)? initial,
-    TResult? Function(List<Integration> integrations)? loading,
-    TResult? Function(List<Integration> integrations)? loaded,
-    TResult? Function(List<Integration> integrations, String message)? error,
+    TResult? Function(Iterable<Integration> integrations)? initial,
+    TResult? Function(Iterable<Integration> integrations)? loading,
+    TResult? Function(Iterable<Integration> integrations)? loaded,
+    TResult? Function(Iterable<Integration> integrations, String message)?
+        error,
   }) {
     return loading?.call(integrations);
   }
@@ -365,10 +359,10 @@ class _$IntegrationsLoading implements IntegrationsLoading {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Integration> integrations)? initial,
-    TResult Function(List<Integration> integrations)? loading,
-    TResult Function(List<Integration> integrations)? loaded,
-    TResult Function(List<Integration> integrations, String message)? error,
+    TResult Function(Iterable<Integration> integrations)? initial,
+    TResult Function(Iterable<Integration> integrations)? loading,
+    TResult Function(Iterable<Integration> integrations)? loaded,
+    TResult Function(Iterable<Integration> integrations, String message)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -416,11 +410,11 @@ class _$IntegrationsLoading implements IntegrationsLoading {
 }
 
 abstract class IntegrationsLoading implements IntegrationsState {
-  const factory IntegrationsLoading(final List<Integration> integrations) =
+  const factory IntegrationsLoading(final Iterable<Integration> integrations) =
       _$IntegrationsLoading;
 
   @override
-  List<Integration> get integrations;
+  Iterable<Integration> get integrations;
   @override
   @JsonKey(ignore: true)
   _$$IntegrationsLoadingCopyWith<_$IntegrationsLoading> get copyWith =>
@@ -435,7 +429,7 @@ abstract class _$$IntegrationsLoadedCopyWith<$Res>
       __$$IntegrationsLoadedCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<Integration> integrations});
+  $Res call({Iterable<Integration> integrations});
 }
 
 /// @nodoc
@@ -453,9 +447,9 @@ class __$$IntegrationsLoadedCopyWithImpl<$Res>
   }) {
     return _then(_$IntegrationsLoaded(
       null == integrations
-          ? _value._integrations
+          ? _value.integrations
           : integrations // ignore: cast_nullable_to_non_nullable
-              as List<Integration>,
+              as Iterable<Integration>,
     ));
   }
 }
@@ -463,16 +457,10 @@ class __$$IntegrationsLoadedCopyWithImpl<$Res>
 /// @nodoc
 
 class _$IntegrationsLoaded implements IntegrationsLoaded {
-  const _$IntegrationsLoaded(final List<Integration> integrations)
-      : _integrations = integrations;
+  const _$IntegrationsLoaded(this.integrations);
 
-  final List<Integration> _integrations;
   @override
-  List<Integration> get integrations {
-    if (_integrations is EqualUnmodifiableListView) return _integrations;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_integrations);
-  }
+  final Iterable<Integration> integrations;
 
   @override
   String toString() {
@@ -485,12 +473,12 @@ class _$IntegrationsLoaded implements IntegrationsLoaded {
         (other.runtimeType == runtimeType &&
             other is _$IntegrationsLoaded &&
             const DeepCollectionEquality()
-                .equals(other._integrations, _integrations));
+                .equals(other.integrations, integrations));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_integrations));
+      runtimeType, const DeepCollectionEquality().hash(integrations));
 
   @JsonKey(ignore: true)
   @override
@@ -502,10 +490,11 @@ class _$IntegrationsLoaded implements IntegrationsLoaded {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Integration> integrations) initial,
-    required TResult Function(List<Integration> integrations) loading,
-    required TResult Function(List<Integration> integrations) loaded,
-    required TResult Function(List<Integration> integrations, String message)
+    required TResult Function(Iterable<Integration> integrations) initial,
+    required TResult Function(Iterable<Integration> integrations) loading,
+    required TResult Function(Iterable<Integration> integrations) loaded,
+    required TResult Function(
+            Iterable<Integration> integrations, String message)
         error,
   }) {
     return loaded(integrations);
@@ -514,10 +503,11 @@ class _$IntegrationsLoaded implements IntegrationsLoaded {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Integration> integrations)? initial,
-    TResult? Function(List<Integration> integrations)? loading,
-    TResult? Function(List<Integration> integrations)? loaded,
-    TResult? Function(List<Integration> integrations, String message)? error,
+    TResult? Function(Iterable<Integration> integrations)? initial,
+    TResult? Function(Iterable<Integration> integrations)? loading,
+    TResult? Function(Iterable<Integration> integrations)? loaded,
+    TResult? Function(Iterable<Integration> integrations, String message)?
+        error,
   }) {
     return loaded?.call(integrations);
   }
@@ -525,10 +515,10 @@ class _$IntegrationsLoaded implements IntegrationsLoaded {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Integration> integrations)? initial,
-    TResult Function(List<Integration> integrations)? loading,
-    TResult Function(List<Integration> integrations)? loaded,
-    TResult Function(List<Integration> integrations, String message)? error,
+    TResult Function(Iterable<Integration> integrations)? initial,
+    TResult Function(Iterable<Integration> integrations)? loading,
+    TResult Function(Iterable<Integration> integrations)? loaded,
+    TResult Function(Iterable<Integration> integrations, String message)? error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -576,11 +566,11 @@ class _$IntegrationsLoaded implements IntegrationsLoaded {
 }
 
 abstract class IntegrationsLoaded implements IntegrationsState {
-  const factory IntegrationsLoaded(final List<Integration> integrations) =
+  const factory IntegrationsLoaded(final Iterable<Integration> integrations) =
       _$IntegrationsLoaded;
 
   @override
-  List<Integration> get integrations;
+  Iterable<Integration> get integrations;
   @override
   @JsonKey(ignore: true)
   _$$IntegrationsLoadedCopyWith<_$IntegrationsLoaded> get copyWith =>
@@ -595,7 +585,7 @@ abstract class _$$IntegrationsErrorCopyWith<$Res>
       __$$IntegrationsErrorCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<Integration> integrations, String message});
+  $Res call({Iterable<Integration> integrations, String message});
 }
 
 /// @nodoc
@@ -614,9 +604,9 @@ class __$$IntegrationsErrorCopyWithImpl<$Res>
   }) {
     return _then(_$IntegrationsError(
       null == integrations
-          ? _value._integrations
+          ? _value.integrations
           : integrations // ignore: cast_nullable_to_non_nullable
-              as List<Integration>,
+              as Iterable<Integration>,
       null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -628,17 +618,10 @@ class __$$IntegrationsErrorCopyWithImpl<$Res>
 /// @nodoc
 
 class _$IntegrationsError implements IntegrationsError {
-  const _$IntegrationsError(final List<Integration> integrations, this.message)
-      : _integrations = integrations;
+  const _$IntegrationsError(this.integrations, this.message);
 
-  final List<Integration> _integrations;
   @override
-  List<Integration> get integrations {
-    if (_integrations is EqualUnmodifiableListView) return _integrations;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_integrations);
-  }
-
+  final Iterable<Integration> integrations;
   @override
   final String message;
 
@@ -653,13 +636,13 @@ class _$IntegrationsError implements IntegrationsError {
         (other.runtimeType == runtimeType &&
             other is _$IntegrationsError &&
             const DeepCollectionEquality()
-                .equals(other._integrations, _integrations) &&
+                .equals(other.integrations, integrations) &&
             (identical(other.message, message) || other.message == message));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_integrations), message);
+      runtimeType, const DeepCollectionEquality().hash(integrations), message);
 
   @JsonKey(ignore: true)
   @override
@@ -670,10 +653,11 @@ class _$IntegrationsError implements IntegrationsError {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(List<Integration> integrations) initial,
-    required TResult Function(List<Integration> integrations) loading,
-    required TResult Function(List<Integration> integrations) loaded,
-    required TResult Function(List<Integration> integrations, String message)
+    required TResult Function(Iterable<Integration> integrations) initial,
+    required TResult Function(Iterable<Integration> integrations) loading,
+    required TResult Function(Iterable<Integration> integrations) loaded,
+    required TResult Function(
+            Iterable<Integration> integrations, String message)
         error,
   }) {
     return error(integrations, message);
@@ -682,10 +666,11 @@ class _$IntegrationsError implements IntegrationsError {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<Integration> integrations)? initial,
-    TResult? Function(List<Integration> integrations)? loading,
-    TResult? Function(List<Integration> integrations)? loaded,
-    TResult? Function(List<Integration> integrations, String message)? error,
+    TResult? Function(Iterable<Integration> integrations)? initial,
+    TResult? Function(Iterable<Integration> integrations)? loading,
+    TResult? Function(Iterable<Integration> integrations)? loaded,
+    TResult? Function(Iterable<Integration> integrations, String message)?
+        error,
   }) {
     return error?.call(integrations, message);
   }
@@ -693,10 +678,10 @@ class _$IntegrationsError implements IntegrationsError {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<Integration> integrations)? initial,
-    TResult Function(List<Integration> integrations)? loading,
-    TResult Function(List<Integration> integrations)? loaded,
-    TResult Function(List<Integration> integrations, String message)? error,
+    TResult Function(Iterable<Integration> integrations)? initial,
+    TResult Function(Iterable<Integration> integrations)? loading,
+    TResult Function(Iterable<Integration> integrations)? loaded,
+    TResult Function(Iterable<Integration> integrations, String message)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -745,11 +730,11 @@ class _$IntegrationsError implements IntegrationsError {
 
 abstract class IntegrationsError implements IntegrationsState {
   const factory IntegrationsError(
-          final List<Integration> integrations, final String message) =
+          final Iterable<Integration> integrations, final String message) =
       _$IntegrationsError;
 
   @override
-  List<Integration> get integrations;
+  Iterable<Integration> get integrations;
   String get message;
   @override
   @JsonKey(ignore: true)
