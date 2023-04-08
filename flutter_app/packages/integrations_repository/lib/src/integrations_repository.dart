@@ -1,4 +1,4 @@
-import 'dart:collection/collection.dart';
+import 'dart:async';
 
 import 'package:async/async.dart' show StreamGroup;
 import 'package:integrations_repository/src/exceptions/exceptions.dart';
@@ -12,7 +12,7 @@ class IntegrationsRepository {
   IntegrationsRepository({
     Iterable<PlatformIntegrationRepository>? repositories,
   }) {
-    _platformMap = HashMap.fromEntries(
+    _platformMap = Map.fromEntries(
       (repositories ?? []).map((e) => MapEntry(e.platform, e)),
     );
   }
@@ -20,7 +20,7 @@ class IntegrationsRepository {
   /// A map of all the platform repositories.
   /// This is used to get the repository from a specific platform.
   /// It is initialized in the constructor.
-  late final HashMap<Platform, PlatformIntegrationRepository> _platformMap;
+  late final Map<Platform, PlatformIntegrationRepository> _platformMap;
 
   /// Returns a stream of all integrations from all sources. This stream reacts
   /// to changes in the integrations, like additions or removals.
@@ -130,4 +130,14 @@ class IntegrationsRepository {
     }
     return repository.getProjectsFromIntegration(integration);
   }
+
+  /// Returns a list of tiles that can be used to create a new integration.
+  Iterable<PlatformIntegrationTile> getIntegrationTiles(
+    FutureOr<void> Function(Integration) onIntegrationCreated,
+  ) =>
+      _platformMap.values
+          .map(
+            (repository) => repository.getIntegrationTile(onIntegrationCreated),
+          )
+          .expand((e) => e);
 }

@@ -1,6 +1,8 @@
 import 'dart:async';
+
 import 'package:platform_integration_repository/src/data_sources/platform_integration_storage.dart';
 import 'package:platform_integration_repository/src/entities/entities.dart';
+import 'package:platform_integration_repository/src/ui/ui.dart';
 
 /// {@template platform_integration_repository}
 /// Base class to implement new integrations for a given [PlatformType].
@@ -33,7 +35,7 @@ abstract class PlatformIntegrationRepository<PlatformType extends Platform,
 
   final PlatformIntegrationStorage<PlatformType, IntegrationType> _storage;
 
-  /// The platform that reporesents the repository
+  /// The platform that represents the repository
   final PlatformType platform;
 
   /// Returns all the tasks that are linked to an specific [project] and are
@@ -61,4 +63,11 @@ abstract class PlatformIntegrationRepository<PlatformType extends Platform,
   /// Deletes an [integration] from the repository.
   Future<void> deleteIntegration(IntegrationType integration) =>
       _storage.deleteIntegration(integration);
+
+  /// Returns a list of PlatformIntegrationTile that will be used to display
+  /// all the possible integrations in the ui and how to integrate them.
+  Iterable<PlatformIntegrationTile<PlatformType, IntegrationType>>
+      getIntegrationTile(
+    FutureOr<void> Function(IntegrationType) onIntegrationCreated,
+  );
 }

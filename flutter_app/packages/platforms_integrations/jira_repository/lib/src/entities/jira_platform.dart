@@ -12,5 +12,5 @@ class JiraPlatform extends Platform {
 const jiraPlatform = JiraPlatform(
   id: 'jira',
   iconUrl:
-      'https://www.atlassian.com/dam/jcr:2b5c9a9a-3f1f-4d2b-af80-21f284a247e4/jira-logo.svg',
+      'https://logos-world.net/wp-content/uploads/2021/02/Jira-Emblem-700x394.png',
 );

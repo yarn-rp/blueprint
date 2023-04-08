@@ -198,14 +198,16 @@ class JiraIntegrationMapper extends PlatformIntegrationMapper<JiraIntegration> {
 
   @override
   JiraIntegration fromJson(Map<String, dynamic> json) {
-    // TODO: implement fromJson
-    throw UnimplementedError();
+    return fromJsonToIntegration(json);
   }
 
   @override
   Map<String, dynamic> toJson(Integration integration) {
-    // TODO: implement toJson
-    throw UnimplementedError();
+    if (integration is JiraIntegration) {
+      return fromIntegrationToJson(integration);
+    }
+
+    throw Exception('Integration not supported');
   }
 }
 

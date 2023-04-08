@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:integrations_repository/integrations_repository.dart';
 import 'package:jira_repository/jira_repository.dart';
-import 'package:poll_e_task/integrations/presentation/widgets/add_integration_card.dart';
-import 'package:poll_e_task/integrations/presentation/widgets/create_integration_modals/create_integration_modals.dart';
 import 'package:poll_e_task/integrations/state_management/cubit/integrations_cubit.dart';
 
 class IntegrationsPage extends StatefulWidget {
@@ -55,31 +53,9 @@ class _IntegrationsPageState extends State<IntegrationsPage> {
             runSpacing: 16,
             spacing: 16,
             children: [
-              CreateJiraBasicAuthIntegrationCard(
-                onIntegrationCreated: (JiraIntegration integration) {
-                  context.read<IntegrationsCubit>().addIntegration(integration);
-                },
-              ),
-              CreateGithubIntegrationCard(
-                onIntegrationCreated: (JiraIntegration integration) {
-                  context.read<IntegrationsCubit>().addIntegration(integration);
-                },
-              ),
-              CreateTrelloBasicAuthIntegrationCard(
-                onIntegrationCreated: (JiraIntegration integration) {
-                  context.read<IntegrationsCubit>().addIntegration(integration);
-                },
-              ),
-              CreateAsanaBasicAuthIntegrationCard(
-                onIntegrationCreated: (JiraIntegration integration) {
-                  context.read<IntegrationsCubit>().addIntegration(integration);
-                },
-              ),
-              CreateOpenAIIntegrationCard(
-                onIntegrationCreated: (JiraIntegration integration) {
-                  context.read<IntegrationsCubit>().addIntegration(integration);
-                },
-              ),
+              ...context.read<IntegrationsRepository>().getIntegrationTiles(
+                    context.read<IntegrationsCubit>().addIntegration,
+                  ),
             ],
           ),
         ],
