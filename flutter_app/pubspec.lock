@@ -405,6 +405,21 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.2.0"
+  github:
+    dependency: transitive
+    description:
+      name: github
+      sha256: "3150898cd04af1213379b98fcd3f75681518eb12bb37b1c3ac489656b98c2138"
+      url: "https://pub.dev"
+    source: hosted
+    version: "9.11.0"
+  github_repository:
+    dependency: "direct main"
+    description:
+      path: "packages/platforms_integrations/github_repository"
+      relative: true
+    source: path
+    version: "0.1.0+1"
   glob:
     dependency: transitive
     description:

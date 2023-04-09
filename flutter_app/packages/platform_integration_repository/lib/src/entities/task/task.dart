@@ -24,7 +24,7 @@ class Task {
     required this.assigned,
     required this.creator,
     required this.isCompleted,
-    required this.status,
+    required this.labels,
     required this.priority,
   });
 
@@ -71,7 +71,7 @@ class Task {
   final bool isCompleted;
 
   /// status of the ticket
-  final Status status;
+  final Iterable<Label> labels;
 
   /// The priority of the ticket
   /// This is an int between 1 and 5. 1 being the highest priority and 5 being

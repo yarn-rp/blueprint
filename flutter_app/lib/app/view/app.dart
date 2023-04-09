@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:github_repository/github_repository.dart';
 import 'package:integrations_repository/integrations_repository.dart';
 import 'package:jira_repository/jira_repository.dart';
 import 'package:poll_e_task/app/presentation/pages/intial_page.dart';
@@ -9,7 +10,7 @@ import 'package:poll_e_task/integrations/state_management/cubit/integrations_cub
 import 'package:poll_e_task/l10n/l10n.dart';
 import 'package:poll_e_task/projects/presentation/pages/projects.dart';
 import 'package:poll_e_task/projects/state_management/projects_cubit/projects_cubit.dart';
-import 'package:poll_e_task/tasks/presentation/pages/tickets_page.dart';
+import 'package:poll_e_task/tasks/presentation/pages/tasks_page.dart';
 import 'package:poll_e_task/tasks/state_management/cubit/tasks_cubit.dart';
 
 /// Injects all the repositories into the widget tree.
@@ -22,12 +23,14 @@ class RepositoriesProvider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final jiraRepository =
-        JiraRepository(secureStorage: const FlutterSecureStorage());
+    const secureStorage = FlutterSecureStorage();
+    final jiraRepository = JiraRepository(secureStorage: secureStorage);
+    final githubRepository = GithubRepository(secureStorage: secureStorage);
 
     final integrationRepository = IntegrationsRepository(
       repositories: [
         jiraRepository,
+        githubRepository,
       ],
     );
 
@@ -54,12 +57,12 @@ class BlocsProvider extends StatelessWidget {
         BlocProvider.value(
           value: ProjectsCubit(
             context.read<IntegrationsRepository>(),
-          ),
+          )..loadProjects(),
         ),
         BlocProvider.value(
           value: TasksCubit(
             context.read<IntegrationsRepository>(),
-          ),
+          )..loadTasks(),
         ),
         BlocProvider.value(
           value: IntegrationsCubit(

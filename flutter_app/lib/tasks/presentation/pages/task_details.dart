@@ -194,13 +194,12 @@ class TaskDetails extends StatelessWidget {
                                   height: 16,
                                 ),
 
-                                Row(
+                                Wrap(
+                                  spacing: 8,
                                   children: [
                                     ProjectChip(project: task.project),
-                                    const SizedBox(
-                                      width: 16,
-                                    ),
-                                    TaskStatusChip(task: task),
+                                    ...task.labels
+                                        .map((e) => LabelChip(label: e)),
                                   ],
                                 ),
                                 const SizedBox(

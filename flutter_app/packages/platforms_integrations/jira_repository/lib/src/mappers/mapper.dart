@@ -104,7 +104,7 @@ class JiraIntegrationMapper extends PlatformIntegrationMapper<JiraIntegration> {
       assigned: [if (userAssigned != null) userAssigned],
       creator: userCreator,
       isCompleted: isCompleted,
-      status: status,
+      labels: [status],
       priority: priority,
     );
   }
@@ -126,16 +126,16 @@ class JiraIntegrationMapper extends PlatformIntegrationMapper<JiraIntegration> {
   }
 
   /// Maps a Map<String,dynamic> with the data of the jira api to a [Status].
-  Status fromJiraApiStatusToStatus(Map<String, dynamic>? status) {
+  Label fromJiraApiStatusToStatus(Map<String, dynamic>? status) {
     if (status == null) {
-      return Status('No Status', '#FFC107');
+      return Label('No Status', '#FFC107');
     }
     final name = status['name'] as String? ?? '';
     final colorName = status['statusCategory']['colorName'] as String? ?? '';
 
     final color = coolColors[colorName] ?? '#FFC107';
 
-    return Status(name, color);
+    return Label(name, color);
   }
 
   int fromJiraApiPriorityToPriority(Map<String, dynamic>? priority) {

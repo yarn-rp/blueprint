@@ -100,8 +100,12 @@ class IntegrationCard extends StatelessWidget {
                 top: 0,
                 right: 0,
                 child: IconButton(
-                  icon: const Icon(Icons.more_vert),
-                  onPressed: () {},
+                  icon: const Icon(Icons.close),
+                  onPressed: () {
+                    context.read<IntegrationsCubit>().deleteIntegration(
+                          integration,
+                        );
+                  },
                 ),
               ),
               Positioned(

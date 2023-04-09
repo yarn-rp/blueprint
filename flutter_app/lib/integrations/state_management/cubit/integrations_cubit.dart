@@ -24,4 +24,13 @@ class IntegrationsCubit extends Cubit<IntegrationsState> {
       emit(IntegrationsState.error(state.integrations, e.toString()));
     }
   }
+
+  Future<void> deleteIntegration(Integration integration) async {
+    emit(IntegrationsState.loading(state.integrations));
+    try {
+      await integrationRepository.deleteIntegration(integration);
+    } catch (e) {
+      emit(IntegrationsState.error(state.integrations, e.toString()));
+    }
+  }
 }

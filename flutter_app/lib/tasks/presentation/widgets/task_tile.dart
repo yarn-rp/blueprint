@@ -40,16 +40,13 @@ class TaskTile extends StatelessWidget {
             ),
             subtitle: Padding(
               padding: const EdgeInsets.symmetric(vertical: 8),
-              child: Row(
+              child: Wrap(
+                spacing: 8,
                 children: [
                   ProjectChip(project: task.project),
-                  const SizedBox(
-                    width: 8,
-                  ),
-                  TaskStatusChip(task: task),
-                  const SizedBox(
-                    width: 8,
-                  ),
+                  ...task.labels.map(
+                    (e) => LabelChip(label: e),
+                  )
                 ],
               ),
             ),

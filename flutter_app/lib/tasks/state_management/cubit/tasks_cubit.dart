@@ -30,7 +30,12 @@ class TasksCubit extends Cubit<TasksState> {
           if (isClosed) {
             return;
           }
-          emit(TasksState.loaded(tasks));
+          emit(
+            TasksState.loaded(
+              tasks.toList()
+                ..sort((a, b) => a.updatedAt.isAfter(b.updatedAt) ? -1 : 1),
+            ),
+          );
         },
       );
     } catch (e) {

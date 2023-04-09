@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:integrations_repository/integrations_repository.dart';
-import 'package:poll_e_task/utils/color/hex_color_extension.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ProjectChip extends StatelessWidget {
@@ -18,6 +17,7 @@ class ProjectChip extends StatelessWidget {
       onTap: () => launchUrl(project.platformURL),
       child: Chip(
         label: Row(
+          mainAxisSize: MainAxisSize.min,
           children: [
             CachedNetworkImage(
               imageUrl: project.integration.platform.iconUrl,
@@ -30,7 +30,7 @@ class ProjectChip extends StatelessWidget {
             ),
           ],
         ),
-        backgroundColor: HexColor.fromHex(project.colorHex),
+        backgroundColor: Colors.transparent,
       ),
     );
   }

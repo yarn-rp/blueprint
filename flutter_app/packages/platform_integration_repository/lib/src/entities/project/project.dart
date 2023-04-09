@@ -13,7 +13,9 @@ class Project {
     required this.name,
     required this.description,
     required this.colorHex,
+    this.owner,
     this.iconUrl,
+    this.slug,
   });
 
   /// Kick-off identifier for the project.
@@ -39,4 +41,10 @@ class Project {
 
   /// The color of the project.
   final String colorHex;
+
+  /// The owner of the project.
+  final String? owner;
+
+  /// Slug of the project for indexed search.
+  final String? slug;
 }

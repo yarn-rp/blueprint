@@ -18,6 +18,8 @@ dependencies:
   flutter_markdown: ^0.6.14
   freezed: ^2.3.2
   freezed_annotation: ^2.2.0
+  github_repository:
+    path: ./packages/platforms_integrations/github_repository
   intl: ^0.17.0
   jira_repository:
     path: ./packages/platforms_integrations/jira_repository

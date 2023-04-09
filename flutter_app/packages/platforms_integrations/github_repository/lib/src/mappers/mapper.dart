@@ -57,12 +57,21 @@ class GitHubIntegrationMapper
     final userAssigned = fromGitHubApiUserToUser(githubIssue.assignee);
     final issueState = githubIssue.state;
 
-    final status = Status(
+    final status = Label(
       issueState,
       colorFromId(
         issueState.hashCode.toString(),
       ),
     );
+
+    final issueLabels = githubIssue.labels;
+
+    final labels = [
+      status,
+      ...issueLabels.map(
+        fromGitHubApiIssueLabelToLabel,
+      )
+    ];
 
     final priority = extractPriority(githubIssue);
     final isCompleted = githubIssue.isClosed;
@@ -82,7 +91,74 @@ class GitHubIntegrationMapper
       assigned: [if (userAssigned != null) userAssigned],
       creator: userCreator!,
       isCompleted: isCompleted,
-      status: status,
+      labels: labels,
+      priority: priority,
+    );
+  }
+
+  /// Maps a [GitHub.IssueBean] to a [Task].
+  Task fromGitHubApiPullRequestToTask(
+    github_api.PullRequest pullRequest,
+    Project project,
+  ) {
+    final issueId = pullRequest.id;
+    final createdAt = pullRequest.createdAt;
+    final updatedAt = pullRequest.updatedAt;
+    final taskURL = pullRequest.htmlUrl;
+    final title = pullRequest.title;
+    final description = pullRequest.body;
+    final startDate = pullRequest.createdAt;
+    final dueDate = pullRequest.closedAt;
+    final estimatedTime = dueDate != null && startDate != null
+        ? dueDate.difference(startDate)
+        : null;
+
+    final userCreator = fromGitHubApiUserToUser(pullRequest.user);
+
+    final assigned =
+        pullRequest.requestedReviewers?.map(fromGitHubApiUserToUser);
+
+    final issueState = pullRequest.state;
+
+    final status = Label(
+      issueState ?? 'open',
+      colorFromId(
+        issueState.hashCode.toString(),
+      ),
+    );
+
+    final labels = [
+      if (pullRequest.labels != null)
+        ...pullRequest.labels!.map(
+          fromGitHubApiIssueLabelToLabel,
+        )
+    ];
+
+    const priority = 2;
+    final isCompleted = pullRequest.merged ?? false;
+
+    return Task(
+      id: issueId.toString(),
+      createdAt: createdAt ?? DateTime.now(),
+      updatedAt: updatedAt ?? DateTime.now(),
+      project: project,
+      taskURL: Uri.parse(taskURL!),
+      title: 'PR: ${title ?? ''}',
+      description: description ?? '',
+      startDate: startDate,
+      dueDate: dueDate,
+      estimatedTime: estimatedTime,
+      loggedTime: Duration.zero,
+      assigned: [
+        if (assigned != null)
+          ...assigned
+              .where((element) => element != null)
+              .map((e) => e!)
+              .toList()
+      ],
+      creator: userCreator!,
+      isCompleted: isCompleted,
+      labels: labels,
       priority: priority,
     );
   }
@@ -140,16 +216,14 @@ class GitHubIntegrationMapper
   }
 
   /// Maps a Map<String,dynamic> with the data of the jira api to a [Status].
-  Status fromGitHubApiStatusToStatus(Map<String, dynamic>? status) {
-    if (status == null) {
-      return Status('No Status', '#FFC107');
-    }
-    final name = status['name'] as String? ?? '';
-    final colorName = status['statusCategory']['colorName'] as String? ?? '';
+  Label fromGitHubApiIssueLabelToLabel(github_api.IssueLabel issueLabel) {
+    final statusName = issueLabel.name;
+    final statusColor = issueLabel.color;
 
-    final color = coolColors[colorName] ?? '#FFC107';
-
-    return Status(name, color);
+    return Label(
+      statusName,
+      statusColor,
+    );
   }
 
   int fromGitHubApiPriorityToPriority(Map<String, dynamic>? priority) {

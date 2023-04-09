@@ -55,9 +55,10 @@ class GithubRepository
         repoSlug,
       )
           .where((issue) {
-        final user = issue.assignee;
+        final user = issue.assignees;
+        final isAssignedToMe = user != null && user.contains(githubUser);
 
-        return user != null && user.login == githubUser.login;
+        return isAssignedToMe;
       }).toList();
     } catch (e) {
       log(
@@ -67,11 +68,34 @@ class GithubRepository
       issues = [];
     }
 
-    final pullRequests = await github.pullRequests.list(repoSlug).toList();
+    late final List<github_api.PullRequest> pullRequests;
+    try {
+      pullRequests = await github.pullRequests.list(repoSlug).where((element) {
+        final reviewers = element.requestedReviewers;
+
+        final isAssignedToMe = reviewers != null &&
+            reviewers.any((user) => user.login == githubUser.login);
+        final isAuthor = element.user?.login == githubUser.login;
+
+        return isAssignedToMe || isAuthor;
+      }).toList();
+    } catch (e) {
+      log(
+        'Error getting pull requests from GitHub slug: ${project.owner}',
+        error: e,
+      );
+      pullRequests = [];
+    }
 
     final tasks = [
       ...issues.map(
         (event) => _integrationMapper.fromGitHubApiIssueToTask(
+          event,
+          project,
+        ),
+      ),
+      ...pullRequests.map(
+        (event) => _integrationMapper.fromGitHubApiPullRequestToTask(
           event,
           project,
         ),
@@ -96,16 +120,21 @@ class GithubRepository
         direction: 'desc',
       )
           .where((repo) {
-        final isActive = repo.updatedAt?.isBefore(
-              DateTime.now().subtract(
-                const Duration(
-                  days: 30,
-                ),
-              ),
-            ) ??
-            false;
+        final isActive = !repo.disabled &&
+            !repo.archived &&
+            (repo.updatedAt?.isBefore(
+                  DateTime.now().subtract(
+                    const Duration(
+                      days: 30,
+                    ),
+                  ),
+                ) ??
+                false);
 
-        return isActive && !repo.archived;
+        final hasIssues = repo.hasIssues;
+        final hasPendingIssues = hasIssues && repo.openIssuesCount != 0;
+
+        return isActive && hasPendingIssues;
       }).toList();
 
       final projects = repositories.map((event) {

@@ -1,8 +1,9 @@
 import 'dart:async';
+import 'dart:developer';
 
-import 'package:async/async.dart' show StreamGroup;
 import 'package:integrations_repository/src/exceptions/exceptions.dart';
 import 'package:platform_integration_repository/platform_integration_repository.dart';
+import 'package:stream_transform/stream_transform.dart';
 
 /// {@template integrations_repository}
 /// A Very Good Project created by Very Good CLI.
@@ -24,27 +25,30 @@ class IntegrationsRepository {
 
   /// Returns a stream of all integrations from all sources. This stream reacts
   /// to changes in the integrations, like additions or removals.
-  Stream<Iterable<Integration>> getAllIntegrations() => StreamGroup.merge(
-        _platformMap.values.map(_getRepositoryIntegrations),
-      );
+  Stream<Iterable<Integration>> getAllIntegrations() =>
+      _platformMap.values.map(_getRepositoryIntegrations).reduce(
+            (previous, current) => previous.combineLatest(
+              current,
+              (a, b) => [...a, ...b],
+            ),
+          );
 
   /// Returns a stream of all integrations from all repositories.
   Stream<Iterable<Platform>> getAllPlatforms() => getAllIntegrations().map(
         (integrations) => integrations.map((e) => e.platform),
       );
 
-  /// Returns a stream of all thhe projects that are linked to the app
-  Stream<Iterable<Project>> getAllProjects() {
-    final repositories = _platformMap.values;
-
-    return StreamGroup.merge(
-      repositories.map(
+  /// Returns a stream of all the projects that are linked to the app
+  Stream<Iterable<Project>> getAllProjects() => _platformMap.values
+      .map(
         (repo) => _getPlatformProjects(repo.platform),
-      ),
-    );
-  }
+      )
+      .reduce(
+        (previous, current) =>
+            previous.combineLatest(current, (a, b) => [...a, ...b]),
+      );
 
-  /// Returs a stream of all tasks that are related to the current user in all
+  /// Returns a stream of all tasks that are related to the current user in all
   /// the projects that are linked to the app.
   Stream<Iterable<Task>> getAllTasksRelatedToMe() => getAllProjects()
       .asyncMap(
@@ -74,6 +78,16 @@ class IntegrationsRepository {
     return repository.deleteIntegration(integration);
   }
 
+  /// Returns a list of tiles that can be used to create a new integration.
+  Iterable<PlatformIntegrationTile> getIntegrationTiles(
+    FutureOr<void> Function(Integration) onIntegrationCreated,
+  ) =>
+      _platformMap.values
+          .map(
+            (repository) => repository.getIntegrationTile(onIntegrationCreated),
+          )
+          .expand((e) => e);
+
   /// Returns all the tasks that are linked to an specific [project].
   Future<Iterable<Task>> _getProjectTasksRelatedToMe(Project project) {
     final integration = project.integration;
@@ -90,24 +104,37 @@ class IntegrationsRepository {
   /// repository, it returns an empty list.
   Stream<List<Project>> _getPlatformProjects(
     Platform platform,
-  ) {
+  ) async* {
     final repository = _platformMap[platform];
     if (repository == null) {
-      return Stream.value([]);
+      yield [];
+      return;
     }
     try {
+      log('Getting projects from $platform', name: 'IntegrationsRepository');
+
       /// Get all the integrations from the repository
       final integrationsStream = repository.getIntegrations();
 
-      final projectsStream = integrationsStream.asyncMap(
+      final integrationProjects = integrationsStream.asyncMap(
         (integrations) => Future.wait(
           integrations.map(_getProjectsFromIntegration),
-        ).then((projects) => projects.expand((e) => e).toList()),
+        ),
       );
 
-      return projectsStream;
+      yield* integrationProjects.map((platformProjects) {
+        log(
+          'Found ${platformProjects.length} projects from $platform',
+          name: 'IntegrationsRepository',
+        );
+        return platformProjects.expand((element) => element).toList();
+      });
     } on IntegrationNotFoundException {
-      return Stream.value([]);
+      log(
+        'No integrations found for $platform',
+        name: 'IntegrationsRepository',
+      );
+      yield [];
     }
   }
 
@@ -130,14 +157,4 @@ class IntegrationsRepository {
     }
     return repository.getProjectsFromIntegration(integration);
   }
-
-  /// Returns a list of tiles that can be used to create a new integration.
-  Iterable<PlatformIntegrationTile> getIntegrationTiles(
-    FutureOr<void> Function(Integration) onIntegrationCreated,
-  ) =>
-      _platformMap.values
-          .map(
-            (repository) => repository.getIntegrationTile(onIntegrationCreated),
-          )
-          .expand((e) => e);
 }
