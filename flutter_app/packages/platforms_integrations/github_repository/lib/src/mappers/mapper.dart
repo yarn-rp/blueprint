@@ -17,7 +17,7 @@ class GitHubIntegrationMapper
   ) {
     final projectId = repository.id;
     final projectUuid = repository.id;
-    final projectName = repository.slug().fullName;
+    final projectName = repository.name;
     final platformURL = repository.htmlUrl;
     final description = repository.description;
 
@@ -31,6 +31,8 @@ class GitHubIntegrationMapper
       description: description,
       colorHex: color,
       integration: integration,
+      owner: repository.owner?.login,
+      slug: repository.slug().fullName,
     );
   }
 
@@ -88,7 +90,7 @@ class GitHubIntegrationMapper
   int extractPriority(
     github_api.Issue githubIssue,
   ) {
-    late String priority;
+    var priority = 'low';
     for (final label in githubIssue.labels) {
       if (label.name.toLowerCase().contains('priority')) {
         priority = label.name.substring(label.name.indexOf(':') + 1).trim();
@@ -193,6 +195,9 @@ class GitHubIntegrationMapper
     if (integration is GitHubBasicAuthIntegration) {
       return integration.toJson();
     }
+    if (integration is GitHubTokenAuthIntegration) {
+      return integration.toJson();
+    }
 
     throw Exception('Integration not supported');
   }
@@ -203,6 +208,9 @@ class GitHubIntegrationMapper
     final type = json['type'] as String? ?? '';
     if (type == 'basic_auth') {
       return GitHubBasicAuthIntegration.fromJson(json);
+    }
+    if (type == 'token_auth') {
+      return GitHubTokenAuthIntegration.fromJson(json);
     }
 
     throw Exception('Integration not supported');

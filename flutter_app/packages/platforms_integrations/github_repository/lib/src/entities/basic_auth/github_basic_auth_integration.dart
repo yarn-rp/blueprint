@@ -10,7 +10,7 @@ part 'github_basic_auth_integration.g.dart';
 class GitHubBasicAuthIntegration extends GitHubIntegration {
   /// Creates a new [GitHubBasicAuthIntegration] instance with the provided
   const GitHubBasicAuthIntegration({
-    required super.username,
+    required this.username,
     required this.password,
   }) : super();
 
@@ -20,6 +20,8 @@ class GitHubBasicAuthIntegration extends GitHubIntegration {
 
   /// The password of the GitHub user.
   final String password;
+
+  final String username;
 
   @override
   List<Object?> get props => [username, password];

@@ -23,6 +23,11 @@ class GitHubPlatformApis {
             ),
           );
         }
+        if (element is GitHubTokenAuthIntegration) {
+          return github_api.GitHub(
+            auth: github_api.Authentication.withToken(element.token),
+          );
+        }
         throw Exception('Unsupported GitHub integration');
       },
     );
@@ -42,6 +47,14 @@ class GitHubPlatformApis {
           integration.username,
           integration.password,
         ),
+      );
+
+      _githubPlatformApis[integration] = client;
+      return client;
+    }
+    if (integration is GitHubTokenAuthIntegration) {
+      final client = github_api.GitHub(
+        auth: github_api.Authentication.withToken(integration.token),
       );
 
       _githubPlatformApis[integration] = client;
