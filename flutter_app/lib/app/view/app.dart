@@ -5,6 +5,7 @@ import 'package:github_repository/github_repository.dart';
 import 'package:integrations_repository/integrations_repository.dart';
 import 'package:jira_repository/jira_repository.dart';
 import 'package:poll_e_task/app/presentation/pages/intial_page.dart';
+import 'package:poll_e_task/blueprint/presentation/pages/todays_blueprint.dart';
 import 'package:poll_e_task/integrations/presentation/pages/integrations_page.dart';
 import 'package:poll_e_task/integrations/state_management/cubit/integrations_cubit.dart';
 import 'package:poll_e_task/l10n/l10n.dart';
@@ -94,6 +95,11 @@ class App extends StatelessWidget {
           supportedLocales: AppLocalizations.supportedLocales,
           home: InitialPage(
             navigationPages: [
+              NavigationPageData(
+                text: 'Todays Blueprint',
+                icon: Icons.today,
+                page: const TodaysBlueprint(),
+              ),
               NavigationPageData(
                 text: 'Tasks',
                 icon: Icons.task_sharp,
