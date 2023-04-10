@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:integrations_repository/integrations_repository.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:markdown/markdown.dart' as md;
+import 'package:poll_e_task/blueprint/state_management/todays_blueprint/todays_blueprint_cubit.dart';
 import 'package:poll_e_task/projects/presentation/widgets/project_chip.dart';
 import 'package:poll_e_task/tasks/presentation/widgets/priority_widget.dart';
 import 'package:poll_e_task/tasks/presentation/widgets/status_chip.dart';
@@ -78,7 +80,11 @@ class TaskDetails extends StatelessWidget {
                 Row(
                   children: [
                     FilledButton.icon(
-                      onPressed: () => launchUrl(task.taskURL),
+                      onPressed: () {
+                        context
+                            .read<TodaysBlueprintCubit>()
+                            .addTaskToTodaysBlueprint(task);
+                      },
                       icon: const Icon(Icons.add),
                       label: const Text('Add to Today'),
                     ),

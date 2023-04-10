@@ -65,7 +65,7 @@ class __GitHubBasicAuthCreateModalState
           if (_formKey.currentState?.validate() ?? false) {
             widget.onIntegrationCreated(
               const GitHubTokenAuthIntegration(
-                token: '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',
+                token: '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',
               ),
             );
             Navigator.of(context).pop();

@@ -6,6 +6,7 @@ import 'package:integrations_repository/integrations_repository.dart';
 import 'package:jira_repository/jira_repository.dart';
 import 'package:poll_e_task/app/presentation/pages/intial_page.dart';
 import 'package:poll_e_task/blueprint/presentation/pages/todays_blueprint.dart';
+import 'package:poll_e_task/blueprint/state_management/todays_blueprint/todays_blueprint_cubit.dart';
 import 'package:poll_e_task/integrations/presentation/pages/integrations_page.dart';
 import 'package:poll_e_task/integrations/state_management/cubit/integrations_cubit.dart';
 import 'package:poll_e_task/l10n/l10n.dart';
@@ -70,6 +71,9 @@ class BlocsProvider extends StatelessWidget {
             context.read<IntegrationsRepository>(),
           ),
         ),
+        BlocProvider.value(
+          value: TodaysBlueprintCubit(),
+        )
       ],
       child: child,
     );
