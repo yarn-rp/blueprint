@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:poll_e_task/blueprint/presentation/pages/today_time_line.dart';
 import 'package:poll_e_task/tasks/presentation/pages/task_details.dart';
 import 'package:poll_e_task/tasks/presentation/widgets/task_tile.dart';
 import 'package:poll_e_task/tasks/state_management/cubit/tasks_cubit.dart';
@@ -10,10 +11,11 @@ class TasksPage extends StatefulWidget {
   });
 
   @override
-  State<TasksPage> createState() => TasksPageState();
+  State<TasksPage> createState() => _TasksPageState();
 }
 
-class TasksPageState extends State<TasksPage> {
+class _TasksPageState extends State<TasksPage>
+    with AutomaticKeepAliveClientMixin {
   @override
   void initState() {
     context.read<TasksCubit>().loadTasks();
@@ -26,10 +28,12 @@ class TasksPageState extends State<TasksPage> {
       builder: (context, state) {
         final tasks = state.tasks;
         final isPhone = MediaQuery.of(context).size.width < 600;
+        final isWide = MediaQuery.of(context).size.width > 1200;
         return Scaffold(
           body: Row(
             children: [
               Expanded(
+                flex: 4,
                 child: AnimatedContainer(
                   padding: EdgeInsets.all(isPhone ? 4 : 32),
                   curve: Curves.fastLinearToSlowEaseIn,
@@ -73,10 +77,21 @@ class TasksPageState extends State<TasksPage> {
                   ),
                 ),
               ),
+              if (isWide)
+                const Expanded(
+                  flex: 3,
+                  child: Padding(
+                    padding: EdgeInsets.only(right: 16),
+                    child: TodayTimeline(),
+                  ),
+                )
             ],
           ),
         );
       },
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

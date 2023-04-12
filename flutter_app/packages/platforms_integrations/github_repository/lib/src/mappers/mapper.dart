@@ -99,8 +99,10 @@ class GitHubIntegrationMapper
   /// Maps a [GitHub.IssueBean] to a [Task].
   Task fromGitHubApiPullRequestToTask(
     github_api.PullRequest pullRequest,
-    Project project,
-  ) {
+    Project project, {
+    required bool isAssignedToMe,
+    required bool isAuthor,
+  }) {
     final issueId = pullRequest.id;
     final createdAt = pullRequest.createdAt;
     final updatedAt = pullRequest.updatedAt;
@@ -137,13 +139,22 @@ class GitHubIntegrationMapper
     const priority = 2;
     final isCompleted = pullRequest.merged ?? false;
 
+    late String prefixTitle;
+    if (isAssignedToMe) {
+      prefixTitle = 'Code Review';
+    } else if (isAuthor) {
+      prefixTitle = 'Pull Request';
+    }
+
+    // Check if the pull request has at least one APPROVED review
+
     return Task(
       id: issueId.toString(),
       createdAt: createdAt ?? DateTime.now(),
       updatedAt: updatedAt ?? DateTime.now(),
       project: project,
       taskURL: Uri.parse(taskURL!),
-      title: 'PR: ${title ?? ''}',
+      title: '$prefixTitle: ${title ?? ''}',
       description: description ?? '',
       startDate: startDate,
       dueDate: dueDate,

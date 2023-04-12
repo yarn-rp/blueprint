@@ -37,46 +37,54 @@ TodaysBlueprintState _$TodaysBlueprintStateFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$TodaysBlueprintState {
   List<CalendarEvent> get calendarEvents => throw _privateConstructorUsedError;
+  DateTime get initialDateTime => throw _privateConstructorUsedError;
+  int get workingHours => throw _privateConstructorUsedError;
   DateTime get addedAt => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            List<CalendarEvent> calendarEvents, DateTime addedAt)
+    required TResult Function(List<CalendarEvent> calendarEvents,
+            DateTime initialDateTime, int workingHours, DateTime addedAt)
         initial,
-    required TResult Function(
-            List<CalendarEvent> calendarEvents, DateTime addedAt)
+    required TResult Function(List<CalendarEvent> calendarEvents,
+            DateTime initialDateTime, int workingHours, DateTime addedAt)
         loading,
-    required TResult Function(
-            List<CalendarEvent> calendarEvents, DateTime addedAt)
+    required TResult Function(List<CalendarEvent> calendarEvents,
+            DateTime initialDateTime, int workingHours, DateTime addedAt)
         loaded,
-    required TResult Function(
-            String error, List<CalendarEvent> calendarEvents, DateTime addedAt)
+    required TResult Function(String error, List<CalendarEvent> calendarEvents,
+            DateTime initialDateTime, int workingHours, DateTime addedAt)
         error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<CalendarEvent> calendarEvents, DateTime addedAt)?
+    TResult? Function(List<CalendarEvent> calendarEvents,
+            DateTime initialDateTime, int workingHours, DateTime addedAt)?
         initial,
-    TResult? Function(List<CalendarEvent> calendarEvents, DateTime addedAt)?
+    TResult? Function(List<CalendarEvent> calendarEvents,
+            DateTime initialDateTime, int workingHours, DateTime addedAt)?
         loading,
-    TResult? Function(List<CalendarEvent> calendarEvents, DateTime addedAt)?
+    TResult? Function(List<CalendarEvent> calendarEvents,
+            DateTime initialDateTime, int workingHours, DateTime addedAt)?
         loaded,
-    TResult? Function(
-            String error, List<CalendarEvent> calendarEvents, DateTime addedAt)?
+    TResult? Function(String error, List<CalendarEvent> calendarEvents,
+            DateTime initialDateTime, int workingHours, DateTime addedAt)?
         error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<CalendarEvent> calendarEvents, DateTime addedAt)?
+    TResult Function(List<CalendarEvent> calendarEvents,
+            DateTime initialDateTime, int workingHours, DateTime addedAt)?
         initial,
-    TResult Function(List<CalendarEvent> calendarEvents, DateTime addedAt)?
+    TResult Function(List<CalendarEvent> calendarEvents,
+            DateTime initialDateTime, int workingHours, DateTime addedAt)?
         loading,
-    TResult Function(List<CalendarEvent> calendarEvents, DateTime addedAt)?
+    TResult Function(List<CalendarEvent> calendarEvents,
+            DateTime initialDateTime, int workingHours, DateTime addedAt)?
         loaded,
-    TResult Function(
-            String error, List<CalendarEvent> calendarEvents, DateTime addedAt)?
+    TResult Function(String error, List<CalendarEvent> calendarEvents,
+            DateTime initialDateTime, int workingHours, DateTime addedAt)?
         error,
     required TResult orElse(),
   }) =>
@@ -118,7 +126,11 @@ abstract class $TodaysBlueprintStateCopyWith<$Res> {
           $Res Function(TodaysBlueprintState) then) =
       _$TodaysBlueprintStateCopyWithImpl<$Res, TodaysBlueprintState>;
   @useResult
-  $Res call({List<CalendarEvent> calendarEvents, DateTime addedAt});
+  $Res call(
+      {List<CalendarEvent> calendarEvents,
+      DateTime initialDateTime,
+      int workingHours,
+      DateTime addedAt});
 }
 
 /// @nodoc
@@ -136,6 +148,8 @@ class _$TodaysBlueprintStateCopyWithImpl<$Res,
   @override
   $Res call({
     Object? calendarEvents = null,
+    Object? initialDateTime = null,
+    Object? workingHours = null,
     Object? addedAt = null,
   }) {
     return _then(_value.copyWith(
@@ -143,6 +157,14 @@ class _$TodaysBlueprintStateCopyWithImpl<$Res,
           ? _value.calendarEvents
           : calendarEvents // ignore: cast_nullable_to_non_nullable
               as List<CalendarEvent>,
+      initialDateTime: null == initialDateTime
+          ? _value.initialDateTime
+          : initialDateTime // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      workingHours: null == workingHours
+          ? _value.workingHours
+          : workingHours // ignore: cast_nullable_to_non_nullable
+              as int,
       addedAt: null == addedAt
           ? _value.addedAt
           : addedAt // ignore: cast_nullable_to_non_nullable
@@ -159,7 +181,11 @@ abstract class _$$_InitialCopyWith<$Res>
       __$$_InitialCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<CalendarEvent> calendarEvents, DateTime addedAt});
+  $Res call(
+      {List<CalendarEvent> calendarEvents,
+      DateTime initialDateTime,
+      int workingHours,
+      DateTime addedAt});
 }
 
 /// @nodoc
@@ -173,6 +199,8 @@ class __$$_InitialCopyWithImpl<$Res>
   @override
   $Res call({
     Object? calendarEvents = null,
+    Object? initialDateTime = null,
+    Object? workingHours = null,
     Object? addedAt = null,
   }) {
     return _then(_$_Initial(
@@ -180,6 +208,14 @@ class __$$_InitialCopyWithImpl<$Res>
           ? _value._calendarEvents
           : calendarEvents // ignore: cast_nullable_to_non_nullable
               as List<CalendarEvent>,
+      initialDateTime: null == initialDateTime
+          ? _value.initialDateTime
+          : initialDateTime // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      workingHours: null == workingHours
+          ? _value.workingHours
+          : workingHours // ignore: cast_nullable_to_non_nullable
+              as int,
       addedAt: null == addedAt
           ? _value.addedAt
           : addedAt // ignore: cast_nullable_to_non_nullable
@@ -193,6 +229,8 @@ class __$$_InitialCopyWithImpl<$Res>
 class _$_Initial extends _Initial {
   const _$_Initial(
       {required final List<CalendarEvent> calendarEvents,
+      required this.initialDateTime,
+      required this.workingHours,
       required this.addedAt,
       final String? $type})
       : _calendarEvents = calendarEvents,
@@ -211,6 +249,10 @@ class _$_Initial extends _Initial {
   }
 
   @override
+  final DateTime initialDateTime;
+  @override
+  final int workingHours;
+  @override
   final DateTime addedAt;
 
   @JsonKey(name: 'runtimeType')
@@ -218,7 +260,7 @@ class _$_Initial extends _Initial {
 
   @override
   String toString() {
-    return 'TodaysBlueprintState.initial(calendarEvents: $calendarEvents, addedAt: $addedAt)';
+    return 'TodaysBlueprintState.initial(calendarEvents: $calendarEvents, initialDateTime: $initialDateTime, workingHours: $workingHours, addedAt: $addedAt)';
   }
 
   @override
@@ -228,13 +270,21 @@ class _$_Initial extends _Initial {
             other is _$_Initial &&
             const DeepCollectionEquality()
                 .equals(other._calendarEvents, _calendarEvents) &&
+            (identical(other.initialDateTime, initialDateTime) ||
+                other.initialDateTime == initialDateTime) &&
+            (identical(other.workingHours, workingHours) ||
+                other.workingHours == workingHours) &&
             (identical(other.addedAt, addedAt) || other.addedAt == addedAt));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType,
-      const DeepCollectionEquality().hash(_calendarEvents), addedAt);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_calendarEvents),
+      initialDateTime,
+      workingHours,
+      addedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -245,54 +295,61 @@ class _$_Initial extends _Initial {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            List<CalendarEvent> calendarEvents, DateTime addedAt)
+    required TResult Function(List<CalendarEvent> calendarEvents,
+            DateTime initialDateTime, int workingHours, DateTime addedAt)
         initial,
-    required TResult Function(
-            List<CalendarEvent> calendarEvents, DateTime addedAt)
+    required TResult Function(List<CalendarEvent> calendarEvents,
+            DateTime initialDateTime, int workingHours, DateTime addedAt)
         loading,
-    required TResult Function(
-            List<CalendarEvent> calendarEvents, DateTime addedAt)
+    required TResult Function(List<CalendarEvent> calendarEvents,
+            DateTime initialDateTime, int workingHours, DateTime addedAt)
         loaded,
-    required TResult Function(
-            String error, List<CalendarEvent> calendarEvents, DateTime addedAt)
+    required TResult Function(String error, List<CalendarEvent> calendarEvents,
+            DateTime initialDateTime, int workingHours, DateTime addedAt)
         error,
   }) {
-    return initial(calendarEvents, addedAt);
+    return initial(calendarEvents, initialDateTime, workingHours, addedAt);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<CalendarEvent> calendarEvents, DateTime addedAt)?
+    TResult? Function(List<CalendarEvent> calendarEvents,
+            DateTime initialDateTime, int workingHours, DateTime addedAt)?
         initial,
-    TResult? Function(List<CalendarEvent> calendarEvents, DateTime addedAt)?
+    TResult? Function(List<CalendarEvent> calendarEvents,
+            DateTime initialDateTime, int workingHours, DateTime addedAt)?
         loading,
-    TResult? Function(List<CalendarEvent> calendarEvents, DateTime addedAt)?
+    TResult? Function(List<CalendarEvent> calendarEvents,
+            DateTime initialDateTime, int workingHours, DateTime addedAt)?
         loaded,
-    TResult? Function(
-            String error, List<CalendarEvent> calendarEvents, DateTime addedAt)?
+    TResult? Function(String error, List<CalendarEvent> calendarEvents,
+            DateTime initialDateTime, int workingHours, DateTime addedAt)?
         error,
   }) {
-    return initial?.call(calendarEvents, addedAt);
+    return initial?.call(
+        calendarEvents, initialDateTime, workingHours, addedAt);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<CalendarEvent> calendarEvents, DateTime addedAt)?
+    TResult Function(List<CalendarEvent> calendarEvents,
+            DateTime initialDateTime, int workingHours, DateTime addedAt)?
         initial,
-    TResult Function(List<CalendarEvent> calendarEvents, DateTime addedAt)?
+    TResult Function(List<CalendarEvent> calendarEvents,
+            DateTime initialDateTime, int workingHours, DateTime addedAt)?
         loading,
-    TResult Function(List<CalendarEvent> calendarEvents, DateTime addedAt)?
+    TResult Function(List<CalendarEvent> calendarEvents,
+            DateTime initialDateTime, int workingHours, DateTime addedAt)?
         loaded,
-    TResult Function(
-            String error, List<CalendarEvent> calendarEvents, DateTime addedAt)?
+    TResult Function(String error, List<CalendarEvent> calendarEvents,
+            DateTime initialDateTime, int workingHours, DateTime addedAt)?
         error,
     required TResult orElse(),
   }) {
     if (initial != null) {
-      return initial(calendarEvents, addedAt);
+      return initial(calendarEvents, initialDateTime, workingHours, addedAt);
     }
     return orElse();
   }
@@ -345,6 +402,8 @@ class _$_Initial extends _Initial {
 abstract class _Initial extends TodaysBlueprintState {
   const factory _Initial(
       {required final List<CalendarEvent> calendarEvents,
+      required final DateTime initialDateTime,
+      required final int workingHours,
       required final DateTime addedAt}) = _$_Initial;
   const _Initial._() : super._();
 
@@ -352,6 +411,10 @@ abstract class _Initial extends TodaysBlueprintState {
 
   @override
   List<CalendarEvent> get calendarEvents;
+  @override
+  DateTime get initialDateTime;
+  @override
+  int get workingHours;
   @override
   DateTime get addedAt;
   @override
@@ -368,7 +431,11 @@ abstract class _$$_LoadingCopyWith<$Res>
       __$$_LoadingCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<CalendarEvent> calendarEvents, DateTime addedAt});
+  $Res call(
+      {List<CalendarEvent> calendarEvents,
+      DateTime initialDateTime,
+      int workingHours,
+      DateTime addedAt});
 }
 
 /// @nodoc
@@ -382,6 +449,8 @@ class __$$_LoadingCopyWithImpl<$Res>
   @override
   $Res call({
     Object? calendarEvents = null,
+    Object? initialDateTime = null,
+    Object? workingHours = null,
     Object? addedAt = null,
   }) {
     return _then(_$_Loading(
@@ -389,6 +458,14 @@ class __$$_LoadingCopyWithImpl<$Res>
           ? _value._calendarEvents
           : calendarEvents // ignore: cast_nullable_to_non_nullable
               as List<CalendarEvent>,
+      initialDateTime: null == initialDateTime
+          ? _value.initialDateTime
+          : initialDateTime // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      workingHours: null == workingHours
+          ? _value.workingHours
+          : workingHours // ignore: cast_nullable_to_non_nullable
+              as int,
       addedAt: null == addedAt
           ? _value.addedAt
           : addedAt // ignore: cast_nullable_to_non_nullable
@@ -402,6 +479,8 @@ class __$$_LoadingCopyWithImpl<$Res>
 class _$_Loading extends _Loading {
   const _$_Loading(
       {required final List<CalendarEvent> calendarEvents,
+      required this.initialDateTime,
+      required this.workingHours,
       required this.addedAt,
       final String? $type})
       : _calendarEvents = calendarEvents,
@@ -420,6 +499,10 @@ class _$_Loading extends _Loading {
   }
 
   @override
+  final DateTime initialDateTime;
+  @override
+  final int workingHours;
+  @override
   final DateTime addedAt;
 
   @JsonKey(name: 'runtimeType')
@@ -427,7 +510,7 @@ class _$_Loading extends _Loading {
 
   @override
   String toString() {
-    return 'TodaysBlueprintState.loading(calendarEvents: $calendarEvents, addedAt: $addedAt)';
+    return 'TodaysBlueprintState.loading(calendarEvents: $calendarEvents, initialDateTime: $initialDateTime, workingHours: $workingHours, addedAt: $addedAt)';
   }
 
   @override
@@ -437,13 +520,21 @@ class _$_Loading extends _Loading {
             other is _$_Loading &&
             const DeepCollectionEquality()
                 .equals(other._calendarEvents, _calendarEvents) &&
+            (identical(other.initialDateTime, initialDateTime) ||
+                other.initialDateTime == initialDateTime) &&
+            (identical(other.workingHours, workingHours) ||
+                other.workingHours == workingHours) &&
             (identical(other.addedAt, addedAt) || other.addedAt == addedAt));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType,
-      const DeepCollectionEquality().hash(_calendarEvents), addedAt);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_calendarEvents),
+      initialDateTime,
+      workingHours,
+      addedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -454,54 +545,61 @@ class _$_Loading extends _Loading {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            List<CalendarEvent> calendarEvents, DateTime addedAt)
+    required TResult Function(List<CalendarEvent> calendarEvents,
+            DateTime initialDateTime, int workingHours, DateTime addedAt)
         initial,
-    required TResult Function(
-            List<CalendarEvent> calendarEvents, DateTime addedAt)
+    required TResult Function(List<CalendarEvent> calendarEvents,
+            DateTime initialDateTime, int workingHours, DateTime addedAt)
         loading,
-    required TResult Function(
-            List<CalendarEvent> calendarEvents, DateTime addedAt)
+    required TResult Function(List<CalendarEvent> calendarEvents,
+            DateTime initialDateTime, int workingHours, DateTime addedAt)
         loaded,
-    required TResult Function(
-            String error, List<CalendarEvent> calendarEvents, DateTime addedAt)
+    required TResult Function(String error, List<CalendarEvent> calendarEvents,
+            DateTime initialDateTime, int workingHours, DateTime addedAt)
         error,
   }) {
-    return loading(calendarEvents, addedAt);
+    return loading(calendarEvents, initialDateTime, workingHours, addedAt);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<CalendarEvent> calendarEvents, DateTime addedAt)?
+    TResult? Function(List<CalendarEvent> calendarEvents,
+            DateTime initialDateTime, int workingHours, DateTime addedAt)?
         initial,
-    TResult? Function(List<CalendarEvent> calendarEvents, DateTime addedAt)?
+    TResult? Function(List<CalendarEvent> calendarEvents,
+            DateTime initialDateTime, int workingHours, DateTime addedAt)?
         loading,
-    TResult? Function(List<CalendarEvent> calendarEvents, DateTime addedAt)?
+    TResult? Function(List<CalendarEvent> calendarEvents,
+            DateTime initialDateTime, int workingHours, DateTime addedAt)?
         loaded,
-    TResult? Function(
-            String error, List<CalendarEvent> calendarEvents, DateTime addedAt)?
+    TResult? Function(String error, List<CalendarEvent> calendarEvents,
+            DateTime initialDateTime, int workingHours, DateTime addedAt)?
         error,
   }) {
-    return loading?.call(calendarEvents, addedAt);
+    return loading?.call(
+        calendarEvents, initialDateTime, workingHours, addedAt);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<CalendarEvent> calendarEvents, DateTime addedAt)?
+    TResult Function(List<CalendarEvent> calendarEvents,
+            DateTime initialDateTime, int workingHours, DateTime addedAt)?
         initial,
-    TResult Function(List<CalendarEvent> calendarEvents, DateTime addedAt)?
+    TResult Function(List<CalendarEvent> calendarEvents,
+            DateTime initialDateTime, int workingHours, DateTime addedAt)?
         loading,
-    TResult Function(List<CalendarEvent> calendarEvents, DateTime addedAt)?
+    TResult Function(List<CalendarEvent> calendarEvents,
+            DateTime initialDateTime, int workingHours, DateTime addedAt)?
         loaded,
-    TResult Function(
-            String error, List<CalendarEvent> calendarEvents, DateTime addedAt)?
+    TResult Function(String error, List<CalendarEvent> calendarEvents,
+            DateTime initialDateTime, int workingHours, DateTime addedAt)?
         error,
     required TResult orElse(),
   }) {
     if (loading != null) {
-      return loading(calendarEvents, addedAt);
+      return loading(calendarEvents, initialDateTime, workingHours, addedAt);
     }
     return orElse();
   }
@@ -554,6 +652,8 @@ class _$_Loading extends _Loading {
 abstract class _Loading extends TodaysBlueprintState {
   const factory _Loading(
       {required final List<CalendarEvent> calendarEvents,
+      required final DateTime initialDateTime,
+      required final int workingHours,
       required final DateTime addedAt}) = _$_Loading;
   const _Loading._() : super._();
 
@@ -561,6 +661,10 @@ abstract class _Loading extends TodaysBlueprintState {
 
   @override
   List<CalendarEvent> get calendarEvents;
+  @override
+  DateTime get initialDateTime;
+  @override
+  int get workingHours;
   @override
   DateTime get addedAt;
   @override
@@ -576,7 +680,11 @@ abstract class _$$_LoadedCopyWith<$Res>
       __$$_LoadedCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<CalendarEvent> calendarEvents, DateTime addedAt});
+  $Res call(
+      {List<CalendarEvent> calendarEvents,
+      DateTime initialDateTime,
+      int workingHours,
+      DateTime addedAt});
 }
 
 /// @nodoc
@@ -590,6 +698,8 @@ class __$$_LoadedCopyWithImpl<$Res>
   @override
   $Res call({
     Object? calendarEvents = null,
+    Object? initialDateTime = null,
+    Object? workingHours = null,
     Object? addedAt = null,
   }) {
     return _then(_$_Loaded(
@@ -597,6 +707,14 @@ class __$$_LoadedCopyWithImpl<$Res>
           ? _value._calendarEvents
           : calendarEvents // ignore: cast_nullable_to_non_nullable
               as List<CalendarEvent>,
+      initialDateTime: null == initialDateTime
+          ? _value.initialDateTime
+          : initialDateTime // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      workingHours: null == workingHours
+          ? _value.workingHours
+          : workingHours // ignore: cast_nullable_to_non_nullable
+              as int,
       addedAt: null == addedAt
           ? _value.addedAt
           : addedAt // ignore: cast_nullable_to_non_nullable
@@ -610,6 +728,8 @@ class __$$_LoadedCopyWithImpl<$Res>
 class _$_Loaded extends _Loaded {
   const _$_Loaded(
       {required final List<CalendarEvent> calendarEvents,
+      required this.initialDateTime,
+      required this.workingHours,
       required this.addedAt,
       final String? $type})
       : _calendarEvents = calendarEvents,
@@ -628,6 +748,10 @@ class _$_Loaded extends _Loaded {
   }
 
   @override
+  final DateTime initialDateTime;
+  @override
+  final int workingHours;
+  @override
   final DateTime addedAt;
 
   @JsonKey(name: 'runtimeType')
@@ -635,7 +759,7 @@ class _$_Loaded extends _Loaded {
 
   @override
   String toString() {
-    return 'TodaysBlueprintState.loaded(calendarEvents: $calendarEvents, addedAt: $addedAt)';
+    return 'TodaysBlueprintState.loaded(calendarEvents: $calendarEvents, initialDateTime: $initialDateTime, workingHours: $workingHours, addedAt: $addedAt)';
   }
 
   @override
@@ -645,13 +769,21 @@ class _$_Loaded extends _Loaded {
             other is _$_Loaded &&
             const DeepCollectionEquality()
                 .equals(other._calendarEvents, _calendarEvents) &&
+            (identical(other.initialDateTime, initialDateTime) ||
+                other.initialDateTime == initialDateTime) &&
+            (identical(other.workingHours, workingHours) ||
+                other.workingHours == workingHours) &&
             (identical(other.addedAt, addedAt) || other.addedAt == addedAt));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType,
-      const DeepCollectionEquality().hash(_calendarEvents), addedAt);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_calendarEvents),
+      initialDateTime,
+      workingHours,
+      addedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -662,54 +794,60 @@ class _$_Loaded extends _Loaded {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            List<CalendarEvent> calendarEvents, DateTime addedAt)
+    required TResult Function(List<CalendarEvent> calendarEvents,
+            DateTime initialDateTime, int workingHours, DateTime addedAt)
         initial,
-    required TResult Function(
-            List<CalendarEvent> calendarEvents, DateTime addedAt)
+    required TResult Function(List<CalendarEvent> calendarEvents,
+            DateTime initialDateTime, int workingHours, DateTime addedAt)
         loading,
-    required TResult Function(
-            List<CalendarEvent> calendarEvents, DateTime addedAt)
+    required TResult Function(List<CalendarEvent> calendarEvents,
+            DateTime initialDateTime, int workingHours, DateTime addedAt)
         loaded,
-    required TResult Function(
-            String error, List<CalendarEvent> calendarEvents, DateTime addedAt)
+    required TResult Function(String error, List<CalendarEvent> calendarEvents,
+            DateTime initialDateTime, int workingHours, DateTime addedAt)
         error,
   }) {
-    return loaded(calendarEvents, addedAt);
+    return loaded(calendarEvents, initialDateTime, workingHours, addedAt);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<CalendarEvent> calendarEvents, DateTime addedAt)?
+    TResult? Function(List<CalendarEvent> calendarEvents,
+            DateTime initialDateTime, int workingHours, DateTime addedAt)?
         initial,
-    TResult? Function(List<CalendarEvent> calendarEvents, DateTime addedAt)?
+    TResult? Function(List<CalendarEvent> calendarEvents,
+            DateTime initialDateTime, int workingHours, DateTime addedAt)?
         loading,
-    TResult? Function(List<CalendarEvent> calendarEvents, DateTime addedAt)?
+    TResult? Function(List<CalendarEvent> calendarEvents,
+            DateTime initialDateTime, int workingHours, DateTime addedAt)?
         loaded,
-    TResult? Function(
-            String error, List<CalendarEvent> calendarEvents, DateTime addedAt)?
+    TResult? Function(String error, List<CalendarEvent> calendarEvents,
+            DateTime initialDateTime, int workingHours, DateTime addedAt)?
         error,
   }) {
-    return loaded?.call(calendarEvents, addedAt);
+    return loaded?.call(calendarEvents, initialDateTime, workingHours, addedAt);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<CalendarEvent> calendarEvents, DateTime addedAt)?
+    TResult Function(List<CalendarEvent> calendarEvents,
+            DateTime initialDateTime, int workingHours, DateTime addedAt)?
         initial,
-    TResult Function(List<CalendarEvent> calendarEvents, DateTime addedAt)?
+    TResult Function(List<CalendarEvent> calendarEvents,
+            DateTime initialDateTime, int workingHours, DateTime addedAt)?
         loading,
-    TResult Function(List<CalendarEvent> calendarEvents, DateTime addedAt)?
+    TResult Function(List<CalendarEvent> calendarEvents,
+            DateTime initialDateTime, int workingHours, DateTime addedAt)?
         loaded,
-    TResult Function(
-            String error, List<CalendarEvent> calendarEvents, DateTime addedAt)?
+    TResult Function(String error, List<CalendarEvent> calendarEvents,
+            DateTime initialDateTime, int workingHours, DateTime addedAt)?
         error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(calendarEvents, addedAt);
+      return loaded(calendarEvents, initialDateTime, workingHours, addedAt);
     }
     return orElse();
   }
@@ -762,6 +900,8 @@ class _$_Loaded extends _Loaded {
 abstract class _Loaded extends TodaysBlueprintState {
   const factory _Loaded(
       {required final List<CalendarEvent> calendarEvents,
+      required final DateTime initialDateTime,
+      required final int workingHours,
       required final DateTime addedAt}) = _$_Loaded;
   const _Loaded._() : super._();
 
@@ -769,6 +909,10 @@ abstract class _Loaded extends TodaysBlueprintState {
 
   @override
   List<CalendarEvent> get calendarEvents;
+  @override
+  DateTime get initialDateTime;
+  @override
+  int get workingHours;
   @override
   DateTime get addedAt;
   @override
@@ -785,7 +929,11 @@ abstract class _$$_ErrorCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String error, List<CalendarEvent> calendarEvents, DateTime addedAt});
+      {String error,
+      List<CalendarEvent> calendarEvents,
+      DateTime initialDateTime,
+      int workingHours,
+      DateTime addedAt});
 }
 
 /// @nodoc
@@ -800,6 +948,8 @@ class __$$_ErrorCopyWithImpl<$Res>
   $Res call({
     Object? error = null,
     Object? calendarEvents = null,
+    Object? initialDateTime = null,
+    Object? workingHours = null,
     Object? addedAt = null,
   }) {
     return _then(_$_Error(
@@ -811,6 +961,14 @@ class __$$_ErrorCopyWithImpl<$Res>
           ? _value._calendarEvents
           : calendarEvents // ignore: cast_nullable_to_non_nullable
               as List<CalendarEvent>,
+      initialDateTime: null == initialDateTime
+          ? _value.initialDateTime
+          : initialDateTime // ignore: cast_nullable_to_non_nullable
+              as DateTime,
+      workingHours: null == workingHours
+          ? _value.workingHours
+          : workingHours // ignore: cast_nullable_to_non_nullable
+              as int,
       addedAt: null == addedAt
           ? _value.addedAt
           : addedAt // ignore: cast_nullable_to_non_nullable
@@ -825,6 +983,8 @@ class _$_Error extends _Error {
   const _$_Error(
       {required this.error,
       required final List<CalendarEvent> calendarEvents,
+      required this.initialDateTime,
+      required this.workingHours,
       required this.addedAt,
       final String? $type})
       : _calendarEvents = calendarEvents,
@@ -845,6 +1005,10 @@ class _$_Error extends _Error {
   }
 
   @override
+  final DateTime initialDateTime;
+  @override
+  final int workingHours;
+  @override
   final DateTime addedAt;
 
   @JsonKey(name: 'runtimeType')
@@ -852,7 +1016,7 @@ class _$_Error extends _Error {
 
   @override
   String toString() {
-    return 'TodaysBlueprintState.error(error: $error, calendarEvents: $calendarEvents, addedAt: $addedAt)';
+    return 'TodaysBlueprintState.error(error: $error, calendarEvents: $calendarEvents, initialDateTime: $initialDateTime, workingHours: $workingHours, addedAt: $addedAt)';
   }
 
   @override
@@ -863,13 +1027,22 @@ class _$_Error extends _Error {
             (identical(other.error, error) || other.error == error) &&
             const DeepCollectionEquality()
                 .equals(other._calendarEvents, _calendarEvents) &&
+            (identical(other.initialDateTime, initialDateTime) ||
+                other.initialDateTime == initialDateTime) &&
+            (identical(other.workingHours, workingHours) ||
+                other.workingHours == workingHours) &&
             (identical(other.addedAt, addedAt) || other.addedAt == addedAt));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, error,
-      const DeepCollectionEquality().hash(_calendarEvents), addedAt);
+  int get hashCode => Object.hash(
+      runtimeType,
+      error,
+      const DeepCollectionEquality().hash(_calendarEvents),
+      initialDateTime,
+      workingHours,
+      addedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -880,54 +1053,63 @@ class _$_Error extends _Error {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            List<CalendarEvent> calendarEvents, DateTime addedAt)
+    required TResult Function(List<CalendarEvent> calendarEvents,
+            DateTime initialDateTime, int workingHours, DateTime addedAt)
         initial,
-    required TResult Function(
-            List<CalendarEvent> calendarEvents, DateTime addedAt)
+    required TResult Function(List<CalendarEvent> calendarEvents,
+            DateTime initialDateTime, int workingHours, DateTime addedAt)
         loading,
-    required TResult Function(
-            List<CalendarEvent> calendarEvents, DateTime addedAt)
+    required TResult Function(List<CalendarEvent> calendarEvents,
+            DateTime initialDateTime, int workingHours, DateTime addedAt)
         loaded,
-    required TResult Function(
-            String error, List<CalendarEvent> calendarEvents, DateTime addedAt)
+    required TResult Function(String error, List<CalendarEvent> calendarEvents,
+            DateTime initialDateTime, int workingHours, DateTime addedAt)
         error,
   }) {
-    return error(this.error, calendarEvents, addedAt);
+    return error(
+        this.error, calendarEvents, initialDateTime, workingHours, addedAt);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(List<CalendarEvent> calendarEvents, DateTime addedAt)?
+    TResult? Function(List<CalendarEvent> calendarEvents,
+            DateTime initialDateTime, int workingHours, DateTime addedAt)?
         initial,
-    TResult? Function(List<CalendarEvent> calendarEvents, DateTime addedAt)?
+    TResult? Function(List<CalendarEvent> calendarEvents,
+            DateTime initialDateTime, int workingHours, DateTime addedAt)?
         loading,
-    TResult? Function(List<CalendarEvent> calendarEvents, DateTime addedAt)?
+    TResult? Function(List<CalendarEvent> calendarEvents,
+            DateTime initialDateTime, int workingHours, DateTime addedAt)?
         loaded,
-    TResult? Function(
-            String error, List<CalendarEvent> calendarEvents, DateTime addedAt)?
+    TResult? Function(String error, List<CalendarEvent> calendarEvents,
+            DateTime initialDateTime, int workingHours, DateTime addedAt)?
         error,
   }) {
-    return error?.call(this.error, calendarEvents, addedAt);
+    return error?.call(
+        this.error, calendarEvents, initialDateTime, workingHours, addedAt);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(List<CalendarEvent> calendarEvents, DateTime addedAt)?
+    TResult Function(List<CalendarEvent> calendarEvents,
+            DateTime initialDateTime, int workingHours, DateTime addedAt)?
         initial,
-    TResult Function(List<CalendarEvent> calendarEvents, DateTime addedAt)?
+    TResult Function(List<CalendarEvent> calendarEvents,
+            DateTime initialDateTime, int workingHours, DateTime addedAt)?
         loading,
-    TResult Function(List<CalendarEvent> calendarEvents, DateTime addedAt)?
+    TResult Function(List<CalendarEvent> calendarEvents,
+            DateTime initialDateTime, int workingHours, DateTime addedAt)?
         loaded,
-    TResult Function(
-            String error, List<CalendarEvent> calendarEvents, DateTime addedAt)?
+    TResult Function(String error, List<CalendarEvent> calendarEvents,
+            DateTime initialDateTime, int workingHours, DateTime addedAt)?
         error,
     required TResult orElse(),
   }) {
     if (error != null) {
-      return error(this.error, calendarEvents, addedAt);
+      return error(
+          this.error, calendarEvents, initialDateTime, workingHours, addedAt);
     }
     return orElse();
   }
@@ -981,6 +1163,8 @@ abstract class _Error extends TodaysBlueprintState {
   const factory _Error(
       {required final String error,
       required final List<CalendarEvent> calendarEvents,
+      required final DateTime initialDateTime,
+      required final int workingHours,
       required final DateTime addedAt}) = _$_Error;
   const _Error._() : super._();
 
@@ -989,6 +1173,10 @@ abstract class _Error extends TodaysBlueprintState {
   String get error;
   @override
   List<CalendarEvent> get calendarEvents;
+  @override
+  DateTime get initialDateTime;
+  @override
+  int get workingHours;
   @override
   DateTime get addedAt;
   @override

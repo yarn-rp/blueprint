@@ -5,19 +5,27 @@ abstract class TodaysBlueprintState with _$TodaysBlueprintState {
   const TodaysBlueprintState._();
   const factory TodaysBlueprintState.initial({
     required List<CalendarEvent> calendarEvents,
+    required DateTime initialDateTime,
+    required int workingHours,
     required DateTime addedAt,
   }) = _Initial;
   const factory TodaysBlueprintState.loading({
     required List<CalendarEvent> calendarEvents,
+    required DateTime initialDateTime,
+    required int workingHours,
     required DateTime addedAt,
   }) = _Loading;
   const factory TodaysBlueprintState.loaded({
     required List<CalendarEvent> calendarEvents,
+    required DateTime initialDateTime,
+    required int workingHours,
     required DateTime addedAt,
   }) = _Loaded;
   const factory TodaysBlueprintState.error({
     required String error,
     required List<CalendarEvent> calendarEvents,
+    required DateTime initialDateTime,
+    required int workingHours,
     required DateTime addedAt,
   }) = _Error;
 
@@ -25,6 +33,28 @@ abstract class TodaysBlueprintState with _$TodaysBlueprintState {
       _$TodaysBlueprintStateFromJson(json);
 
   _EventsDataSource get toDataSource => _EventsDataSource([...calendarEvents]);
+
+  CalendarEvent? get currentEvent {
+    final now = DateTime.now();
+    return calendarEvents.firstWhereOrNull(
+      (event) => event.startTime.isBefore(now) && event.endTime.isAfter(now),
+    );
+  }
+
+  Iterable<CalendarEvent>? get nextEvents {
+    final current = currentEvent;
+    if (current != null) {
+      final nextEvents = calendarEvents
+          .sorted((a, b) => a.startTime.compareTo(b.startTime))
+          .where(
+            (event) => event.startTime
+                .isAfter(current.endTime.subtract(const Duration(minutes: 1))),
+          );
+      return nextEvents;
+    }
+    // If there is no current event, return the first event
+    return calendarEvents;
+  }
 }
 
 class _EventsDataSource extends CalendarDataSource<CalendarEvent> {

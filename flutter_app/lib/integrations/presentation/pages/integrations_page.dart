@@ -11,12 +11,8 @@ class IntegrationsPage extends StatefulWidget {
   State<IntegrationsPage> createState() => _IntegrationsPageState();
 }
 
-class _IntegrationsPageState extends State<IntegrationsPage> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
+class _IntegrationsPageState extends State<IntegrationsPage>
+    with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,6 +58,9 @@ class _IntegrationsPageState extends State<IntegrationsPage> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class IntegrationCard extends StatelessWidget {

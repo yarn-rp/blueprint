@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:integrations_repository/integrations_repository.dart';
+import 'package:poll_e_task/app/styles/styles.dart';
 import 'package:poll_e_task/utils/color/hex_color_extension.dart';
 
 class LabelChip extends StatelessWidget {
@@ -24,7 +25,11 @@ class LabelChip extends StatelessWidget {
               color: foregroundColor,
             ),
       ),
-      backgroundColor: backgroundColor,
+      backgroundColor: backgroundColor == null
+          ? backgroundColor
+          : Theme.of(context).brightness == Brightness.light
+              ? lighten(backgroundColor)
+              : darken(backgroundColor),
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:collection/collection.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:integrations_repository/integrations_repository.dart';
@@ -51,13 +52,20 @@ final _defaultEvents = <CalendarEvent>[
 ];
 
 class TodaysBlueprintCubit extends HydratedCubit<TodaysBlueprintState> {
-  TodaysBlueprintCubit()
-      : super(
+  TodaysBlueprintCubit({
+    required this.initialDateTime,
+    required this.workingHours,
+  }) : super(
           TodaysBlueprintState.initial(
             calendarEvents: _defaultEvents,
+            initialDateTime: initialDateTime,
+            workingHours: workingHours,
             addedAt: DateTime.now(),
           ),
         );
+
+  final DateTime initialDateTime;
+  final int workingHours;
 
   void addTaskToTodaysBlueprint(Task task) {
     late Duration estimatedTime;
@@ -66,7 +74,22 @@ class TodaysBlueprintCubit extends HydratedCubit<TodaysBlueprintState> {
     } else {
       estimatedTime = const Duration(hours: 1);
     }
-    final startTime = _findFirstAvailableSpotForTask(task);
+
+    final startTime = findAvailableSpot(estimatedTime);
+
+    if (startTime == null) {
+      log('No available spot for task $task');
+      emit(
+        TodaysBlueprintState.error(
+          error: 'No available spot for task $task',
+          calendarEvents: [...state.calendarEvents],
+          initialDateTime: initialDateTime,
+          workingHours: workingHours,
+          addedAt: DateTime.now(),
+        ),
+      );
+      return;
+    }
 
     final event = CalendarEvent.task(
       task: task,
@@ -76,6 +99,8 @@ class TodaysBlueprintCubit extends HydratedCubit<TodaysBlueprintState> {
     emit(
       TodaysBlueprintState.loaded(
         calendarEvents: [...state.calendarEvents, event],
+        initialDateTime: initialDateTime,
+        workingHours: workingHours,
         addedAt: DateTime.now(),
       ),
     );
@@ -83,12 +108,12 @@ class TodaysBlueprintCubit extends HydratedCubit<TodaysBlueprintState> {
 
   void removeTaskFromTodaysBlueprint(Task task) {
     final events = state.calendarEvents;
-
+    log('removing task $task');
     final itemsToKeep = events
         .where(
           (event) => event.map(
             event: (event) => true,
-            task: (taskEvent) => taskEvent.task != task,
+            task: (taskEvent) => taskEvent.task.title != task.title,
           ),
         )
         .toList();
@@ -96,38 +121,43 @@ class TodaysBlueprintCubit extends HydratedCubit<TodaysBlueprintState> {
     emit(
       TodaysBlueprintState.loaded(
         calendarEvents: itemsToKeep,
+        initialDateTime: initialDateTime,
+        workingHours: workingHours,
         addedAt: DateTime.now(),
       ),
     );
   }
 
-  /// Finds the first available place where a task can be scheduled.
-  ///
-  /// Basically, it finds the first section where task1.endTime +
-  /// task.estimatedTime < task2.startTime
-  DateTime _findFirstAvailableSpotForTask(
-    Task task,
-  ) {
-    final events = state.calendarEvents;
-    final estimatedTime = task.estimatedTime ?? const Duration(hours: 1);
+  DateTime? findAvailableSpot(Duration eventDuration) {
+    final dayStart = DateTime.now().isAfter(initialDateTime)
+        ? DateTime.now()
+        : initialDateTime;
 
-    for (var i = 0; i < events.length; i++) {
-      final event = events[i];
+    final dayEnd = dayStart.add(Duration(hours: workingHours));
+    // Sort events by start time
+    final events = state.calendarEvents
+        .sorted((a, b) => a.startTime.compareTo(b.startTime));
 
-      late CalendarEvent nextEvent;
+    // Check for availability before the first event
+    if (events.first.startTime.difference(dayStart) >= eventDuration) {
+      return dayStart;
+    }
 
-      try {
-        nextEvent = events[i + 1];
-      } catch (e) {
-        return event.endTime;
-      }
-
-      if (event.endTime.add(estimatedTime).isBefore(nextEvent.startTime)) {
-        return event.endTime;
+    // Check for availability between events
+    for (var i = 0; i < events.length - 1; i++) {
+      final gap = events[i + 1].startTime.difference(events[i].endTime);
+      if (gap >= eventDuration) {
+        return events[i].endTime;
       }
     }
 
-    return events.last.endTime;
+    // Check for availability after the last event
+    if (dayEnd.difference(events.last.endTime) >= eventDuration) {
+      return events.last.endTime;
+    }
+
+    // No available spot found
+    return null;
   }
 
   /// Moves a task in the time line,
@@ -146,6 +176,8 @@ class TodaysBlueprintCubit extends HydratedCubit<TodaysBlueprintState> {
 
     emit(
       TodaysBlueprintState.loaded(
+        initialDateTime: initialDateTime,
+        workingHours: workingHours,
         calendarEvents: [
           ...itemsToKeep,
           movedEvent.copyWith(
@@ -165,6 +197,8 @@ class TodaysBlueprintCubit extends HydratedCubit<TodaysBlueprintState> {
     if (state.addedAt.day != DateTime.now().day) {
       return TodaysBlueprintState.initial(
         calendarEvents: _defaultEvents,
+        initialDateTime: initialDateTime,
+        workingHours: workingHours,
         addedAt: DateTime.now(),
       );
     }
@@ -174,4 +208,14 @@ class TodaysBlueprintCubit extends HydratedCubit<TodaysBlueprintState> {
 
   @override
   Map<String, dynamic>? toJson(TodaysBlueprintState state) => state.toJson();
+}
+
+class Spot {
+  Spot(
+    this.start,
+    this.end,
+  );
+
+  final DateTime start;
+  final DateTime end;
 }

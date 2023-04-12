@@ -124,7 +124,7 @@ class IntegrationsRepository {
 
       yield* integrationProjects.map((platformProjects) {
         log(
-          'Found ${platformProjects.length} projects from $platform',
+          'Found ${platformProjects.map((e) => e.map((e) => e.name))} projects from $platform',
           name: 'IntegrationsRepository',
         );
         return platformProjects.expand((element) => element).toList();

@@ -38,7 +38,8 @@ class _InitialPageState extends State<InitialPage> {
   Widget build(BuildContext context) {
     return Builder(
       builder: (context) {
-        final isSmallScreen = MediaQuery.of(context).size.width < 800;
+        final isPhone = MediaQuery.of(context).size.width < 600;
+
         return Theme(
           data: Theme.of(context).copyWith(
             bottomNavigationBarTheme: BottomNavigationBarThemeData(
@@ -48,7 +49,7 @@ class _InitialPageState extends State<InitialPage> {
             ),
           ),
           child: Scaffold(
-            bottomNavigationBar: isSmallScreen
+            bottomNavigationBar: isPhone
                 ? BottomNavigationBar(
                     currentIndex: currentIndex,
                     onTap: (index) {
@@ -94,7 +95,7 @@ class _InitialPageState extends State<InitialPage> {
                 child: const CupertinoSearchTextField(),
               ),
             ),
-            body: isSmallScreen
+            body: isPhone
                 ? widget.navigationPages[currentIndex].page
                 : SidebarPage(
                     navigationPages: widget.navigationPages,
@@ -158,7 +159,7 @@ class _SidebarPageState extends State<SidebarPage> {
           Expanded(child: widget.navigationPages[currentPage].page),
         ],
       ),
-      title: 'Yan Rodriguez',
+      showTitle: false,
       iconSize: 28,
       toggleTitle: '',
       backgroundColor: Theme.of(context).colorScheme.background,

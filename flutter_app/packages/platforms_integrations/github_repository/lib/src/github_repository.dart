@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:github/github.dart' as github_api;
@@ -48,7 +47,7 @@ class GithubRepository
     late final List<github_api.Issue> issues;
 
     final githubUser = await github.users.getCurrentUser();
-
+    print('Getting issues for user: ${project.name}');
     try {
       issues = await github.issues
           .listByRepo(
@@ -61,9 +60,8 @@ class GithubRepository
         return isAssignedToMe;
       }).toList();
     } catch (e) {
-      log(
+      print(
         'Error getting issues from GitHub slug: ${project.owner}',
-        error: e,
       );
       issues = [];
     }
@@ -77,12 +75,13 @@ class GithubRepository
             reviewers.any((user) => user.login == githubUser.login);
         final isAuthor = element.user?.login == githubUser.login;
 
-        return isAssignedToMe || isAuthor;
+        // Remove also the ones that are created by me but has't been reviewed yet
+        final hasNotBeenReviewedYet = element.state == 'open';
+        return isAssignedToMe || (isAuthor && hasNotBeenReviewedYet);
       }).toList();
     } catch (e) {
-      log(
+      print(
         'Error getting pull requests from GitHub slug: ${project.owner}',
-        error: e,
       );
       pullRequests = [];
     }
@@ -94,12 +93,20 @@ class GithubRepository
           project,
         ),
       ),
-      ...pullRequests.map(
-        (event) => _integrationMapper.fromGitHubApiPullRequestToTask(
+      ...pullRequests.map((event) {
+        final isAssignedToMe = event.requestedReviewers != null &&
+            event.requestedReviewers!.any(
+              (user) => user.login == githubUser.login,
+            );
+        final isAuthor = event.user?.login == githubUser.login;
+
+        return _integrationMapper.fromGitHubApiPullRequestToTask(
           event,
           project,
-        ),
-      ),
+          isAssignedToMe: isAssignedToMe,
+          isAuthor: isAuthor,
+        );
+      }),
     ];
     return tasks;
   }
