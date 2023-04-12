@@ -71,7 +71,7 @@ class __JiraBasicAuthCreateModalState extends State<_JiraBasicAuthCreateModal> {
                 url: 'zelfio.atlassian.net',
                 username: 'yrodriguez@createthrive.com',
                 password:
-                    'ATATT3xFfGF0cIpJNgDEdtGqACTseiE5KSlvnUtmaeqph2HHqVeizIpg4kAmFhe4IeHzOxCec8yYy05WpDYZ11Rzvk3LDQqpBE315lJpVnVoCy1wG_BMCnNLMmsVuuondITtUr_sQRmkFAsSVj06M3hy2f3UhLDQcsPyBKsY4sVVyCsZQssDP_k=A1803628',
+                    'ATATT3xFfGF0IPlrH9MdfEXW8fFcOhBIiKNQFBU-Bmvv8fYYN9anszERBhLYT-TtdZUMSpCvQZqmXnPK8fxUKAD0RMTzQX-xWRcBT4ykBkuvFhB0Pi5-D49mIPPAG0v6cMkh1e0gvS-oDHI_dvqJvhgf2v1qIuwKLxC27fB5xH34zU8PX-lUB2M=6620F243',
               ),
             );
             Navigator.of(context).pop();

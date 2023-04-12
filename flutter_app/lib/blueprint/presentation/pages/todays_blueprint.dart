@@ -17,8 +17,6 @@ class TodaysBlueprint extends StatefulWidget {
 }
 
 class _TodaysBlueprintState extends State<TodaysBlueprint> {
-  EventsDataSource _events = EventsDataSource(<CalendarEvent>[]);
-
   /// Global key used to maintain the state, when we change the parent of the
   /// widget
   final GlobalKey _globalKey = GlobalKey();
@@ -27,25 +25,6 @@ class _TodaysBlueprintState extends State<TodaysBlueprint> {
 
   @override
   void initState() {
-    _events = EventsDataSource([
-      CalendarEvent(
-        subject: 'Launch',
-        startTime: DateTime.now().copyWith(
-          hour: 13,
-          minute: 0,
-          second: 0,
-          millisecond: 0,
-          microsecond: 0,
-        ),
-        endTime: DateTime.now().copyWith(
-          hour: 14,
-          minute: 0,
-          second: 0,
-          millisecond: 0,
-          microsecond: 0,
-        ),
-      ),
-    ]);
     super.initState();
   }
 
@@ -98,11 +77,9 @@ class _TodaysBlueprintState extends State<TodaysBlueprint> {
 
     return BlocBuilder<TodaysBlueprintCubit, TodaysBlueprintState>(
       builder: (context, state) {
-        final calendarDataSource = EventsDataSource([...state.calendarEvents]);
-
         return SfCalendar(
           controller: calendarController,
-          dataSource: calendarDataSource,
+          dataSource: state.toDataSource,
           allowDragAndDrop: true,
           minDate: now.copyWith(hour: 0, minute: 0, second: 0, millisecond: 0),
           maxDate: now.copyWith(
@@ -133,27 +110,34 @@ class _TodaysBlueprintState extends State<TodaysBlueprint> {
             if (calendarTapDetails.targetElement ==
                 CalendarElement.appointment) {
               final appointment = calendarTapDetails.appointments?.first;
-
-              if (appointment is TaskCalendarEvent) {
-                await showDialog(
-                  context: context,
-                  builder: (context) {
-                    return Dialog(
-                      surfaceTintColor: Theme.of(context).canvasColor,
-                      child: ConstrainedBox(
-                        constraints: BoxConstraints(
-                          maxWidth: 1200,
-                          maxHeight: MediaQuery.of(context).size.height,
-                        ),
-                        child: TaskDetails(
-                          task: appointment.task,
-                          onClose: () => Navigator.of(context).pop(),
-                        ),
-                      ),
-                    );
-                  },
-                );
+              if (appointment is! CalendarEvent) {
+                return;
               }
+              await appointment.map(
+                event: (event) {
+                  // TODO: do something
+                },
+                task: (appointment) async {
+                  await showDialog(
+                    context: context,
+                    builder: (context) {
+                      return Dialog(
+                        surfaceTintColor: Theme.of(context).canvasColor,
+                        child: ConstrainedBox(
+                          constraints: BoxConstraints(
+                            maxWidth: 1200,
+                            maxHeight: MediaQuery.of(context).size.height,
+                          ),
+                          child: TaskDetails(
+                            task: appointment.task,
+                            onClose: () => Navigator.of(context).pop(),
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                },
+              );
             }
           },
           // Rounds the new appointment time to the nearest 15 minutes interval.
@@ -191,26 +175,27 @@ class _TodaysBlueprintState extends State<TodaysBlueprint> {
               endTime.hour,
               (endTime.minute / dragUnit).round() * dragUnit,
             );
-
-            appointment
-              ..startTime = newStartTime
-              ..endTime = newEndTime;
+            context.read<TodaysBlueprintCubit>().moveEventInTimeLine(
+                  appointment,
+                  newStartTime,
+                  newEndTime,
+                );
           },
           appointmentBuilder: (
             BuildContext context,
             CalendarAppointmentDetails calendarAppointmentDetails,
           ) {
             final appointment = calendarAppointmentDetails.appointments.first;
-
-            if (appointment is TaskCalendarEvent) {
-              return TaskEventTile(
+            if (appointment is! CalendarEvent) {
+              return const SizedBox();
+            }
+            return appointment.map(
+              event: (appointment) =>
+                  CalendarEventTile(appointment: appointment),
+              task: (appointment) => TaskEventTile(
                 appointment: appointment,
-              );
-            }
-            if (appointment is CalendarEvent) {
-              return CalendarEventTile(appointment: appointment);
-            }
-            return Container();
+              ),
+            );
           },
           timeSlotViewSettings: TimeSlotViewSettings(
             minimumAppointmentDuration: const Duration(minutes: 15),
@@ -218,43 +203,6 @@ class _TodaysBlueprintState extends State<TodaysBlueprint> {
           ),
         );
       },
-    );
-  }
-}
-
-class EventsDataSource extends CalendarDataSource<CalendarEvent> {
-  EventsDataSource(List<CalendarEvent> source) {
-    appointments = source;
-  }
-
-  @override
-  DateTime getStartTime(int index) {
-    return appointments![index].startTime as DateTime;
-  }
-
-  @override
-  bool isAllDay(int index) {
-    return appointments![index].isAllDay as bool;
-  }
-
-  @override
-  DateTime getEndTime(int index) {
-    return appointments![index].endTime as DateTime;
-  }
-
-  @override
-  String getSubject(int index) {
-    return appointments![index].subject as String;
-  }
-
-  @override
-  CalendarEvent convertAppointmentToObject(
-    CalendarEvent customData,
-    Appointment appointment,
-  ) {
-    return customData.copyWith(
-      startTime: appointment.startTime,
-      endTime: appointment.endTime,
     );
   }
 }

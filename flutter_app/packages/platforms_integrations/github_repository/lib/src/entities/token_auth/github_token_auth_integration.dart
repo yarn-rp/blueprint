@@ -25,6 +25,6 @@ class GitHubTokenAuthIntegration extends GitHubIntegration {
 
   /// Converts this [GitHubTokenAuthIntegration] instance to a JSON object.
   /// Adds the type of the integration to the JSON object.
-  Map<String, dynamic> toJson() =>
-      _$GitHubTokenAuthIntegrationToJson(this)..addAll({'type': 'token_auth'});
+  Map<String, dynamic> toJson() => _$GitHubTokenAuthIntegrationToJson(this)
+    ..addAll({'type': 'token_auth', 'platformId': platform.id});
 }

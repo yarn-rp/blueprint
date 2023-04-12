@@ -28,6 +28,7 @@ class GitHubBasicAuthIntegration extends GitHubIntegration {
 
   /// Converts this [GitHubBasicAuthIntegration] instance to a JSON object.
   /// Adds the type of the integration to the JSON object.
-  Map<String, dynamic> toJson() =>
-      _$GitHubBasicAuthIntegrationToJson(this)..addAll({'type': 'basic_auth'});
+  @override
+  Map<String, dynamic> toJson() => _$GitHubBasicAuthIntegrationToJson(this)
+    ..addAll({'type': 'basic_auth', 'platformId': platform.id});
 }

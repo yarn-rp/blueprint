@@ -1,65 +1,36 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:integrations_repository/integrations_repository.dart';
+import 'package:poll_e_task/blueprint/mappers/task_json_mapper.dart';
+
+part 'calendar_event.freezed.dart';
+part 'calendar_event.g.dart';
 
 /// Refers to an event that is displayed in the calendar.
-class CalendarEvent {
-  CalendarEvent({
-    required this.startTime,
-    required this.endTime,
-    required this.subject,
-    this.isAllDay = false,
-  });
+@freezed
+class CalendarEvent with _$CalendarEvent {
+  // Private constructor to prevent instantiation.
+  const CalendarEvent._();
+  const factory CalendarEvent.event({
+    required DateTime startTime,
+    required DateTime endTime,
+    required String subject,
+    @Default(false) bool isAllDay,
+  }) = GeneralCalendarEvent;
 
-  DateTime startTime;
-  DateTime endTime;
-  String subject;
-  bool isAllDay;
+  const factory CalendarEvent.task({
+    @JsonKey(fromJson: TaskJsonMapper.fromJson, toJson: TaskJsonMapper.toJson)
+        required Task task,
+    required DateTime startTime,
+    required DateTime endTime,
+    @Default(false) bool isAllDay,
+  }) = TaskCalendarEvent;
 
-  // copyWith
-  CalendarEvent copyWith({
-    DateTime? startTime,
-    DateTime? endTime,
-    String? subject,
-    bool? isAllDay,
-  }) {
-    return CalendarEvent(
-      startTime: startTime ?? this.startTime,
-      endTime: endTime ?? this.endTime,
-      subject: subject ?? this.subject,
-      isAllDay: isAllDay ?? this.isAllDay,
-    );
-  }
-}
+  factory CalendarEvent.fromJson(Map<String, dynamic> json) =>
+      _$CalendarEventFromJson(json);
 
-/// Refers to a task that is displayed in the calendar as a realization event.
-class TaskCalendarEvent extends CalendarEvent {
-  TaskCalendarEvent({
-    required this.task,
-    required super.startTime,
-    Duration? estimatedTime,
-  })  : assert(
-          estimatedTime != null || task.estimatedTime != null,
-          'Need an estimation for the task',
-        ),
-        super(
-          subject: task.title,
-          endTime: startTime.add(
-            (estimatedTime ?? task.estimatedTime)!,
-          ),
-        );
-
-  final Task task;
-
-  @override
-  TaskCalendarEvent copyWith({
-    DateTime? startTime,
-    DateTime? endTime,
-    String? subject,
-    bool? isAllDay,
-  }) {
-    return TaskCalendarEvent(
-      task: task,
-      startTime: startTime ?? this.startTime,
-    );
-  }
+  String get subject => map(
+        event: (event) => event.subject,
+        task: (task) => task.task.title,
+      );
 }

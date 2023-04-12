@@ -29,6 +29,6 @@ class JiraBasicAuthIntegration extends JiraIntegration {
 
   /// Converts this [JiraBasicAuthIntegration] instance to a JSON object.
   /// Adds the type of the integration to the JSON object.
-  Map<String, dynamic> toJson() =>
-      _$JiraBasicAuthIntegrationToJson(this)..addAll({'type': 'basic_auth'});
+  Map<String, dynamic> toJson() => _$JiraBasicAuthIntegrationToJson(this)
+    ..addAll({'type': 'basic_auth', 'platformId': platform.id});
 }

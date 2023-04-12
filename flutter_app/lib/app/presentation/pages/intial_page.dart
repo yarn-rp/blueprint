@@ -38,58 +38,69 @@ class _InitialPageState extends State<InitialPage> {
   Widget build(BuildContext context) {
     return Builder(
       builder: (context) {
-        final isSmallScreen = MediaQuery.of(context).size.width < 600;
-        return Scaffold(
-          bottomNavigationBar: isSmallScreen
-              ? BottomNavigationBar(
-                  currentIndex: currentIndex,
-                  onTap: (index) {
-                    setState(() {
-                      currentIndex = index;
-                    });
-                  },
-                  items: widget.navigationPages
-                      .map(
-                        (e) => BottomNavigationBarItem(
-                          icon: Icon(e.icon),
-                          label: e.text,
-                        ),
-                      )
-                      .toList(),
-                )
-              : null,
-          appBar: AppBar(
-            actions: [
-              // Settings
-              IconButton(
-                icon: const Icon(Icons.settings),
-                onPressed: () {},
-              ),
-              const SizedBox(width: 8),
-              const Icon(
-                Icons.notifications,
-              ),
-              const SizedBox(width: 8),
-              // Profile
-              IconButton(
-                icon: const Icon(Icons.person),
-                onPressed: () {},
-              ),
-            ],
-            centerTitle: true,
-            title: Container(
-              constraints: const BoxConstraints(
-                maxWidth: 600,
-              ),
-              child: const CupertinoSearchTextField(),
+        final isSmallScreen = MediaQuery.of(context).size.width < 800;
+        return Theme(
+          data: Theme.of(context).copyWith(
+            bottomNavigationBarTheme: BottomNavigationBarThemeData(
+              backgroundColor: const Color(0xFF121212),
+              unselectedItemColor: Colors.white54,
+              selectedItemColor: Theme.of(context).colorScheme.primary,
             ),
           ),
-          body: isSmallScreen
-              ? widget.navigationPages[currentIndex].page
-              : SidebarPage(
-                  navigationPages: widget.navigationPages,
-                  initialPage: currentIndex,
+          child: Scaffold(
+            bottomNavigationBar: isSmallScreen
+                ? BottomNavigationBar(
+                    currentIndex: currentIndex,
+                    onTap: (index) {
+                      setState(() {
+                        currentIndex = index;
+                      });
+                    },
+                    items: widget.navigationPages
+                        .map(
+                          (e) => BottomNavigationBarItem(
+                            icon: Icon(
+                              e.icon,
+                            ),
+                            label: e.text,
+                          ),
+                        )
+                        .toList(),
+                  )
+                : null,
+            appBar: AppBar(
+              actions: [
+                // Settings
+                IconButton(
+                  icon: const Icon(Icons.settings),
+                  onPressed: () {},
                 ),
+                const SizedBox(width: 8),
+                const Icon(
+                  Icons.notifications,
+                ),
+                const SizedBox(width: 8),
+                // Profile
+                IconButton(
+                  icon: const Icon(Icons.person),
+                  onPressed: () {},
+                ),
+              ],
+              centerTitle: true,
+              title: Container(
+                constraints: const BoxConstraints(
+                  maxWidth: 600,
+                ),
+                child: const CupertinoSearchTextField(),
+              ),
+            ),
+            body: isSmallScreen
+                ? widget.navigationPages[currentIndex].page
+                : SidebarPage(
+                    navigationPages: widget.navigationPages,
+                    initialPage: currentIndex,
+                  ),
+          ),
         );
       },
     );

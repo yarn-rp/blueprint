@@ -25,12 +25,13 @@ class TasksPageState extends State<TasksPage> {
     return BlocBuilder<TasksCubit, TasksState>(
       builder: (context, state) {
         final tasks = state.tasks;
+        final isPhone = MediaQuery.of(context).size.width < 600;
         return Scaffold(
           body: Row(
             children: [
               Expanded(
                 child: AnimatedContainer(
-                  padding: const EdgeInsets.all(32),
+                  padding: EdgeInsets.all(isPhone ? 4 : 32),
                   curve: Curves.fastLinearToSlowEaseIn,
                   duration: const Duration(milliseconds: 1200),
                   child: ListView(
@@ -45,17 +46,22 @@ class TasksPageState extends State<TasksPage> {
                                 return Dialog(
                                   surfaceTintColor:
                                       Theme.of(context).canvasColor,
-                                  child: ConstrainedBox(
-                                    constraints: BoxConstraints(
-                                      maxWidth: 1200,
-                                      maxHeight:
-                                          MediaQuery.of(context).size.height,
-                                    ),
-                                    child: TaskDetails(
-                                      task: task,
-                                      onClose: () =>
-                                          Navigator.of(context).pop(),
-                                    ),
+                                  child: Builder(
+                                    builder: (context) {
+                                      return ConstrainedBox(
+                                        constraints: BoxConstraints(
+                                          maxWidth: 1200,
+                                          maxHeight: MediaQuery.of(context)
+                                              .size
+                                              .height,
+                                        ),
+                                        child: TaskDetails(
+                                          task: task,
+                                          onClose: () =>
+                                              Navigator.of(context).pop(),
+                                        ),
+                                      );
+                                    },
                                   ),
                                 );
                               },

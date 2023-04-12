@@ -4,7 +4,7 @@ import 'package:poll_e_task/blueprint/entities/calendar_event.dart';
 
 class CalendarEventTile extends StatelessWidget {
   const CalendarEventTile({super.key, required this.appointment});
-  final CalendarEvent appointment;
+  final GeneralCalendarEvent appointment;
 
   @override
   Widget build(BuildContext context) {

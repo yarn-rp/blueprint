@@ -94,6 +94,11 @@ class App extends StatelessWidget {
           themeMode: ThemeMode.dark,
           darkTheme: ThemeData.dark(
             useMaterial3: true,
+          ).copyWith(
+            bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+              backgroundColor: Color(0xFF121212),
+              unselectedItemColor: Colors.white54,
+            ),
           ),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,

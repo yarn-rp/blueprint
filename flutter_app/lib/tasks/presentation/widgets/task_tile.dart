@@ -16,43 +16,57 @@ class TaskTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: Theme.of(context).listTileTheme.tileColor,
-      child: InkWell(
-        onTap: onDetails,
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: ListTile(
-            leading: PriorityWidget(priority: task.priority),
-            title: Text(task.title),
-            trailing: Row(
-              mainAxisSize: MainAxisSize.min,
+    return Builder(
+      builder: (context) {
+        final isPhone = MediaQuery.of(context).size.width < 600;
+        final tile = ListTile(
+          onTap: onDetails,
+          leading: PriorityWidget(priority: task.priority),
+          title: Text(
+            task.title,
+            maxLines: 3,
+            overflow: TextOverflow.ellipsis,
+          ),
+          trailing: !isPhone
+              ? Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(Icons.add),
+                    ),
+                    IconButton(
+                      onPressed: () => launchUrl(task.taskURL),
+                      icon: const Icon(Icons.link),
+                    ),
+                  ],
+                )
+              : null,
+          subtitle: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            child: Wrap(
+              spacing: 8,
               children: [
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.add),
-                ),
-                IconButton(
-                  onPressed: () => launchUrl(task.taskURL),
-                  icon: const Icon(Icons.link),
-                ),
+                ProjectChip(project: task.project),
+                ...task.labels.map(
+                  (e) => LabelChip(label: e),
+                )
               ],
             ),
-            subtitle: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8),
-              child: Wrap(
-                spacing: 8,
-                children: [
-                  ProjectChip(project: task.project),
-                  ...task.labels.map(
-                    (e) => LabelChip(label: e),
-                  )
-                ],
-              ),
+          ),
+        );
+
+        return Card(
+          color: Theme.of(context).listTileTheme.tileColor,
+          child: InkWell(
+            onTap: onDetails,
+            child: Padding(
+              padding: EdgeInsets.all(!isPhone ? 16 : 4),
+              child: tile,
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }
