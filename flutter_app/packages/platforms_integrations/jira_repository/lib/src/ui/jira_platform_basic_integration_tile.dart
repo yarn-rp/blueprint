@@ -3,7 +3,6 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:jira_repository/jira_repository.dart';
-import 'package:jira_repository/src/entities/jira_platform.dart';
 import 'package:platform_integration_repository/platform_integration_repository.dart';
 
 /// A [PlatformIntegrationTile] that creates a [JiraBasicAuthIntegration].
@@ -71,7 +70,7 @@ class __JiraBasicAuthCreateModalState extends State<_JiraBasicAuthCreateModal> {
                 url: 'zelfio.atlassian.net',
                 username: 'yrodriguez@createthrive.com',
                 password:
-                    'ATATT3xFfGF0IPlrH9MdfEXW8fFcOhBIiKNQFBU-Bmvv8fYYN9anszERBhLYT-TtdZUMSpCvQZqmXnPK8fxUKAD0RMTzQX-xWRcBT4ykBkuvFhB0Pi5-D49mIPPAG0v6cMkh1e0gvS-oDHI_dvqJvhgf2v1qIuwKLxC27fB5xH34zU8PX-lUB2M=6620F243',
+                    'jATATT3xFfGF0IMOSAbherAiiIz2jZB-LYTFuDsxgWvdufCCpjNJOdVQU-yog-CDXwOndyQQjqs8MCiT8yRgF7ANko-dZAV6_y-l9bZZmlCNr2YhhvflsjLnrFyQyiYxVDcIyFCfRyKK4eSOS8q3IQ-jM2br4JU5Y1-BGHX8QPssTMGRYdgJqaeI=D9EE3562',
               ),
             );
             Navigator.of(context).pop();

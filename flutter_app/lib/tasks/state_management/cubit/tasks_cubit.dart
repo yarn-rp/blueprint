@@ -14,7 +14,8 @@ class TasksCubit extends Cubit<TasksState> {
   /// subscription when the bloc is closed.
   StreamSubscription<Iterable<Task>>? _tasksSubscription;
 
-  Future<void> loadTasks() async {
+  /// Subscribe to the stream of Tasks.
+  Future<void> _loadTasks() async {
     if (_tasksSubscription != null) {
       // If the bloc has a subscription to the stream of Tasks, then it is
       // already with the latest data.

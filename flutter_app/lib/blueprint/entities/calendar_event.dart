@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:integrations_repository/integrations_repository.dart';
 import 'package:poll_e_task/blueprint/mappers/task_json_mapper.dart';

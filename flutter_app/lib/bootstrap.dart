@@ -23,7 +23,10 @@ class AppBlocObserver extends BlocObserver {
 }
 
 Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
+  // Ensure that the widgets library is initialized.
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize HydratedBloc.
   HydratedBloc.storage = await HydratedStorage.build(
     storageDirectory: kIsWeb
         ? HydratedStorage.webStorageDirectory

@@ -22,7 +22,6 @@ class _ProjectsPage extends StatefulWidget {
 class _ProjectsPageState extends State<_ProjectsPage> {
   @override
   void initState() {
-    context.read<ProjectsCubit>().loadProjects();
     super.initState();
   }
 

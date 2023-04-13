@@ -19,13 +19,16 @@ part 'projects_state.dart';
 ///
 class ProjectsCubit extends Cubit<ProjectsState> {
   ProjectsCubit(this._projectRepository)
-      : super(const ProjectsState.initial([]));
+      : super(const ProjectsState.initial([])) {
+    _loadProjects();
+  }
 
   /// The subscription to the stream of projects. This is used to cancel the
   /// subscription when the bloc is closed.
   StreamSubscription<Iterable<Project>>? _projectsSubscription;
 
-  Future<void> loadProjects() async {
+  /// Subscribe to the stream of projects.
+  Future<void> _loadProjects() async {
     if (_projectsSubscription != null) {
       // If the bloc has a subscription to the stream of projects, then it is
       // already with the latest data.

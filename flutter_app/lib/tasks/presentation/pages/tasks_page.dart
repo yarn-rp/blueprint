@@ -17,13 +17,8 @@ class TasksPage extends StatefulWidget {
 class _TasksPageState extends State<TasksPage>
     with AutomaticKeepAliveClientMixin {
   @override
-  void initState() {
-    context.read<TasksCubit>().loadTasks();
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    super.build(context);
     return BlocBuilder<TasksCubit, TasksState>(
       builder: (context, state) {
         final tasks = state.tasks;

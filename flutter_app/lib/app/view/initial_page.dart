@@ -1,6 +1,7 @@
+
 import 'package:collapsible_sidebar/collapsible_sidebar.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:poll_e_task/core/widgets/material_search.dart';
 
 class NavigationPageData {
   NavigationPageData({
@@ -91,8 +92,12 @@ class _InitialPageState extends State<InitialPage> {
               title: Container(
                 constraints: const BoxConstraints(
                   maxWidth: 600,
+                  maxHeight: kTextTabBarHeight - 2,
                 ),
-                child: const CupertinoSearchTextField(),
+                child: MaterialSearchWidget(
+                  hintText: 'Search Tasks (Not implemented yet)',
+                  controller: TextEditingController(),
+                ),
               ),
             ),
             body: isPhone

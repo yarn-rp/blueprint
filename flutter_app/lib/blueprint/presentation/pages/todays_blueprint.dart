@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import 'package:poll_e_task/blueprint/presentation/pages/today_time_line.dart';
 import 'package:poll_e_task/blueprint/presentation/widgets/calendar_event_tile.dart';
 import 'package:poll_e_task/blueprint/state_management/todays_blueprint/todays_blueprint_cubit.dart';
@@ -41,25 +40,6 @@ class TodaysBlueprint extends StatelessWidget {
                               ),
                               const SizedBox(height: 16),
                               CalendarEventTile(event: currentEvent),
-                              //Button to add entry
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 16),
-                                child: Column(
-                                  children: const [
-                                    BulletPoint(
-                                      text:
-                                          'Implement models for the app and the API',
-                                    ),
-                                    SizedBox(
-                                      height: 16,
-                                    ),
-                                    BulletPoint(
-                                      text: 'Add unit test for the models',
-                                    ),
-                                  ],
-                                ),
-                              ),
                             ],
                           ),
                         ),
@@ -97,46 +77,6 @@ class TodaysBlueprint extends StatelessWidget {
             ),
         ],
       ),
-    );
-  }
-}
-
-class BulletPoint extends StatelessWidget {
-  const BulletPoint({super.key, required this.text});
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(top: 4, right: 8),
-          child: Icon(
-            Icons.fiber_manual_record,
-            size: 12,
-            color: Theme.of(context).colorScheme.outline,
-          ),
-        ),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                text,
-                style: Theme.of(context).textTheme.labelLarge,
-              ),
-              const SizedBox(height: 2),
-              Text(
-                '${DateFormat('hh:mm a').format(DateTime.now())} - '
-                '${DateFormat('hh:mm a').format(DateTime.now())}',
-                textAlign: TextAlign.left,
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(),
-              )
-            ],
-          ),
-        ),
-      ],
     );
   }
 }
