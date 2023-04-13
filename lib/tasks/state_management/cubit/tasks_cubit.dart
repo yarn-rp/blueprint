@@ -8,7 +8,9 @@ part 'tasks_cubit.freezed.dart';
 part 'tasks_state.dart';
 
 class TasksCubit extends Cubit<TasksState> {
-  TasksCubit(this._projectRepository) : super(const TasksState.initial([]));
+  TasksCubit(this._projectRepository) : super(const TasksState.initial([])) {
+    _loadTasks();
+  }
 
   /// The subscription to the stream of Tasks. This is used to cancel the
   /// subscription when the bloc is closed.
