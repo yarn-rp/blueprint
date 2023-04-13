@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:integrations_repository/integrations_repository.dart';
-import 'package:poll_e_task/utils/color/hex_color_extension.dart';
+import 'package:poll_e_task/core/utils/color/hex_color_extension.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ProjectCard extends StatelessWidget {
