@@ -120,7 +120,7 @@ export class Task {
   priority: Priority; //maybe a float
 }
 
-```# Poll E Task
+```# Blueprint
 
 ![coverage][coverage_badge]
 [![style: very good analysis][very_good_analysis_badge]][very_good_analysis_link]
@@ -153,7 +153,7 @@ $ flutter run --flavor staging --target lib/main_staging.dart
 $ flutter run --flavor production --target lib/main_production.dart
 ```
 
-_\*Poll E Task works on iOS, Android, Web, and Windows._
+_\*Blueprint works on iOS, Android, Web, and Windows._
 
 ---
 
@@ -214,7 +214,7 @@ This project relies on [flutter_localizations][flutter_localizations_link] and f
 3. Use the new string
 
 ```dart
-import 'package:poll_e_task/l10n/l10n.dart';
+import 'package:blueprint/l10n/l10n.dart';
 
 @override
 Widget build(BuildContext context) {

@@ -1,4 +1,4 @@
-package com.example.verygoodcore.poll_e_task
+package com.example.verygoodcore.blueprint
 
 import io.flutter.embedding.android.FlutterActivity
 

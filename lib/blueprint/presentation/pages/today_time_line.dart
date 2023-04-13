@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:poll_e_task/blueprint/entities/calendar_event.dart';
-import 'package:poll_e_task/blueprint/presentation/widgets/general_calendar_event_tile.dart';
-import 'package:poll_e_task/blueprint/presentation/widgets/task_event_tile.dart';
-import 'package:poll_e_task/blueprint/state_management/todays_blueprint/todays_blueprint_cubit.dart';
-import 'package:poll_e_task/tasks/presentation/pages/task_details.dart';
+import 'package:blueprint/blueprint/entities/calendar_event.dart';
+import 'package:blueprint/blueprint/presentation/widgets/general_calendar_event_tile.dart';
+import 'package:blueprint/blueprint/presentation/widgets/task_event_tile.dart';
+import 'package:blueprint/blueprint/state_management/todays_blueprint/todays_blueprint_cubit.dart';
+import 'package:blueprint/tasks/presentation/pages/task_details.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class TodayTimeline extends StatefulWidget {

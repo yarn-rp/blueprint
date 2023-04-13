@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.14)
-project(poll_e_task LANGUAGES CXX)
+project(blueprint LANGUAGES CXX)
 
-set(BINARY_NAME "poll_e_task")
+set(BINARY_NAME "blueprint")
 
 cmake_policy(SET CMP0063 NEW)
 

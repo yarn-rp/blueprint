@@ -1,7 +1,6 @@
-
 import 'package:collapsible_sidebar/collapsible_sidebar.dart';
 import 'package:flutter/material.dart';
-import 'package:poll_e_task/core/widgets/material_search.dart';
+import 'package:blueprint/core/widgets/material_search.dart';
 
 class NavigationPageData {
   NavigationPageData({

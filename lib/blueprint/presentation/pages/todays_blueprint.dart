@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:poll_e_task/blueprint/presentation/pages/today_time_line.dart';
-import 'package:poll_e_task/blueprint/presentation/widgets/calendar_event_tile.dart';
-import 'package:poll_e_task/blueprint/state_management/todays_blueprint/todays_blueprint_cubit.dart';
+import 'package:blueprint/blueprint/presentation/pages/today_time_line.dart';
+import 'package:blueprint/blueprint/presentation/widgets/calendar_event_tile.dart';
+import 'package:blueprint/blueprint/state_management/todays_blueprint/todays_blueprint_cubit.dart';
 
 class TodaysBlueprint extends StatelessWidget {
   const TodaysBlueprint({super.key});

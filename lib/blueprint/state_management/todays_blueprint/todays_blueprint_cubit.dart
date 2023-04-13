@@ -4,7 +4,7 @@ import 'package:collection/collection.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:integrations_repository/integrations_repository.dart';
-import 'package:poll_e_task/blueprint/entities/calendar_event.dart';
+import 'package:blueprint/blueprint/entities/calendar_event.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 part 'todays_blueprint_cubit.freezed.dart';

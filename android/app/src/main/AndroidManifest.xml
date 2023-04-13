@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.verygoodcore.poll_e_task">
+    package="com.example.verygoodcore.blueprint">
    <application
-        android:label="poll_e_task"
+        android:label="Blueprint"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

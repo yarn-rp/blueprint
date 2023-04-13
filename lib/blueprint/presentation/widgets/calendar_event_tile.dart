@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:poll_e_task/blueprint/entities/calendar_event.dart';
-import 'package:poll_e_task/blueprint/presentation/widgets/general_calendar_event_tile.dart';
-import 'package:poll_e_task/blueprint/presentation/widgets/task_event_tile.dart';
-import 'package:poll_e_task/tasks/presentation/pages/task_details.dart';
+import 'package:blueprint/blueprint/entities/calendar_event.dart';
+import 'package:blueprint/blueprint/presentation/widgets/general_calendar_event_tile.dart';
+import 'package:blueprint/blueprint/presentation/widgets/task_event_tile.dart';
+import 'package:blueprint/tasks/presentation/pages/task_details.dart';
 
 class CalendarEventTile extends StatelessWidget {
   const CalendarEventTile({super.key, required this.event});

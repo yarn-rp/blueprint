@@ -1,5 +1,5 @@
-import 'package:poll_e_task/app/app.dart';
-import 'package:poll_e_task/bootstrap.dart';
+import 'package:blueprint/app/app.dart';
+import 'package:blueprint/bootstrap.dart';
 
 void main() {
   bootstrap(() => const App());

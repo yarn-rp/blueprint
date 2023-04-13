@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:poll_e_task/blueprint/entities/calendar_event.dart';
+import 'package:blueprint/blueprint/entities/calendar_event.dart';
 
 class GeneralCalendarEventTile extends StatelessWidget {
   const GeneralCalendarEventTile({super.key, required this.appointment});

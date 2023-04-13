@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:poll_e_task/app/app.dart';
+import 'package:blueprint/app/app.dart';
 
 void main() {
   group('App', () {
