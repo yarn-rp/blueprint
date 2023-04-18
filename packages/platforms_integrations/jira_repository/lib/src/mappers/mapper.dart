@@ -49,6 +49,22 @@ class JiraIntegrationMapper extends PlatformIntegrationMapper<JiraIntegration> {
     );
   }
 
+  /// Gets the url of the jira task, so that it can be opened in the browser.
+  Uri? getTaskUrl(Jira.IssueBean jiraIssue) {
+    final urlParts = jiraIssue.self?.split('/');
+    if (urlParts == null || urlParts.length < 3) {
+      return null;
+    }
+    final domain = urlParts[2];
+    final issueId = jiraIssue.id;
+
+    if (issueId == null) {
+      return null;
+    }
+
+    return Uri.parse('https://$domain/browse/$issueId');
+  }
+
   /// Maps a [Jira.IssueBean] to a [Task].
   Task fromJiraApiIssueToTask(
     Jira.IssueBean jiraIssue,
@@ -62,7 +78,7 @@ class JiraIntegrationMapper extends PlatformIntegrationMapper<JiraIntegration> {
 
     final createdAt = fields['created'] as String;
     final updatedAt = fields['updated'] as String;
-    final taskURL = fields['self'] as String? ?? '';
+
     final title = fields['summary'] as String? ?? '';
     final description = fromJiraApiDescriptionToString(
       fields['description'] as Map<String, dynamic>?,
@@ -92,7 +108,7 @@ class JiraIntegrationMapper extends PlatformIntegrationMapper<JiraIntegration> {
       createdAt: DateTime.parse(createdAt),
       updatedAt: DateTime.parse(updatedAt),
       project: project,
-      taskURL: Uri.parse(taskURL),
+      taskURL: getTaskUrl(jiraIssue) ?? Uri.parse(''),
       title: title,
       description: description,
       startDate: startDate != null ? DateTime.parse(startDate) : null,

@@ -1,10 +1,10 @@
 import 'dart:developer';
 
+import 'package:blueprint/blueprint/entities/calendar_event.dart';
 import 'package:collection/collection.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:integrations_repository/integrations_repository.dart';
-import 'package:blueprint/blueprint/entities/calendar_event.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 part 'todays_blueprint_cubit.freezed.dart';
@@ -202,8 +202,19 @@ class TodaysBlueprintCubit extends HydratedCubit<TodaysBlueprintState> {
         addedAt: DateTime.now(),
       );
     }
-    log('fromJson returned: $state');
-    return TodaysBlueprintState.fromJson(json);
+
+    // Take only the events that are today
+    final events = state.calendarEvents
+        .where(
+          (event) => event.startTime.day == DateTime.now().day,
+        )
+        .toList();
+
+    return state.copyWith(
+      calendarEvents: [...events],
+      workingHours: workingHours,
+      addedAt: DateTime.now(),
+    );
   }
 
   @override

@@ -66,10 +66,11 @@ class __JiraBasicAuthCreateModalState extends State<_JiraBasicAuthCreateModal> {
           log('values: $url, $username, $token');
           if (_formKey.currentState?.validate() ?? false) {
             widget.onIntegrationCreated(
-              JiraBasicAuthIntegration(
-                url: url!,
-                username: username!,
-                password: token!,
+              const JiraBasicAuthIntegration(
+                url: 'zelfio.atlassian.net',
+                username: 'yrodriguez@createthrive.com',
+                password:
+                    'ATATT3xFfGF0OOQpmwZ9JkWCIwshLYUbR43qMd-d1QYkBMnHJ2aY3BCBXDSslq0Y6NzJd50k5A7RstHDq5KlOass1ePqZgS0w77lSf4xZh6CEZfzZ34eKnesSsSeDw_uwaZHlMIkcOJPDp5j7yAoctDtNasZQU9JJsyZyPHH1A8gArAZB3Un3bE=F124DB37',
               ),
             );
             Navigator.of(context).pop();

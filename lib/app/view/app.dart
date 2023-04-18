@@ -75,12 +75,12 @@ class BlocsProvider extends StatelessWidget {
           value: TodaysBlueprintCubit(
             //TODO: get this from the settings:
             initialDateTime: DateTime.now().copyWith(
-              hour: 7,
+              hour: 8,
               minute: 00,
               microsecond: 0,
               second: 0,
             ),
-            workingHours: 14,
+            workingHours: 12,
           ),
         )
       ],

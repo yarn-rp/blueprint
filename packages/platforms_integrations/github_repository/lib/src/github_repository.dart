@@ -47,7 +47,7 @@ class GithubRepository
     late final List<github_api.Issue> issues;
 
     final githubUser = await github.users.getCurrentUser();
-    print('Getting issues for user: ${project.name}');
+
     try {
       issues = await github.issues
           .listByRepo(
@@ -60,9 +60,6 @@ class GithubRepository
         return isAssignedToMe;
       }).toList();
     } catch (e) {
-      print(
-        'Error getting issues from GitHub slug: ${project.owner}',
-      );
       issues = [];
     }
 
