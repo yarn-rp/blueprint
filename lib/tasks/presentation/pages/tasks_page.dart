@@ -1,10 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:blueprint/blueprint/presentation/pages/today_time_line.dart';
 import 'package:blueprint/tasks/presentation/pages/task_details.dart';
 import 'package:blueprint/tasks/presentation/widgets/task_tile.dart';
 import 'package:blueprint/tasks/state_management/cubit/tasks_cubit.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+@RoutePage()
 class TasksPage extends StatefulWidget {
   const TasksPage({
     super.key,

@@ -1,12 +1,9 @@
-import 'package:blueprint/app/view/initial_page.dart';
-import 'package:blueprint/blueprint/presentation/pages/todays_blueprint.dart';
+import 'package:blueprint/app/view/app_router.dart';
 import 'package:blueprint/blueprint/state_management/todays_blueprint/todays_blueprint_cubit.dart';
 import 'package:blueprint/core/l10n/l10n.dart';
 import 'package:blueprint/core/styles/styles.dart';
-import 'package:blueprint/integrations/presentation/pages/integrations_page.dart';
 import 'package:blueprint/integrations/state_management/cubit/integrations_cubit.dart';
 import 'package:blueprint/projects/state_management/projects_cubit/projects_cubit.dart';
-import 'package:blueprint/tasks/presentation/pages/tasks_page.dart';
 import 'package:blueprint/tasks/state_management/cubit/tasks_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -90,13 +87,17 @@ class BlocsProvider extends StatelessWidget {
 }
 
 class App extends StatelessWidget {
-  const App({super.key});
+  App({super.key});
+
+  // make sure you don't initiate your router
+  // inside of the build function.
+  final _appRouter = AppRouter();
 
   @override
   Widget build(BuildContext context) {
     return RepositoriesProvider(
       child: BlocsProvider(
-        child: MaterialApp(
+        child: MaterialApp.router(
           theme: ThemeData(
             useMaterial3: true,
             colorScheme: lightColorScheme,
@@ -110,25 +111,7 @@ class App extends StatelessWidget {
           ),
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
-          home: InitialPage(
-            navigationPages: [
-              NavigationPageData(
-                text: 'Todays Blueprint',
-                icon: Icons.today,
-                page: const TodaysBlueprint(),
-              ),
-              NavigationPageData(
-                text: 'Tasks',
-                icon: Icons.task_sharp,
-                page: const TasksPage(),
-              ),
-              NavigationPageData(
-                text: 'Integrations',
-                icon: Icons.integration_instructions,
-                page: const IntegrationsPage(),
-              ),
-            ],
-          ),
+          routerConfig: _appRouter.config(),
         ),
       ),
     );

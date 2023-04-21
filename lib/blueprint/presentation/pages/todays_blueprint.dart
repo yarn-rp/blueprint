@@ -1,11 +1,13 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:blueprint/blueprint/presentation/pages/today_time_line.dart';
 import 'package:blueprint/blueprint/presentation/widgets/calendar_event_tile.dart';
 import 'package:blueprint/blueprint/state_management/todays_blueprint/todays_blueprint_cubit.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class TodaysBlueprint extends StatelessWidget {
-  const TodaysBlueprint({super.key});
+@RoutePage()
+class TodaysBlueprintPage extends StatelessWidget {
+  const TodaysBlueprintPage({super.key});
 
   @override
   Widget build(BuildContext context) {

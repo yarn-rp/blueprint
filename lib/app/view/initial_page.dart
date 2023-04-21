@@ -1,25 +1,41 @@
-import 'package:collapsible_sidebar/collapsible_sidebar.dart';
-import 'package:flutter/material.dart';
+import 'package:auto_route/auto_route.dart';
+import 'package:blueprint/app/view/app_router.dart';
 import 'package:blueprint/core/widgets/material_search.dart';
+import 'package:collapsible_sidebar/collapsible_sidebar.dart';
+import 'package:collection/collection.dart';
+import 'package:flutter/material.dart';
 
-class NavigationPageData {
+final navigationPages = [
+  NavigationPageData(
+    text: 'Todays Blueprint',
+    icon: Icons.today,
+    route: const TodaysBlueprintRoute(),
+  ),
+  NavigationPageData(
+    text: 'Might Do',
+    icon: Icons.task_sharp,
+    route: const TasksRoute(),
+  ),
+];
+
+class NavigationPageData<T> {
   NavigationPageData({
     required this.text,
     required this.icon,
-    required this.page,
+    required this.route,
   });
 
   final String text;
   final IconData icon;
-  final Widget page;
+  final PageRouteInfo<T> route;
 }
 
 // An scaffold with a material side bar with the navigation options in case
 // is not in mobile. If mobile, then is a bottom app bar with the navigation
 // options.
+@RoutePage()
 class InitialPage extends StatefulWidget {
-  const InitialPage({super.key, required this.navigationPages});
-  final List<NavigationPageData> navigationPages;
+  const InitialPage({super.key});
 
   @override
   State<InitialPage> createState() => _InitialPageState();
@@ -48,63 +64,69 @@ class _InitialPageState extends State<InitialPage> {
               selectedItemColor: Theme.of(context).colorScheme.primary,
             ),
           ),
-          child: Scaffold(
-            bottomNavigationBar: isPhone
-                ? BottomNavigationBar(
-                    currentIndex: currentIndex,
-                    onTap: (index) {
-                      setState(() {
-                        currentIndex = index;
-                      });
-                    },
-                    items: widget.navigationPages
-                        .map(
-                          (e) => BottomNavigationBarItem(
-                            icon: Icon(
-                              e.icon,
-                            ),
-                            label: e.text,
-                          ),
-                        )
-                        .toList(),
-                  )
-                : null,
-            appBar: AppBar(
-              actions: [
-                // Settings
-                IconButton(
-                  icon: const Icon(Icons.settings),
-                  onPressed: () {},
-                ),
-                const SizedBox(width: 8),
-                const Icon(
-                  Icons.notifications,
-                ),
-                const SizedBox(width: 8),
-                // Profile
-                IconButton(
-                  icon: const Icon(Icons.person),
-                  onPressed: () {},
-                ),
-              ],
-              centerTitle: true,
-              title: Container(
-                constraints: const BoxConstraints(
-                  maxWidth: 600,
-                  maxHeight: kTextTabBarHeight - 2,
-                ),
-                child: MaterialSearchWidget(
-                  hintText: 'Search Tasks (Not implemented yet)',
-                  controller: TextEditingController(),
-                ),
-              ),
+          child: AutoTabsRouter(
+            routes: const [
+              TodaysBlueprintRoute(),
+              TasksRoute(),
+            ],
+            transitionBuilder: (context, child, animation) => FadeTransition(
+              opacity: animation,
+              // the passed child is technically our animated selected-tab page
+              child: child,
             ),
-            body: isPhone
-                ? widget.navigationPages[currentIndex].page
-                : SidebarPage(
-                    navigationPages: widget.navigationPages,
-                    initialPage: currentIndex,
+            builder: (context, child) {
+              // obtain the scoped TabsRouter controller using context
+              final tabsRouter = AutoTabsRouter.of(context);
+              // Here we're building our Scaffold inside of AutoTabsRouter
+              // to access the tabsRouter controller provided in this context
+
+              return Scaffold(
+                bottomNavigationBar: isPhone
+                    ? BottomNavigationBar(
+                        currentIndex: tabsRouter.activeIndex,
+                        onTap: tabsRouter.setActiveIndex,
+                        items: navigationPages
+                            .map(
+                              (e) => BottomNavigationBarItem(
+                                icon: Icon(
+                                  e.icon,
+                                ),
+                                label: e.text,
+                              ),
+                            )
+                            .toList(),
+                      )
+                    : null,
+                appBar: AppBar(
+                  actions: [
+                    IconButton(
+                      icon: const Icon(Icons.settings),
+                      onPressed: () => context.router.push(
+                        const SettingsRoute(),
+                      ),
+                    ),
+                  ],
+                  centerTitle: true,
+                  title: Container(
+                    constraints: const BoxConstraints(
+                      maxWidth: 600,
+                      maxHeight: kTextTabBarHeight - 2,
+                    ),
+                    child: MaterialSearchWidget(
+                      hintText: 'Search Tasks (Not implemented yet)',
+                      controller: TextEditingController(),
+                    ),
                   ),
+                ),
+                body: isPhone
+                    ? child
+                    : SidebarPage(
+                        navigationPages: navigationPages,
+                        onPageChanged: tabsRouter.setActiveIndex,
+                        child: child,
+                      ),
+              );
+            },
           ),
         );
       },
@@ -114,12 +136,14 @@ class _InitialPageState extends State<InitialPage> {
 
 class SidebarPage extends StatefulWidget {
   const SidebarPage({
-    super.key,
+    required this.child,
+    required this.onPageChanged,
     required this.navigationPages,
-    required this.initialPage,
+    super.key,
   });
+  final Widget child;
   final List<NavigationPageData> navigationPages;
-  final int initialPage;
+  final void Function(int index) onPageChanged;
 
   @override
   _SidebarPageState createState() => _SidebarPageState();
@@ -135,6 +159,13 @@ class _SidebarPageState extends State<SidebarPage> {
     currentPage = 0;
   }
 
+  void onPageChanged(int index) {
+    widget.onPageChanged(index);
+    setState(() {
+      currentPage = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -142,14 +173,12 @@ class _SidebarPageState extends State<SidebarPage> {
     return CollapsibleSidebar(
       isCollapsed: isMobile,
       items: widget.navigationPages
-          .map(
-            (e) => CollapsibleItem(
+          .mapIndexed(
+            (index, e) => CollapsibleItem(
               text: e.text,
               icon: e.icon,
               isSelected: widget.navigationPages.indexOf(e) == currentPage,
-              onPressed: () => setState(() {
-                currentPage = widget.navigationPages.indexOf(e);
-              }),
+              onPressed: () => onPageChanged(index),
             ),
           )
           .toList(),
@@ -160,7 +189,7 @@ class _SidebarPageState extends State<SidebarPage> {
       body: Row(
         children: [
           SizedBox(width: isMobile ? 0 : 164),
-          Expanded(child: widget.navigationPages[currentPage].page),
+          Expanded(child: widget.child),
         ],
       ),
       showTitle: false,

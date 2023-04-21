@@ -1,9 +1,11 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:blueprint/integrations/state_management/cubit/integrations_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:integrations_repository/integrations_repository.dart';
 import 'package:jira_repository/jira_repository.dart';
-import 'package:blueprint/integrations/state_management/cubit/integrations_cubit.dart';
 
+@RoutePage()
 class IntegrationsPage extends StatefulWidget {
   const IntegrationsPage({super.key});
 
@@ -16,7 +18,11 @@ class _IntegrationsPageState extends State<IntegrationsPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Integrations'),
+      ),
       body: ListView(
+        padding: const EdgeInsets.all(16),
         children: [
           const SizedBox(height: 16),
           Text(
