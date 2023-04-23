@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:blueprint/blueprint/entities/calendar_event.dart';
+import 'package:blueprint/settings/entities/working_calendar.dart';
 import 'package:collection/collection.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
@@ -53,19 +54,15 @@ final _defaultEvents = <CalendarEvent>[
 
 class TodaysBlueprintCubit extends HydratedCubit<TodaysBlueprintState> {
   TodaysBlueprintCubit({
-    required this.initialDateTime,
-    required this.workingHours,
+    required this.workTimes,
   }) : super(
           TodaysBlueprintState.initial(
             calendarEvents: _defaultEvents,
-            initialDateTime: initialDateTime,
-            workingHours: workingHours,
+            workTimes: workTimes,
             addedAt: DateTime.now(),
           ),
         );
-
-  final DateTime initialDateTime;
-  final int workingHours;
+  final List<WorkTime> workTimes;
 
   void addTaskToTodaysBlueprint(Task task) {
     late Duration estimatedTime;
@@ -83,8 +80,7 @@ class TodaysBlueprintCubit extends HydratedCubit<TodaysBlueprintState> {
         TodaysBlueprintState.error(
           error: 'No available spot for task $task',
           calendarEvents: [...state.calendarEvents],
-          initialDateTime: initialDateTime,
-          workingHours: workingHours,
+          workTimes: workTimes,
           addedAt: DateTime.now(),
         ),
       );
@@ -99,8 +95,7 @@ class TodaysBlueprintCubit extends HydratedCubit<TodaysBlueprintState> {
     emit(
       TodaysBlueprintState.loaded(
         calendarEvents: [...state.calendarEvents, event],
-        initialDateTime: initialDateTime,
-        workingHours: workingHours,
+        workTimes: workTimes,
         addedAt: DateTime.now(),
       ),
     );
@@ -121,19 +116,35 @@ class TodaysBlueprintCubit extends HydratedCubit<TodaysBlueprintState> {
     emit(
       TodaysBlueprintState.loaded(
         calendarEvents: itemsToKeep,
-        initialDateTime: initialDateTime,
-        workingHours: workingHours,
+        workTimes: workTimes,
         addedAt: DateTime.now(),
       ),
     );
   }
 
-  DateTime? findAvailableSpot(Duration eventDuration) {
-    final dayStart = DateTime.now().isAfter(initialDateTime)
-        ? DateTime.now()
-        : initialDateTime;
+  DateTime? findAvailableSpot(Duration eventDuration) => workTimes
+      .map((workTime) => findAvailableSpotInWorkTime(eventDuration, workTime))
+      .firstWhereOrNull((element) => element != null);
 
-    final dayEnd = dayStart.add(Duration(hours: workingHours));
+  DateTime? findAvailableSpotInWorkTime(
+    Duration eventDuration,
+    WorkTime workTime,
+  ) {
+    final dayStart = DateTime.now().copyWith(
+      hour: workTime.start.hour,
+      minute: workTime.start.minute,
+      second: 0,
+      millisecond: 0,
+      microsecond: 0,
+    );
+    final dayEnd = DateTime.now().copyWith(
+      hour: workTime.end.hour,
+      minute: workTime.end.minute,
+      second: 0,
+      millisecond: 0,
+      microsecond: 0,
+    );
+
     // Sort events by start time
     final events = state.calendarEvents
         .sorted((a, b) => a.startTime.compareTo(b.startTime));
@@ -176,8 +187,7 @@ class TodaysBlueprintCubit extends HydratedCubit<TodaysBlueprintState> {
 
     emit(
       TodaysBlueprintState.loaded(
-        initialDateTime: initialDateTime,
-        workingHours: workingHours,
+        workTimes: workTimes,
         calendarEvents: [
           ...itemsToKeep,
           movedEvent.copyWith(
@@ -192,13 +202,13 @@ class TodaysBlueprintCubit extends HydratedCubit<TodaysBlueprintState> {
 
   @override
   TodaysBlueprintState? fromJson(Map<String, dynamic> json) {
-    log('fromJson: $json');
-    final state = _$TodaysBlueprintStateFromJson(json);
+    final state = _$TodaysBlueprintStateFromJson(json).copyWith(
+      workTimes: this.state.workTimes,
+    );
     if (state.addedAt.day != DateTime.now().day) {
       return TodaysBlueprintState.initial(
         calendarEvents: _defaultEvents,
-        initialDateTime: initialDateTime,
-        workingHours: workingHours,
+        workTimes: workTimes,
         addedAt: DateTime.now(),
       );
     }
@@ -212,7 +222,6 @@ class TodaysBlueprintCubit extends HydratedCubit<TodaysBlueprintState> {
 
     return state.copyWith(
       calendarEvents: [...events],
-      workingHours: workingHours,
       addedAt: DateTime.now(),
     );
   }

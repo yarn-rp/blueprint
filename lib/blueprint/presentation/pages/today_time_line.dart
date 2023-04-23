@@ -1,10 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'dart:developer';
+
 import 'package:blueprint/blueprint/entities/calendar_event.dart';
 import 'package:blueprint/blueprint/presentation/widgets/general_calendar_event_tile.dart';
 import 'package:blueprint/blueprint/presentation/widgets/task_event_tile.dart';
 import 'package:blueprint/blueprint/state_management/todays_blueprint/todays_blueprint_cubit.dart';
 import 'package:blueprint/tasks/presentation/pages/task_details.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class TodayTimeline extends StatefulWidget {
@@ -74,6 +76,7 @@ class _TodaysBlueprintState extends State<TodayTimeline>
 
     return BlocBuilder<TodaysBlueprintCubit, TodaysBlueprintState>(
       builder: (context, state) {
+        log('working times: ${state.workTimes}');
         return SfCalendar(
           controller: calendarController,
           dataSource: state.toDataSource,
@@ -86,12 +89,19 @@ class _TodaysBlueprintState extends State<TodayTimeline>
             millisecond: 999,
           ),
           specialRegions: [
-            TimeRegion(
-              text: 'Working Time',
-              startTime: state.initialDateTime,
-              endTime: state.initialDateTime
-                  .add(Duration(hours: state.workingHours)),
-            )
+            ...state.workTimes.map(
+              (workTime) => TimeRegion(
+                text: 'Working Time',
+                startTime: DateTime.now().copyWith(
+                  hour: workTime.start.hour,
+                  minute: workTime.start.minute,
+                ),
+                endTime: DateTime.now().copyWith(
+                  hour: workTime.end.hour,
+                  minute: workTime.end.minute,
+                ),
+              ),
+            ),
           ],
 
           onTap: (calendarTapDetails) async {
