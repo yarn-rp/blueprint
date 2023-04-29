@@ -83,7 +83,7 @@ All the tasks that you have added to your day are presented in a timeline format
 
 In here you can move the tasks around to change their order. You can also remove them from your day. To do that, you can click on the task and then click on the remove from day button in the task details screen.
 
-### Features planned to be added in the future
+## Features planned to be added in the future
 
 This project is still in its early stages, so there are a lot of features that are planned to be added in the future. Some of them are:
 
