@@ -14,7 +14,7 @@ class TodaysBlueprintPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isPhone = MediaQuery.of(context).size.width < 600;
-    final isWide = MediaQuery.of(context).size.width > 1200;
+    final isWide = MediaQuery.of(context).size.width >= 1150;
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () async {

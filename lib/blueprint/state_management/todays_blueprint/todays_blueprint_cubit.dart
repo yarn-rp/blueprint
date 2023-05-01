@@ -211,9 +211,7 @@ class TodaysBlueprintCubit extends HydratedCubit<TodaysBlueprintState> {
 
   @override
   TodaysBlueprintState? fromJson(Map<String, dynamic> json) {
-    final state = _$TodaysBlueprintStateFromJson(json).copyWith(
-      workTimes: this.state.workTimes,
-    );
+    final state = _$TodaysBlueprintStateFromJson(json);
     if (state.addedAt.day != DateTime.now().day) {
       return TodaysBlueprintState.initial(
         calendarEvents: _defaultEvents,

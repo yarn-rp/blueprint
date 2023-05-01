@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:platform_integration_repository/src/entities/entities.dart';
@@ -47,17 +48,27 @@ class PlatformIntegrationStorage<PlatformType extends Platform,
 
   /// Stores the given [integrations] in the secure storage.
   Future<void> storeIntegrations(List<IntegrationType> integrations) async {
-    final itemsStorables = integrations.map((integration) {
-      final map = _mapper.toJson(integration);
-      return json.encode(map);
-    }).toList();
+    try {
+      log('Storing integrations: $integrations');
 
-    await _storage.write(
-      key: _storageKey,
-      value: json.encode(itemsStorables),
-    );
+      final itemsStorables = integrations.map((integration) {
+        final map = _mapper.toJson(integration);
+        return json.encode(map);
+      }).toList();
 
-    refresh();
+      await _storage.write(
+        key: _storageKey,
+        value: json.encode(itemsStorables),
+      );
+
+      final jsonString = await _storage.read(key: _storageKey);
+      log('Stored integrations: $jsonString');
+
+      refresh();
+    } catch (e) {
+      log('Storing integrations Error storing integrations: $e');
+      rethrow;
+    }
   }
 
   /// Refresh the stream of integrations, emitting the new list of current
@@ -75,17 +86,26 @@ class PlatformIntegrationStorage<PlatformType extends Platform,
 
   /// Returns the stored integrations.
   Future<List<IntegrationType>> _getAllIntegrations() async {
-    final jsonString = await _storage.read(key: _storageKey);
-    if (jsonString == null) {
-      return [];
+    log('Getting integrations');
+    try {
+      final jsonString = await _storage.read(key: _storageKey);
+      await _storage.readAll().then((value) => log('All values: $value'));
+
+      if (jsonString == null) {
+        return [];
+      }
+
+      final integrationsDecoded = json.decode(jsonString);
+
+      final integrations = (integrationsDecoded as List).map((e) {
+        final json = jsonDecode(e as String);
+        return _mapper.fromJson(json as Map<String, dynamic>);
+      }).toList();
+      log('Got integrations: $integrations');
+      return integrations;
+    } catch (e) {
+      log('Error getting integrations: ', error: e);
+      rethrow;
     }
-    final integrationsDecoded = json.decode(jsonString);
-
-    final integrations = (integrationsDecoded as List).map((e) {
-      final json = jsonDecode(e as String);
-      return _mapper.fromJson(json as Map<String, dynamic>);
-    }).toList();
-
-    return integrations;
   }
 }
