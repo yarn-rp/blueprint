@@ -101,15 +101,24 @@ class TodaysBlueprintCubit extends HydratedCubit<TodaysBlueprintState> {
     );
   }
 
-  void removeTaskFromTodaysBlueprint(Task task) {
+  void addNewCalendarEvent(GeneralCalendarEvent event) {
     final events = state.calendarEvents;
-    log('removing task $task');
+
+    emit(
+      TodaysBlueprintState.loaded(
+        calendarEvents: [...events, event],
+        workTimes: workTimes,
+        addedAt: DateTime.now(),
+      ),
+    );
+  }
+
+  void removeEvent(CalendarEvent calendarEvent) {
+    final events = state.calendarEvents;
+
     final itemsToKeep = events
         .where(
-          (event) => event.map(
-            event: (event) => true,
-            task: (taskEvent) => taskEvent.task.title != task.title,
-          ),
+          (event) => event != calendarEvent,
         )
         .toList();
 
