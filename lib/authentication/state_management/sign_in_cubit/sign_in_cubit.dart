@@ -19,7 +19,7 @@ class SignInCubit extends Cubit<SignInState> {
   ) async {
     emit(const SignInState.processing());
     try {
-      await _authenticationRepository.signUpWithEmailAndPassword(
+      await _authenticationRepository.signInWithEmailAndPassword(
         email: email,
         password: password,
       );

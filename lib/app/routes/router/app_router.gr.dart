@@ -45,6 +45,16 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const TodaysBlueprintPage(),
       );
     },
+    SignInRoute.name: (routeData) {
+      final args = routeData.argsAs<SignInRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: SignInPage(
+          onResult: args.onResult,
+          key: args.key,
+        ),
+      );
+    },
   };
 }
 
@@ -116,4 +126,41 @@ class TodaysBlueprintRoute extends PageRouteInfo<void> {
   static const String name = 'TodaysBlueprintRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [SignInPage]
+class SignInRoute extends PageRouteInfo<SignInRouteArgs> {
+  SignInRoute({
+    required void Function(bool) onResult,
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
+          SignInRoute.name,
+          args: SignInRouteArgs(
+            onResult: onResult,
+            key: key,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'SignInRoute';
+
+  static const PageInfo<SignInRouteArgs> page = PageInfo<SignInRouteArgs>(name);
+}
+
+class SignInRouteArgs {
+  const SignInRouteArgs({
+    required this.onResult,
+    this.key,
+  });
+
+  final void Function(bool) onResult;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'SignInRouteArgs{onResult: $onResult, key: $key}';
+  }
 }
