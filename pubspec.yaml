@@ -37,6 +37,7 @@ dependencies:
   google_fonts: ^4.0.3
   dynamic_color: ^1.6.3
   auto_route: ^6.2.1
+  firebase_core: ^2.11.0
 
 dev_dependencies:
   auto_route_generator: ^6.2.0
