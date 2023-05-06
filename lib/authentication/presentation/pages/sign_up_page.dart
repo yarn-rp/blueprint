@@ -1,14 +1,13 @@
 import 'package:authentication_repository/authentication_repository.dart';
-import 'package:auto_route/auto_route.dart';
+import 'package:auto_route/annotations.dart';
 import 'package:blueprint/app/routes/guards/authentication_guard.dart';
-import 'package:blueprint/app/routes/routes.dart';
-import 'package:blueprint/authentication/state_management/sign_in_cubit/sign_in_cubit.dart';
+import 'package:blueprint/authentication/state_management/sign_up_cubit/sign_up_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage()
-class SignInPage extends StatelessWidget {
-  const SignInPage({
+class SignUpPage extends StatelessWidget {
+  const SignUpPage({
     required this.onResult,
     super.key,
   });
@@ -17,38 +16,40 @@ class SignInPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => SignInCubit(
+      create: (context) => SignUpCubit(
         context.read<AuthenticationRepository>(),
       ),
-      child: _SignInView(
+      child: _SignUpView(
         onResult: onResult,
       ),
     );
   }
 }
 
-class _SignInView extends StatelessWidget {
-  _SignInView({
+class _SignUpView extends StatelessWidget {
+  _SignUpView({
     required this.onResult,
   });
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _repeatPasswordController =
+      TextEditingController();
   final AuthenticationResultFunction onResult;
 
   @override
   Widget build(BuildContext context) {
-    final signInCubit = context.watch<SignInCubit>();
+    final signInCubit = context.watch<SignUpCubit>();
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Sign In'),
+        title: const Text('Sign Up'),
       ),
-      body: BlocListener<SignInCubit, SignInState>(
+      body: BlocListener<SignUpCubit, SignUpState>(
         listener: (context, state) {
-          if (state is SignInSuccessful) {
+          if (state is SignUpSuccessful) {
             onResult(true);
-          } else if (state is SignInError) {
+          } else if (state is SignUpError) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(state.failure.toString()),
@@ -75,24 +76,33 @@ class _SignInView extends StatelessWidget {
                   labelText: 'Password',
                 ),
               ),
+              TextField(
+                controller: _repeatPasswordController,
+                obscureText: true,
+                decoration: const InputDecoration(
+                  labelText: 'Repeat Password',
+                ),
+              ),
               const SizedBox(height: 16),
               ElevatedButton(
                 child: const Text('Sign In'),
                 onPressed: () {
                   final email = _emailController.text;
                   final password = _passwordController.text;
+                  final repeatPassword = _repeatPasswordController.text;
+                  if (password != repeatPassword) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Passwords do not match'),
+                      ),
+                    );
+                    return;
+                  }
 
                   if (email.isNotEmpty && password.isNotEmpty) {
-                    signInCubit.signInWithEmailAndPassword(email, password);
+                    signInCubit.signUpWithEmailAndPassword(email, password);
                   }
                 },
-              ),
-              const Text("Don't have an account?"),
-              TextButton(
-                child: const Text('Sign Up'),
-                onPressed: () => context.router.push(
-                  SignUpRoute(onResult: onResult),
-                ),
               ),
             ],
           ),

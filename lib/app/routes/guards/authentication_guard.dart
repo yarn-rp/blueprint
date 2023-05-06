@@ -13,7 +13,7 @@ class AuthGuard extends AutoRouteGuard {
 
   final authenticationRoutesNames = [
     SignInRoute.name,
-    // SignUpRoute.name,
+    SignUpRoute.name,
     // ForgotPasswordRoute.name,
   ];
   @override

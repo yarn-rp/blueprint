@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:blueprint/app/app.dart';
 import 'package:blueprint/app/routes/guards/authentication_guard.dart';
 import 'package:blueprint/authentication/presentation/pages/sign_in_page.dart';
+import 'package:blueprint/authentication/presentation/pages/sign_up_page.dart';
 import 'package:blueprint/authentication/state_management/authentication_cubit/authentication_cubit.dart';
 import 'package:blueprint/blueprint/presentation/pages/todays_blueprint.dart';
 import 'package:blueprint/integrations/presentation/pages/integrations_page.dart';
@@ -24,6 +25,10 @@ class AppRouter extends _$AppRouter {
         AutoRoute(
           page: SignInRoute.page,
           path: '/sign-in',
+        ),
+        AutoRoute(
+          page: SignUpRoute.page,
+          path: '/sign-up',
         ),
 
         /// routes go here
