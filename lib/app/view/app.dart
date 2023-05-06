@@ -2,8 +2,10 @@ import 'package:blueprint/app/view/app_router.dart';
 import 'package:blueprint/blueprint/state_management/todays_blueprint/todays_blueprint_cubit.dart';
 import 'package:blueprint/core/l10n/l10n.dart';
 import 'package:blueprint/core/styles/styles.dart';
+import 'package:blueprint/core/utils/datetime/datetime_utils.dart';
 import 'package:blueprint/integrations/state_management/cubit/integrations_cubit.dart';
 import 'package:blueprint/projects/state_management/projects_cubit/projects_cubit.dart';
+import 'package:blueprint/settings/state_management/bloc/settings_bloc.dart';
 import 'package:blueprint/tasks/state_management/cubit/tasks_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -51,8 +53,12 @@ class BlocsProvider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final settingsBloc = SettingsBloc();
     return MultiBlocProvider(
       providers: [
+        BlocProvider.value(
+          value: settingsBloc,
+        ),
         BlocProvider.value(
           value: ProjectsCubit(
             context.read<IntegrationsRepository>(),
@@ -70,14 +76,8 @@ class BlocsProvider extends StatelessWidget {
         ),
         BlocProvider.value(
           value: TodaysBlueprintCubit(
-            //TODO: get this from the settings:
-            initialDateTime: DateTime.now().copyWith(
-              hour: 8,
-              minute: 00,
-              microsecond: 0,
-              second: 0,
-            ),
-            workingHours: 12,
+            workTimes: settingsBloc
+                .state.workingCalendar.events[DateTime.now().dayOfWeek]!,
           ),
         )
       ],
@@ -97,21 +97,26 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return RepositoriesProvider(
       child: BlocsProvider(
-        child: MaterialApp.router(
-          theme: ThemeData(
-            useMaterial3: true,
-            colorScheme: lightColorScheme,
-            textTheme: textTheme,
-          ),
-          themeMode: ThemeMode.dark,
-          darkTheme: ThemeData(
-            useMaterial3: true,
-            colorScheme: darkColorScheme,
-            textTheme: textTheme,
-          ),
-          localizationsDelegates: AppLocalizations.localizationsDelegates,
-          supportedLocales: AppLocalizations.supportedLocales,
-          routerConfig: _appRouter.config(),
+        child: BlocSelector<SettingsBloc, SettingsState, AppBrightness>(
+          selector: (state) => state.brightness,
+          builder: (context, brightness) {
+            return MaterialApp.router(
+              theme: ThemeData(
+                useMaterial3: true,
+                colorScheme: lightColorScheme,
+                textTheme: textTheme,
+              ),
+              themeMode: brightness.themeMode,
+              darkTheme: ThemeData(
+                useMaterial3: true,
+                colorScheme: darkColorScheme,
+                textTheme: textTheme,
+              ),
+              localizationsDelegates: AppLocalizations.localizationsDelegates,
+              supportedLocales: AppLocalizations.supportedLocales,
+              routerConfig: _appRouter.config(),
+            );
+          },
         ),
       ),
     );

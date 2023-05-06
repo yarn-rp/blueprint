@@ -1,6 +1,6 @@
+import 'package:blueprint/blueprint/mappers/task_json_mapper.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:integrations_repository/integrations_repository.dart';
-import 'package:blueprint/blueprint/mappers/task_json_mapper.dart';
 
 part 'calendar_event.freezed.dart';
 part 'calendar_event.g.dart';

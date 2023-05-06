@@ -18,7 +18,7 @@ class AppRouter extends _$AppRouter {
         ),
         AutoRoute(
           page: IntegrationsRoute.page,
-          path: '/integrations',
+          path: '/settings/integrations',
         ),
         AutoRoute(
           path: '/',

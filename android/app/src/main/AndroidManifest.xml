@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.verygoodcore.blueprint">
+    package="com.yarn.blueprint">
    <application
         android:label="Blueprint"
         android:name="${applicationName}"
