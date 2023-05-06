@@ -1,7 +1,9 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:blueprint/blueprint/entities/calendar_event.dart';
 import 'package:blueprint/blueprint/presentation/pages/today_time_line.dart';
 import 'package:blueprint/blueprint/presentation/widgets/calendar_event_tile.dart';
 import 'package:blueprint/blueprint/state_management/todays_blueprint/todays_blueprint_cubit.dart';
+import 'package:blueprint/settings/presentation/pages/working_time_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -12,8 +14,26 @@ class TodaysBlueprintPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isPhone = MediaQuery.of(context).size.width < 600;
-    final isWide = MediaQuery.of(context).size.width > 1200;
+    final isWide = MediaQuery.of(context).size.width >= 1150;
     return Scaffold(
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () async {
+          final event = await showModalBottomSheet<GeneralCalendarEvent?>(
+            context: context,
+            builder: (context) {
+              return BlocProvider.value(
+                value: context.read<TodaysBlueprintCubit>(),
+                child: const AddEventBottomSheet(),
+              );
+            },
+          );
+          if (event != null) {
+            context.read<TodaysBlueprintCubit>().addNewCalendarEvent(event);
+          }
+        },
+        label: const Text('Add Event'),
+        icon: const Icon(Icons.add),
+      ),
       body: Row(
         children: [
           Flexible(
@@ -78,6 +98,120 @@ class TodaysBlueprintPage extends StatelessWidget {
               child: TodayTimeline(),
             ),
         ],
+      ),
+    );
+  }
+}
+
+class AddEventBottomSheet extends StatefulWidget {
+  const AddEventBottomSheet({super.key});
+
+  @override
+  State<AddEventBottomSheet> createState() => _AddEventBottomSheetState();
+}
+
+class _AddEventBottomSheetState extends State<AddEventBottomSheet> {
+  late TimeOfDay startTime;
+  late TimeOfDay endTime;
+  String? subject;
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    startTime = TimeOfDay.now();
+
+    endTime = TimeOfDay.now().replacing(hour: startTime.hour + 1);
+    super.initState();
+  }
+
+  void validate() {
+    if (formKey.currentState!.validate()) {
+      final event = GeneralCalendarEvent(
+        subject: subject!,
+        startTime: DateTime.now().copyWith(
+          hour: startTime.hour,
+          minute: startTime.minute,
+        ),
+        endTime: DateTime.now().copyWith(
+          hour: endTime.hour,
+          minute: endTime.minute,
+        ),
+      );
+      context.router.pop(
+        event,
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: validate,
+        child: const Icon(Icons.add),
+      ),
+      appBar: AppBar(
+        title: const Text('Add New Event'),
+      ),
+      body: Form(
+        key: formKey,
+        child: ListView(
+          children: [
+            // Title Text Field
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: TextFormField(
+                onChanged: (value) {
+                  subject = value;
+                },
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter a title';
+                  }
+                  return null;
+                },
+                decoration: const InputDecoration(
+                  labelText: 'Title',
+                  border: OutlineInputBorder(),
+                  contentPadding: EdgeInsets.symmetric(horizontal: 16),
+                ),
+              ),
+            ),
+            // Start Time Text Field
+            Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    children: [
+                      const Text('From'),
+                      //Time of day picker
+                      TimeInput(
+                        onChanged: (time) {
+                          startTime = time;
+                        },
+                        initialTime: startTime,
+                      ),
+                    ],
+                  ),
+                ),
+                Expanded(
+                  child: Column(
+                    children: [
+                      const Text('To'),
+                      //Time of day picker
+                      TimeInput(
+                        onChanged: (time) {
+                          endTime = time;
+                        },
+                        initialTime: endTime,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

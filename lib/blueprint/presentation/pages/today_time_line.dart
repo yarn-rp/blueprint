@@ -1,10 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'dart:developer';
+
 import 'package:blueprint/blueprint/entities/calendar_event.dart';
 import 'package:blueprint/blueprint/presentation/widgets/general_calendar_event_tile.dart';
 import 'package:blueprint/blueprint/presentation/widgets/task_event_tile.dart';
 import 'package:blueprint/blueprint/state_management/todays_blueprint/todays_blueprint_cubit.dart';
 import 'package:blueprint/tasks/presentation/pages/task_details.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class TodayTimeline extends StatefulWidget {
@@ -74,10 +76,12 @@ class _TodaysBlueprintState extends State<TodayTimeline>
 
     return BlocBuilder<TodaysBlueprintCubit, TodaysBlueprintState>(
       builder: (context, state) {
+        log('working times: ${state.workTimes}');
         return SfCalendar(
           controller: calendarController,
           dataSource: state.toDataSource,
           allowDragAndDrop: true,
+          allowAppointmentResize: true,
           minDate: now.copyWith(hour: 0, minute: 0, second: 0, millisecond: 0),
           maxDate: now.copyWith(
             hour: 23,
@@ -86,12 +90,19 @@ class _TodaysBlueprintState extends State<TodayTimeline>
             millisecond: 999,
           ),
           specialRegions: [
-            TimeRegion(
-              text: 'Working Time',
-              startTime: state.initialDateTime,
-              endTime: state.initialDateTime
-                  .add(Duration(hours: state.workingHours)),
-            )
+            ...state.workTimes.map(
+              (workTime) => TimeRegion(
+                text: 'Working Time',
+                startTime: DateTime.now().copyWith(
+                  hour: workTime.start.hour,
+                  minute: workTime.start.minute,
+                ),
+                endTime: DateTime.now().copyWith(
+                  hour: workTime.end.hour,
+                  minute: workTime.end.minute,
+                ),
+              ),
+            ),
           ],
 
           onTap: (calendarTapDetails) async {
@@ -169,6 +180,37 @@ class _TodaysBlueprintState extends State<TodayTimeline>
                   newEndTime,
                 );
           },
+
+          onAppointmentResizeEnd: (appointmentResizeEndDetails) {
+            final appointment = appointmentResizeEndDetails.appointment;
+            if (appointment is! CalendarEvent) {
+              return;
+            }
+            final startTime = appointment.startTime;
+            final endTime = appointment.endTime;
+
+            final newStartTime = DateTime(
+              startTime.year,
+              startTime.month,
+              startTime.day,
+              startTime.hour,
+              (startTime.minute / dragUnit).round() * dragUnit,
+            );
+
+            final newEndTime = DateTime(
+              endTime.year,
+              endTime.month,
+              endTime.day,
+              endTime.hour,
+              (endTime.minute / dragUnit).round() * dragUnit,
+            );
+            context.read<TodaysBlueprintCubit>().moveEventInTimeLine(
+                  appointment,
+                  newStartTime,
+                  newEndTime,
+                );
+          },
+
           appointmentBuilder: (
             BuildContext context,
             CalendarAppointmentDetails calendarAppointmentDetails,
@@ -179,8 +221,13 @@ class _TodaysBlueprintState extends State<TodayTimeline>
             }
             final isAfter = appointment.endTime.isAfter(now);
             return appointment.map(
-              event: (appointment) =>
-                  GeneralCalendarEventTile(appointment: appointment),
+              event: (appointment) => GeneralCalendarEventTile(
+                appointment: appointment,
+                isSmallVersion: appointment.endTime
+                        .difference(appointment.startTime)
+                        .inMinutes <
+                    30,
+              ),
               task: (appointment) => TaskEventTile(
                 appointment: appointment,
                 color: isAfter
