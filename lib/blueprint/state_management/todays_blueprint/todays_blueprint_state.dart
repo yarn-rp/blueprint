@@ -5,27 +5,23 @@ abstract class TodaysBlueprintState with _$TodaysBlueprintState {
   const TodaysBlueprintState._();
   const factory TodaysBlueprintState.initial({
     required List<CalendarEvent> calendarEvents,
-    required DateTime initialDateTime,
-    required int workingHours,
+    required List<WorkTime> workTimes,
     required DateTime addedAt,
   }) = _Initial;
   const factory TodaysBlueprintState.loading({
     required List<CalendarEvent> calendarEvents,
-    required DateTime initialDateTime,
-    required int workingHours,
+    required List<WorkTime> workTimes,
     required DateTime addedAt,
   }) = _Loading;
   const factory TodaysBlueprintState.loaded({
     required List<CalendarEvent> calendarEvents,
-    required DateTime initialDateTime,
-    required int workingHours,
+    required List<WorkTime> workTimes,
     required DateTime addedAt,
   }) = _Loaded;
   const factory TodaysBlueprintState.error({
     required String error,
     required List<CalendarEvent> calendarEvents,
-    required DateTime initialDateTime,
-    required int workingHours,
+    required List<WorkTime> workTimes,
     required DateTime addedAt,
   }) = _Error;
 

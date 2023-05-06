@@ -1,4 +1,4 @@
-package com.example.verygoodcore.blueprint
+package com.yarn.blueprint
 
 import io.flutter.embedding.android.FlutterActivity
 
