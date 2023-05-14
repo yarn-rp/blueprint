@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:blueprint/app/dependency_injection/init.dart';
+import 'package:blueprint/core/env/app_environment.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
@@ -22,9 +24,15 @@ class AppBlocObserver extends BlocObserver {
   }
 }
 
-Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
+Future<void> bootstrap(
+  FutureOr<Widget> Function() builder, {
+  required AppEnvironment environment,
+}) async {
   // Ensure that the widgets library is initialized.
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Configure all dependencies using get_it.
+  await configureDependencies(sl, environment: environment);
 
   // Initialize HydratedBloc.
   HydratedBloc.storage = await HydratedStorage.build(
