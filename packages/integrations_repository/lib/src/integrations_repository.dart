@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:integrations_repository/src/exceptions/exceptions.dart';
 import 'package:platform_integration_repository/platform_integration_repository.dart';
@@ -111,8 +110,6 @@ class IntegrationsRepository {
       return;
     }
     try {
-      log('Getting projects from $platform', name: 'IntegrationsRepository');
-
       /// Get all the integrations from the repository
       final integrationsStream = repository.getIntegrations();
 
@@ -122,18 +119,11 @@ class IntegrationsRepository {
         ),
       );
 
-      yield* integrationProjects.map((platformProjects) {
-        log(
-          'Found ${platformProjects.map((e) => e.map((e) => e.name))} projects from $platform',
-          name: 'IntegrationsRepository',
-        );
-        return platformProjects.expand((element) => element).toList();
-      });
-    } on IntegrationNotFoundException {
-      log(
-        'No integrations found for $platform',
-        name: 'IntegrationsRepository',
+      yield* integrationProjects.map(
+        (platformProjects) =>
+            platformProjects.expand((element) => element).toList(),
       );
+    } on IntegrationNotFoundException {
       yield [];
     }
   }
