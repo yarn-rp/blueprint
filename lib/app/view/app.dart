@@ -1,4 +1,4 @@
-import 'package:blueprint/app/dependency_injection/dependency_injection.dart';
+import 'package:blueprint/app/dependency_injection/global_dependencies_provider.dart';
 import 'package:blueprint/app/routes/routes.dart';
 import 'package:blueprint/authentication/state_management/authentication_cubit/authentication_cubit.dart';
 import 'package:blueprint/core/l10n/l10n.dart';
