@@ -7,6 +7,8 @@ environment:
   sdk: '>=2.19.0 <3.0.0'
 
 dependencies:
+  authentication_repository:
+    path: ./packages/authentication_repository
   bloc: ^8.1.1
   cached_network_image: ^3.2.3
   collapsible_sidebar: ^2.0.3+3

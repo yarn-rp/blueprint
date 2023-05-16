@@ -7,8 +7,7 @@ part of 'calendar_event.dart';
 // **************************************************************************
 
 _$GeneralCalendarEvent _$$GeneralCalendarEventFromJson(
-  Map<String, dynamic> json,
-) =>
+        Map<String, dynamic> json) =>
     _$GeneralCalendarEvent(
       startTime: DateTime.parse(json['startTime'] as String),
       endTime: DateTime.parse(json['endTime'] as String),
@@ -18,8 +17,7 @@ _$GeneralCalendarEvent _$$GeneralCalendarEventFromJson(
     );
 
 Map<String, dynamic> _$$GeneralCalendarEventToJson(
-  _$GeneralCalendarEvent instance,
-) =>
+        _$GeneralCalendarEvent instance) =>
     <String, dynamic>{
       'startTime': instance.startTime.toIso8601String(),
       'endTime': instance.endTime.toIso8601String(),

@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:blueprint/app/view/app_router.dart';
+import 'package:blueprint/app/routes/routes.dart';
 import 'package:blueprint/core/widgets/material_search.dart';
 import 'package:collapsible_sidebar/collapsible_sidebar.dart';
 import 'package:collection/collection.dart';
