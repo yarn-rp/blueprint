@@ -1,5 +1,5 @@
-import 'package:authentication_repository/authentication_repository.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:blueprint/app/dependency_injection/init.dart';
 import 'package:blueprint/app/routes/routes.dart';
 import 'package:blueprint/authentication/state_management/sign_out_cubit/sign_out_cubit.dart';
 import 'package:blueprint/settings/presentation/pages/working_time_page.dart';
@@ -14,9 +14,7 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => SignOutCubit(
-        context.read<AuthenticationRepository>(),
-      ),
+      create: (context) => sl<SignOutCubit>(),
       child: const _SettingsView(),
     );
   }
