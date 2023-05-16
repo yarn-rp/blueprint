@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:blueprint/app/dependency_injection/init.dart';
 import 'package:blueprint/integrations/state_management/cubit/integrations_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,6 +18,8 @@ class _IntegrationsPageState extends State<IntegrationsPage>
     with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Integrations'),
@@ -55,9 +58,9 @@ class _IntegrationsPageState extends State<IntegrationsPage>
             runSpacing: 16,
             spacing: 16,
             children: [
-              ...context.read<IntegrationsRepository>().getIntegrationTiles(
-                    context.read<IntegrationsCubit>().addIntegration,
-                  ),
+              ...sl<IntegrationsRepository>().getIntegrationTiles(
+                context.read<IntegrationsCubit>().addIntegration,
+              ),
             ],
           ),
         ],
@@ -70,7 +73,7 @@ class _IntegrationsPageState extends State<IntegrationsPage>
 }
 
 class IntegrationCard extends StatelessWidget {
-  const IntegrationCard({super.key, required this.integration});
+  const IntegrationCard({required this.integration, super.key});
   final Integration integration;
 
   @override
@@ -145,8 +148,8 @@ class IntegrationCard extends StatelessWidget {
 
 class IntegrationsDetails extends StatelessWidget {
   const IntegrationsDetails({
-    super.key,
     required this.integration,
+    super.key,
   });
 
   final Integration integration;
@@ -170,7 +173,7 @@ class IntegrationsDetails extends StatelessWidget {
 }
 
 class JiraIntegrationDetails extends StatelessWidget {
-  const JiraIntegrationDetails({super.key, required this.integration});
+  const JiraIntegrationDetails({required this.integration, super.key});
   final JiraIntegration integration;
 
   @override
