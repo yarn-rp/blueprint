@@ -1,5 +1,6 @@
 import 'package:blueprint/app/app.dart';
 import 'package:blueprint/bootstrap.dart';
+import 'package:blueprint/core/env/app_environment.dart';
 import 'package:blueprint/core/firebase_options/firebase_options_prd.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -9,5 +10,5 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  await bootstrap(App.new);
+  await bootstrap(App.new, environment: AppEnvironment.production);
 }

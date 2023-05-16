@@ -39,12 +39,6 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const IntegrationsPage(),
       );
     },
-    TodaysBlueprintRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const TodaysBlueprintPage(),
-      );
-    },
     SignInRoute.name: (routeData) {
       final args = routeData.argsAs<SignInRouteArgs>();
       return AutoRoutePage<dynamic>(
@@ -63,6 +57,12 @@ abstract class _$AppRouter extends RootStackRouter {
           onResult: args.onResult,
           key: args.key,
         ),
+      );
+    },
+    TodaysBlueprintRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const TodaysBlueprintPage(),
       );
     },
   };
@@ -120,20 +120,6 @@ class IntegrationsRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'IntegrationsRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [TodaysBlueprintPage]
-class TodaysBlueprintRoute extends PageRouteInfo<void> {
-  const TodaysBlueprintRoute({List<PageRouteInfo>? children})
-      : super(
-          TodaysBlueprintRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'TodaysBlueprintRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
@@ -210,4 +196,18 @@ class SignUpRouteArgs {
   String toString() {
     return 'SignUpRouteArgs{onResult: $onResult, key: $key}';
   }
+}
+
+/// generated route for
+/// [TodaysBlueprintPage]
+class TodaysBlueprintRoute extends PageRouteInfo<void> {
+  const TodaysBlueprintRoute({List<PageRouteInfo>? children})
+      : super(
+          TodaysBlueprintRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'TodaysBlueprintRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
 }

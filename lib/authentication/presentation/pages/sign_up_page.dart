@@ -1,5 +1,5 @@
-import 'package:authentication_repository/authentication_repository.dart';
 import 'package:auto_route/annotations.dart';
+import 'package:blueprint/app/dependency_injection/init.dart';
 import 'package:blueprint/app/routes/guards/authentication_guard.dart';
 import 'package:blueprint/authentication/state_management/sign_up_cubit/sign_up_cubit.dart';
 import 'package:flutter/material.dart';
@@ -16,9 +16,7 @@ class SignUpPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => SignUpCubit(
-        context.read<AuthenticationRepository>(),
-      ),
+      create: (context) => sl<SignUpCubit>(),
       child: _SignUpView(
         onResult: onResult,
       ),
