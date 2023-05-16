@@ -220,10 +220,10 @@ packages:
     dependency: "direct main"
     description:
       name: collapsible_sidebar
-      sha256: "0b2a754eec3eb5ba7e733712ffa6ff99d28b2e2930fa5d42e76b0e7a29828b25"
+      sha256: "6eb957698fd27d54b06234e07d6d71395a4f06018e866ea8d8b0aedc5732841a"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.4"
+    version: "2.0.5+1"
   collection:
     dependency: "direct main"
     description:
@@ -276,10 +276,10 @@ packages:
     dependency: "direct main"
     description:
       name: dynamic_color
-      sha256: bbebb1b7ebed819e0ec83d4abdc2a8482d934f6a85289ffc1c6acf7589fa2aad
+      sha256: "74dff1435a695887ca64899b8990004f8d1232b0e84bfc4faa1fdda7c6f57cc1"
       url: "https://pub.dev"
     source: hosted
-    version: "1.6.3"
+    version: "1.6.5"
   equatable:
     dependency: transitive
     description:
@@ -1081,10 +1081,10 @@ packages:
     dependency: transitive
     description:
       name: sqflite
-      sha256: "3a82c9a216b46b88617e3714dd74227eaca20c501c4abcc213e56db26b9caa00"
+      sha256: "41498eed139e9daadc18877cbd4c877fc184f29f08bf9fb04565c4afc6609f27"
       url: "https://pub.dev"
     source: hosted
-    version: "2.2.8+2"
+    version: "2.2.8+3"
   sqflite_common:
     dependency: transitive
     description:
