@@ -1,5 +1,5 @@
-import 'package:authentication_repository/authentication_repository.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:blueprint/app/dependency_injection/init.dart';
 import 'package:blueprint/app/routes/guards/authentication_guard.dart';
 import 'package:blueprint/app/routes/routes.dart';
 import 'package:blueprint/authentication/state_management/sign_in_cubit/sign_in_cubit.dart';
@@ -17,9 +17,7 @@ class SignInPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => SignInCubit(
-        context.read<AuthenticationRepository>(),
-      ),
+      create: (context) => sl<SignInCubit>(),
       child: _SignInView(
         onResult: onResult,
       ),

@@ -2,6 +2,7 @@ import 'package:authentication_repository/authentication_repository.dart';
 import 'package:blueprint/authentication/state_management/authentication_cubit/authentication_cubit.dart';
 import 'package:blueprint/authentication/state_management/forgot_password_cubit/forgot_password_cubit.dart';
 import 'package:blueprint/authentication/state_management/sign_in_cubit/sign_in_cubit.dart';
+import 'package:blueprint/authentication/state_management/sign_out_cubit/sign_out_cubit.dart';
 import 'package:blueprint/authentication/state_management/sign_up_cubit/sign_up_cubit.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:injectable/injectable.dart';
@@ -29,6 +30,14 @@ abstract class AuthenticationModule {
     AuthenticationRepositoryContract authenticationRepository,
   ) =>
       SignUpCubit(
+        authenticationRepository,
+      );
+
+  @injectable
+  SignOutCubit signOutCubit(
+    AuthenticationRepositoryContract authenticationRepository,
+  ) =>
+      SignOutCubit(
         authenticationRepository,
       );
 
