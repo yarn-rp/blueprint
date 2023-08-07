@@ -31,7 +31,6 @@ jobs:
       flavor: staging
       target: lib/main_staging.dart
     secrets:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_STG }}
     
 

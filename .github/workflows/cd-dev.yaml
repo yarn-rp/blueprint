@@ -14,5 +14,4 @@ jobs:
       flavor: development
       target: lib/main_development.dart
     secrets:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_DEV }}
