@@ -1,16 +1,13 @@
-name: blueprint
+name: ci-dev
 
 concurrency:
   group: $-$
   cancel-in-progress: true
 
 on:
-  push:
-    branches:
-      - main
   pull_request:
     branches:
-      - main
+      - development
 
 jobs:
   semantic-pull-request:
@@ -27,3 +24,15 @@ jobs:
       includes: |
         **/*.md
       modified_files_only: false
+  build_and_deploy:
+    uses: ./.github/workflows/firebase-hosting-preview.yml
+    with:
+      project_id: polletask-dev
+      flavor: development
+      target: lib/main_development.dart
+    secrets:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_DEV }}
+    
+
+  
