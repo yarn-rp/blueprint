@@ -10,8 +10,6 @@
 .history
 .svn/
 
-# Firebase api keys:
-firebase_options_*.dart
 
 # IntelliJ related
 *.iml
