@@ -4,6 +4,8 @@ concurrency:
   group: $-$
   cancel-in-progress: true
 
+permissions: read-all
+
 on:
   pull_request:
     branches:
