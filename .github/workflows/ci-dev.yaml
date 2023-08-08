@@ -4,7 +4,9 @@ concurrency:
   group: $-$
   cancel-in-progress: true
 
-permissions: read-all
+permissions:
+  contents: read
+  pull-requests: write
 
 on:
   pull_request:
