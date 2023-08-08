@@ -8,9 +8,6 @@ on:
       project_id:
         type: string
         required: true
-      flavor:
-        type: string
-        required: true
       target:
         required: false
         type: string

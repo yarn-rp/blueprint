@@ -28,7 +28,6 @@ jobs:
     uses: ./.github/workflows/firebase-hosting-preview.yml
     with:
       project_id: blueprint-384623
-      flavor: production
       target: lib/main_production.dart
     secrets:
       FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_PRD }}

@@ -28,7 +28,6 @@ jobs:
     uses: ./.github/workflows/firebase-hosting-preview.yml
     with:
       project_id: blueprint-stg
-      flavor: staging
       target: lib/main_staging.dart
     secrets:
       FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_STG }}
