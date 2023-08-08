@@ -4,10 +4,6 @@ concurrency:
   group: $-$
   cancel-in-progress: true
 
-permissions:
-  contents: read
-  pull-requests: write
-  issues: write
 
 on:
   pull_request:
@@ -34,8 +30,10 @@ jobs:
     with:
       project_id: polletask-dev
       target: lib/main_development.dart
-      firebase_service_account: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_DEV }}
+    secrets:  
+      FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_DEV }}
 
+      
 
 
     
