@@ -1,12 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:integrations_repository/integrations_repository.dart';
 import 'package:blueprint/core/styles/styles.dart';
 import 'package:blueprint/core/utils/color/hex_color_extension.dart';
+import 'package:flutter/material.dart';
+import 'package:integrations_repository/integrations_repository.dart';
 
 class LabelChip extends StatelessWidget {
   const LabelChip({
-    super.key,
-    required this.label,
+    required this.label, super.key,
   });
 
   final Label label;

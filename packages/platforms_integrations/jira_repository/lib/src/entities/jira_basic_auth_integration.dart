@@ -8,16 +8,16 @@ part 'jira_basic_auth_integration.g.dart';
 /// some services and platforms like Web due to CORS restrictions.
 @JsonSerializable()
 class JiraBasicAuthIntegration extends JiraIntegration {
-  /// Creates a new [JiraBasicAuthIntegration] instance from a JSON object.
-  factory JiraBasicAuthIntegration.fromJson(Map<String, dynamic> json) =>
-      _$JiraBasicAuthIntegrationFromJson(json);
-
   /// Creates a new [JiraBasicAuthIntegration] instance with the provided
   const JiraBasicAuthIntegration({
     required this.username,
     required this.password,
     required super.url,
   }) : super(user: username);
+
+  /// Creates a new [JiraBasicAuthIntegration] instance from a JSON object.
+  factory JiraBasicAuthIntegration.fromJson(Map<String, dynamic> json) =>
+      _$JiraBasicAuthIntegrationFromJson(json);
 
   /// The username of the Jira user.
   final String username;
@@ -29,6 +29,7 @@ class JiraBasicAuthIntegration extends JiraIntegration {
 
   /// Converts this [JiraBasicAuthIntegration] instance to a JSON object.
   /// Adds the type of the integration to the JSON object.
+  @override
   Map<String, dynamic> toJson() => _$JiraBasicAuthIntegrationToJson(this)
     ..addAll({'type': 'basic_auth', 'platformId': platform.id});
 }

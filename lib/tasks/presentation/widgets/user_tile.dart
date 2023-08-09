@@ -3,7 +3,7 @@ import 'package:integrations_repository/integrations_repository.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class UserTile extends StatelessWidget {
-  const UserTile({super.key, required this.user});
+  const UserTile({required this.user, super.key});
   final User user;
   @override
   Widget build(BuildContext context) {

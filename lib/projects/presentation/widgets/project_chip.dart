@@ -5,8 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 class ProjectChip extends StatelessWidget {
   const ProjectChip({
-    super.key,
-    required this.project,
+    required this.project, super.key,
   });
 
   final Project project;

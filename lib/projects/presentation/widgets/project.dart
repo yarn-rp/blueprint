@@ -1,11 +1,11 @@
+import 'package:blueprint/core/utils/color/hex_color_extension.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:integrations_repository/integrations_repository.dart';
-import 'package:blueprint/core/utils/color/hex_color_extension.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ProjectCard extends StatelessWidget {
-  const ProjectCard({super.key, required this.project});
+  const ProjectCard({required this.project, super.key});
   final Project project;
 
   @override

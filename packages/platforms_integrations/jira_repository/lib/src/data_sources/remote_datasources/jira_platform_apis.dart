@@ -18,7 +18,7 @@ class JiraPlatformApis {
         if (element is JiraBasicAuthIntegration) {
           return Jira.JiraPlatformApi(
             Jira.ApiClient.basicAuthentication(
-              Uri.https(element.url, ''),
+              Uri.https(element.url),
               user: element.username,
               apiToken: element.password,
             ),
@@ -39,7 +39,7 @@ class JiraPlatformApis {
     }
     if (integration is JiraBasicAuthIntegration) {
       final client = Jira.ApiClient.basicAuthentication(
-        Uri.https(integration.url, ''),
+        Uri.https(integration.url),
         user: integration.username,
         apiToken: integration.password,
       );

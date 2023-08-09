@@ -1,15 +1,14 @@
-import 'package:flutter/material.dart';
-import 'package:integrations_repository/integrations_repository.dart';
 import 'package:blueprint/projects/presentation/widgets/project_chip.dart';
 import 'package:blueprint/tasks/presentation/widgets/priority_widget.dart';
 import 'package:blueprint/tasks/presentation/widgets/status_chip.dart';
+import 'package:flutter/material.dart';
+import 'package:integrations_repository/integrations_repository.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TaskTile extends StatelessWidget {
   const TaskTile({
     required this.task,
-    super.key,
-    required this.onDetails,
+    required this.onDetails, super.key,
   });
   final Task task;
   final VoidCallback onDetails;

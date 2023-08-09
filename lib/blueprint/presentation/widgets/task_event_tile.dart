@@ -7,8 +7,7 @@ import 'package:intl/intl.dart';
 
 class TaskEventTile extends StatelessWidget {
   const TaskEventTile({
-    super.key,
-    required this.appointment,
+    required this.appointment, super.key,
     this.showDeleteButton = true,
     this.color,
   });
@@ -18,7 +17,7 @@ class TaskEventTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return DecoratedBox(
       decoration: BoxDecoration(
         color: color,
         borderRadius: const BorderRadius.all(Radius.circular(4)),
