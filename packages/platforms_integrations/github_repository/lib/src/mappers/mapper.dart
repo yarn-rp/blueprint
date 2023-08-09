@@ -130,6 +130,7 @@ class GitHubIntegrationMapper
     );
 
     final labels = [
+      status,
       if (pullRequest.labels != null)
         ...pullRequest.labels!.map(
           fromGitHubApiIssueLabelToLabel,

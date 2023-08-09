@@ -28,6 +28,7 @@ class _TodaysBlueprintState extends State<TodayTimeline>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     final Widget calendar = Theme(
       /// The key set here to maintain the state,
       ///  when we change the parent of the widget
@@ -117,7 +118,7 @@ class _TodaysBlueprintState extends State<TodayTimeline>
                   // TODO: do something
                 },
                 task: (appointment) async {
-                  await showDialog(
+                  await showDialog<void>(
                     context: context,
                     builder: (context) {
                       return Dialog(
@@ -140,11 +141,12 @@ class _TodaysBlueprintState extends State<TodayTimeline>
             }
           },
           // Rounds the new appointment time to the nearest 15 minutes interval.
-          // For example, if the appointment is dragged to 10:05, the appointment
-          // time will be rounded to 10:00. If the appointment is dragged to 10:07,
-          // the appointment time will be rounded to 10:15. If the appointment is
-          // dragged to 10:27, the appointment time will be rounded to 10:30. If the
-          // appointment is dragged to 10:16, the appointment time will be rounded
+          // For example, if the appointment is dragged to 10:05, the
+          // appointment time will be rounded to 10:00. If the appointment is
+          // dragged to 10:07, the appointment time will be rounded to 10:15.
+          // If the appointment is dragged to 10:27, the appointment time will
+          // be rounded to 10:30. If the appointment is dragged to 10:16, the
+          // appointment time will be rounded
           // to 10:15.
           onDragEnd: (AppointmentDragEndDetails details) {
             final appointment = details.appointment;

@@ -41,7 +41,7 @@ class _TasksPageState extends State<TasksPage>
                         (task) => TaskTile(
                           task: task,
                           onDetails: () async {
-                            await showDialog(
+                            await showDialog<void>(
                               context: context,
                               builder: (context) {
                                 return Dialog(

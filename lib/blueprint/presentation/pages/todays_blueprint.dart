@@ -13,24 +13,23 @@ class TodaysBlueprintPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isPhone = MediaQuery.of(context).size.width < 600;
+    // final isPhone = MediaQuery.of(context).size.width < 600;
     final isWide = MediaQuery.of(context).size.width >= 1150;
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () async {
-          final event = await showModalBottomSheet<GeneralCalendarEvent?>(
-            context: context,
-            builder: (context) {
-              return BlocProvider.value(
-                value: context.read<TodaysBlueprintCubit>(),
-                child: const AddEventBottomSheet(),
-              );
-            },
-          );
-          if (event != null) {
-            context.read<TodaysBlueprintCubit>().addNewCalendarEvent(event);
+        onPressed: () => showModalBottomSheet<GeneralCalendarEvent?>(
+          context: context,
+          builder: (context) {
+            return BlocProvider.value(
+              value: context.read<TodaysBlueprintCubit>(),
+              child: const AddEventBottomSheet(),
+            );
+          },
+        ).then((value) {
+          if (value != null) {
+            context.read<TodaysBlueprintCubit>().addNewCalendarEvent(value);
           }
-        },
+        }),
         label: const Text('Add Event'),
         icon: const Icon(Icons.add),
       ),
