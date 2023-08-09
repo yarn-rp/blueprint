@@ -1,5 +1,7 @@
 name: ci-prd
 
+permissions: write-all
+
 concurrency:
   group: $-$
   cancel-in-progress: true
@@ -31,6 +33,3 @@ jobs:
       target: lib/main_production.dart
     secrets:
       FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_PRD }}
-    
-
-  
