@@ -70,7 +70,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '364868056134',
     projectId: 'blueprint-384623',
     storageBucket: 'blueprint-384623.appspot.com',
-    iosClientId: '364868056134-mmcaj71vch2qa827319srbi020anl24p.apps.googleusercontent.com',
+    iosClientId:
+        '364868056134-mmcaj71vch2qa827319srbi020anl24p.apps.googleusercontent.com',
     iosBundleId: 'com.blueprint.app.prd',
   );
 }
