@@ -19,7 +19,7 @@ class CalendarEvent with _$CalendarEvent {
 
   const factory CalendarEvent.task({
     @JsonKey(fromJson: TaskJsonMapper.fromJson, toJson: TaskJsonMapper.toJson)
-        required Task task,
+    required Task task,
     required DateTime startTime,
     required DateTime endTime,
     @Default(false) bool isAllDay,
