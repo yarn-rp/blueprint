@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_dynamic_calls, library_private_types_in_public_api
+
 part of 'todays_blueprint_cubit.dart';
 
 @Freezed(fromJson: true, toJson: true)

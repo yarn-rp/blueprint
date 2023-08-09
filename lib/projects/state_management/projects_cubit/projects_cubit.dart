@@ -13,7 +13,8 @@ part 'projects_state.dart';
 /// Emits the following states:
 /// - [ProjectsInitial] - The initial state of the bloc.
 /// - [ProjectsLoading] - The state when the bloc is loading the projects.
-/// - [ProjectsModifyingProject] - The state when the bloc is modifying a project.
+/// - [ProjectsModifyingProject] - The state when the bloc is modifying a
+/// project.
 /// - [ProjectsLoaded] - The state when the bloc has loaded the projects.
 /// - [ProjectsError] - The state when the bloc has encountered an error.
 ///

@@ -125,7 +125,7 @@ class ScheduledTimeTile extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           IconButton(
-            onPressed: () => editWorkTime(context, workTime!),
+            onPressed: () => editWorkTime(context, workTime),
             icon: Icon(
               Icons.edit,
               color: Theme.of(context).iconTheme.color,

@@ -128,7 +128,7 @@ class IntegrationsRoute extends PageRouteInfo<void> {
 /// [SignInPage]
 class SignInRoute extends PageRouteInfo<SignInRouteArgs> {
   SignInRoute({
-    required void Function(bool) onResult,
+    required void Function({bool? result}) onResult,
     Key? key,
     List<PageRouteInfo>? children,
   }) : super(
@@ -151,7 +151,7 @@ class SignInRouteArgs {
     this.key,
   });
 
-  final void Function(bool) onResult;
+  final void Function({bool? result}) onResult;
 
   final Key? key;
 
@@ -165,7 +165,7 @@ class SignInRouteArgs {
 /// [SignUpPage]
 class SignUpRoute extends PageRouteInfo<SignUpRouteArgs> {
   SignUpRoute({
-    required void Function(bool) onResult,
+    required void Function({bool? result}) onResult,
     Key? key,
     List<PageRouteInfo>? children,
   }) : super(
@@ -188,7 +188,7 @@ class SignUpRouteArgs {
     this.key,
   });
 
-  final void Function(bool) onResult;
+  final void Function({bool? result}) onResult;
 
   final Key? key;
 

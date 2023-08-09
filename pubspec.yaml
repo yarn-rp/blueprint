@@ -44,6 +44,8 @@ dependencies:
   injectable: ^2.1.1
   firebase_auth: ^4.5.0
   get_it: ^7.6.0
+  meta: ^1.9.1
+  markdown: ^7.1.1
 
 dev_dependencies:
   auto_route_generator: ^6.2.0
