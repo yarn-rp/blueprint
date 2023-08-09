@@ -14,15 +14,15 @@ abstract class IntegrationsModule {
       );
 
   @lazySingleton
-  GithubRepository githubRepository(FlutterSecureStorage secureStorage) =>
-      GithubRepository(
+  GitHubRepository githubRepository(FlutterSecureStorage secureStorage) =>
+      GitHubRepository(
         secureStorage: secureStorage,
       );
 
   @lazySingleton
   IntegrationsRepository integrationsRepository(
     JiraRepository jiraRepository,
-    GithubRepository githubRepository,
+    GitHubRepository githubRepository,
   ) =>
       IntegrationsRepository(
         repositories: [jiraRepository, githubRepository],

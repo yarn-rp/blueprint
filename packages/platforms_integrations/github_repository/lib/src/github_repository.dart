@@ -12,10 +12,10 @@ import 'package:platform_integration_repository/platform_integration_repository.
 /// {@template github_repository}
 /// Repository in charge of managing GitHub integrations.
 /// {@endtemplate}
-class GithubRepository
+class GitHubRepository
     extends PlatformIntegrationRepository<GitHubPlatform, GitHubIntegration> {
   /// {@macro github_repository}
-  GithubRepository({
+  GitHubRepository({
     required FlutterSecureStorage secureStorage,
     String? storageKey,
     GitHubPlatform? platform,
