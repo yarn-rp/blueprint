@@ -3,8 +3,8 @@ import 'dart:developer';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:github/github.dart' as github_api;
-import 'package:github_repository/src/data_sources/local_datasources/github_integrations_storage.dart';
-import 'package:github_repository/src/data_sources/remote_datasources/github_platform_apis.dart';
+import 'package:github_repository/src/data_sources/local_data_sources/github_integrations_storage.dart';
+import 'package:github_repository/src/data_sources/remote_data_sources/github_platform_apis.dart';
 import 'package:github_repository/src/entities/entities.dart';
 import 'package:github_repository/src/mappers/mapper.dart';
 import 'package:github_repository/src/ui/ui.dart';
