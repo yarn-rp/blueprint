@@ -1,10 +1,10 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:blueprint/app/dependency_injection/init.dart';
-import 'package:blueprint/integrations/state_management/cubit/integrations_cubit.dart';
+import 'package:blueprint/integrations/presentation/widgets/platform_integration_tile.dart';
+import 'package:blueprint/integrations/state_management/available_platforms/available_platforms_cubit.dart';
+import 'package:blueprint/integrations/state_management/integrations_repository/integrations_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:integrations_repository/integrations_repository.dart';
-import 'package:jira_repository/jira_repository.dart';
 
 @RoutePage()
 class IntegrationsPage extends StatefulWidget {
@@ -54,14 +54,45 @@ class _IntegrationsPageState extends State<IntegrationsPage>
             style: Theme.of(context).textTheme.titleLarge,
           ),
           const SizedBox(height: 16),
-          Wrap(
-            runSpacing: 16,
-            spacing: 16,
-            children: [
-              ...sl<IntegrationsRepository>().getIntegrationTiles(
-                context.read<IntegrationsCubit>().addIntegration,
-              ),
-            ],
+          BlocBuilder<AvailablePlatformsCubit, AvailablePlatformsState>(
+            builder: (context, state) {
+              return state.map(
+                initial: (_) => const SizedBox.shrink(),
+                loading: (_) => const Center(
+                  child: CircularProgressIndicator(),
+                ),
+                loaded: (state) => Wrap(
+                  runSpacing: 16,
+                  spacing: 16,
+                  children: [
+                    ...state.platforms.map((platform) {
+                      switch (platform.authentication) {
+                        case OAuth2():
+                          return OAuth2PlatformTile(
+                            platform: platform,
+                            integrationName: platform.displayName,
+                            description:
+                                'Connect your ${platform.displayName} account to Blueprint',
+                            onIntegrationCreated: (integration) {
+                              context
+                                  .read<IntegrationsCubit>()
+                                  .addIntegration(integration as Integration);
+                            },
+                          );
+
+                        default:
+                          throw UnimplementedError(
+                            'Platform $platform is not implemented',
+                          );
+                      }
+                    }),
+                  ],
+                ),
+                error: (_) => const Center(
+                  child: Text('Error loading platforms'),
+                ),
+              );
+            },
           ),
         ],
       ),
@@ -156,44 +187,11 @@ class IntegrationsDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (integration is JiraIntegration) {
-      return JiraIntegrationDetails(
-        integration: integration as JiraIntegration,
-      );
-    }
     return Column(
       children: [
         Text(
           integration.platform.displayName,
           style: Theme.of(context).textTheme.titleLarge,
-        ),
-      ],
-    );
-  }
-}
-
-class JiraIntegrationDetails extends StatelessWidget {
-  const JiraIntegrationDetails({required this.integration, super.key});
-  final JiraIntegration integration;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          integration.platform.displayName,
-          style: Theme.of(context).textTheme.titleLarge,
-        ),
-        const SizedBox(height: 4),
-        Text(
-          integration.url,
-          style: Theme.of(context).textTheme.bodyMedium,
-        ),
-        const SizedBox(height: 4),
-        Text(
-          integration.user,
-          style: Theme.of(context).textTheme.bodySmall,
         ),
       ],
     );

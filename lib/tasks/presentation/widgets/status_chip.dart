@@ -14,7 +14,7 @@ class LabelChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Black or white depending on the background color
-    final backgroundColor = HexColor.fromHex(label.hexColor);
+    final backgroundColor = HexColor.fromHex(label.colorHex);
     final foregroundColor = (backgroundColor?.computeLuminance() ?? 0) > 0.5
         ? Colors.black
         : Colors.white;

@@ -20,7 +20,6 @@ class TaskTile extends StatelessWidget {
       builder: (context) {
         final isPhone = MediaQuery.of(context).size.width < 600;
         final tile = ListTile(
-          onTap: onDetails,
           leading: PriorityWidget(priority: task.priority),
           title: Text(
             task.title,

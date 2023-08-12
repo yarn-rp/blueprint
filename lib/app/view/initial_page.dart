@@ -170,7 +170,7 @@ class _SidebarPageState extends State<SidebarPage> {
     final size = MediaQuery.of(context).size;
     final isMobile = size.width < 800;
     return CollapsibleSidebar(
-      isCollapsed: isMobile,
+      isCollapsed: false,
       items: widget.navigationPages
           .mapIndexed(
             (index, e) => CollapsibleItem(

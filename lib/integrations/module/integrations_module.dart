@@ -1,38 +1,39 @@
-import 'package:blueprint/integrations/state_management/cubit/integrations_cubit.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:github_repository/github_repository.dart';
+import 'package:authentication_repository/authentication_repository.dart';
+import 'package:blueprint/integrations/state_management/available_platforms/available_platforms_cubit.dart';
+import 'package:blueprint/integrations/state_management/integrations_repository/integrations_cubit.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:injectable/injectable.dart';
 import 'package:integrations_repository/integrations_repository.dart';
-import 'package:jira_repository/jira_repository.dart';
 
 @module
 abstract class IntegrationsModule {
-  @lazySingleton
-  JiraRepository jiraRepository(FlutterSecureStorage secureStorage) =>
-      JiraRepository(
-        secureStorage: secureStorage,
-      );
-
-  @lazySingleton
-  GitHubRepository githubRepository(FlutterSecureStorage secureStorage) =>
-      GitHubRepository(
-        secureStorage: secureStorage,
-      );
-
-  @lazySingleton
-  IntegrationsRepository integrationsRepository(
-    JiraRepository jiraRepository,
-    GitHubRepository githubRepository,
-  ) =>
-      IntegrationsRepository(
-        repositories: [jiraRepository, githubRepository],
-      );
-
   @lazySingleton
   IntegrationsCubit integrationsCubit(
     IntegrationsRepository integrationsRepository,
   ) =>
       IntegrationsCubit(
         integrationsRepository,
+      );
+
+  @lazySingleton
+  AvailablePlatformsCubit availablePlatformsCubit(
+    IntegrationsRepository integrationsRepository,
+  ) =>
+      AvailablePlatformsCubit(
+        integrationsRepository,
+      );
+
+  @lazySingleton
+  IntegrationsRepository integrationsRepository(
+    FirebaseFirestore firestore,
+    FirebaseFunctions functions,
+    AuthenticationRepositoryContract authenticationRepository,
+  ) =>
+      IntegrationsRepository(
+        firestore: firestore,
+        firebaseFunctions: functions,
+        currentUserIdStream: authenticationRepository.authenticationStream
+            .map((user) => user?.id),
       );
 }
