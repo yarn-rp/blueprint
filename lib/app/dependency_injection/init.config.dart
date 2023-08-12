@@ -86,7 +86,7 @@ extension GetItInjectableX on _i1.GetIt {
     );
     gh.lazySingleton<_i5.FlutterSecureStorage>(
         () => coreModule.flutterSecureStorage());
-    gh.lazySingleton<_i6.GithubRepository>(() =>
+    gh.lazySingleton<_i6.GitHubRepository>(() =>
         integrationsModule.githubRepository(gh<_i5.FlutterSecureStorage>()));
     gh.lazySingleton<_i3.GoogleAuthenticationProvider>(
         () => authenticationModule.googleAuthenticationProvider());
@@ -104,7 +104,7 @@ extension GetItInjectableX on _i1.GetIt {
     gh.lazySingleton<_i11.IntegrationsRepository>(
         () => integrationsModule.integrationsRepository(
               gh<_i7.JiraRepository>(),
-              gh<_i6.GithubRepository>(),
+              gh<_i6.GitHubRepository>(),
             ));
     gh.factory<_i12.TasksCubit>(
         () => taskModule.taskCubit(gh<_i11.IntegrationsRepository>()));

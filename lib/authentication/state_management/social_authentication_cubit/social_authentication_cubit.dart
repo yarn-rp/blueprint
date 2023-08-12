@@ -49,7 +49,7 @@ class SocialAuthenticationCubit extends Cubit<SocialAuthenticationState> {
       SocialAuthenticationState.processing(providerType),
     );
     try {
-      final signInOrFailure = await socialAuthenticatorFunction();
+      await socialAuthenticatorFunction();
 
       if (isClosed) return;
       emit(SocialAuthenticationState.success(providerType));

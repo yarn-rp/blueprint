@@ -1,3 +1,4 @@
+/// Colors used in the app.
 final coolColors = {
   'red': '#F44336',
   'pink': '#E91E63',

@@ -21,6 +21,7 @@ class GitHubBasicAuthIntegration extends GitHubIntegration {
   /// The password of the GitHub user.
   final String password;
 
+  /// The username of the GitHub user.
   final String username;
 
   @override

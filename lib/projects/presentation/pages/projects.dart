@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:blueprint/projects/presentation/widgets/project.dart';
 import 'package:blueprint/projects/state_management/projects_cubit/projects_cubit.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProjectsPage extends StatelessWidget {
   const ProjectsPage({super.key});

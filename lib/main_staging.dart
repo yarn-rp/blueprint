@@ -1,4 +1,5 @@
 import 'package:blueprint/app/app.dart';
+import 'package:blueprint/app/dependency_injection/global_dependencies_provider.dart';
 import 'package:blueprint/bootstrap.dart';
 import 'package:blueprint/core/env/app_environment.dart';
 import 'package:blueprint/core/firebase_options/firebase_options_stg.dart';
@@ -10,5 +11,11 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  await bootstrap(App.new, environment: AppEnvironment.staging);
+
+  await bootstrap(
+    () => const GlobalDependenciesProvider(
+      child: App(),
+    ),
+    environment: AppEnvironment.staging,
+  );
 }

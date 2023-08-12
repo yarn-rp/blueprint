@@ -1,9 +1,10 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:github/github.dart' as github_api;
-import 'package:github_repository/src/data_sources/local_datasources/github_integrations_storage.dart';
-import 'package:github_repository/src/data_sources/remote_datasources/github_platform_apis.dart';
+import 'package:github_repository/src/data_sources/local_data_sources/github_integrations_storage.dart';
+import 'package:github_repository/src/data_sources/remote_data_sources/github_platform_apis.dart';
 import 'package:github_repository/src/entities/entities.dart';
 import 'package:github_repository/src/mappers/mapper.dart';
 import 'package:github_repository/src/ui/ui.dart';
@@ -12,10 +13,10 @@ import 'package:platform_integration_repository/platform_integration_repository.
 /// {@template github_repository}
 /// Repository in charge of managing GitHub integrations.
 /// {@endtemplate}
-class GithubRepository
+class GitHubRepository
     extends PlatformIntegrationRepository<GitHubPlatform, GitHubIntegration> {
   /// {@macro github_repository}
-  GithubRepository({
+  GitHubRepository({
     required FlutterSecureStorage secureStorage,
     String? storageKey,
     GitHubPlatform? platform,
@@ -72,12 +73,13 @@ class GithubRepository
             reviewers.any((user) => user.login == githubUser.login);
         final isAuthor = element.user?.login == githubUser.login;
 
-        // Remove also the ones that are created by me but has't been reviewed yet
+        // Remove also the ones that are created by me but has't been reviewed
+        // yet
         final hasNotBeenReviewedYet = element.state == 'open';
         return isAssignedToMe || (isAuthor && hasNotBeenReviewedYet);
       }).toList();
     } catch (e) {
-      print(
+      log(
         'Error getting pull requests from GitHub slug: ${project.owner}',
       );
       pullRequests = [];

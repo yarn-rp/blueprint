@@ -1,6 +1,6 @@
 import 'dart:collection';
 
-import 'package:atlassian_apis/jira_platform.dart' as Jira;
+import 'package:atlassian_apis/jira_platform.dart' as jira;
 import 'package:jira_repository/jira_repository.dart';
 import 'package:platform_integration_repository/platform_integration_repository.dart';
 
@@ -16,37 +16,37 @@ class JiraPlatformApis {
       integrations,
       value: (element) {
         if (element is JiraBasicAuthIntegration) {
-          return Jira.JiraPlatformApi(
-            Jira.ApiClient.basicAuthentication(
-              Uri.https(element.url, ''),
+          return jira.JiraPlatformApi(
+            jira.ApiClient.basicAuthentication(
+              Uri.https(element.url),
               user: element.username,
               apiToken: element.password,
             ),
           );
         }
-        throw Exception('Unsupported Jira integration');
+        throw Exception('Unsupported jira integration');
       },
     );
   }
-  late final HashMap<Integration, Jira.JiraPlatformApi> _jiraPlatformApis;
+  late final HashMap<Integration, jira.JiraPlatformApi> _jiraPlatformApis;
 
   /// Returns the jira api for the given [integration].
   /// If the api does not exist, it will create a client and an api for it.
   /// Then, will add it to future use, and then return it.
-  Jira.JiraPlatformApi getFor(Integration integration) {
+  jira.JiraPlatformApi getFor(Integration integration) {
     if (_jiraPlatformApis.containsKey(integration)) {
       return _jiraPlatformApis[integration]!;
     }
     if (integration is JiraBasicAuthIntegration) {
-      final client = Jira.ApiClient.basicAuthentication(
-        Uri.https(integration.url, ''),
+      final client = jira.ApiClient.basicAuthentication(
+        Uri.https(integration.url),
         user: integration.username,
         apiToken: integration.password,
       );
-      final jira = Jira.JiraPlatformApi(client);
-      _jiraPlatformApis[integration] = jira;
-      return jira;
+      final jiraClient = jira.JiraPlatformApi(client);
+      _jiraPlatformApis[integration] = jiraClient;
+      return jiraClient;
     }
-    throw Exception('Unsupported Jira integration');
+    throw Exception('Unsupported jira integration');
   }
 }

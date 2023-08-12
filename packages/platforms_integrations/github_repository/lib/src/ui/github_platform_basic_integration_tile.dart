@@ -91,13 +91,13 @@ class __GitHubBasicAuthCreateModalState
         child: ListView(
           padding: const EdgeInsets.all(16),
           children: [
-            Card(
+            const Card(
               margin: EdgeInsets.zero,
               child: Padding(
-                padding: const EdgeInsets.all(24),
+                padding: EdgeInsets.all(24),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
+                  children: [
                     Text(
                       'GitHub (Basic Auth) Integration',
                       style: TextStyle(
@@ -228,6 +228,7 @@ class __GitHubBasicAuthCreateModalState
   }
 }
 
+/// A [PlatformIntegrationTile] that creates a [GitHubTokenAuthIntegration].
 const jiraTokenInstructions = '''
 
 # Create an API token from your Atlassian account:

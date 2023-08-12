@@ -3,7 +3,8 @@ import 'package:github_repository/src/entities/entities.dart';
 import 'package:platform_integration_repository/platform_integration_repository.dart';
 
 /// {@template jira_integration_mapper}
-/// Mapper in charge of mapping GitHub entities to platform integration entities.
+/// Mapper in charge of mapping GitHub entities to platform integration
+/// entities.
 /// {@endtemplate}
 class GitHubIntegrationMapper
     extends PlatformIntegrationMapper<GitHubIntegration> {
@@ -36,7 +37,7 @@ class GitHubIntegrationMapper
     );
   }
 
-  /// Maps a [GitHub.IssueBean] to a [Task].
+  /// Maps a GitHub.IssueBean to a [Task].
   Task fromGitHubApiIssueToTask(
     github_api.Issue githubIssue,
     Project project,
@@ -96,7 +97,7 @@ class GitHubIntegrationMapper
     );
   }
 
-  /// Maps a [GitHub.IssueBean] to a [Task].
+  /// Maps a GitHub.IssueBean to a [Task].
   Task fromGitHubApiPullRequestToTask(
     github_api.PullRequest pullRequest,
     Project project, {
@@ -130,6 +131,7 @@ class GitHubIntegrationMapper
     );
 
     final labels = [
+      status,
       if (pullRequest.labels != null)
         ...pullRequest.labels!.map(
           fromGitHubApiIssueLabelToLabel,
@@ -162,10 +164,7 @@ class GitHubIntegrationMapper
       loggedTime: Duration.zero,
       assigned: [
         if (assigned != null)
-          ...assigned
-              .where((element) => element != null)
-              .map((e) => e!)
-              .toList()
+          ...assigned.where((element) => element != null).map((e) => e!)
       ],
       creator: userCreator!,
       isCompleted: isCompleted,
@@ -174,6 +173,7 @@ class GitHubIntegrationMapper
     );
   }
 
+  /// Extracts the priority from the issue labels.
   int extractPriority(
     github_api.Issue githubIssue,
   ) {
@@ -226,7 +226,7 @@ class GitHubIntegrationMapper
     );
   }
 
-  /// Maps a Map<String,dynamic> with the data of the jira api to a [Status].
+  /// Maps a Map<String,dynamic> with the data of the jira api to a Status
   Label fromGitHubApiIssueLabelToLabel(github_api.IssueLabel issueLabel) {
     final statusName = issueLabel.name;
     final statusColor = issueLabel.color;
@@ -237,6 +237,7 @@ class GitHubIntegrationMapper
     );
   }
 
+  /// Maps a Map<String,dynamic> with the data of the jira api to a Status
   int fromGitHubApiPriorityToPriority(Map<String, dynamic>? priority) {
     if (priority == null) {
       return 0;
@@ -251,7 +252,7 @@ class GitHubIntegrationMapper
     return priorityInt;
   }
 
-  /// Maps a [GitHub.IssueBean] description to a [String].
+  /// Maps a GitHub.IssueBean description to a [String].
   String fromGitHubApiDescriptionToString(
     Map<String, dynamic>? descriptionField,
   ) {
@@ -262,7 +263,10 @@ class GitHubIntegrationMapper
       final descriptionContent = descriptionField['content'] as List;
 
       description = descriptionContent.map((e) {
-        final content = e['content'] as List?;
+        if (e is! Map<String, dynamic>) {
+          return '';
+        }
+        final content = e['content'] as List<Map<String, dynamic>>?;
         if (content == null) {
           return '';
         }

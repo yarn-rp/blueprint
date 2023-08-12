@@ -3,7 +3,6 @@ import 'package:blueprint/settings/state_management/bloc/settings_bloc.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class WorkingTime extends StatefulWidget {
   const WorkingTime({super.key});
@@ -13,12 +12,6 @@ class WorkingTime extends StatefulWidget {
 }
 
 class _WorkingTimeState extends State<WorkingTime> {
-  /// Global key used to maintain the state, when we change the parent of the
-  /// widget
-  final GlobalKey _globalKey = GlobalKey();
-  final ScrollController _controller = ScrollController();
-  final CalendarController _calendarController = CalendarController();
-
   late DaysOfWeek selectedWeekDay;
 
   @override
@@ -81,7 +74,7 @@ class _WorkingTimeState extends State<WorkingTime> {
 }
 
 class ScheduledTimeTile extends StatelessWidget {
-  const ScheduledTimeTile({super.key, this.workTime, required this.day});
+  const ScheduledTimeTile({required this.day, super.key, this.workTime});
   final WorkTime? workTime;
   final DaysOfWeek day;
   @override
@@ -89,14 +82,16 @@ class ScheduledTimeTile extends StatelessWidget {
     if (workTime == null) {
       return ListTile(
         onTap: () async {
+          final bloc = context.read<SettingsBloc>();
           final edited = await editWorkTime(context, workTime);
+
           if (edited != null) {
-            context.read<SettingsBloc>().add(
-                  SettingsEvent.changeWorkingHours(
-                    day,
-                    [edited],
-                  ),
-                );
+            bloc.add(
+              SettingsEvent.changeWorkingHours(
+                day,
+                [edited],
+              ),
+            );
           }
         },
         title: const Text(
@@ -110,24 +105,27 @@ class ScheduledTimeTile extends StatelessWidget {
     return ListTile(
       title: const Text('Scheduled Work Time'),
       onTap: () async {
+        final bloc = context.read<SettingsBloc>();
         final edited = await editWorkTime(context, workTime);
+
         if (edited != null) {
-          context.read<SettingsBloc>().add(
-                SettingsEvent.changeWorkingHours(
-                  day,
-                  [edited],
-                ),
-              );
+          bloc.add(
+            SettingsEvent.changeWorkingHours(
+              day,
+              [edited],
+            ),
+          );
         }
       },
       subtitle: Text(
-        'From ${workTime!.start.format(context)} to ${workTime!.end.format(context)}',
+        'From ${workTime!.start.format(context)} to '
+        '${workTime!.end.format(context)}',
       ),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           IconButton(
-            onPressed: () => editWorkTime(context, workTime!),
+            onPressed: () => editWorkTime(context, workTime),
             icon: Icon(
               Icons.edit,
               color: Theme.of(context).iconTheme.color,
@@ -166,8 +164,8 @@ Future<WorkTime?> editWorkTime(BuildContext context, WorkTime? workTime) {
 
 class ModifyWorkTimeBody extends StatefulWidget {
   const ModifyWorkTimeBody({
-    super.key,
     required this.workTime,
+    super.key,
   });
   final WorkTime workTime;
 
@@ -238,15 +236,15 @@ class _ModifyWorkTimeBodyState extends State<ModifyWorkTimeBody> {
 
 class TimeInput extends StatefulWidget {
   const TimeInput({
-    super.key,
     required this.onChanged,
     required this.initialTime,
+    super.key,
   });
   final void Function(TimeOfDay time) onChanged;
   final TimeOfDay initialTime;
 
   @override
-  _TimeInputState createState() => _TimeInputState();
+  State<TimeInput> createState() => _TimeInputState();
 }
 
 class _TimeInputState extends State<TimeInput> {

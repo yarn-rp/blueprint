@@ -46,7 +46,7 @@ class _SignUpView extends StatelessWidget {
       body: BlocListener<SignUpCubit, SignUpState>(
         listener: (context, state) {
           if (state is SignUpSuccessful) {
-            onResult(true);
+            onResult(result: true);
           } else if (state is SignUpError) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(

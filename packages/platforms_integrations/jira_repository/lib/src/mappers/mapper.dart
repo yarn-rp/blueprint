@@ -1,16 +1,19 @@
-import 'package:atlassian_apis/jira_platform.dart' as Jira;
+// ignore_for_file: avoid_dynamic_calls
+
+import 'package:atlassian_apis/jira_platform.dart' as jira;
 import 'package:jira_repository/jira_repository.dart';
 import 'package:platform_integration_repository/platform_integration_repository.dart';
 
 /// {@template jira_integration_mapper}
-/// Mapper in charge of mapping Jira entities to platform integration entities.
+/// Mapper in charge of mapping jira entities to platform integration entities.
 /// {@endtemplate}
 class JiraIntegrationMapper extends PlatformIntegrationMapper<JiraIntegration> {
+  /// {@macro jira_integration_mapper}
   const JiraIntegrationMapper();
 
-  /// Maps a [Jira.Project] to a [Project].
+  /// Maps a [jira.Project] to a [Project].
   Project fromJiraApiProjectToProject(
-    Jira.Project jiraProject,
+    jira.Project jiraProject,
     Integration integration,
   ) {
     final projectId = jiraProject.id;
@@ -50,7 +53,7 @@ class JiraIntegrationMapper extends PlatformIntegrationMapper<JiraIntegration> {
   }
 
   /// Gets the url of the jira task, so that it can be opened in the browser.
-  Uri? getTaskUrl(Jira.IssueBean jiraIssue) {
+  Uri? getTaskUrl(jira.IssueBean jiraIssue) {
     final urlParts = jiraIssue.self?.split('/');
     if (urlParts == null || urlParts.length < 3) {
       return null;
@@ -65,9 +68,9 @@ class JiraIntegrationMapper extends PlatformIntegrationMapper<JiraIntegration> {
     return Uri.parse('https://$domain/browse/$issueId');
   }
 
-  /// Maps a [Jira.IssueBean] to a [Task].
+  /// Maps a [jira.IssueBean] to a [Task].
   Task fromJiraApiIssueToTask(
-    Jira.IssueBean jiraIssue,
+    jira.IssueBean jiraIssue,
     Project project,
   ) {
     if (jiraIssue.fields == null) {
@@ -141,7 +144,7 @@ class JiraIntegrationMapper extends PlatformIntegrationMapper<JiraIntegration> {
     );
   }
 
-  /// Maps a Map<String,dynamic> with the data of the jira api to a [Status].
+  /// Maps a Map<String,dynamic> with the data of the jira api to a Status.
   Label fromJiraApiStatusToStatus(Map<String, dynamic>? status) {
     if (status == null) {
       return Label('No Status', '#FFC107');
@@ -154,6 +157,7 @@ class JiraIntegrationMapper extends PlatformIntegrationMapper<JiraIntegration> {
     return Label(name, color);
   }
 
+  /// Maps a Map<String,dynamic> with the data of the jira api to a Priority.
   int fromJiraApiPriorityToPriority(Map<String, dynamic>? priority) {
     if (priority == null) {
       return 0;
@@ -168,7 +172,7 @@ class JiraIntegrationMapper extends PlatformIntegrationMapper<JiraIntegration> {
     return priorityInt;
   }
 
-  /// Maps a [Jira.IssueBean] description to a [String].
+  /// Maps a [jira.IssueBean] description to a [String].
   String fromJiraApiDescriptionToString(
     Map<String, dynamic>? descriptionField,
   ) {

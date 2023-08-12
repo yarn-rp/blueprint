@@ -1,16 +1,15 @@
-name: blueprint
+name: ci-stg
+
+permissions: write-all
 
 concurrency:
   group: $-$
   cancel-in-progress: true
 
 on:
-  push:
-    branches:
-      - main
   pull_request:
     branches:
-      - main
+      - staging
 
 jobs:
   semantic-pull-request:
@@ -27,3 +26,10 @@ jobs:
       includes: |
         **/*.md
       modified_files_only: false
+  build_and_deploy:
+    uses: ./.github/workflows/firebase-hosting-preview.yml
+    with:
+      project_id: blueprint-stg
+      target: lib/main_staging.dart
+    secrets:
+      FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_STG }}

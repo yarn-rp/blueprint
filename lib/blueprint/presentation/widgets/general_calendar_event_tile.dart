@@ -6,10 +6,10 @@ import 'package:intl/intl.dart';
 
 class GeneralCalendarEventTile extends StatelessWidget {
   const GeneralCalendarEventTile({
-    super.key,
     required this.appointment,
-    this.showDeleteButton = true,
     required this.isSmallVersion,
+    super.key,
+    this.showDeleteButton = true,
   });
   final GeneralCalendarEvent appointment;
 
@@ -18,7 +18,7 @@ class GeneralCalendarEventTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (isSmallVersion) {
-      return Container(
+      return DecoratedBox(
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.secondary,
           borderRadius: const BorderRadius.all(Radius.circular(4)),
@@ -51,7 +51,7 @@ class GeneralCalendarEventTile extends StatelessWidget {
         ),
       );
     }
-    return Container(
+    return DecoratedBox(
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.secondary,
         borderRadius: const BorderRadius.all(Radius.circular(4)),

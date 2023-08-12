@@ -9,6 +9,7 @@ class JiraPlatform extends Platform {
   }) : super(displayName: 'Jira');
 }
 
+/// The Jira platform.
 const jiraPlatform = JiraPlatform(
   id: 'jira',
   iconUrl:

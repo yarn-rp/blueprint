@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 
 class CalendarEventTile extends StatelessWidget {
   const CalendarEventTile({
-    super.key,
     required this.event,
+    super.key,
     this.showSmallVersions = false,
   });
   final CalendarEvent event;
@@ -22,7 +22,7 @@ class CalendarEventTile extends StatelessWidget {
       ),
       task: (event) => InkWell(
         onTap: () async {
-          await showDialog(
+          await showDialog<void>(
             context: context,
             builder: (context) {
               return Dialog(

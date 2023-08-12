@@ -3,7 +3,7 @@
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  group('GithubRepository', () {
+  group('GitHubRepository', () {
     test('can be instantiated', () {
       expect(true, isNotNull);
     });

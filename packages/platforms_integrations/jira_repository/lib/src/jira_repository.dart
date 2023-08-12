@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:jira_repository/jira_repository.dart';
-import 'package:jira_repository/src/data_sources/local_datasources/jira_integrations_storage.dart';
-import 'package:jira_repository/src/data_sources/remote_datasources/jira_platform_apis.dart';
+import 'package:jira_repository/src/data_sources/local_data_sources/jira_integrations_storage.dart';
+import 'package:jira_repository/src/data_sources/remote_data_sources/jira_platform_apis.dart';
 import 'package:jira_repository/src/mappers/mapper.dart';
 import 'package:jira_repository/src/ui/jira_platform_basic_integration_tile.dart';
 import 'package:platform_integration_repository/platform_integration_repository.dart';
@@ -89,8 +89,8 @@ class JiraRepository
 
     // Communicate with the APIs..
     final results = await jira.issueSearch.searchForIssuesUsingJql(
-      jql:
-          'project=${project.platformId}  AND assignee = currentUser() AND status not in ("Done", "Accepted")',
+      jql: 'project=${project.platformId}  AND assignee = currentUser() '
+          'AND status not in ("Done", "Accepted")',
       maxResults: 1000,
     );
 

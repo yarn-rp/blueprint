@@ -18,8 +18,9 @@ class CalendarEvent with _$CalendarEvent {
   }) = GeneralCalendarEvent;
 
   const factory CalendarEvent.task({
+    // ignore: invalid_annotation_target
     @JsonKey(fromJson: TaskJsonMapper.fromJson, toJson: TaskJsonMapper.toJson)
-        required Task task,
+    required Task task,
     required DateTime startTime,
     required DateTime endTime,
     @Default(false) bool isAllDay,

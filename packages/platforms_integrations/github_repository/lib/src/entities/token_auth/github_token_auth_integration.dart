@@ -8,14 +8,14 @@ part 'github_token_auth_integration.g.dart';
 /// some services and platforms like Web due to CORS restrictions.
 @JsonSerializable()
 class GitHubTokenAuthIntegration extends GitHubIntegration {
-  // from json
-  factory GitHubTokenAuthIntegration.fromJson(Map<String, dynamic> json) =>
-      _$GitHubTokenAuthIntegrationFromJson(json);
-
   /// Creates a new [GitHubTokenAuthIntegration] instance with the provided
   const GitHubTokenAuthIntegration({
     required this.token,
   }) : super();
+
+  /// from json
+  factory GitHubTokenAuthIntegration.fromJson(Map<String, dynamic> json) =>
+      _$GitHubTokenAuthIntegrationFromJson(json);
 
   /// The password of the GitHub user.
   final String token;
@@ -25,6 +25,7 @@ class GitHubTokenAuthIntegration extends GitHubIntegration {
 
   /// Converts this [GitHubTokenAuthIntegration] instance to a JSON object.
   /// Adds the type of the integration to the JSON object.
+  @override
   Map<String, dynamic> toJson() => _$GitHubTokenAuthIntegrationToJson(this)
     ..addAll({'type': 'token_auth', 'platformId': platform.id});
 }

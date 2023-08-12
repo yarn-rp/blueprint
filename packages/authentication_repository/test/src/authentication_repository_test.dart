@@ -6,8 +6,8 @@ import 'package:test/test.dart';
 
 class _MockFirebaseAuth extends Mock implements firebase_auth.FirebaseAuth {}
 
-class _MockUserCredential extends Mock implements firebase_auth.UserCredential {
-}
+class _MockUserCredential extends Mock
+    implements firebase_auth.UserCredential {}
 
 class _MockUser extends Mock implements firebase_auth.User {}
 

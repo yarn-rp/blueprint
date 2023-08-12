@@ -7,7 +7,8 @@ part of 'jira_basic_auth_integration.dart';
 // **************************************************************************
 
 JiraBasicAuthIntegration _$JiraBasicAuthIntegrationFromJson(
-        Map<String, dynamic> json) =>
+  Map<String, dynamic> json,
+) =>
     JiraBasicAuthIntegration(
       username: json['username'] as String,
       password: json['password'] as String,
@@ -15,7 +16,8 @@ JiraBasicAuthIntegration _$JiraBasicAuthIntegrationFromJson(
     );
 
 Map<String, dynamic> _$JiraBasicAuthIntegrationToJson(
-        JiraBasicAuthIntegration instance) =>
+  JiraBasicAuthIntegration instance,
+) =>
     <String, dynamic>{
       'url': instance.url,
       'username': instance.username,

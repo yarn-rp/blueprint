@@ -42,7 +42,6 @@ class InitialPage extends StatefulWidget {
 }
 
 class _InitialPageState extends State<InitialPage> {
-  final _key = GlobalKey<ScaffoldState>();
   late int currentIndex;
   @override
   void initState() {
@@ -142,11 +141,11 @@ class SidebarPage extends StatefulWidget {
     super.key,
   });
   final Widget child;
-  final List<NavigationPageData> navigationPages;
+  final List<NavigationPageData<dynamic>> navigationPages;
   final void Function(int index) onPageChanged;
 
   @override
-  _SidebarPageState createState() => _SidebarPageState();
+  State<SidebarPage> createState() => _SidebarPageState();
 }
 
 class _SidebarPageState extends State<SidebarPage> {

@@ -248,6 +248,7 @@ class __JiraBasicAuthCreateModalState extends State<_JiraBasicAuthCreateModal> {
   }
 }
 
+/// Instructions for adding the token
 const jiraTokenInstructions = '''
 
 # Create an API token from your Atlassian account:

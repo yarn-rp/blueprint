@@ -84,10 +84,10 @@ packages:
     dependency: "direct dev"
     description:
       name: bloc_test
-      sha256: ffbb60c17ee3d8e3784cb78071088e353199057233665541e8ac6cd438dca8ad
+      sha256: af0de1a1e16a7536e95dcd7491e0a6d6078e11d2d691988e862280b74f5c7968
       url: "https://pub.dev"
     source: hosted
-    version: "9.1.1"
+    version: "9.1.4"
   boolean_selector:
     dependency: transitive
     description:
@@ -730,13 +730,13 @@ packages:
     source: hosted
     version: "1.1.1"
   markdown:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: markdown
-      sha256: "8e332924094383133cee218b676871f42db2514f1f6ac617b6cf6152a7faab8e"
+      sha256: acf35edccc0463a9d7384e437c015a3535772e09714cf60e07eeef3a15870dcd
       url: "https://pub.dev"
     source: hosted
-    version: "7.1.0"
+    version: "7.1.1"
   matcher:
     dependency: transitive
     description:
@@ -754,7 +754,7 @@ packages:
     source: hosted
     version: "0.2.0"
   meta:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: meta
       sha256: "3c74dbf8763d36539f114c799d8a2d87343b5067e9d796ca22b5eb8437090ee3"
