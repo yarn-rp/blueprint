@@ -228,6 +228,7 @@ class __GitHubBasicAuthCreateModalState
   }
 }
 
+/// A [PlatformIntegrationTile] that creates a [GitHubTokenAuthIntegration].
 const jiraTokenInstructions = '''
 
 # Create an API token from your Atlassian account:

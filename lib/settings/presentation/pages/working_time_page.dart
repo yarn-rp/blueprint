@@ -244,7 +244,7 @@ class TimeInput extends StatefulWidget {
   final TimeOfDay initialTime;
 
   @override
-  _TimeInputState createState() => _TimeInputState();
+  State<TimeInput> createState() => _TimeInputState();
 }
 
 class _TimeInputState extends State<TimeInput> {

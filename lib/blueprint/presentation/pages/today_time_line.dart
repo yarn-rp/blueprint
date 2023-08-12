@@ -115,7 +115,7 @@ class _TodaysBlueprintState extends State<TodayTimeline>
               }
               await appointment.map(
                 event: (event) {
-                  // TODO: do something
+                  // TODO(yarn-rp): do something
                 },
                 task: (appointment) async {
                   await showDialog<void>(

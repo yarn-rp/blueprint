@@ -89,8 +89,8 @@ class JiraRepository
 
     // Communicate with the APIs..
     final results = await jira.issueSearch.searchForIssuesUsingJql(
-      jql:
-          'project=${project.platformId}  AND assignee = currentUser() AND status not in ("Done", "Accepted")',
+      jql: 'project=${project.platformId}  AND assignee = currentUser() '
+          'AND status not in ("Done", "Accepted")',
       maxResults: 1000,
     );
 

@@ -95,7 +95,8 @@ class TaskDetails extends StatelessWidget {
                       onPressed: () => launchUrl(task.taskURL),
                       icon: const Icon(Icons.link),
                       label: Text(
-                        'View in ${task.project.integration.platform.displayName}',
+                        'View in '
+                        '${task.project.integration.platform.displayName}',
                       ),
                     )
                   ],
@@ -155,7 +156,8 @@ class TaskDetails extends StatelessWidget {
                           // Use jiffy to format the date
                           Text(
                             task.estimatedTime!.inHours > 0
-                                ? '${task.estimatedTime!.inHours}h ${task.estimatedTime!.inMinutes % 60}m'
+                                ? '${task.estimatedTime!.inHours}h '
+                                    '${task.estimatedTime!.inMinutes % 60}m'
                                 : '${task.estimatedTime!.inMinutes % 60}m',
                             style: Theme.of(context).textTheme.bodySmall,
                           ),
@@ -250,6 +252,7 @@ class TaskDetails extends StatelessWidget {
                                               children: [
                                                 if (task.loggedTime != null)
                                                   Text(
+                                                    // ignore: lines_longer_than_80_chars
                                                     '${task.loggedTime!.inHours}h ${task.loggedTime!.inMinutes % 60}m',
                                                     style: Theme.of(context)
                                                         .textTheme
@@ -258,6 +261,7 @@ class TaskDetails extends StatelessWidget {
                                                 const Spacer(),
                                                 if (task.estimatedTime != null)
                                                   Text(
+                                                    // ignore: lines_longer_than_80_chars
                                                     '${task.estimatedTime!.inHours}h ${task.estimatedTime!.inMinutes % 60}m',
                                                     style: Theme.of(context)
                                                         .textTheme

@@ -145,7 +145,7 @@ class SidebarPage extends StatefulWidget {
   final void Function(int index) onPageChanged;
 
   @override
-  _SidebarPageState createState() => _SidebarPageState();
+  State<SidebarPage> createState() => _SidebarPageState();
 }
 
 class _SidebarPageState extends State<SidebarPage> {

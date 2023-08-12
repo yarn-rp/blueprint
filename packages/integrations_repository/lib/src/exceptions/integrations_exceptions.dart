@@ -40,7 +40,8 @@ class IntegrationUnsupportedException implements IntegrationException {
 
   @override
   String get message =>
-      'The integration with ${integration.platform.displayName} is not supported.';
+      'The integration with ${integration.platform.displayName} is not '
+      'supported.';
 }
 
 /// {@template integrations_not_found_exception}

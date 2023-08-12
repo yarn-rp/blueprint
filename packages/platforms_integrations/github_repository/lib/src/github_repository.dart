@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:github/github.dart' as github_api;
@@ -72,12 +73,13 @@ class GitHubRepository
             reviewers.any((user) => user.login == githubUser.login);
         final isAuthor = element.user?.login == githubUser.login;
 
-        // Remove also the ones that are created by me but has't been reviewed yet
+        // Remove also the ones that are created by me but has't been reviewed
+        // yet
         final hasNotBeenReviewedYet = element.state == 'open';
         return isAssignedToMe || (isAuthor && hasNotBeenReviewedYet);
       }).toList();
     } catch (e) {
-      print(
+      log(
         'Error getting pull requests from GitHub slug: ${project.owner}',
       );
       pullRequests = [];

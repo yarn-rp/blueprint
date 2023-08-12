@@ -9,6 +9,7 @@ class GitHubPlatform extends Platform {
   }) : super(displayName: 'GitHub');
 }
 
+/// The GitHub platform.
 const githubPlatform = GitHubPlatform(
   id: 'github',
   iconUrl:
