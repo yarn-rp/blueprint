@@ -12,7 +12,7 @@
 import 'package:authentication_repository/authentication_repository.dart'
     as _i3;
 import 'package:blueprint/authentication/module/authentication_module.dart'
-    as _i25;
+    as _i20;
 import 'package:blueprint/authentication/state_management/authentication_cubit/authentication_cubit.dart'
     as _i17;
 import 'package:blueprint/authentication/state_management/forgot_password_cubit/forgot_password_cubit.dart'
@@ -23,20 +23,20 @@ import 'package:blueprint/authentication/state_management/sign_out_cubit/sign_ou
     as _i14;
 import 'package:blueprint/authentication/state_management/sign_up_cubit/sign_up_cubit.dart'
     as _i15;
-import 'package:blueprint/blueprint/module/blueprint_module.dart' as _i26;
+import 'package:blueprint/blueprint/module/blueprint_module.dart' as _i24;
 import 'package:blueprint/blueprint/state_management/todays_blueprint/todays_blueprint_cubit.dart'
     as _i7;
 import 'package:blueprint/core/module/core_module.dart' as _i22;
-import 'package:blueprint/core/module/firebase_module.dart' as _i23;
-import 'package:blueprint/integrations/module/integrations_module.dart' as _i24;
+import 'package:blueprint/core/module/firebase_module.dart' as _i21;
+import 'package:blueprint/integrations/module/integrations_module.dart' as _i25;
 import 'package:blueprint/integrations/state_management/available_platforms/available_platforms_cubit.dart'
     as _i18;
 import 'package:blueprint/integrations/state_management/integrations_repository/integrations_cubit.dart'
     as _i19;
-import 'package:blueprint/settings/module/settings_module.dart' as _i20;
+import 'package:blueprint/settings/module/settings_module.dart' as _i23;
 import 'package:blueprint/settings/state_management/bloc/settings_bloc.dart'
     as _i6;
-import 'package:blueprint/tasks/module/task_module.dart' as _i21;
+import 'package:blueprint/tasks/module/task_module.dart' as _i26;
 import 'package:blueprint/tasks/state_management/cubit/tasks_cubit.dart'
     as _i16;
 import 'package:cloud_firestore/cloud_firestore.dart' as _i9;
@@ -53,7 +53,7 @@ const String _prod = 'prod';
 const String _stg = 'stg';
 
 extension GetItInjectableX on _i1.GetIt {
-  // initializes the registration of main-scope dependencies inside of GetIt
+// initializes the registration of main-scope dependencies inside of GetIt
   Future<_i1.GetIt> init({
     String? environment,
     _i2.EnvironmentFilter? environmentFilter,
@@ -88,8 +88,6 @@ extension GetItInjectableX on _i1.GetIt {
     );
     gh.lazySingleton<_i5.FlutterSecureStorage>(
         () => coreModule.flutterSecureStorage());
-    gh.lazySingleton<_i6.GitHubRepository>(() =>
-        integrationsModule.githubRepository(gh<_i5.FlutterSecureStorage>()));
     gh.lazySingleton<_i3.GoogleAuthenticationProvider>(
         () => authenticationModule.googleAuthenticationProvider());
     gh.lazySingleton<_i6.SettingsBloc>(() => settingsModule.settingsBloc());
@@ -105,13 +103,6 @@ extension GetItInjectableX on _i1.GetIt {
         () => firebaseModule.firebaseFirestore(gh<_i4.FirebaseApp>()));
     gh.lazySingleton<_i10.FirebaseFunctions>(
         () => firebaseModule.firebaseFunctions(gh<_i4.FirebaseApp>()));
-    gh.lazySingleton<_i11.IntegrationsRepository>(
-        () => integrationsModule.integrationsRepository(
-              gh<_i7.JiraRepository>(),
-              gh<_i6.GitHubRepository>(),
-            ));
-    gh.factory<_i12.TasksCubit>(
-        () => taskModule.taskCubit(gh<_i11.IntegrationsRepository>()));
     gh.lazySingleton<_i3.AuthenticationRepositoryContract>(
         () => authenticationModule.authenticationRepository(
               gh<_i3.AppleAuthenticationProvider>(),
@@ -145,16 +136,16 @@ extension GetItInjectableX on _i1.GetIt {
   }
 }
 
-class _$SettingsModule extends _i20.SettingsModule {}
+class _$AuthenticationModule extends _i20.AuthenticationModule {}
 
-class _$TaskModule extends _i21.TaskModule {}
+class _$FirebaseModule extends _i21.FirebaseModule {}
 
 class _$CoreModule extends _i22.CoreModule {}
 
-class _$FirebaseModule extends _i23.FirebaseModule {}
+class _$SettingsModule extends _i23.SettingsModule {}
 
-class _$IntegrationsModule extends _i24.IntegrationsModule {}
+class _$BlueprintModule extends _i24.BlueprintModule {}
 
-class _$AuthenticationModule extends _i25.AuthenticationModule {}
+class _$IntegrationsModule extends _i25.IntegrationsModule {}
 
-class _$BlueprintModule extends _i26.BlueprintModule {}
+class _$TaskModule extends _i26.TaskModule {}
