@@ -38,8 +38,10 @@ mixin _$CalendarEvent {
             DateTime startTime, DateTime endTime, String subject, bool isAllDay)
         event,
     required TResult Function(
-            @JsonKey(fromJson: TaskJsonMapper.fromJson, toJson: TaskJsonMapper.toJson)
-                Task task,
+            @JsonKey(
+                fromJson: TaskJsonMapper.fromJson,
+                toJson: TaskJsonMapper.toJson)
+            Task task,
             DateTime startTime,
             DateTime endTime,
             bool isAllDay)
@@ -52,8 +54,10 @@ mixin _$CalendarEvent {
             bool isAllDay)?
         event,
     TResult? Function(
-            @JsonKey(fromJson: TaskJsonMapper.fromJson, toJson: TaskJsonMapper.toJson)
-                Task task,
+            @JsonKey(
+                fromJson: TaskJsonMapper.fromJson,
+                toJson: TaskJsonMapper.toJson)
+            Task task,
             DateTime startTime,
             DateTime endTime,
             bool isAllDay)?
@@ -66,8 +70,10 @@ mixin _$CalendarEvent {
             bool isAllDay)?
         event,
     TResult Function(
-            @JsonKey(fromJson: TaskJsonMapper.fromJson, toJson: TaskJsonMapper.toJson)
-                Task task,
+            @JsonKey(
+                fromJson: TaskJsonMapper.fromJson,
+                toJson: TaskJsonMapper.toJson)
+            Task task,
             DateTime startTime,
             DateTime endTime,
             bool isAllDay)?
@@ -257,8 +263,10 @@ class _$GeneralCalendarEvent extends GeneralCalendarEvent {
             DateTime startTime, DateTime endTime, String subject, bool isAllDay)
         event,
     required TResult Function(
-            @JsonKey(fromJson: TaskJsonMapper.fromJson, toJson: TaskJsonMapper.toJson)
-                Task task,
+            @JsonKey(
+                fromJson: TaskJsonMapper.fromJson,
+                toJson: TaskJsonMapper.toJson)
+            Task task,
             DateTime startTime,
             DateTime endTime,
             bool isAllDay)
@@ -274,8 +282,10 @@ class _$GeneralCalendarEvent extends GeneralCalendarEvent {
             bool isAllDay)?
         event,
     TResult? Function(
-            @JsonKey(fromJson: TaskJsonMapper.fromJson, toJson: TaskJsonMapper.toJson)
-                Task task,
+            @JsonKey(
+                fromJson: TaskJsonMapper.fromJson,
+                toJson: TaskJsonMapper.toJson)
+            Task task,
             DateTime startTime,
             DateTime endTime,
             bool isAllDay)?
@@ -291,8 +301,10 @@ class _$GeneralCalendarEvent extends GeneralCalendarEvent {
             bool isAllDay)?
         event,
     TResult Function(
-            @JsonKey(fromJson: TaskJsonMapper.fromJson, toJson: TaskJsonMapper.toJson)
-                Task task,
+            @JsonKey(
+                fromJson: TaskJsonMapper.fromJson,
+                toJson: TaskJsonMapper.toJson)
+            Task task,
             DateTime startTime,
             DateTime endTime,
             bool isAllDay)?
@@ -377,8 +389,9 @@ abstract class _$$TaskCalendarEventCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(fromJson: TaskJsonMapper.fromJson, toJson: TaskJsonMapper.toJson)
-          Task task,
+      {@JsonKey(
+          fromJson: TaskJsonMapper.fromJson, toJson: TaskJsonMapper.toJson)
+      Task task,
       DateTime startTime,
       DateTime endTime,
       bool isAllDay});
@@ -425,8 +438,9 @@ class __$$TaskCalendarEventCopyWithImpl<$Res>
 @JsonSerializable()
 class _$TaskCalendarEvent extends TaskCalendarEvent {
   const _$TaskCalendarEvent(
-      {@JsonKey(fromJson: TaskJsonMapper.fromJson, toJson: TaskJsonMapper.toJson)
-          required this.task,
+      {@JsonKey(
+          fromJson: TaskJsonMapper.fromJson, toJson: TaskJsonMapper.toJson)
+      required this.task,
       required this.startTime,
       required this.endTime,
       this.isAllDay = false,
@@ -488,8 +502,10 @@ class _$TaskCalendarEvent extends TaskCalendarEvent {
             DateTime startTime, DateTime endTime, String subject, bool isAllDay)
         event,
     required TResult Function(
-            @JsonKey(fromJson: TaskJsonMapper.fromJson, toJson: TaskJsonMapper.toJson)
-                Task task,
+            @JsonKey(
+                fromJson: TaskJsonMapper.fromJson,
+                toJson: TaskJsonMapper.toJson)
+            Task task,
             DateTime startTime,
             DateTime endTime,
             bool isAllDay)
@@ -505,8 +521,10 @@ class _$TaskCalendarEvent extends TaskCalendarEvent {
             bool isAllDay)?
         event,
     TResult? Function(
-            @JsonKey(fromJson: TaskJsonMapper.fromJson, toJson: TaskJsonMapper.toJson)
-                Task task,
+            @JsonKey(
+                fromJson: TaskJsonMapper.fromJson,
+                toJson: TaskJsonMapper.toJson)
+            Task task,
             DateTime startTime,
             DateTime endTime,
             bool isAllDay)?
@@ -522,8 +540,10 @@ class _$TaskCalendarEvent extends TaskCalendarEvent {
             bool isAllDay)?
         event,
     TResult Function(
-            @JsonKey(fromJson: TaskJsonMapper.fromJson, toJson: TaskJsonMapper.toJson)
-                Task task,
+            @JsonKey(
+                fromJson: TaskJsonMapper.fromJson,
+                toJson: TaskJsonMapper.toJson)
+            Task task,
             DateTime startTime,
             DateTime endTime,
             bool isAllDay)?
@@ -577,8 +597,9 @@ class _$TaskCalendarEvent extends TaskCalendarEvent {
 
 abstract class TaskCalendarEvent extends CalendarEvent {
   const factory TaskCalendarEvent(
-      {@JsonKey(fromJson: TaskJsonMapper.fromJson, toJson: TaskJsonMapper.toJson)
-          required final Task task,
+      {@JsonKey(
+          fromJson: TaskJsonMapper.fromJson, toJson: TaskJsonMapper.toJson)
+      required final Task task,
       required final DateTime startTime,
       required final DateTime endTime,
       final bool isAllDay}) = _$TaskCalendarEvent;

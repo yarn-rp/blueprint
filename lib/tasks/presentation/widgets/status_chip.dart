@@ -5,7 +5,8 @@ import 'package:integrations_repository/integrations_repository.dart';
 
 class LabelChip extends StatelessWidget {
   const LabelChip({
-    required this.label, super.key,
+    required this.label,
+    super.key,
   });
 
   final Label label;

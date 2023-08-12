@@ -8,7 +8,8 @@ import 'package:url_launcher/url_launcher.dart';
 class TaskTile extends StatelessWidget {
   const TaskTile({
     required this.task,
-    required this.onDetails, super.key,
+    required this.onDetails,
+    super.key,
   });
   final Task task;
   final VoidCallback onDetails;

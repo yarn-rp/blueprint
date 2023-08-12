@@ -7,7 +7,8 @@ import 'package:intl/intl.dart';
 
 class TaskEventTile extends StatelessWidget {
   const TaskEventTile({
-    required this.appointment, super.key,
+    required this.appointment,
+    super.key,
     this.showDeleteButton = true,
     this.color,
   });
