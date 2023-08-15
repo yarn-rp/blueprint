@@ -2,11 +2,15 @@
 
 import 'package:calendar_repository/calendar_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
+
+final class _MockCalendarRepository extends Mock
+    implements CalendarRepository<void> {}
 
 void main() {
   group('CalendarRepository', () {
-    test('can be instantiated', () {
-      expect(CalendarRepository(), isNotNull);
+    test('can be extended', () {
+      expect(_MockCalendarRepository(), isA<CalendarRepository<void>>());
     });
   });
 }
