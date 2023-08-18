@@ -9,15 +9,18 @@ class Event extends Equatable {
     required this.startTime,
     required this.endTime,
     required this.subject,
-    this.isAllDay = false,
+    required this.isAllDay,
     this.description,
-  });
+  }) : assert(
+          startTime != null || isAllDay != null && isAllDay == true,
+          'event should be all day or have a start date',
+        );
 
   /// The start time of the event.
-  final DateTime startTime;
+  final DateTime? startTime;
 
   /// The end time of the event.
-  final DateTime endTime;
+  final DateTime? endTime;
 
   /// The subject of the event.
   final String subject;
@@ -26,7 +29,7 @@ class Event extends Equatable {
   final String? description;
 
   /// Whether the event is an all day event.
-  final bool isAllDay;
+  final bool? isAllDay;
 
   @override
   List<Object?> get props => [
