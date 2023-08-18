@@ -10,11 +10,11 @@ A Very Good Project created by Very Good CLI.
 
 **❗ In order to start using Google Calendar Repository you must have the [Flutter SDK][flutter_install_link] installed on your machine.**
 
-Add `google_calendar_repository` to your `pubspec.yaml`:
+Add `google_calendar_service` to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  google_calendar_repository:
+  google_calendar_service:
 ```
 
 Install it:

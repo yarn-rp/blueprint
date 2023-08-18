@@ -2,7 +2,7 @@
 
 import 'package:calendar_repository/calendar_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:google_calendar_repository/google_calendar_repository.dart';
+import 'package:google_calendar_service/google_calendar_service.dart';
 import 'package:googleapis/calendar/v3.dart' as gCalendar;
 import 'package:mocktail/mocktail.dart';
 
@@ -19,10 +19,10 @@ void main() {
     when(() => gCalendarApi.events).thenReturn(eventsResource);
   });
 
-  group('GoogleCalendarRepository', () {
+  group('GoogleCalendarService', () {
     test('can be instantiated', () {
       expect(
-        GoogleCalendarRepository(
+        GoogleCalendarService(
           googleCalendarApi: gCalendarApi,
         ),
         isNotNull,
@@ -56,7 +56,7 @@ void main() {
           (_) async => gCalendarEvents,
         );
 
-        final googleCalendarRepository = GoogleCalendarRepository(
+        final googleCalendarRepository = GoogleCalendarService(
           googleCalendarApi: gCalendarApi,
         );
 
@@ -89,7 +89,7 @@ void main() {
           Exception('Test exception'),
         );
 
-        final googleCalendarRepository = GoogleCalendarRepository(
+        final googleCalendarRepository = GoogleCalendarService(
           googleCalendarApi: gCalendarApi,
         );
 

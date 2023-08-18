@@ -4,12 +4,12 @@ import 'package:googleapis/calendar/v3.dart' as gCalendar;
 /// Google Calendar ID for the primary calendar.
 const primaryCalendarId = 'primary';
 
-/// {@template google_calendar_repository}
+/// {@template google_calendar_service}
 /// Implementation of [CalendarRepository] using Google Calendar API.
 /// {@endtemplate}
-class GoogleCalendarRepository implements CalendarRepository {
-  /// {@macro google_calendar_repository}
-  const GoogleCalendarRepository({
+class GoogleCalendarService implements CalendarRepository {
+  /// {@macro google_calendar_service}
+  const GoogleCalendarService({
     required gCalendar.CalendarApi googleCalendarApi,
   }) : _googleCalendarApi = googleCalendarApi;
 
