@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:platform_integration_repository/src/entities/entities.dart';
+import 'package:platform_integration_repository/src/key_pair_storage/key_pair_storage.dart';
 import 'package:platform_integration_repository/src/mapper/platform_integration_mapper.dart';
 
 /// {@template platform_integration_storage}
@@ -13,31 +13,31 @@ import 'package:platform_integration_repository/src/mapper/platform_integration_
 /// To implement a new storage integration, you must extend this class and
 /// implement the abstract methods.
 /// {@endtemplate}
-class PlatformIntegrationStorage<PlatformType extends Platform,
+abstract class PlatformIntegrationStorage<PlatformType extends Platform,
     IntegrationType extends Integration> {
   /// Creates a new [PlatformIntegrationStorage] instance.
   PlatformIntegrationStorage({
-    required FlutterSecureStorage storage,
+    required KeyPairStorage storage,
     required PlatformIntegrationMapper<IntegrationType> mapper,
-    String? storageKey,
-  })  : _storageKey = storageKey ?? PlatformType.runtimeType.toString(),
-        _storage = storage,
+    required String storageKey,
+  })  : _storage = storage,
+        _storageKey = storageKey,
         _mapper = mapper,
         _streamController =
             StreamController<List<IntegrationType>>.broadcast() {
     refresh();
   }
 
+  /// The key used to store the integrations in the device.
+  final String _storageKey;
+
   /// The storage used to store the integrations in the device.
   /// This is a singleton, so it will be the same instance for all the
   /// implementations of this class.
-  final FlutterSecureStorage _storage;
+  final KeyPairStorage _storage;
 
   /// The mapper used to convert the integrations to json and vice versa.
   final PlatformIntegrationMapper<IntegrationType> _mapper;
-
-  /// The key used to store the integrations in the secure storage.
-  final String _storageKey;
 
   /// The stream controller used to emit the integrations.
   final StreamController<List<IntegrationType>> _streamController;

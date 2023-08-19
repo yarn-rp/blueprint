@@ -1,3 +1,5 @@
+export 'package:integrations_repository/integrations_repository.dart';
+
 export 'src/calendar_repository.dart';
 export 'src/entities/entities.dart';
 export 'src/service/calendar_service.dart';

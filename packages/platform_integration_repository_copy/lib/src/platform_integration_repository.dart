@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:platform_integration_repository/src/data_sources/platform_integration_storage.dart';
 import 'package:platform_integration_repository/src/entities/entities.dart';
-import 'package:platform_integration_repository/src/ui/ui.dart';
 
 /// {@template platform_integration_repository}
 /// Base class to implement new integrations for a given [PlatformType].
@@ -26,35 +25,30 @@ import 'package:platform_integration_repository/src/ui/ui.dart';
 /// ```
 /// {@endtemplate}
 abstract class PlatformIntegrationService<PlatformType extends Platform,
-    IntegrationType extends Integration> {
+    IntegrationType extends Integration<PlatformType>> {
   /// Creates a new [PlatformIntegrationService] instance.
   PlatformIntegrationService({
     required this.platform,
-    required PlatformIntegrationStorage<PlatformType, IntegrationType> storage,
-  }) : _storage = storage;
+    required PlatformIntegrationStorage<PlatformType, IntegrationType>
+        platformIntegrationStorage,
+  }) : _platformIntegrationStorage = platformIntegrationStorage;
 
-  final PlatformIntegrationStorage<PlatformType, IntegrationType> _storage;
+  final PlatformIntegrationStorage<PlatformType, IntegrationType>
+      _platformIntegrationStorage;
 
   /// The platform that represents the repository
   final PlatformType platform;
 
   /// Returns a stream of all integrations from all sources. This stream reacts
   /// to changes in the integrations, like additions or removals.
-  Stream<List<IntegrationType>> getIntegrations() =>
-      _storage.integrationsStream;
+  Stream<List<Integration<PlatformType>>> getIntegrations() =>
+      _platformIntegrationStorage.integrationsStream;
 
   /// Creates a new [integration] in the repository.
   Future<void> createIntegration(IntegrationType integration) =>
-      _storage.storeIntegrations([integration]);
+      _platformIntegrationStorage.storeIntegrations([integration]);
 
   /// Deletes an [integration] from the repository.
   Future<void> deleteIntegration(IntegrationType integration) =>
-      _storage.deleteIntegration(integration);
-
-  /// Returns a list of PlatformIntegrationTile that will be used to display
-  /// all the possible integrations in the ui and how to integrate them.
-  Iterable<PlatformIntegrationTile<PlatformType, IntegrationType>>
-      getIntegrationTile(
-    FutureOr<void> Function(IntegrationType) onIntegrationCreated,
-  );
+      _platformIntegrationStorage.deleteIntegration(integration);
 }

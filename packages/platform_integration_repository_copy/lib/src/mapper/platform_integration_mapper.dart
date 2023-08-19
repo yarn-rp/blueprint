@@ -5,7 +5,8 @@ import 'package:platform_integration_repository/src/entities/entities.dart';
 /// To implement a new mapper, you must extend this class and implement the
 /// abstract methods.
 /// {@endtemplate}
-abstract class PlatformIntegrationMapper<IntegrationType extends Integration> {
+abstract interface class PlatformIntegrationMapper<
+    IntegrationType extends Integration> {
   /// Creates a new [PlatformIntegrationMapper] instance.
   const PlatformIntegrationMapper();
 
