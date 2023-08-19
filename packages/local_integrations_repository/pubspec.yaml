@@ -1,4 +1,4 @@
-name: integrations_repository
+name: local_integrations_repository
 description: A Very Good Project created by Very Good CLI.
 version: 0.1.0+1
 publish_to: none
@@ -13,8 +13,8 @@ dependencies:
   equatable: ^2.0.0
   flutter:
     sdk: flutter
-  platform_integration_repository:
-    path: ../platform_integration_repository_copy
+  local_platform_integration_repository:
+    path: packages/local_platform_integration_repository
   stream_transform: ^2.1.0
 
 dev_dependencies:

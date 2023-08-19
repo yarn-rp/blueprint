@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:integrations_repository/src/exceptions/exceptions.dart';
-import 'package:platform_integration_repository/platform_integration_repository.dart';
+import 'package:local_integrations_repository/src/exceptions/exceptions.dart';
+import 'package:local_platform_integration_repository/local_platform_integration_repository.dart';
 import 'package:stream_transform/stream_transform.dart';
 
 /// {@template integrations_repository}

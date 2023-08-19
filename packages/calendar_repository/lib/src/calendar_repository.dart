@@ -1,6 +1,6 @@
 import 'package:calendar_repository/src/entities/entities.dart';
 import 'package:calendar_repository/src/service/calendar_service.dart';
-import 'package:integrations_repository/integrations_repository.dart';
+import 'package:local_integrations_repository/local_integrations_repository.dart';
 
 /// {@template calendar_repository}
 /// Repository which manages calendar events of the same Type.

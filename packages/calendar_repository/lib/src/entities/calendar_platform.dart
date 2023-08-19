@@ -1,4 +1,4 @@
-import 'package:integrations_repository/integrations_repository.dart';
+import 'package:local_integrations_repository/local_integrations_repository.dart';
 
 /// {@template calendar_platform}
 /// Platform which manages calendar events.

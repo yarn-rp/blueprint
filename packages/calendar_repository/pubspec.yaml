@@ -11,8 +11,8 @@ dependencies:
   equatable: ^2.0.5
   flutter:
     sdk: flutter
-  integrations_repository:
-    path: ../integrations_repository_copy
+  local_integrations_repository:
+    path: ../local_integrations_repository
 
 dev_dependencies:
   flutter_test:

@@ -1,4 +1,4 @@
-import 'package:platform_integration_repository/platform_integration_repository.dart';
+import 'package:local_platform_integration_repository/local_platform_integration_repository.dart';
 
 /// {@template integrations_exceptions}
 /// Exceptions thrown by the integrations repository.
