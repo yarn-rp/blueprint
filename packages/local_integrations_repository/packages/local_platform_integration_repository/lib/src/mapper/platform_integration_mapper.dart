@@ -8,9 +8,6 @@ import 'package:local_platform_integration_repository/src/entities/entities.dart
 abstract interface class PlatformIntegrationMapper<
     PlatformType extends Platform,
     IntegrationType extends Integration<PlatformType>> {
-  /// Creates a new [PlatformIntegrationMapper] instance.
-  const PlatformIntegrationMapper();
-
   /// Maps a [json] to an [IntegrationType].
   IntegrationType fromJson(Map<String, dynamic> json);
 

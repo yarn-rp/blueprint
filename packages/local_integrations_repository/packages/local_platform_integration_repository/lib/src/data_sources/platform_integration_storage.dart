@@ -13,7 +13,7 @@ import 'package:local_platform_integration_repository/src/mapper/platform_integr
 /// To implement a new storage integration, you must extend this class and
 /// implement the abstract methods.
 /// {@endtemplate}
-abstract class PlatformIntegrationStorage<PlatformType extends Platform,
+class PlatformIntegrationStorage<PlatformType extends Platform,
     IntegrationType extends Integration<PlatformType>> {
   /// Creates a new [PlatformIntegrationStorage] instance.
   PlatformIntegrationStorage({

@@ -12,8 +12,11 @@ dependencies:
     path: ../calendar_repository
   flutter:
     sdk: flutter
+  flutter_secure_storage: ^8.0.0
   google_sign_in: ^6.1.4
   googleapis: ^11.4.0
+  googleapis_auth: ^1.4.1
+  http: ^0.13.0
 
 dev_dependencies:
   flutter_test:

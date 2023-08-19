@@ -1,6 +1,5 @@
 import 'package:calendar_repository/calendar_repository.dart';
 import 'package:google_calendar_service/src/entities/entities.dart';
-import 'package:googleapis/calendar/v3.dart' as gCalendar;
 
 /// Google Calendar ID for the primary calendar.
 const primaryCalendarId = 'primary';
@@ -12,16 +11,29 @@ class GoogleCalendarService
     extends CalendarService<GoogleCalendarPlatform, GoogleCalendarIntegration> {
   /// {@macro google_calendar_service}
   GoogleCalendarService({
-    required gCalendar.CalendarApi googleCalendarApi,
     required super.platformIntegrationStorage,
     super.platform = GoogleCalendarPlatform.instance,
-  }) : _googleCalendarApi = googleCalendarApi;
-
-  final gCalendar.CalendarApi _googleCalendarApi;
+  });
 
   @override
-  Future<Iterable<Event>> getTodayEvents() async {
-    final calEvents = await _googleCalendarApi.events.list(
+  Stream<Iterable<Event>> getTodayEvents() {
+    final integrationsStream = getIntegrations();
+
+    return integrationsStream.asyncMap((integrations) async {
+      final todayEventsOfEachIntegration = await Future.wait(
+        integrations.map(_getTodayEventsOfIntegration),
+      );
+
+      return todayEventsOfEachIntegration.expand((e) => e);
+    });
+  }
+
+  Future<Iterable<Event>> _getTodayEventsOfIntegration(
+    GoogleCalendarIntegration integration,
+  ) async {
+    final calendarApi = await integration.calendarAPI;
+
+    final calEvents = await calendarApi.events.list(
       primaryCalendarId,
       timeMin: DateTime.now().toUtc(),
       timeMax: DateTime.now().add(const Duration(days: 1)).toUtc(),

@@ -41,7 +41,7 @@ abstract class PlatformIntegrationService<PlatformType extends Platform,
 
   /// Returns a stream of all integrations from all sources. This stream reacts
   /// to changes in the integrations, like additions or removals.
-  Stream<List<Integration<PlatformType>>> getIntegrations() =>
+  Stream<List<IntegrationType>> getIntegrations() =>
       _platformIntegrationStorage.integrationsStream;
 
   /// Creates a new [integration] in the repository.

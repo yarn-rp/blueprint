@@ -3,7 +3,6 @@
 import 'package:calendar_repository/calendar_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:google_calendar_service/google_calendar_service.dart';
-import 'package:google_calendar_service/src/entities/entities.dart';
 import 'package:googleapis/calendar/v3.dart' as gCalendar;
 import 'package:mocktail/mocktail.dart';
 
@@ -34,7 +33,6 @@ void main() {
     test('can be instantiated', () {
       expect(
         GoogleCalendarService(
-          googleCalendarApi: gCalendarApi,
           platformIntegrationStorage: platformIntegrationStorage,
         ),
         isNotNull,
@@ -46,7 +44,6 @@ void main() {
 
       setUp(() {
         googleCalendarService = GoogleCalendarService(
-          googleCalendarApi: gCalendarApi,
           platformIntegrationStorage: platformIntegrationStorage,
         );
       });

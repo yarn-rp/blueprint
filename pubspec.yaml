@@ -13,6 +13,8 @@ dependencies:
   auto_route: ^6.2.1
   bloc: ^8.1.1
   cached_network_image: ^3.2.3
+  calendar_repository:
+    path: ./packages/calendar_repository
   collapsible_sidebar: ^2.0.3+3
   collection: ^1.17.0
   dynamic_color: ^1.6.3
@@ -24,12 +26,15 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   flutter_markdown: ^0.6.14
-  flutter_secure_storage: ^8.0.0
+  flutter_secure_key_pair_storage:
+    path: ./packages/flutter_secure_key_pair_storage
   freezed: ^2.3.2
   freezed_annotation: ^2.2.0
   get_it: ^7.6.0
   github_repository:
     path: ./packages/platforms_integrations/github_repository
+  google_calendar_service:
+    path: ./packages/google_calendar_service
   google_fonts: ^4.0.3
   hydrated_bloc: ^9.1.0
   injectable: ^2.1.1

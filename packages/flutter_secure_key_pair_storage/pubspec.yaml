@@ -1,4 +1,4 @@
-name: calendar_repository
+name: flutter_secure_key_pair_storage
 description: A Very Good Project created by Very Good CLI.
 version: 0.1.0+1
 publish_to: none
@@ -8,12 +8,12 @@ environment:
   flutter: 3.10.0
 
 dependencies:
-  equatable: ^2.0.5
+  calendar_repository:
+    path: ../calendar_repository
+
   flutter:
     sdk: flutter
-  local_integrations_repository:
-    path: ../local_integrations_repository
-  stream_transform: ^2.1.0
+  flutter_secure_storage: ^8.0.0
 
 dev_dependencies:
   flutter_test:

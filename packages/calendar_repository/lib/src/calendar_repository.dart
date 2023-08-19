@@ -1,6 +1,7 @@
 import 'package:calendar_repository/src/entities/entities.dart';
 import 'package:calendar_repository/src/service/calendar_service.dart';
 import 'package:local_integrations_repository/local_integrations_repository.dart';
+import 'package:stream_transform/stream_transform.dart';
 
 /// {@template calendar_repository}
 /// Repository which manages calendar events of the same Type.
@@ -10,19 +11,21 @@ import 'package:local_integrations_repository/local_integrations_repository.dart
 class CalendarRepository
     extends IntegrationsRepository<CalendarPlatform, CalendarService> {
   /// {@macro calendar_repository}
-  CalendarRepository(
-    List<CalendarService> services,
-  ) : super(services: services);
+  CalendarRepository({
+    required List<CalendarService> services,
+  }) : super(services: services);
 
   /// Get all events of the day from the calendars managed by this repository.
-  Stream<Iterable<Event>> getTodayEvents() => services.asyncMap(
-        (event) async {
-          final allEvents = await Future.wait(
-            event.map(
-              (e) => e.getTodayEvents(),
-            ),
-          );
-          return allEvents.expand((element) => element);
-        },
-      );
+  Stream<Iterable<Event>> getTodayEvents() {
+    final servicesTodayEvents = services.map(
+      (e) => e.getTodayEvents(),
+    );
+
+    return servicesTodayEvents.reduce(
+      (previous, current) => previous.combineLatest(
+        current,
+        (a, b) => [...a, ...b],
+      ),
+    );
+  }
 }

@@ -4,10 +4,11 @@ import 'package:local_integrations_repository/local_integrations_repository.dart
 /// {@template calendar_service}
 /// Service which manages calendar events.
 /// {@endtemplate}
-abstract class CalendarService<CalendarPlatformType extends CalendarPlatform,
-        CalendarIntegrationType extends Integration<CalendarPlatformType>>
-    extends PlatformIntegrationService<CalendarPlatformType,
-        CalendarIntegrationType> {
+abstract class CalendarService<
+    CalendarPlatformType extends CalendarPlatform,
+    CalendarIntegrationType extends CalendarIntegration<
+        CalendarPlatformType>> extends PlatformIntegrationService<
+    CalendarPlatformType, CalendarIntegrationType> {
   /// {@macro calendar_service}
   CalendarService({
     required super.platform,
@@ -15,5 +16,5 @@ abstract class CalendarService<CalendarPlatformType extends CalendarPlatform,
   });
 
   /// Get all events from the calendar.
-  Future<Iterable<Event>> getTodayEvents();
+  Stream<Iterable<Event>> getTodayEvents();
 }
