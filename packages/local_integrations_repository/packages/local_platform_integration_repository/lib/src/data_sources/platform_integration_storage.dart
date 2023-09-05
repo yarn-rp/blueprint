@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:collection/collection.dart';
 import 'package:local_platform_integration_repository/src/entities/entities.dart';
 import 'package:local_platform_integration_repository/src/key_pair_storage/key_pair_storage.dart';
 import 'package:local_platform_integration_repository/src/mapper/platform_integration_mapper.dart';
@@ -46,6 +47,12 @@ class PlatformIntegrationStorage<PlatformType extends Platform,
   Stream<List<IntegrationType>> get integrationsStream =>
       _streamController.stream;
 
+  /// Stores a single integration.
+  Future<void> storeIntegration(IntegrationType integration) async {
+    final integrations = await _getAllIntegrations();
+    return storeIntegrations([...integrations, integration]);
+  }
+
   /// Stores the given [integrations] in the secure storage.
   Future<void> storeIntegrations(List<IntegrationType> integrations) async {
     try {
@@ -86,7 +93,6 @@ class PlatformIntegrationStorage<PlatformType extends Platform,
 
   /// Returns the stored integrations.
   Future<List<IntegrationType>> _getAllIntegrations() async {
-    log('Getting integrations');
     try {
       final jsonString = await _storage.read(key: _storageKey);
       await _storage.readAll().then((value) => log('All values: $value'));
@@ -97,11 +103,19 @@ class PlatformIntegrationStorage<PlatformType extends Platform,
 
       final integrationsDecoded = json.decode(jsonString);
 
-      final integrations = (integrationsDecoded as List).map((e) {
-        final json = jsonDecode(e as String);
-        return _mapper.fromJson(json as Map<String, dynamic>);
-      }).toList();
-      log('Got integrations: $integrations');
+      final integrations = (integrationsDecoded as List)
+          .map((e) {
+            try {
+              final json = jsonDecode(e as String);
+              return _mapper.fromJson(json as Map<String, dynamic>);
+            } catch (e) {
+              _storage.delete(key: _storageKey);
+              return null;
+            }
+          })
+          .whereNotNull()
+          .toList();
+
       return integrations;
     } catch (e) {
       log('Error getting integrations: ', error: e);

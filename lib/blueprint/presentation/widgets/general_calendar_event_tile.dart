@@ -10,17 +10,19 @@ class GeneralCalendarEventTile extends StatelessWidget {
     required this.isSmallVersion,
     super.key,
     this.showDeleteButton = true,
+    this.color,
   });
   final GeneralCalendarEvent appointment;
 
   final bool showDeleteButton;
   final bool isSmallVersion;
+  final Color? color;
   @override
   Widget build(BuildContext context) {
     if (isSmallVersion) {
       return DecoratedBox(
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.secondary,
+          color: color ?? Theme.of(context).colorScheme.secondary,
           borderRadius: const BorderRadius.all(Radius.circular(4)),
         ),
         child: Padding(
@@ -53,7 +55,7 @@ class GeneralCalendarEventTile extends StatelessWidget {
     }
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.secondary,
+        color: color ?? Theme.of(context).colorScheme.secondary,
         borderRadius: const BorderRadius.all(Radius.circular(4)),
       ),
       child: ListTile(

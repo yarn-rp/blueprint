@@ -31,22 +31,50 @@ class GoogleCalendarService
   Future<Iterable<Event>> _getTodayEventsOfIntegration(
     GoogleCalendarIntegration integration,
   ) async {
-    final calendarApi = await integration.calendarAPI;
+    try {
+      final calendarApi = await integration.calendarAPI;
 
-    final calEvents = await calendarApi.events.list(
-      primaryCalendarId,
-      timeMin: DateTime.now().toUtc(),
-      timeMax: DateTime.now().add(const Duration(days: 1)).toUtc(),
-    );
+      final todayDate = DateTime.now().copyWith(
+        hour: 0,
+        minute: 0,
+        second: 0,
+        millisecond: 0,
+      );
 
-    return calEvents.items!.map(
-      (gEvent) => Event(
-        startTime: gEvent.start!.dateTime,
-        endTime: gEvent.end!.dateTime,
-        subject: gEvent.summary!,
-        description: gEvent.description,
-        isAllDay: gEvent.start?.dateTime == null,
-      ),
-    );
+      final calEvents = await calendarApi.events.list(
+        primaryCalendarId,
+        timeMin: todayDate.toUtc(),
+        timeMax: todayDate.add(const Duration(days: 1)).toUtc(),
+      );
+
+      final colors = await calendarApi.colors.get();
+
+      print('Colors :  ${colors.toJson()}');
+
+      return calEvents.items!.map((gEvent) {
+        final colorId = gEvent.colorId;
+        print('ColorId: $colorId');
+
+        final colorHex = colors.event![colorId]?.background ?? '#000000';
+        print('ColorHex: $colorHex');
+
+        /// fetch the color hex given the colorId
+
+        final gEventStart = gEvent.start;
+        final gEventEnd = gEvent.end;
+
+        return Event(
+          startTime: gEventStart?.dateTime?.toLocal(),
+          endTime: gEventEnd?.dateTime?.toLocal(),
+          subject: gEvent.summary ?? 'some integration',
+          description: gEvent.description,
+          isAllDay: gEvent.start?.dateTime == null,
+          colorHex: colorHex,
+        );
+      });
+    } catch (e) {
+      await deleteIntegration(integration);
+      rethrow;
+    }
   }
 }

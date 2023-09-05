@@ -12,12 +12,19 @@ import 'package:http/http.dart' as http;
 class GoogleCalendarIntegration
     extends CalendarIntegration<GoogleCalendarPlatform> {
   /// {@macro google_calendar_integration}
-  GoogleCalendarIntegration(super.platform, this.oAuthTokenString) {
+  GoogleCalendarIntegration(
+    super.platform,
+    this.oAuthTokenString,
+    this.accountName,
+  ) {
     _client.complete(authenticatedClient(oAuthTokenString));
   }
 
   /// OAuth token string.
   final String oAuthTokenString;
+
+  /// The name of the authenticated user
+  final String accountName;
 
   /// The authenticated client.
   final Completer<gApis.AuthClient?> _client = Completer<gApis.AuthClient>();
@@ -28,11 +35,17 @@ class GoogleCalendarIntegration
       _client.future.then((client) => gCalendar.CalendarApi(client!));
 
   @override
-  List<Object?> get props => throw UnimplementedError();
+  List<Object?> get props => [
+        platform,
+        oAuthTokenString,
+        accountName,
+      ];
 }
 
 /// Retrieve a `gApis` authenticated client.
-Future<gApis.AuthClient?> authenticatedClient(String authToken) async {
+Future<gApis.AuthClient>? authenticatedClient(
+  String authToken,
+) async {
   final credentials = gApis.AccessCredentials(
     gApis.AccessToken(
       'Bearer',
@@ -41,7 +54,7 @@ Future<gApis.AuthClient?> authenticatedClient(String authToken) async {
       // See https://github.com/flutter/flutter/issues/80905
       DateTime.now().toUtc().add(const Duration(days: 365)),
     ),
-    null, // We don't have a refreshToken
+    null,
     [
       gCalendar.CalendarApi.calendarScope,
     ],

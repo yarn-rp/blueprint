@@ -1,8 +1,8 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:blueprint/app/dependency_injection/init.dart';
 import 'package:blueprint/integrations/state_management/cubit/integrations_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_calendar_service/google_calendar_service.dart';
 import 'package:integrations_repository/integrations_repository.dart';
 import 'package:jira_repository/jira_repository.dart';
 
@@ -35,14 +35,13 @@ class _IntegrationsPageState extends State<IntegrationsPage>
           const SizedBox(height: 16),
           BlocBuilder<IntegrationsCubit, IntegrationsState>(
             builder: (context, state) {
-              final integrations = state.integrations;
+              final integrations = state.calendarIntegrations;
               return Wrap(
                 runSpacing: 16,
                 spacing: 16,
                 children: [
-                  ...integrations.map(
-                    (integration) => IntegrationCard(integration: integration),
-                  ),
+                  for (final integration in integrations)
+                    Text(integration.platform.displayName),
                 ],
               );
             },
@@ -54,14 +53,43 @@ class _IntegrationsPageState extends State<IntegrationsPage>
             style: Theme.of(context).textTheme.titleLarge,
           ),
           const SizedBox(height: 16),
-          Wrap(
-            runSpacing: 16,
-            spacing: 16,
-            children: [
-              ...sl<IntegrationsRepository>().getIntegrationTiles(
-                context.read<IntegrationsCubit>().addIntegration,
-              ),
-            ],
+          BlocBuilder<IntegrationsCubit, IntegrationsState>(
+            builder: (context, state) {
+              final platforms = state.calendarPlatforms;
+              return Wrap(
+                runSpacing: 16,
+                spacing: 16,
+                children: [
+                  for (final platform in platforms)
+                    GestureDetector(
+                      onTap: () {
+                        if (platform is GoogleCalendarPlatform) {
+                          context
+                              .read<IntegrationsCubit>()
+                              .startIntegrationWithPlatform(
+                                platform,
+                              );
+                        }
+                      },
+                      child: Card(
+                        child: Padding(
+                          padding: const EdgeInsets.all(16),
+                          child: Column(
+                            children: [
+                              Image.network(platform.iconUrl),
+                              const SizedBox(height: 16),
+                              Text(
+                                platform.displayName,
+                                style: Theme.of(context).textTheme.titleLarge,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                ],
+              );
+            },
           ),
         ],
       ),
@@ -110,9 +138,9 @@ class IntegrationCard extends StatelessWidget {
                 child: IconButton(
                   icon: const Icon(Icons.close),
                   onPressed: () {
-                    context.read<IntegrationsCubit>().deleteIntegration(
-                          integration,
-                        );
+                    // context.read<IntegrationsCubit>().deleteIntegration(
+                    //       integration,
+                    //     );
                   },
                 ),
               ),

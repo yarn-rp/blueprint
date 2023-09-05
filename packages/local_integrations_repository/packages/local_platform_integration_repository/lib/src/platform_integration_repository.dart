@@ -46,7 +46,7 @@ abstract class PlatformIntegrationService<PlatformType extends Platform,
 
   /// Creates a new [integration] in the repository.
   Future<void> createIntegration(IntegrationType integration) =>
-      _platformIntegrationStorage.storeIntegrations([integration]);
+      _platformIntegrationStorage.storeIntegration(integration);
 
   /// Deletes an [integration] from the repository.
   Future<void> deleteIntegration(IntegrationType integration) =>

@@ -36,6 +36,7 @@ dependencies:
   google_calendar_service:
     path: ./packages/google_calendar_service
   google_fonts: ^4.0.3
+  google_sign_in: ^6.1.4
   hydrated_bloc: ^9.1.0
   injectable: ^2.1.1
   integrations_repository:
@@ -49,6 +50,7 @@ dependencies:
   meta: ^1.9.1
   path_provider: ^2.0.14
   sidebarx: ^0.15.0
+  stream_transform: ^2.1.0
   syncfusion_flutter_calendar: ^21.1.38
   url_launcher: ^6.1.10
 

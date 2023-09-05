@@ -4,6 +4,8 @@ import 'package:blueprint/blueprint/entities/calendar_event.dart';
 import 'package:blueprint/blueprint/presentation/widgets/general_calendar_event_tile.dart';
 import 'package:blueprint/blueprint/presentation/widgets/task_event_tile.dart';
 import 'package:blueprint/blueprint/state_management/todays_blueprint/todays_blueprint_cubit.dart';
+import 'package:blueprint/core/styles/styles.dart';
+import 'package:blueprint/core/utils/color/hex_color_extension.dart';
 import 'package:blueprint/tasks/presentation/pages/task_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -222,6 +224,12 @@ class _TodaysBlueprintState extends State<TodayTimeline>
               return const SizedBox();
             }
             final isAfter = appointment.endTime.isAfter(now);
+            final originalColor = appointment.colorHex != null
+                ? HexColor.fromHex(
+                    appointment.colorHex!,
+                  )
+                : Theme.of(context).colorScheme.surfaceVariant;
+
             return appointment.map(
               event: (appointment) => GeneralCalendarEventTile(
                 appointment: appointment,
@@ -229,6 +237,7 @@ class _TodaysBlueprintState extends State<TodayTimeline>
                         .difference(appointment.startTime)
                         .inMinutes <
                     30,
+                color: isAfter ? originalColor : darken(originalColor!, 0.3),
               ),
               task: (appointment) => TaskEventTile(
                 appointment: appointment,

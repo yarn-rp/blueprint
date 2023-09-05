@@ -13,11 +13,13 @@ class GoogleCalendarIntegrationMapper
     return GoogleCalendarIntegration(
       GoogleCalendarPlatform.instance,
       json['oAuthTokenString'] as String,
+      json['accountName'] as String,
     );
   }
 
   @override
   Map<String, dynamic> toJson(GoogleCalendarIntegration integration) => {
         'oAuthTokenString': integration.oAuthTokenString,
+        'accountName': integration.accountName,
       };
 }

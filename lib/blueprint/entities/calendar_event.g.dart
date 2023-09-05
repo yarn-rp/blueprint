@@ -12,6 +12,7 @@ _$GeneralCalendarEvent _$$GeneralCalendarEventFromJson(
       startTime: DateTime.parse(json['startTime'] as String),
       endTime: DateTime.parse(json['endTime'] as String),
       subject: json['subject'] as String,
+      colorHex: colorFromJson(json['colorHex'] as Map<String, dynamic>?),
       isAllDay: json['isAllDay'] as bool? ?? false,
       $type: json['runtimeType'] as String?,
     );
@@ -22,6 +23,7 @@ Map<String, dynamic> _$$GeneralCalendarEventToJson(
       'startTime': instance.startTime.toIso8601String(),
       'endTime': instance.endTime.toIso8601String(),
       'subject': instance.subject,
+      'colorHex': colorToJson(instance.colorHex),
       'isAllDay': instance.isAllDay,
       'runtimeType': instance.$type,
     };
@@ -31,6 +33,7 @@ _$TaskCalendarEvent _$$TaskCalendarEventFromJson(Map<String, dynamic> json) =>
       task: TaskJsonMapper.fromJson(json['task'] as Map<String, dynamic>),
       startTime: DateTime.parse(json['startTime'] as String),
       endTime: DateTime.parse(json['endTime'] as String),
+      colorHex: colorFromJson(json['colorHex'] as Map<String, dynamic>?),
       isAllDay: json['isAllDay'] as bool? ?? false,
       $type: json['runtimeType'] as String?,
     );
@@ -40,6 +43,7 @@ Map<String, dynamic> _$$TaskCalendarEventToJson(_$TaskCalendarEvent instance) =>
       'task': TaskJsonMapper.toJson(instance.task),
       'startTime': instance.startTime.toIso8601String(),
       'endTime': instance.endTime.toIso8601String(),
+      'colorHex': colorToJson(instance.colorHex),
       'isAllDay': instance.isAllDay,
       'runtimeType': instance.$type,
     };

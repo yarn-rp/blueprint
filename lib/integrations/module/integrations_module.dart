@@ -1,6 +1,9 @@
 import 'package:blueprint/integrations/state_management/cubit/integrations_cubit.dart';
+import 'package:calendar_repository/calendar_repository.dart'
+    show CalendarRepository;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:github_repository/github_repository.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:injectable/injectable.dart';
 import 'package:integrations_repository/integrations_repository.dart';
 import 'package:jira_repository/jira_repository.dart';
@@ -30,9 +33,11 @@ abstract class IntegrationsModule {
 
   @lazySingleton
   IntegrationsCubit integrationsCubit(
-    IntegrationsRepository integrationsRepository,
+    CalendarRepository integrationsRepository,
+    GoogleSignIn googleSignIn,
   ) =>
       IntegrationsCubit(
         integrationsRepository,
+        googleSignIn,
       );
 }

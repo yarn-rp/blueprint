@@ -9,8 +9,9 @@ import 'package:stream_transform/stream_transform.dart';
 /// {@endtemplate}
 class IntegrationsRepository<
     PlatformType extends Platform,
+    IntegrationType extends Integration<PlatformType>,
     PlatformIntegrationServiceType extends PlatformIntegrationService<
-        PlatformType, Integration<PlatformType>>> {
+        PlatformType, IntegrationType>> {
   /// {@macro integrations_repository}
   IntegrationsRepository({
     Iterable<PlatformIntegrationServiceType>? services,
@@ -30,7 +31,7 @@ class IntegrationsRepository<
 
   /// Returns a stream of all integrations from all sources. This stream reacts
   /// to changes in the integrations, like additions or removals.
-  Stream<Iterable<Integration<PlatformType>>> getAllIntegrations() =>
+  Stream<Iterable<IntegrationType>> getAllIntegrations() =>
       _platformMap.values.map(_getServiceIntegrations).reduce(
             (previous, current) => previous.combineLatest(
               current,
@@ -39,12 +40,12 @@ class IntegrationsRepository<
           );
 
   /// Returns a stream of all integrations from all services.
-  Stream<Iterable<PlatformType>> getAllPlatforms() => getAllIntegrations().map(
-        (integrations) => integrations.map((e) => e.platform),
+  Stream<Iterable<PlatformType>> getAllPlatforms() => Stream.value(
+        _platformMap.keys,
       );
 
   /// Adds a new [integration] to the service.
-  Future<void> addIntegration(Integration<PlatformType> integration) {
+  Future<void> addIntegration(IntegrationType integration) {
     final service = _platformMap[integration.platform];
 
     if (service == null) {
@@ -54,7 +55,7 @@ class IntegrationsRepository<
   }
 
   /// Deletes an [integration] from the service.
-  Future<void> deleteIntegration(Integration<PlatformType> integration) {
+  Future<void> deleteIntegration(IntegrationType integration) {
     final service = _platformMap[integration.platform];
 
     if (service == null) {
@@ -66,7 +67,7 @@ class IntegrationsRepository<
   /// Returns a stream of all integrations from a specific [service].
   ///
   /// Just a wrapper method to make the code more readable.
-  Stream<List<Integration<PlatformType>>> _getServiceIntegrations(
+  Stream<List<IntegrationType>> _getServiceIntegrations(
     PlatformIntegrationServiceType service,
   ) =>
       service.getIntegrations();

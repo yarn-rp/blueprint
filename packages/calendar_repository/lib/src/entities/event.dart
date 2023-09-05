@@ -11,6 +11,7 @@ class Event extends Equatable {
     required this.subject,
     required this.isAllDay,
     this.description,
+    this.colorHex,
   }) : assert(
           startTime != null || isAllDay != null && isAllDay == true,
           'event should be all day or have a start date',
@@ -30,6 +31,9 @@ class Event extends Equatable {
 
   /// Whether the event is an all day event.
   final bool? isAllDay;
+
+  /// The color of the event in hex format.
+  final String? colorHex;
 
   @override
   List<Object?> get props => [

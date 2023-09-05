@@ -14,6 +14,7 @@ class CalendarEvent with _$CalendarEvent {
     required DateTime startTime,
     required DateTime endTime,
     required String subject,
+    @JsonKey(fromJson: colorFromJson, toJson: colorToJson) String? colorHex,
     @Default(false) bool isAllDay,
   }) = GeneralCalendarEvent;
 
@@ -23,6 +24,7 @@ class CalendarEvent with _$CalendarEvent {
     required Task task,
     required DateTime startTime,
     required DateTime endTime,
+    @JsonKey(fromJson: colorFromJson, toJson: colorToJson) String? colorHex,
     @Default(false) bool isAllDay,
   }) = TaskCalendarEvent;
 
@@ -33,4 +35,18 @@ class CalendarEvent with _$CalendarEvent {
         event: (event) => event.subject,
         task: (task) => task.task.title,
       );
+}
+
+String? colorFromJson(Map<String, dynamic>? json) {
+  if (json == null) {
+    return null;
+  }
+  return json['colorHex'] as String?;
+}
+
+Map<String, dynamic>? colorToJson(String? colorHex) {
+  if (colorHex == null) {
+    return null;
+  }
+  return {'colorHex': colorHex};
 }

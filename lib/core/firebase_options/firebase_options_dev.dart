@@ -2,13 +2,13 @@
 // ignore_for_file: lines_longer_than_80_chars, avoid_classes_with_only_static_members
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
-    show TargetPlatform, defaultTargetPlatform, kIsWeb;
+    show defaultTargetPlatform, kIsWeb, TargetPlatform;
 
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
 /// Example:
 /// ```dart
-/// import 'firebase_options_dev.dart';
+/// import 'firebase_options.dart';
 /// // ...
 /// await Firebase.initializeApp(
 ///   options: DefaultFirebaseOptions.currentPlatform,
@@ -39,10 +39,9 @@ class DefaultFirebaseOptions {
           'DefaultFirebaseOptions have not been configured for linux - '
           'you can reconfigure this by running the FlutterFire CLI again.',
         );
-      case TargetPlatform.fuchsia:
+      default:
         throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for fuchsia - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
+          'DefaultFirebaseOptions are not supported for this platform.',
         );
     }
   }
@@ -60,7 +59,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDEicy3hfG1T9v_wBK_PudTRML-OjhAL9s',
-    appId: '1:333437725100:android:9f0e6abfd0a738aab03209',
+    appId: '1:333437725100:android:baadcafcea63d0e0b03209',
     messagingSenderId: '333437725100',
     projectId: 'polletask-dev',
     databaseURL: 'https://polletask-dev-default-rtdb.firebaseio.com',
@@ -69,13 +68,13 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyBMkEuCELz3ERI8Qih2epyjmDnzCuxv4dw',
-    appId: '1:333437725100:ios:38f9e9fd022371dbb03209',
+    appId: '1:333437725100:ios:a38b07f6d3bafbffb03209',
     messagingSenderId: '333437725100',
     projectId: 'polletask-dev',
     databaseURL: 'https://polletask-dev-default-rtdb.firebaseio.com',
     storageBucket: 'polletask-dev.appspot.com',
     iosClientId:
-        '333437725100-ea52a78cisaej3481rp04n1u0qclrs57.apps.googleusercontent.com',
-    iosBundleId: 'com.blueprint.app.dev',
+        '333437725100-gedi3r0oh08vad1f3c6elp4ep8j2vjg6.apps.googleusercontent.com',
+    iosBundleId: 'com.yarn.blueprint',
   );
 }
