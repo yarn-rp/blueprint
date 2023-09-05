@@ -28,13 +28,12 @@ class TodaysBlueprintCubit extends Cubit<TodaysBlueprintState> {
       print('Returned events: $events');
       emit(
         TodaysBlueprintState.loaded(
-          calendarEvents: events.map<CalendarEvent>((e) {
+          calendarEvents: events.map<CalendarEvent>((event) {
             return CalendarEvent.event(
-              startTime: e.startTime ?? DateTime.now(),
+              startTime: event.startTime ?? DateTime.now(),
               endTime:
-                  e.endTime ?? DateTime.now().add(const Duration(hours: 1)),
-              subject: e.subject,
-              colorHex: e.colorHex,
+                  event.endTime ?? DateTime.now().add(const Duration(hours: 1)),
+              event: event,
             );
           }).toList(),
           workTimes: workTimes,

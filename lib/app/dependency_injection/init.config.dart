@@ -80,16 +80,16 @@ extension GetItInjectableX on _i1.GetIt {
     gh.lazySingleton<_i3.FacebookAuthenticationProvider>(
         () => authenticationModule.facebookAuthenticationProvider());
     gh.singleton<_i4.FirebaseOptions>(
-      firebaseModule.productionFirebaseOptions,
-      registerFor: {_prod},
-    );
-    gh.singleton<_i4.FirebaseOptions>(
       firebaseModule.stagingFirebaseOptions,
       registerFor: {_stg},
     );
     gh.singleton<_i4.FirebaseOptions>(
       firebaseModule.developmentFirebaseOptions,
       registerFor: {_dev},
+    );
+    gh.singleton<_i4.FirebaseOptions>(
+      firebaseModule.productionFirebaseOptions,
+      registerFor: {_prod},
     );
     gh.lazySingleton<_i5.FlutterSecureStorage>(
         () => coreModule.flutterSecureStorage());

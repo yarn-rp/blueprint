@@ -11,9 +11,7 @@ _$GeneralCalendarEvent _$$GeneralCalendarEventFromJson(
     _$GeneralCalendarEvent(
       startTime: DateTime.parse(json['startTime'] as String),
       endTime: DateTime.parse(json['endTime'] as String),
-      subject: json['subject'] as String,
-      colorHex: colorFromJson(json['colorHex'] as Map<String, dynamic>?),
-      isAllDay: json['isAllDay'] as bool? ?? false,
+      event: Event.fromJson(json['event'] as Map<String, dynamic>),
       $type: json['runtimeType'] as String?,
     );
 
@@ -22,9 +20,7 @@ Map<String, dynamic> _$$GeneralCalendarEventToJson(
     <String, dynamic>{
       'startTime': instance.startTime.toIso8601String(),
       'endTime': instance.endTime.toIso8601String(),
-      'subject': instance.subject,
-      'colorHex': colorToJson(instance.colorHex),
-      'isAllDay': instance.isAllDay,
+      'event': instance.event,
       'runtimeType': instance.$type,
     };
 

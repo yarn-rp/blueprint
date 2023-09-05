@@ -225,12 +225,13 @@ class _TodaysBlueprintState extends State<TodayTimeline>
             if (appointment is! CalendarEvent) {
               return const SizedBox();
             }
+
             final isAfter = appointment.endTime.isAfter(now);
-            final originalColor = appointment.colorHex != null
+            final originalColor = appointment.color != null
                 ? HexColor.fromHex(
-                    appointment.colorHex!,
+                    appointment.color!,
                   )
-                : Theme.of(context).colorScheme.surfaceVariant;
+                : Theme.of(context).colorScheme.secondary;
 
             return appointment.map(
               event: (appointment) => GeneralCalendarEventTile(

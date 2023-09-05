@@ -1,5 +1,6 @@
 import 'package:blueprint/blueprint/entities/calendar_event.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:markdown/markdown.dart' as md;
 import 'package:url_launcher/url_launcher.dart';
@@ -24,7 +25,6 @@ class GeneralEventCalendarEventDetails extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Theme.of(context).canvasColor,
         appBar: AppBar(
-          // leading: const SizedBox.shrink(),
           automaticallyImplyLeading: false,
           toolbarHeight: kToolbarHeight + kMinInteractiveDimension + padding,
           backgroundColor: Colors.transparent,
@@ -106,15 +106,9 @@ class GeneralEventCalendarEventDetails extends StatelessWidget {
                       child: InkWell(
                         child: Padding(
                           padding: const EdgeInsets.all(24),
-                          child: MarkdownBody(
-                            selectable: true,
-                            data: appointment.subject,
-                            extensionSet: md.ExtensionSet(
-                              md.ExtensionSet.commonMark.blockSyntaxes,
-                              [
-                                md.EmojiSyntax(),
-                              ],
-                            ),
+                          child: RichTextBody(
+                            text: appointment.event.description ??
+                                'No description provided',
                           ),
                         ),
                       ),
@@ -407,4 +401,76 @@ class GeneralEventCalendarEventDetails extends StatelessWidget {
       ),
     );
   }
+}
+
+class RichTextBody extends StatelessWidget {
+  const RichTextBody({
+    required this.text,
+    super.key,
+  });
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    final isBasicMD = isBasicMarkdown(text);
+
+    if (!isBasicMD) {
+      return Html(
+        data: text,
+        onLinkTap: (
+          url,
+          _,
+          __,
+        ) =>
+            launchUrl(Uri.parse(url!)),
+      );
+    }
+
+    return MarkdownBody(
+      selectable: true,
+      data: text,
+      extensionSet: md.ExtensionSet(
+        md.ExtensionSet.gitHubFlavored.blockSyntaxes,
+        <md.InlineSyntax>[
+          md.EmojiSyntax(),
+          ...md.ExtensionSet.gitHubFlavored.inlineSyntaxes
+        ],
+      ),
+      onTapLink: (String url, String? title, String? id) {
+        // Handle link tap
+      },
+    );
+  }
+}
+
+bool isBasicMarkdown(String text) {
+  // List of HTML tags that are not supported by flutter_markdown
+  // This is a simplified list and may not cover all unsupported tags
+  final unsupportedTags = <String>[
+    '<script',
+    '</script>',
+    '<style',
+    '</style>',
+    '<iframe',
+    '</iframe>',
+    '<object',
+    '</object>',
+    '<embed',
+    '</embed>',
+    '<i>',
+    '</i>',
+    '<a>',
+    '</a>',
+    // Add more unsupported tags here
+  ];
+
+  // Check if the text contains any of the unsupported tags
+  for (final tag in unsupportedTags) {
+    if (text.contains(tag)) {
+      return false;
+    }
+  }
+
+  return true;
 }
