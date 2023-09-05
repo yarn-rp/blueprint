@@ -4,7 +4,7 @@ import 'package:blueprint/blueprint/entities/calendar_event.dart';
 import 'package:blueprint/blueprint/presentation/widgets/general_calendar_event_tile.dart';
 import 'package:blueprint/blueprint/presentation/widgets/task_event_tile.dart';
 import 'package:blueprint/blueprint/state_management/todays_blueprint/todays_blueprint_cubit.dart';
-import 'package:blueprint/core/styles/styles.dart';
+import 'package:blueprint/calendar/presentation/views/event_details.dart';
 import 'package:blueprint/core/utils/color/hex_color_extension.dart';
 import 'package:blueprint/tasks/presentation/pages/task_details.dart';
 import 'package:flutter/material.dart';
@@ -92,21 +92,6 @@ class _TodaysBlueprintState extends State<TodayTimeline>
             second: 59,
             millisecond: 999,
           ),
-          specialRegions: [
-            ...state.workTimes.map(
-              (workTime) => TimeRegion(
-                text: 'Working Time',
-                startTime: DateTime.now().copyWith(
-                  hour: workTime.start.hour,
-                  minute: workTime.start.minute,
-                ),
-                endTime: DateTime.now().copyWith(
-                  hour: workTime.end.hour,
-                  minute: workTime.end.minute,
-                ),
-              ),
-            ),
-          ],
 
           onTap: (calendarTapDetails) async {
             if (calendarTapDetails.targetElement ==
@@ -116,8 +101,25 @@ class _TodaysBlueprintState extends State<TodayTimeline>
                 return;
               }
               await appointment.map(
-                event: (event) {
-                  // TODO(yarn-rp): do something
+                event: (appointment) async {
+                  await showDialog<void>(
+                    context: context,
+                    builder: (context) {
+                      return Dialog(
+                        surfaceTintColor: Theme.of(context).canvasColor,
+                        child: ConstrainedBox(
+                          constraints: BoxConstraints(
+                            maxWidth: 1200,
+                            maxHeight: MediaQuery.of(context).size.height,
+                          ),
+                          child: GeneralEventCalendarEventDetails(
+                            appointment: appointment,
+                            onClose: () => Navigator.of(context).pop(),
+                          ),
+                        ),
+                      );
+                    },
+                  );
                 },
                 task: (appointment) async {
                   await showDialog<void>(
@@ -235,9 +237,10 @@ class _TodaysBlueprintState extends State<TodayTimeline>
                 appointment: appointment,
                 isSmallVersion: appointment.endTime
                         .difference(appointment.startTime)
-                        .inMinutes <
+                        .inMinutes <=
                     30,
-                color: isAfter ? originalColor : darken(originalColor!, 0.3),
+                color:
+                    isAfter ? originalColor : originalColor?.withOpacity(0.3),
               ),
               task: (appointment) => TaskEventTile(
                 appointment: appointment,
@@ -247,9 +250,9 @@ class _TodaysBlueprintState extends State<TodayTimeline>
               ),
             );
           },
-          timeSlotViewSettings: TimeSlotViewSettings(
-            minimumAppointmentDuration: const Duration(minutes: 15),
-            timeIntervalHeight: MediaQuery.of(context).size.height / 14,
+          timeSlotViewSettings: const TimeSlotViewSettings(
+            minimumAppointmentDuration: Duration(minutes: 15),
+            timeIntervalHeight: 100,
           ),
         );
       },

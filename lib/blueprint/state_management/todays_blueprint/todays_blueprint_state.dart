@@ -41,17 +41,16 @@ abstract class TodaysBlueprintState with _$TodaysBlueprintState {
 
   Iterable<CalendarEvent>? get nextEvents {
     final current = currentEvent;
-    if (current != null) {
-      final nextEvents = calendarEvents
-          .sorted((a, b) => a.startTime.compareTo(b.startTime))
-          .where(
-            (event) => event.startTime
-                .isAfter(current.endTime.subtract(const Duration(minutes: 1))),
-          );
-      return nextEvents;
-    }
-    // If there is no current event, return the first event
-    return calendarEvents;
+
+    final endTime = current?.endTime ?? DateTime.now();
+
+    final nextEvents = calendarEvents
+        .sorted((a, b) => a.startTime.compareTo(b.startTime))
+        .where(
+          (event) => event.startTime
+              .isAfter(endTime.subtract(const Duration(minutes: 1))),
+        );
+    return nextEvents;
   }
 }
 

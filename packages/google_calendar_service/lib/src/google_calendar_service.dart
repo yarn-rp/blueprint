@@ -41,21 +41,26 @@ class GoogleCalendarService
         millisecond: 0,
       );
 
+      final todayDateUTC = todayDate.toUtc();
+      final todayDateUTCPlusOneDay = todayDateUTC.add(const Duration(days: 1));
+
+      print(
+        'Fetching calendar events from $todayDateUTC to $todayDateUTCPlusOneDay',
+      );
+
       final calEvents = await calendarApi.events.list(
         primaryCalendarId,
-        timeMin: todayDate.toUtc(),
-        timeMax: todayDate.add(const Duration(days: 1)).toUtc(),
+        timeMin: todayDateUTC,
+        timeMax: todayDateUTCPlusOneDay,
       );
 
       final colors = await calendarApi.colors.get();
-
-      print('Colors :  ${colors.toJson()}');
 
       return calEvents.items!.map((gEvent) {
         final colorId = gEvent.colorId;
         print('ColorId: $colorId');
 
-        final colorHex = colors.event![colorId]?.background ?? '#000000';
+        final colorHex = colors.event![colorId]?.background;
         print('ColorHex: $colorHex');
 
         /// fetch the color hex given the colorId
