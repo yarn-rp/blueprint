@@ -2,7 +2,7 @@
 
 part of 'todays_blueprint_cubit.dart';
 
-@Freezed(fromJson: true, toJson: true)
+@Freezed()
 abstract class TodaysBlueprintState with _$TodaysBlueprintState {
   const TodaysBlueprintState._();
   const factory TodaysBlueprintState.initial({
@@ -26,9 +26,6 @@ abstract class TodaysBlueprintState with _$TodaysBlueprintState {
     required List<WorkTime> workTimes,
     required DateTime addedAt,
   }) = _Error;
-
-  factory TodaysBlueprintState.fromJson(Map<String, dynamic> json) =>
-      _$TodaysBlueprintStateFromJson(json);
 
   _EventsDataSource get toDataSource => _EventsDataSource([...calendarEvents]);
 

@@ -1,7 +1,10 @@
 import 'package:blueprint/blueprint/entities/calendar_event.dart';
+import 'package:blueprint/calendar/presentation/widgets/attendee_tile.dart';
+import 'package:blueprint/calendar/presentation/widgets/conference_entrypoints.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:jiffy/jiffy.dart';
 import 'package:markdown/markdown.dart' as md;
 import 'package:url_launcher/url_launcher.dart';
 
@@ -62,22 +65,39 @@ class GeneralEventCalendarEventDetails extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  appointment.subject,
-                  style: Theme.of(context).textTheme.titleLarge,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+                Row(
+                  children: [
+                    Text(
+                      appointment.subject,
+                      style: Theme.of(context).textTheme.titleLarge,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
                 ),
                 const SizedBox(
                   height: 8,
                 ),
-                FilledButton.tonalIcon(
-                  onPressed: () => launchUrl(Uri.parse('someUrl')),
-                  icon: const Icon(Icons.link),
-                  label: const Text(
-                    'View in ',
+                if (appointment.event.platformLink != null)
+                  FilledButton.tonalIcon(
+                    onPressed: () => launchUrl(
+                      Uri.parse(
+                        appointment.event.platformLink!,
+                      ),
+                    ),
+                    icon: const Icon(Icons.link),
+                    label: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Text(
+                          'View in ',
+                        ),
+                        Text(
+                          appointment.event.platform.displayName,
+                        ),
+                      ],
+                    ),
                   ),
-                )
               ],
             ),
           ),
@@ -106,10 +126,8 @@ class GeneralEventCalendarEventDetails extends StatelessWidget {
                       child: InkWell(
                         child: Padding(
                           padding: const EdgeInsets.all(24),
-                          child: RichTextBody(
-                            text: appointment.event.description ??
-                                'No description provided',
-                          ),
+                          child:
+                              EventDetailsDescription(appointment: appointment),
                         ),
                       ),
                     ),
@@ -119,286 +137,312 @@ class GeneralEventCalendarEventDetails extends StatelessWidget {
                   ],
                 ),
               ),
+              Expanded(
+                flex: 4,
+                child: Column(
+                  children: [
+                    Expanded(
+                      flex: 3,
+                      child: Container(
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color:
+                                Theme.of(context).dividerColor.withOpacity(0.3),
+                          ),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: ListView(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Details',
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium,
+                                ),
+                                // Divider
+                                const Divider(
+                                  endIndent: 0,
+                                  indent: 0,
+                                ),
+                                if (appointment.event.conferenceData !=
+                                    null) ...[
+                                  ConferenceEntryPoints(
+                                    conferenceData:
+                                        appointment.event.conferenceData!,
+                                  ),
+                                ],
+                                // Divider
+                                const Divider(
+                                  endIndent: 0,
+                                  indent: 0,
+                                ),
 
-              // Expanded(
-              //   flex: 4,
-              //   child: Column(
-              //     children: [
-              //       Expanded(
-              //         flex: 3,
-              //         child: Container(
-              //           padding: const EdgeInsets.all(16),
-              //           decoration: BoxDecoration(
-              //             border: Border.all(
-              //               color:
-              //                   Theme.of(context).dividerColor.withOpacity(0.3),
-              //             ),
-              //             borderRadius: BorderRadius.circular(4),
-              //           ),
-              //           child: ListView(
-              //             padding: const EdgeInsets.symmetric(horizontal: 16),
-              //             children: [
-              //               Column(
-              //                 crossAxisAlignment: CrossAxisAlignment.start,
-              //                 children: [
-              //                   Text(
-              //                     'Details',
-              //                     style:
-              //                         Theme.of(context).textTheme.titleMedium,
-              //                   ),
-              //                   // Divider
-              //                   const Divider(
-              //                     endIndent: 0,
-              //                     indent: 0,
-              //                   ),
+                                // Column(
+                                //   crossAxisAlignment: CrossAxisAlignment.start,
+                                //   children: [
+                                //     const Text('Time logged'),
+                                //     const SizedBox(
+                                //       height: 16,
+                                //     ),
+                                //     // A percentage bar showing the time logged
+                                //     if (task.loggedTime != null &&
+                                //         task.estimatedTime != null)
+                                //       Column(
+                                //         children: [
+                                //           LinearProgressIndicator(
+                                //             value: task.loggedTime!
+                                //                     .inMilliseconds /
+                                //                 task.estimatedTime!
+                                //                     .inMilliseconds,
+                                //             valueColor:
+                                //                 AlwaysStoppedAnimation<Color>(
+                                //               Theme.of(context)
+                                //                   .colorScheme
+                                //                   .primary,
+                                //             ),
+                                //             backgroundColor: Theme.of(context)
+                                //                 .colorScheme
+                                //                 .primary
+                                //                 .withOpacity(
+                                //                   0.3,
+                                //                 ),
+                                //           ),
+                                //           const SizedBox(
+                                //             height: 8,
+                                //           ),
+                                //           if (task.loggedTime != null &&
+                                //               task.estimatedTime != null)
+                                //             Row(
+                                //               children: [
+                                //                 if (task.loggedTime != null)
+                                //                   Text(
+                                //                     // ignore: lines_longer_than_80_chars
+                                //                     '${task.loggedTime!.inHours}h ${task.loggedTime!.inMinutes % 60}m',
+                                //                     style: Theme.of(context)
+                                //                         .textTheme
+                                //                         .bodySmall,
+                                //                   ),
+                                //                 const Spacer(),
+                                //                 if (task.estimatedTime != null)
+                                //                   Text(
+                                //                     // ignore: lines_longer_than_80_chars
+                                //                     '${task.estimatedTime!.inHours}h ${task.estimatedTime!.inMinutes % 60}m',
+                                //                     style: Theme.of(context)
+                                //                         .textTheme
+                                //                         .bodySmall,
+                                //                   ),
+                                //               ],
+                                //             )
+                                //         ],
+                                //       ),
+                                //   ],
+                                // ),
+                                // Starting date and due date of the task
+                                const SizedBox(
+                                  height: 32,
+                                ),
+                                Wrap(
+                                  spacing: 16,
+                                  runSpacing: 16,
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        const Text('Starting date'),
+                                        const SizedBox(
+                                          height: 16,
+                                        ),
+                                        // Use jiffy to format the date
+                                        Text(
+                                          Jiffy(appointment.startTime)
+                                              .format('dd MMM yyyy hh:mm a'),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall,
+                                        ),
+                                      ],
+                                    ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        const Text('Due date'),
+                                        const SizedBox(
+                                          height: 16,
+                                        ),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              Jiffy(
+                                                appointment.endTime,
+                                              ).fromNow(),
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodySmall
+                                                  ?.copyWith(
+                                                    color: Theme.of(context)
+                                                        .highlightColor,
+                                                  ),
+                                            ),
+                                            const Text(' - '),
+                                            Expanded(
+                                              child: Text(
+                                                Jiffy(appointment.endTime)
+                                                    .format(
+                                                  'dd MMM yyyy hh:mm a',
+                                                ),
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodySmall,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
 
-              //                   const SizedBox(
-              //                     height: 16,
-              //                   ),
-
-              //                   Wrap(
-              //                     spacing: 8,
-              //                     children: [
-              //                       ProjectChip(project: task.project),
-              //                       ...task.labels
-              //                           .map((e) => LabelChip(label: e)),
-              //                     ],
-              //                   ),
-              //                   const SizedBox(
-              //                     height: 16,
-              //                   ),
-              //                   Column(
-              //                     crossAxisAlignment: CrossAxisAlignment.start,
-              //                     children: [
-              //                       const Text('Time logged'),
-              //                       const SizedBox(
-              //                         height: 16,
-              //                       ),
-              //                       // A percentage bar showing the time logged
-              //                       if (task.loggedTime != null &&
-              //                           task.estimatedTime != null)
-              //                         Column(
-              //                           children: [
-              //                             LinearProgressIndicator(
-              //                               value: task.loggedTime!
-              //                                       .inMilliseconds /
-              //                                   task.estimatedTime!
-              //                                       .inMilliseconds,
-              //                               valueColor:
-              //                                   AlwaysStoppedAnimation<Color>(
-              //                                 Theme.of(context)
-              //                                     .colorScheme
-              //                                     .primary,
-              //                               ),
-              //                               backgroundColor: Theme.of(context)
-              //                                   .colorScheme
-              //                                   .primary
-              //                                   .withOpacity(
-              //                                     0.3,
-              //                                   ),
-              //                             ),
-              //                             const SizedBox(
-              //                               height: 8,
-              //                             ),
-              //                             if (task.loggedTime != null &&
-              //                                 task.estimatedTime != null)
-              //                               Row(
-              //                                 children: [
-              //                                   if (task.loggedTime != null)
-              //                                     Text(
-              //                                       // ignore: lines_longer_than_80_chars
-              //                                       '${task.loggedTime!.inHours}h ${task.loggedTime!.inMinutes % 60}m',
-              //                                       style: Theme.of(context)
-              //                                           .textTheme
-              //                                           .bodySmall,
-              //                                     ),
-              //                                   const Spacer(),
-              //                                   if (task.estimatedTime != null)
-              //                                     Text(
-              //                                       // ignore: lines_longer_than_80_chars
-              //                                       '${task.estimatedTime!.inHours}h ${task.estimatedTime!.inMinutes % 60}m',
-              //                                       style: Theme.of(context)
-              //                                           .textTheme
-              //                                           .bodySmall,
-              //                                     ),
-              //                                 ],
-              //                               )
-              //                           ],
-              //                         ),
-              //                     ],
-              //                   ),
-              //                   // Starting date and due date of the task
-              //                   const SizedBox(
-              //                     height: 32,
-              //                   ),
-              //                   Wrap(
-              //                     spacing: 16,
-              //                     runSpacing: 16,
-              //                     children: [
-              //                       Column(
-              //                         crossAxisAlignment:
-              //                             CrossAxisAlignment.start,
-              //                         children: [
-              //                           const Text('Starting date'),
-              //                           const SizedBox(
-              //                             height: 16,
-              //                           ),
-              //                           // Use jiffy to format the date
-              //                           Text(
-              //                             Jiffy(task.startDate)
-              //                                 .format('dd MMM yyyy hh:mm a'),
-              //                             style: Theme.of(context)
-              //                                 .textTheme
-              //                                 .bodySmall,
-              //                           ),
-              //                         ],
-              //                       ),
-              //                       Column(
-              //                         crossAxisAlignment:
-              //                             CrossAxisAlignment.start,
-              //                         children: [
-              //                           const Text('Due date'),
-              //                           const SizedBox(
-              //                             height: 16,
-              //                           ),
-              //                           Row(
-              //                             children: [
-              //                               Text(
-              //                                 Jiffy(
-              //                                   task.dueDate,
-              //                                 ).fromNow(),
-              //                                 style: Theme.of(context)
-              //                                     .textTheme
-              //                                     .bodySmall
-              //                                     ?.copyWith(
-              //                                       color: Theme.of(context)
-              //                                           .highlightColor,
-              //                                     ),
-              //                               ),
-              //                               const Text(' - '),
-              //                               Expanded(
-              //                                 child: Text(
-              //                                   Jiffy(task.dueDate).format(
-              //                                     'dd MMM yyyy hh:mm a',
-              //                                   ),
-              //                                   maxLines: 1,
-              //                                   overflow: TextOverflow.ellipsis,
-              //                                   style: Theme.of(context)
-              //                                       .textTheme
-              //                                       .bodySmall,
-              //                                 ),
-              //                               ),
-              //                             ],
-              //                           ),
-              //                         ],
-              //                       ),
-              //                     ],
-              //                   ),
-
-              //                   // Priority of the task
-              //                   const SizedBox(
-              //                     height: 32,
-              //                   ),
-              //                   Column(
-              //                     crossAxisAlignment: CrossAxisAlignment.start,
-              //                     children: [
-              //                       const Text('Priority'),
-              //                       const SizedBox(
-              //                         height: 16,
-              //                       ),
-              //                       PriorityWidget.label(
-              //                         priority: task.priority,
-              //                       )
-              //                     ],
-              //                   ),
-              //                   const SizedBox(
-              //                     height: 16,
-              //                   ),
-              //                   Wrap(
-              //                     runSpacing: 8,
-              //                     spacing: 8,
-              //                     children: [
-              //                       Expanded(
-              //                         child: Column(
-              //                           crossAxisAlignment:
-              //                               CrossAxisAlignment.start,
-              //                           children: [
-              //                             const Text('Creator'),
-              //                             const SizedBox(
-              //                               height: 16,
-              //                             ),
-              //                             UserTile(
-              //                               user: task.creator,
-              //                             ),
-              //                           ],
-              //                         ),
-              //                       ),
-              //                       const SizedBox(
-              //                         width: 16,
-              //                       ),
-              //                       Expanded(
-              //                         child: Column(
-              //                           crossAxisAlignment:
-              //                               CrossAxisAlignment.start,
-              //                           children: [
-              //                             const Text('Assignees'),
-              //                             const SizedBox(
-              //                               height: 16,
-              //                             ),
-              //                             ...task.assigned
-              //                                 .map((e) => UserTile(user: e)),
-              //                           ],
-              //                         ),
-              //                       ),
-              //                     ],
-              //                   ),
-              //                   const SizedBox(
-              //                     height: 32,
-              //                   ),
-              //                 ],
-              //               ),
-              //             ],
-              //           ),
-              //         ),
-              //       ),
-              //       const SizedBox(
-              //         height: 16,
-              //       ),
-              //       // Updated at and created at of the task
-              //       // Use jiffy to format the date
-              //       Expanded(
-              //         child: Column(
-              //           crossAxisAlignment: CrossAxisAlignment.start,
-              //           children: [
-              //             Align(
-              //               alignment: Alignment.centerLeft,
-              //               child: Text(
-              //                 'Created at ${Jiffy(task.createdAt).format('dd '
-              //                     'MMM yyyy hh:mm a')}',
-              //                 style: Theme.of(context).textTheme.bodySmall,
-              //               ),
-              //             ),
-              //             const SizedBox(
-              //               height: 8,
-              //             ),
-              //             Align(
-              //               alignment: Alignment.centerLeft,
-              //               child: Text(
-              //                 'Updated at ${Jiffy(task.updatedAt).format('dd '
-              //                     'MMM yyyy hh:mm a')}',
-              //                 style: Theme.of(context).textTheme.bodySmall,
-              //               ),
-              //             ),
-              //           ],
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              // ),
+                                const SizedBox(
+                                  height: 16,
+                                ),
+                                Wrap(
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        const Text('Attendees'),
+                                        const SizedBox(
+                                          height: 16,
+                                        ),
+                                        if (appointment.event.attendees != null)
+                                          ...appointment
+                                              .event.attendees!.entries
+                                              .map((attendee) {
+                                            final user = attendee.key;
+                                            final status = attendee.value;
+                                            return Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                vertical: 4,
+                                              ),
+                                              child: AttendeeTile(
+                                                platformUrl:
+                                                    attendee.key.platformUrl,
+                                                attendantStatus: status,
+                                                displayName:
+                                                    attendee.key.displayName,
+                                                email: attendee.key.email,
+                                              ),
+                                            );
+                                          }),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 32,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    // Updated at and created at of the task
+                    // Use jiffy to format the date
+                    // Expanded(
+                    //   child: Column(
+                    //     crossAxisAlignment: CrossAxisAlignment.start,
+                    //     children: [
+                    //       Align(
+                    //         alignment: Alignment.centerLeft,
+                    //         child: Text(
+                    //           'Created at ${Jiffy(task.createdAt).format('dd '
+                    //               'MMM yyyy hh:mm a')}',
+                    //           style: Theme.of(context).textTheme.bodySmall,
+                    //         ),
+                    //       ),
+                    //       const SizedBox(
+                    //         height: 8,
+                    //       ),
+                    //       Align(
+                    //         alignment: Alignment.centerLeft,
+                    //         child: Text(
+                    //           'Updated at ${Jiffy(task.updatedAt).format('dd '
+                    //               'MMM yyyy hh:mm a')}',
+                    //           style: Theme.of(context).textTheme.bodySmall,
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class EventDetailsDescription extends StatelessWidget {
+  const EventDetailsDescription({
+    required this.appointment,
+    super.key,
+  });
+
+  final GeneralCalendarEvent appointment;
+
+  String humanizeEntryPointHeader(String entryPointType) {
+    switch (entryPointType) {
+      case 'video':
+        return 'Video call information';
+      case 'phone':
+        return 'Phone call';
+      case 'sip':
+        return 'SIP call';
+      case 'more':
+        return 'More about phone numbers';
+      default:
+        return 'Meeting';
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final descriptionContent = <String>[
+      appointment.event.description ?? '',
+      appointment.event.conferenceData?.notes ?? '',
+    ];
+
+    if (appointment.event.conferenceData?.entryPoints != null) {
+      for (final entryPoint in appointment.event.conferenceData!.entryPoints) {
+        descriptionContent.add(
+          "### ${humanizeEntryPointHeader(entryPoint.entryPointType ?? '')}\n${entryPoint.uri}",
+        );
+      }
+    }
+
+    if (descriptionContent.every((element) => element.isEmpty)) {
+      return const Text('No description provided');
+    }
+
+    return RichTextBody(
+      text: descriptionContent.join('\n'),
     );
   }
 }
@@ -426,6 +470,9 @@ class RichTextBody extends StatelessWidget {
             launchUrl(Uri.parse(url!)),
       );
     }
+    if (text.isEmpty) {
+      return const SizedBox();
+    }
 
     return MarkdownBody(
       selectable: true,
@@ -438,7 +485,7 @@ class RichTextBody extends StatelessWidget {
         ],
       ),
       onTapLink: (String url, String? title, String? id) {
-        // Handle link tap
+        launchUrl(Uri.parse(url));
       },
     );
   }

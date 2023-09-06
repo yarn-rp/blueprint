@@ -85,6 +85,8 @@ void main() {
                   subject: 'Test event',
                   description: 'Test description',
                   isAllDay: false,
+                  platform: GoogleCalendarPlatform.instance,
+                  attendantStatus: AttendantStatus.none,
                 ),
               ],
             ),

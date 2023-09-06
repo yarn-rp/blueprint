@@ -1,12 +1,10 @@
+import 'package:calendar_repository/src/entities/entities.dart';
 import 'package:equatable/equatable.dart';
-import 'package:json_annotation/json_annotation.dart';
-
-part 'event.g.dart';
 
 /// {@template event}
 /// A class that represents an event in the calendar.
 /// {@endtemplate}
-@JsonSerializable()
+
 class Event extends Equatable {
   /// {@macro event}
   const Event({
@@ -14,15 +12,18 @@ class Event extends Equatable {
     required this.endTime,
     required this.subject,
     required this.isAllDay,
+    required this.platform,
+    required this.attendantStatus,
     this.description,
     this.colorHex,
+    this.organizer,
+    this.attendees,
+    this.platformLink,
+    this.conferenceData,
   }) : assert(
           startTime != null || isAllDay != null && isAllDay == true,
           'event should be all day or have a start date',
         );
-
-  /// Converts a json map to an [Event] instance.
-  factory Event.fromJson(Map<String, dynamic> json) => _$EventFromJson(json);
 
   /// The start time of the event.
   final DateTime? startTime;
@@ -42,8 +43,24 @@ class Event extends Equatable {
   /// The color of the event in hex format.
   final String? colorHex;
 
-  /// Converts the event to a json map.
-  Map<String, dynamic> toJson() => _$EventToJson(this);
+  /// The organizer of the event.
+  final User? organizer;
+
+  /// The list of attendees of the event.
+  final Map<User, AttendantStatus>? attendees;
+
+  /// The link to the event in the platform.
+  final String? platformLink;
+
+  /// The platform of the event.
+  final CalendarPlatform platform;
+
+  /// The meeting data of the event. If null, means that the event is not a
+  /// meeting.
+  final ConferenceData? conferenceData;
+
+  /// My status in the conference
+  final AttendantStatus attendantStatus;
 
   @override
   List<Object?> get props => [
@@ -52,5 +69,9 @@ class Event extends Equatable {
         subject,
         description,
         isAllDay,
+        colorHex,
+        organizer,
+        attendees,
+        platformLink,
       ];
 }

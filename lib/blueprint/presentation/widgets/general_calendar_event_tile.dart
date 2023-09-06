@@ -33,24 +33,30 @@ class GeneralCalendarEventTile extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Row(
             children: [
-              Text(
-                appointment.subject,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: foregroundColor,
-                    ),
+              Flexible(
+                child: Text(
+                  appointment.subject,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        color: foregroundColor,
+                      ),
+                ),
               ),
               const SizedBox(
                 width: 16,
               ),
-              Text(
-                '${DateFormat('hh:mm a').format(appointment.startTime)} - '
-                '${DateFormat('hh:mm a').format(appointment.endTime)}',
-                textAlign: TextAlign.left,
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: foregroundColor,
-                    ),
+              Flexible(
+                child: Text(
+                  '${DateFormat('hh:mm a').format(appointment.startTime)} - '
+                  '${DateFormat('hh:mm a').format(appointment.endTime)}',
+                  textAlign: TextAlign.left,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: foregroundColor,
+                      ),
+                ),
               )
             ],
           ),
@@ -68,8 +74,13 @@ class GeneralCalendarEventTile extends StatelessWidget {
           backgroundColor:
               Theme.of(context).colorScheme.onSecondary.withOpacity(0.3),
           child: Icon(
-            Icons.event,
-            color: foregroundColor,
+            switch (appointment
+                .event.conferenceData?.entryPoints.first.entryPointType) {
+              'video' => Icons.video_call,
+              'phone' => Icons.phone,
+              'sip' => Icons.phone,
+              null || _ => Icons.event,
+            },
           ),
         ),
         title: Text(

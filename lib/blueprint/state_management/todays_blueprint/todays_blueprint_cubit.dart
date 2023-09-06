@@ -10,7 +10,6 @@ import 'package:integrations_repository/integrations_repository.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 part 'todays_blueprint_cubit.freezed.dart';
-part 'todays_blueprint_cubit.g.dart';
 part 'todays_blueprint_state.dart';
 
 class TodaysBlueprintCubit extends Cubit<TodaysBlueprintState> {
@@ -25,7 +24,7 @@ class TodaysBlueprintCubit extends Cubit<TodaysBlueprintState> {
           ),
         ) {
     calendarRepository.getTodayEvents().listen((events) {
-      print('Returned events: $events');
+      print('Returned events: ${events.map((e) => e.subject).toList()}');
       emit(
         TodaysBlueprintState.loaded(
           calendarEvents: events.map<CalendarEvent>((event) {
@@ -189,33 +188,6 @@ class TodaysBlueprintCubit extends Cubit<TodaysBlueprintState> {
       ),
     );
   }
-
-  @override
-  TodaysBlueprintState? fromJson(Map<String, dynamic> json) {
-    final state = _$TodaysBlueprintStateFromJson(json);
-    if (state.addedAt.day != DateTime.now().day) {
-      return TodaysBlueprintState.initial(
-        calendarEvents: [],
-        workTimes: workTimes,
-        addedAt: DateTime.now(),
-      );
-    }
-
-    // Take only the events that are today
-    final events = state.calendarEvents
-        .where(
-          (event) => event.startTime.day == DateTime.now().day,
-        )
-        .toList();
-
-    return state.copyWith(
-      calendarEvents: [...events],
-      addedAt: DateTime.now(),
-    );
-  }
-
-  @override
-  Map<String, dynamic>? toJson(TodaysBlueprintState state) => state.toJson();
 }
 
 class Spot {

@@ -14,26 +14,6 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-TodaysBlueprintState _$TodaysBlueprintStateFromJson(Map<String, dynamic> json) {
-  switch (json['runtimeType']) {
-    case 'initial':
-      return _Initial.fromJson(json);
-    case 'loading':
-      return _Loading.fromJson(json);
-    case 'loaded':
-      return _Loaded.fromJson(json);
-    case 'error':
-      return _Error.fromJson(json);
-
-    default:
-      throw CheckedFromJsonException(
-          json,
-          'runtimeType',
-          'TodaysBlueprintState',
-          'Invalid union type "${json['runtimeType']}"!');
-  }
-}
-
 /// @nodoc
 mixin _$TodaysBlueprintState {
   List<CalendarEvent> get calendarEvents => throw _privateConstructorUsedError;
@@ -113,7 +93,7 @@ mixin _$TodaysBlueprintState {
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
   @JsonKey(ignore: true)
   $TodaysBlueprintStateCopyWith<TodaysBlueprintState> get copyWith =>
       throw _privateConstructorUsedError;
@@ -212,20 +192,15 @@ class __$$_InitialCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
 class _$_Initial extends _Initial {
   const _$_Initial(
       {required final List<CalendarEvent> calendarEvents,
       required final List<WorkTime> workTimes,
-      required this.addedAt,
-      final String? $type})
+      required this.addedAt})
       : _calendarEvents = calendarEvents,
         _workTimes = workTimes,
-        $type = $type ?? 'initial',
         super._();
-
-  factory _$_Initial.fromJson(Map<String, dynamic> json) =>
-      _$$_InitialFromJson(json);
 
   final List<CalendarEvent> _calendarEvents;
   @override
@@ -246,9 +221,6 @@ class _$_Initial extends _Initial {
   @override
   final DateTime addedAt;
 
-  @JsonKey(name: 'runtimeType')
-  final String $type;
-
   @override
   String toString() {
     return 'TodaysBlueprintState.initial(calendarEvents: $calendarEvents, workTimes: $workTimes, addedAt: $addedAt)';
@@ -266,7 +238,6 @@ class _$_Initial extends _Initial {
             (identical(other.addedAt, addedAt) || other.addedAt == addedAt));
   }
 
-  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -377,13 +348,6 @@ class _$_Initial extends _Initial {
     }
     return orElse();
   }
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$_InitialToJson(
-      this,
-    );
-  }
 }
 
 abstract class _Initial extends TodaysBlueprintState {
@@ -392,8 +356,6 @@ abstract class _Initial extends TodaysBlueprintState {
       required final List<WorkTime> workTimes,
       required final DateTime addedAt}) = _$_Initial;
   const _Initial._() : super._();
-
-  factory _Initial.fromJson(Map<String, dynamic> json) = _$_Initial.fromJson;
 
   @override
   List<CalendarEvent> get calendarEvents;
@@ -453,20 +415,15 @@ class __$$_LoadingCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
 class _$_Loading extends _Loading {
   const _$_Loading(
       {required final List<CalendarEvent> calendarEvents,
       required final List<WorkTime> workTimes,
-      required this.addedAt,
-      final String? $type})
+      required this.addedAt})
       : _calendarEvents = calendarEvents,
         _workTimes = workTimes,
-        $type = $type ?? 'loading',
         super._();
-
-  factory _$_Loading.fromJson(Map<String, dynamic> json) =>
-      _$$_LoadingFromJson(json);
 
   final List<CalendarEvent> _calendarEvents;
   @override
@@ -487,9 +444,6 @@ class _$_Loading extends _Loading {
   @override
   final DateTime addedAt;
 
-  @JsonKey(name: 'runtimeType')
-  final String $type;
-
   @override
   String toString() {
     return 'TodaysBlueprintState.loading(calendarEvents: $calendarEvents, workTimes: $workTimes, addedAt: $addedAt)';
@@ -507,7 +461,6 @@ class _$_Loading extends _Loading {
             (identical(other.addedAt, addedAt) || other.addedAt == addedAt));
   }
 
-  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -618,13 +571,6 @@ class _$_Loading extends _Loading {
     }
     return orElse();
   }
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$_LoadingToJson(
-      this,
-    );
-  }
 }
 
 abstract class _Loading extends TodaysBlueprintState {
@@ -633,8 +579,6 @@ abstract class _Loading extends TodaysBlueprintState {
       required final List<WorkTime> workTimes,
       required final DateTime addedAt}) = _$_Loading;
   const _Loading._() : super._();
-
-  factory _Loading.fromJson(Map<String, dynamic> json) = _$_Loading.fromJson;
 
   @override
   List<CalendarEvent> get calendarEvents;
@@ -693,20 +637,15 @@ class __$$_LoadedCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
 class _$_Loaded extends _Loaded {
   const _$_Loaded(
       {required final List<CalendarEvent> calendarEvents,
       required final List<WorkTime> workTimes,
-      required this.addedAt,
-      final String? $type})
+      required this.addedAt})
       : _calendarEvents = calendarEvents,
         _workTimes = workTimes,
-        $type = $type ?? 'loaded',
         super._();
-
-  factory _$_Loaded.fromJson(Map<String, dynamic> json) =>
-      _$$_LoadedFromJson(json);
 
   final List<CalendarEvent> _calendarEvents;
   @override
@@ -727,9 +666,6 @@ class _$_Loaded extends _Loaded {
   @override
   final DateTime addedAt;
 
-  @JsonKey(name: 'runtimeType')
-  final String $type;
-
   @override
   String toString() {
     return 'TodaysBlueprintState.loaded(calendarEvents: $calendarEvents, workTimes: $workTimes, addedAt: $addedAt)';
@@ -747,7 +683,6 @@ class _$_Loaded extends _Loaded {
             (identical(other.addedAt, addedAt) || other.addedAt == addedAt));
   }
 
-  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -858,13 +793,6 @@ class _$_Loaded extends _Loaded {
     }
     return orElse();
   }
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$_LoadedToJson(
-      this,
-    );
-  }
 }
 
 abstract class _Loaded extends TodaysBlueprintState {
@@ -873,8 +801,6 @@ abstract class _Loaded extends TodaysBlueprintState {
       required final List<WorkTime> workTimes,
       required final DateTime addedAt}) = _$_Loaded;
   const _Loaded._() : super._();
-
-  factory _Loaded.fromJson(Map<String, dynamic> json) = _$_Loaded.fromJson;
 
   @override
   List<CalendarEvent> get calendarEvents;
@@ -939,21 +865,16 @@ class __$$_ErrorCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
 class _$_Error extends _Error {
   const _$_Error(
       {required this.error,
       required final List<CalendarEvent> calendarEvents,
       required final List<WorkTime> workTimes,
-      required this.addedAt,
-      final String? $type})
+      required this.addedAt})
       : _calendarEvents = calendarEvents,
         _workTimes = workTimes,
-        $type = $type ?? 'error',
         super._();
-
-  factory _$_Error.fromJson(Map<String, dynamic> json) =>
-      _$$_ErrorFromJson(json);
 
   @override
   final String error;
@@ -976,9 +897,6 @@ class _$_Error extends _Error {
   @override
   final DateTime addedAt;
 
-  @JsonKey(name: 'runtimeType')
-  final String $type;
-
   @override
   String toString() {
     return 'TodaysBlueprintState.error(error: $error, calendarEvents: $calendarEvents, workTimes: $workTimes, addedAt: $addedAt)';
@@ -997,7 +915,6 @@ class _$_Error extends _Error {
             (identical(other.addedAt, addedAt) || other.addedAt == addedAt));
   }
 
-  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -1109,13 +1026,6 @@ class _$_Error extends _Error {
     }
     return orElse();
   }
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$_ErrorToJson(
-      this,
-    );
-  }
 }
 
 abstract class _Error extends TodaysBlueprintState {
@@ -1125,8 +1035,6 @@ abstract class _Error extends TodaysBlueprintState {
       required final List<WorkTime> workTimes,
       required final DateTime addedAt}) = _$_Error;
   const _Error._() : super._();
-
-  factory _Error.fromJson(Map<String, dynamic> json) = _$_Error.fromJson;
 
   String get error;
   @override

@@ -50,6 +50,7 @@ dependencies:
   markdown: ^7.1.1
   meta: ^1.9.1
   path_provider: ^2.0.14
+  share_plus: ^7.1.0
   sidebarx: ^0.15.0
   stream_transform: ^2.1.0
   syncfusion_flutter_calendar: ^21.1.38

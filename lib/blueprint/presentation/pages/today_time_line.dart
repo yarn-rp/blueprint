@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:blueprint/blueprint/entities/calendar_event.dart';
 import 'package:blueprint/blueprint/presentation/widgets/general_calendar_event_tile.dart';
 import 'package:blueprint/blueprint/presentation/widgets/task_event_tile.dart';
@@ -79,19 +77,16 @@ class _TodaysBlueprintState extends State<TodayTimeline>
 
     return BlocBuilder<TodaysBlueprintCubit, TodaysBlueprintState>(
       builder: (context, state) {
-        log('working times: ${state.workTimes}');
+        print(
+          'Presentation events: ${state.calendarEvents.map(
+                (e) => (e.subject, e.startTime),
+              ).toList()}',
+        );
         return SfCalendar(
           controller: calendarController,
           dataSource: state.toDataSource,
           allowDragAndDrop: true,
           allowAppointmentResize: true,
-          minDate: now.copyWith(hour: 0, minute: 0, second: 0, millisecond: 0),
-          maxDate: now.copyWith(
-            hour: 23,
-            minute: 59,
-            second: 59,
-            millisecond: 999,
-          ),
 
           onTap: (calendarTapDetails) async {
             if (calendarTapDetails.targetElement ==
@@ -221,8 +216,9 @@ class _TodaysBlueprintState extends State<TodayTimeline>
             BuildContext context,
             CalendarAppointmentDetails calendarAppointmentDetails,
           ) {
-            final appointment = calendarAppointmentDetails.appointments.first;
+            final appointment = calendarAppointmentDetails.appointments.last;
             if (appointment is! CalendarEvent) {
+              print('got something that is not a calendar event');
               return const SizedBox();
             }
 
@@ -241,7 +237,7 @@ class _TodaysBlueprintState extends State<TodayTimeline>
                         .inMinutes <=
                     30,
                 color:
-                    isAfter ? originalColor : originalColor?.withOpacity(0.3),
+                    isAfter ? originalColor : originalColor?.withOpacity(0.5),
               ),
               task: (appointment) => TaskEventTile(
                 appointment: appointment,
