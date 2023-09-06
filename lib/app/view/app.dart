@@ -3,8 +3,10 @@ import 'package:blueprint/authentication/state_management/authentication_cubit/a
 import 'package:blueprint/core/l10n/l10n.dart';
 import 'package:blueprint/core/styles/styles.dart';
 import 'package:blueprint/settings/state_management/bloc/settings_bloc.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class App extends StatefulWidget {
   const App({super.key});
@@ -33,17 +35,20 @@ class _AppState extends State<App> {
           builder: (context, brightness) {
             // make sure you don't initiate your router
             // inside of the build function.
+            final customTextTheme =
+                kIsWeb ? GoogleFonts.nunitoTextTheme(textTheme) : textTheme;
+
             return MaterialApp.router(
               theme: ThemeData(
                 useMaterial3: true,
                 colorScheme: lightColorScheme,
-                textTheme: textTheme,
+                textTheme: customTextTheme,
               ),
               themeMode: brightness.themeMode,
               darkTheme: ThemeData(
                 useMaterial3: true,
                 colorScheme: darkColorScheme,
-                textTheme: textTheme,
+                textTheme: customTextTheme,
               ),
               localizationsDelegates: AppLocalizations.localizationsDelegates,
               supportedLocales: AppLocalizations.supportedLocales,

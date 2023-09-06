@@ -1,10 +1,11 @@
 import 'package:blueprint/blueprint/entities/calendar_event.dart';
+import 'package:blueprint/calendar/presentation/widgets/appointment_time.dart';
 import 'package:blueprint/calendar/presentation/widgets/attendee_tile.dart';
 import 'package:blueprint/calendar/presentation/widgets/conference_entrypoints.dart';
+import 'package:blueprint/core/utils/color/hex_color_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:jiffy/jiffy.dart';
 import 'package:markdown/markdown.dart' as md;
 import 'package:url_launcher/url_launcher.dart';
 
@@ -67,6 +68,22 @@ class GeneralEventCalendarEventDetails extends StatelessWidget {
               children: [
                 Row(
                   children: [
+                    // Rounded box like google calendar showing event color
+                    Container(
+                      width: 12,
+                      height: 12,
+                      decoration: BoxDecoration(
+                        color: appointment.event.colorHex != null
+                            ? HexColor.fromHex(
+                                appointment.event.colorHex!,
+                              )
+                            : Theme.of(context).colorScheme.secondary,
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 8,
+                    ),
                     Text(
                       appointment.subject,
                       style: Theme.of(context).textTheme.titleLarge,
@@ -75,6 +92,7 @@ class GeneralEventCalendarEventDetails extends StatelessWidget {
                     ),
                   ],
                 ),
+                CalendarEventTime(appointment: appointment),
                 const SizedBox(
                   height: 8,
                 ),
@@ -174,156 +192,33 @@ class GeneralEventCalendarEventDetails extends StatelessWidget {
                                     conferenceData:
                                         appointment.event.conferenceData!,
                                   ),
+
+                                  // Divider
+                                  const Divider(
+                                    endIndent: 0,
+                                    indent: 0,
+                                  ),
+                                  const SizedBox(
+                                    height: 32,
+                                  ),
                                 ],
-                                // Divider
-                                const Divider(
-                                  endIndent: 0,
-                                  indent: 0,
-                                ),
-
-                                // Column(
-                                //   crossAxisAlignment: CrossAxisAlignment.start,
-                                //   children: [
-                                //     const Text('Time logged'),
-                                //     const SizedBox(
-                                //       height: 16,
-                                //     ),
-                                //     // A percentage bar showing the time logged
-                                //     if (task.loggedTime != null &&
-                                //         task.estimatedTime != null)
-                                //       Column(
-                                //         children: [
-                                //           LinearProgressIndicator(
-                                //             value: task.loggedTime!
-                                //                     .inMilliseconds /
-                                //                 task.estimatedTime!
-                                //                     .inMilliseconds,
-                                //             valueColor:
-                                //                 AlwaysStoppedAnimation<Color>(
-                                //               Theme.of(context)
-                                //                   .colorScheme
-                                //                   .primary,
-                                //             ),
-                                //             backgroundColor: Theme.of(context)
-                                //                 .colorScheme
-                                //                 .primary
-                                //                 .withOpacity(
-                                //                   0.3,
-                                //                 ),
-                                //           ),
-                                //           const SizedBox(
-                                //             height: 8,
-                                //           ),
-                                //           if (task.loggedTime != null &&
-                                //               task.estimatedTime != null)
-                                //             Row(
-                                //               children: [
-                                //                 if (task.loggedTime != null)
-                                //                   Text(
-                                //                     // ignore: lines_longer_than_80_chars
-                                //                     '${task.loggedTime!.inHours}h ${task.loggedTime!.inMinutes % 60}m',
-                                //                     style: Theme.of(context)
-                                //                         .textTheme
-                                //                         .bodySmall,
-                                //                   ),
-                                //                 const Spacer(),
-                                //                 if (task.estimatedTime != null)
-                                //                   Text(
-                                //                     // ignore: lines_longer_than_80_chars
-                                //                     '${task.estimatedTime!.inHours}h ${task.estimatedTime!.inMinutes % 60}m',
-                                //                     style: Theme.of(context)
-                                //                         .textTheme
-                                //                         .bodySmall,
-                                //                   ),
-                                //               ],
-                                //             )
-                                //         ],
-                                //       ),
-                                //   ],
-                                // ),
-                                // Starting date and due date of the task
-                                const SizedBox(
-                                  height: 32,
-                                ),
-                                Wrap(
-                                  spacing: 16,
-                                  runSpacing: 16,
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        const Text('Starting date'),
-                                        const SizedBox(
-                                          height: 16,
-                                        ),
-                                        // Use jiffy to format the date
-                                        Text(
-                                          Jiffy(appointment.startTime)
-                                              .format('dd MMM yyyy hh:mm a'),
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodySmall,
-                                        ),
-                                      ],
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        const Text('Due date'),
-                                        const SizedBox(
-                                          height: 16,
-                                        ),
-                                        Row(
-                                          children: [
-                                            Text(
-                                              Jiffy(
-                                                appointment.endTime,
-                                              ).fromNow(),
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodySmall
-                                                  ?.copyWith(
-                                                    color: Theme.of(context)
-                                                        .highlightColor,
-                                                  ),
-                                            ),
-                                            const Text(' - '),
-                                            Expanded(
-                                              child: Text(
-                                                Jiffy(appointment.endTime)
-                                                    .format(
-                                                  'dd MMM yyyy hh:mm a',
-                                                ),
-                                                maxLines: 1,
-                                                overflow: TextOverflow.ellipsis,
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodySmall,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-
+                                CalendarEventTime(appointment: appointment),
                                 const SizedBox(
                                   height: 16,
                                 ),
                                 Wrap(
                                   children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        const Text('Attendees'),
-                                        const SizedBox(
-                                          height: 16,
-                                        ),
-                                        if (appointment.event.attendees != null)
+                                    if (appointment
+                                            .event.attendees?.isNotEmpty ??
+                                        false)
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          const Text('Attendees'),
+                                          const SizedBox(
+                                            height: 16,
+                                          ),
                                           ...appointment
                                               .event.attendees!.entries
                                               .map((attendee) {
@@ -335,17 +230,15 @@ class GeneralEventCalendarEventDetails extends StatelessWidget {
                                                 vertical: 4,
                                               ),
                                               child: AttendeeTile(
-                                                platformUrl:
-                                                    attendee.key.platformUrl,
+                                                platformUrl: user.platformUrl,
                                                 attendantStatus: status,
-                                                displayName:
-                                                    attendee.key.displayName,
-                                                email: attendee.key.email,
+                                                displayName: user.displayName,
+                                                email: user.email,
                                               ),
                                             );
                                           }),
-                                      ],
-                                    )
+                                        ],
+                                      )
                                   ],
                                 ),
                                 const SizedBox(

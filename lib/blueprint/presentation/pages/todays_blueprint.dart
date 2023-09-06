@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:auto_route/auto_route.dart';
+import 'package:blueprint/blueprint/entities/calendar_event.dart';
 import 'package:blueprint/blueprint/presentation/pages/today_time_line.dart';
 import 'package:blueprint/blueprint/presentation/widgets/calendar_event_tile.dart';
 import 'package:blueprint/blueprint/state_management/todays_blueprint/todays_blueprint_cubit.dart';
@@ -28,7 +31,7 @@ class TodaysBlueprintPage extends StatelessWidget {
                     if (currentEvent != null) ...[
                       Card(
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          padding: const EdgeInsets.only(top: 16),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -49,18 +52,7 @@ class TodaysBlueprintPage extends StatelessWidget {
                     ],
                     if (nextEvents?.isNotEmpty ?? false) ...[
                       const SizedBox(height: 32),
-                      Text(
-                        'Next on Blueprint',
-                        style: Theme.of(context).textTheme.titleLarge,
-                      ),
-                      const SizedBox(height: 16),
-                      if (nextEvents?.isNotEmpty ?? false)
-                        ...nextEvents!.map(
-                          (event) => Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 8),
-                            child: CalendarEventTile(event: event),
-                          ),
-                        )
+                      NextOnBlueprint(nextEvents: nextEvents),
                     ],
                     if (!isWide)
                       const SizedBox(
@@ -79,6 +71,47 @@ class TodaysBlueprintPage extends StatelessWidget {
             ),
         ],
       ),
+    );
+  }
+}
+
+class NextOnBlueprint extends StatelessWidget {
+  const NextOnBlueprint({
+    required this.nextEvents,
+    super.key,
+  });
+
+  final Iterable<CalendarEvent>? nextEvents;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 8,
+          ),
+          child: Text(
+            'Upcoming events',
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
+        ),
+        const SizedBox(height: 16),
+        if (nextEvents?.isNotEmpty ?? false)
+          ...nextEvents!.take(min(2, nextEvents!.length)).map(
+                (event) => Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 8,
+                  ),
+                  child: CalendarEventTile(
+                    event: event,
+                    showSmallVersions: true,
+                  ),
+                ),
+              )
+      ],
     );
   }
 }

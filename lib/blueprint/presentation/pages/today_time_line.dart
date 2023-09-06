@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:blueprint/blueprint/entities/calendar_event.dart';
 import 'package:blueprint/blueprint/presentation/widgets/general_calendar_event_tile.dart';
 import 'package:blueprint/blueprint/presentation/widgets/task_event_tile.dart';
@@ -87,6 +89,12 @@ class _TodaysBlueprintState extends State<TodayTimeline>
           dataSource: state.toDataSource,
           allowDragAndDrop: true,
           allowAppointmentResize: true,
+          appointmentTextStyle: Theme.of(context).textTheme.bodyMedium!,
+          todayTextStyle: Theme.of(context).textTheme.bodyMedium!,
+          blackoutDatesTextStyle: Theme.of(context).textTheme.bodyMedium!,
+          weekNumberStyle: WeekNumberStyle(
+            textStyle: Theme.of(context).textTheme.bodyMedium!,
+          ),
 
           onTap: (calendarTapDetails) async {
             if (calendarTapDetails.targetElement ==
@@ -247,9 +255,19 @@ class _TodaysBlueprintState extends State<TodayTimeline>
               ),
             );
           },
-          timeSlotViewSettings: const TimeSlotViewSettings(
-            minimumAppointmentDuration: Duration(minutes: 15),
-            timeIntervalHeight: 100,
+          timeSlotViewSettings: TimeSlotViewSettings(
+            timeTextStyle: Theme.of(context).textTheme.labelMedium,
+            minimumAppointmentDuration: const Duration(minutes: 15),
+            timeIntervalHeight: state.calendarEvents.isEmpty
+                ? 100
+                : state.calendarEvents
+                    .map(
+                      (value) =>
+                          value.endTime.difference(value.startTime).inMinutes *
+                          4,
+                    )
+                    .reduce(min)
+                    .toDouble(),
           ),
         );
       },

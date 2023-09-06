@@ -60,6 +60,9 @@ class ConferenceEntryPoints extends StatelessWidget {
                         'Join',
                       ),
                     ),
+                    const SizedBox(
+                      width: 8,
+                    ),
                     Builder(
                       builder: (context) {
                         return IconButton.filled(
