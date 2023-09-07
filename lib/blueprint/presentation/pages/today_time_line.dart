@@ -262,9 +262,10 @@ class _TodaysBlueprintState extends State<TodayTimeline>
                 ? 100
                 : state.calendarEvents
                     .map(
-                      (value) =>
-                          value.endTime.difference(value.startTime).inMinutes *
-                          4,
+                      (value) => max(
+                        value.endTime.difference(value.startTime).inMinutes * 5,
+                        80,
+                      ),
                     )
                     .reduce(min)
                     .toDouble(),
