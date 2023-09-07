@@ -2,7 +2,7 @@
 
 part of 'todays_blueprint_cubit.dart';
 
-@Freezed(fromJson: true, toJson: true)
+@Freezed()
 abstract class TodaysBlueprintState with _$TodaysBlueprintState {
   const TodaysBlueprintState._();
   const factory TodaysBlueprintState.initial({
@@ -27,9 +27,6 @@ abstract class TodaysBlueprintState with _$TodaysBlueprintState {
     required DateTime addedAt,
   }) = _Error;
 
-  factory TodaysBlueprintState.fromJson(Map<String, dynamic> json) =>
-      _$TodaysBlueprintStateFromJson(json);
-
   _EventsDataSource get toDataSource => _EventsDataSource([...calendarEvents]);
 
   CalendarEvent? get currentEvent {
@@ -41,17 +38,16 @@ abstract class TodaysBlueprintState with _$TodaysBlueprintState {
 
   Iterable<CalendarEvent>? get nextEvents {
     final current = currentEvent;
-    if (current != null) {
-      final nextEvents = calendarEvents
-          .sorted((a, b) => a.startTime.compareTo(b.startTime))
-          .where(
-            (event) => event.startTime
-                .isAfter(current.endTime.subtract(const Duration(minutes: 1))),
-          );
-      return nextEvents;
-    }
-    // If there is no current event, return the first event
-    return calendarEvents;
+
+    final endTime = current?.endTime ?? DateTime.now();
+
+    final nextEvents = calendarEvents
+        .sorted((a, b) => a.startTime.compareTo(b.startTime))
+        .where(
+          (event) => event.startTime
+              .isAfter(endTime.subtract(const Duration(minutes: 1))),
+        );
+    return nextEvents;
   }
 }
 

@@ -4,6 +4,7 @@ import 'package:blueprint/integrations/state_management/available_platforms/avai
 import 'package:blueprint/integrations/state_management/integrations_repository/integrations_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_calendar_service/google_calendar_service.dart';
 import 'package:integrations_repository/integrations_repository.dart';
 
 @RoutePage()
@@ -35,14 +36,13 @@ class _IntegrationsPageState extends State<IntegrationsPage>
           const SizedBox(height: 16),
           BlocBuilder<IntegrationsCubit, IntegrationsState>(
             builder: (context, state) {
-              final integrations = state.integrations;
+              final integrations = state.calendarIntegrations;
               return Wrap(
                 runSpacing: 16,
                 spacing: 16,
                 children: [
-                  ...integrations.map(
-                    (integration) => IntegrationCard(integration: integration),
-                  ),
+                  for (final integration in integrations)
+                    Text(integration.platform.displayName),
                 ],
               );
             },
@@ -74,9 +74,9 @@ class _IntegrationsPageState extends State<IntegrationsPage>
                             description:
                                 'Connect your ${platform.displayName} account to Blueprint',
                             onIntegrationCreated: (integration) {
-                              context
-                                  .read<IntegrationsCubit>()
-                                  .addIntegration(integration as Integration);
+                              // context
+                              //     .read<IntegrationsCubit>()
+                              //     .addIntegration(integration);
                             },
                           );
 
@@ -91,6 +91,44 @@ class _IntegrationsPageState extends State<IntegrationsPage>
                 error: (_) => const Center(
                   child: Text('Error loading platforms'),
                 ),
+              );
+            },
+          ),
+          BlocBuilder<IntegrationsCubit, IntegrationsState>(
+            builder: (context, state) {
+              final platforms = state.calendarPlatforms;
+              return Wrap(
+                runSpacing: 16,
+                spacing: 16,
+                children: [
+                  for (final platform in platforms)
+                    GestureDetector(
+                      onTap: () {
+                        if (platform is GoogleCalendarPlatform) {
+                          context
+                              .read<IntegrationsCubit>()
+                              .startIntegrationWithPlatform(
+                                platform,
+                              );
+                        }
+                      },
+                      child: Card(
+                        child: Padding(
+                          padding: const EdgeInsets.all(16),
+                          child: Column(
+                            children: [
+                              Image.network(platform.iconUrl),
+                              const SizedBox(height: 16),
+                              Text(
+                                platform.displayName,
+                                style: Theme.of(context).textTheme.titleLarge,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                ],
               );
             },
           ),
@@ -141,9 +179,9 @@ class IntegrationCard extends StatelessWidget {
                 child: IconButton(
                   icon: const Icon(Icons.close),
                   onPressed: () {
-                    context.read<IntegrationsCubit>().deleteIntegration(
-                          integration,
-                        );
+                    // context.read<IntegrationsCubit>().deleteIntegration(
+                    //       integration,
+                    //     );
                   },
                 ),
               ),

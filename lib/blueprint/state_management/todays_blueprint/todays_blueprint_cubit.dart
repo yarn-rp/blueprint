@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:blueprint/blueprint/entities/calendar_event.dart';
 import 'package:blueprint/settings/entities/working_calendar.dart';
+import 'package:calendar_repository/calendar_repository.dart';
 import 'package:collection/collection.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
@@ -9,60 +10,39 @@ import 'package:integrations_repository/integrations_repository.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 part 'todays_blueprint_cubit.freezed.dart';
-part 'todays_blueprint_cubit.g.dart';
 part 'todays_blueprint_state.dart';
 
-final _defaultEvents = <CalendarEvent>[
-  // Gym from 12:00 to 2:00
-  CalendarEvent.event(
-    subject: 'Gym',
-    startTime: DateTime.now().copyWith(
-      hour: 12,
-      minute: 0,
-      second: 0,
-      millisecond: 0,
-      microsecond: 0,
-    ),
-    endTime: DateTime.now().copyWith(
-      hour: 14,
-      minute: 0,
-      second: 0,
-      millisecond: 0,
-      microsecond: 0,
-    ),
-  ),
-
-  // Launch at 2
-  CalendarEvent.event(
-    subject: 'Launch',
-    startTime: DateTime.now().copyWith(
-      hour: 14,
-      minute: 0,
-      second: 0,
-      millisecond: 0,
-      microsecond: 0,
-    ),
-    endTime: DateTime.now().copyWith(
-      hour: 15,
-      minute: 0,
-      second: 0,
-      millisecond: 0,
-      microsecond: 0,
-    ),
-  ),
-];
-
-class TodaysBlueprintCubit extends HydratedCubit<TodaysBlueprintState> {
+class TodaysBlueprintCubit extends Cubit<TodaysBlueprintState> {
   TodaysBlueprintCubit({
     required this.workTimes,
+    required this.calendarRepository,
   }) : super(
           TodaysBlueprintState.initial(
-            calendarEvents: _defaultEvents,
+            calendarEvents: [],
             workTimes: workTimes,
             addedAt: DateTime.now(),
           ),
-        );
+        ) {
+    calendarRepository.getTodayEvents().listen((events) {
+      print('Returned events: ${events.map((e) => e.subject).toList()}');
+      emit(
+        TodaysBlueprintState.loaded(
+          calendarEvents: events.map<CalendarEvent>((event) {
+            return CalendarEvent.event(
+              startTime: event.startTime ?? DateTime.now(),
+              endTime:
+                  event.endTime ?? DateTime.now().add(const Duration(hours: 1)),
+              event: event,
+            );
+          }).toList(),
+          workTimes: workTimes,
+          addedAt: DateTime.now(),
+        ),
+      );
+    });
+  }
   final List<WorkTime> workTimes;
+  final CalendarRepository calendarRepository;
 
   void addTaskToTodaysBlueprint(Task task) {
     late Duration estimatedTime;
@@ -208,33 +188,6 @@ class TodaysBlueprintCubit extends HydratedCubit<TodaysBlueprintState> {
       ),
     );
   }
-
-  @override
-  TodaysBlueprintState? fromJson(Map<String, dynamic> json) {
-    final state = _$TodaysBlueprintStateFromJson(json);
-    if (state.addedAt.day != DateTime.now().day) {
-      return TodaysBlueprintState.initial(
-        calendarEvents: _defaultEvents,
-        workTimes: workTimes,
-        addedAt: DateTime.now(),
-      );
-    }
-
-    // Take only the events that are today
-    final events = state.calendarEvents
-        .where(
-          (event) => event.startTime.day == DateTime.now().day,
-        )
-        .toList();
-
-    return state.copyWith(
-      calendarEvents: [...events],
-      addedAt: DateTime.now(),
-    );
-  }
-
-  @override
-  Map<String, dynamic>? toJson(TodaysBlueprintState state) => state.toJson();
 }
 
 class Spot {

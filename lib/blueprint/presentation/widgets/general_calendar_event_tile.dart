@@ -10,41 +10,53 @@ class GeneralCalendarEventTile extends StatelessWidget {
     required this.isSmallVersion,
     super.key,
     this.showDeleteButton = true,
+    this.color,
   });
   final GeneralCalendarEvent appointment;
 
   final bool showDeleteButton;
   final bool isSmallVersion;
+  final Color? color;
   @override
   Widget build(BuildContext context) {
+    final backgroundColor = color ?? Theme.of(context).colorScheme.secondary;
+    final foregroundColor =
+        backgroundColor.computeLuminance() > 0.5 ? Colors.black : Colors.white;
+
     if (isSmallVersion) {
       return DecoratedBox(
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.secondary,
+          color: backgroundColor,
           borderRadius: const BorderRadius.all(Radius.circular(4)),
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Row(
             children: [
-              Text(
-                appointment.subject,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: Theme.of(context).colorScheme.onSecondary,
-                    ),
+              Flexible(
+                child: Text(
+                  appointment.subject,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        color: foregroundColor,
+                      ),
+                ),
               ),
               const SizedBox(
                 width: 16,
               ),
-              Text(
-                '${DateFormat('hh:mm a').format(appointment.startTime)} - '
-                '${DateFormat('hh:mm a').format(appointment.endTime)}',
-                textAlign: TextAlign.left,
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: Theme.of(context).colorScheme.onSecondary,
-                    ),
+              Flexible(
+                child: Text(
+                  '${DateFormat('hh:mm a').format(appointment.startTime)} - '
+                  '${DateFormat('hh:mm a').format(appointment.endTime)}',
+                  textAlign: TextAlign.left,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                        color: foregroundColor,
+                      ),
+                ),
               )
             ],
           ),
@@ -53,16 +65,22 @@ class GeneralCalendarEventTile extends StatelessWidget {
     }
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.secondary,
+        color: backgroundColor,
         borderRadius: const BorderRadius.all(Radius.circular(4)),
       ),
       child: ListTile(
+        isThreeLine: true,
         leading: CircleAvatar(
           backgroundColor:
               Theme.of(context).colorScheme.onSecondary.withOpacity(0.3),
           child: Icon(
-            Icons.event,
-            color: Theme.of(context).colorScheme.onSecondary,
+            switch (appointment
+                .event.conferenceData?.entryPoints.first.entryPointType) {
+              'video' => Icons.video_call,
+              'phone' => Icons.phone,
+              'sip' => Icons.phone,
+              null || _ => Icons.event,
+            },
           ),
         ),
         title: Text(
@@ -70,7 +88,7 @@ class GeneralCalendarEventTile extends StatelessWidget {
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                color: Theme.of(context).colorScheme.onSecondary,
+                color: foregroundColor,
               ),
         ),
         trailing: Row(
@@ -83,7 +101,7 @@ class GeneralCalendarEventTile extends StatelessWidget {
                     .removeEvent(appointment),
                 icon: Icon(
                   Icons.delete,
-                  color: Theme.of(context).colorScheme.onSecondary,
+                  color: foregroundColor,
                 ),
               ),
           ],
@@ -96,7 +114,7 @@ class GeneralCalendarEventTile extends StatelessWidget {
               '${DateFormat('hh:mm a').format(appointment.endTime)}',
               textAlign: TextAlign.left,
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: Theme.of(context).colorScheme.onSecondary,
+                    color: foregroundColor,
                   ),
             )
           ],

@@ -14,69 +14,32 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-CalendarEvent _$CalendarEventFromJson(Map<String, dynamic> json) {
-  switch (json['runtimeType']) {
-    case 'event':
-      return GeneralCalendarEvent.fromJson(json);
-    case 'task':
-      return TaskCalendarEvent.fromJson(json);
-
-    default:
-      throw CheckedFromJsonException(json, 'runtimeType', 'CalendarEvent',
-          'Invalid union type "${json['runtimeType']}"!');
-  }
-}
-
 /// @nodoc
 mixin _$CalendarEvent {
   DateTime get startTime => throw _privateConstructorUsedError;
   DateTime get endTime => throw _privateConstructorUsedError;
-  bool get isAllDay => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            DateTime startTime, DateTime endTime, String subject, bool isAllDay)
+    required TResult Function(DateTime startTime, DateTime endTime, Event event)
         event,
-    required TResult Function(
-            @JsonKey(
-                fromJson: TaskJsonMapper.fromJson,
-                toJson: TaskJsonMapper.toJson)
-            Task task,
-            DateTime startTime,
-            DateTime endTime,
-            bool isAllDay)
+    required TResult Function(Task task, DateTime startTime, DateTime endTime,
+            String? colorHex, bool isAllDay)
         task,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(DateTime startTime, DateTime endTime, String subject,
-            bool isAllDay)?
-        event,
-    TResult? Function(
-            @JsonKey(
-                fromJson: TaskJsonMapper.fromJson,
-                toJson: TaskJsonMapper.toJson)
-            Task task,
-            DateTime startTime,
-            DateTime endTime,
-            bool isAllDay)?
+    TResult? Function(DateTime startTime, DateTime endTime, Event event)? event,
+    TResult? Function(Task task, DateTime startTime, DateTime endTime,
+            String? colorHex, bool isAllDay)?
         task,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(DateTime startTime, DateTime endTime, String subject,
-            bool isAllDay)?
-        event,
-    TResult Function(
-            @JsonKey(
-                fromJson: TaskJsonMapper.fromJson,
-                toJson: TaskJsonMapper.toJson)
-            Task task,
-            DateTime startTime,
-            DateTime endTime,
-            bool isAllDay)?
+    TResult Function(DateTime startTime, DateTime endTime, Event event)? event,
+    TResult Function(Task task, DateTime startTime, DateTime endTime,
+            String? colorHex, bool isAllDay)?
         task,
     required TResult orElse(),
   }) =>
@@ -100,7 +63,7 @@ mixin _$CalendarEvent {
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
   @JsonKey(ignore: true)
   $CalendarEventCopyWith<CalendarEvent> get copyWith =>
       throw _privateConstructorUsedError;
@@ -112,7 +75,7 @@ abstract class $CalendarEventCopyWith<$Res> {
           CalendarEvent value, $Res Function(CalendarEvent) then) =
       _$CalendarEventCopyWithImpl<$Res, CalendarEvent>;
   @useResult
-  $Res call({DateTime startTime, DateTime endTime, bool isAllDay});
+  $Res call({DateTime startTime, DateTime endTime});
 }
 
 /// @nodoc
@@ -130,7 +93,6 @@ class _$CalendarEventCopyWithImpl<$Res, $Val extends CalendarEvent>
   $Res call({
     Object? startTime = null,
     Object? endTime = null,
-    Object? isAllDay = null,
   }) {
     return _then(_value.copyWith(
       startTime: null == startTime
@@ -141,10 +103,6 @@ class _$CalendarEventCopyWithImpl<$Res, $Val extends CalendarEvent>
           ? _value.endTime
           : endTime // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      isAllDay: null == isAllDay
-          ? _value.isAllDay
-          : isAllDay // ignore: cast_nullable_to_non_nullable
-              as bool,
     ) as $Val);
   }
 }
@@ -157,8 +115,7 @@ abstract class _$$GeneralCalendarEventCopyWith<$Res>
       __$$GeneralCalendarEventCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {DateTime startTime, DateTime endTime, String subject, bool isAllDay});
+  $Res call({DateTime startTime, DateTime endTime, Event event});
 }
 
 /// @nodoc
@@ -174,8 +131,7 @@ class __$$GeneralCalendarEventCopyWithImpl<$Res>
   $Res call({
     Object? startTime = null,
     Object? endTime = null,
-    Object? subject = null,
-    Object? isAllDay = null,
+    Object? event = null,
   }) {
     return _then(_$GeneralCalendarEvent(
       startTime: null == startTime
@@ -186,49 +142,31 @@ class __$$GeneralCalendarEventCopyWithImpl<$Res>
           ? _value.endTime
           : endTime // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      subject: null == subject
-          ? _value.subject
-          : subject // ignore: cast_nullable_to_non_nullable
-              as String,
-      isAllDay: null == isAllDay
-          ? _value.isAllDay
-          : isAllDay // ignore: cast_nullable_to_non_nullable
-              as bool,
+      event: null == event
+          ? _value.event
+          : event // ignore: cast_nullable_to_non_nullable
+              as Event,
     ));
   }
 }
 
 /// @nodoc
-@JsonSerializable()
+
 class _$GeneralCalendarEvent extends GeneralCalendarEvent {
   const _$GeneralCalendarEvent(
-      {required this.startTime,
-      required this.endTime,
-      required this.subject,
-      this.isAllDay = false,
-      final String? $type})
-      : $type = $type ?? 'event',
-        super._();
-
-  factory _$GeneralCalendarEvent.fromJson(Map<String, dynamic> json) =>
-      _$$GeneralCalendarEventFromJson(json);
+      {required this.startTime, required this.endTime, required this.event})
+      : super._();
 
   @override
   final DateTime startTime;
   @override
   final DateTime endTime;
   @override
-  final String subject;
-  @override
-  @JsonKey()
-  final bool isAllDay;
-
-  @JsonKey(name: 'runtimeType')
-  final String $type;
+  final Event event;
 
   @override
   String toString() {
-    return 'CalendarEvent.event(startTime: $startTime, endTime: $endTime, subject: $subject, isAllDay: $isAllDay)';
+    return 'CalendarEvent.event(startTime: $startTime, endTime: $endTime, event: $event)';
   }
 
   @override
@@ -239,15 +177,11 @@ class _$GeneralCalendarEvent extends GeneralCalendarEvent {
             (identical(other.startTime, startTime) ||
                 other.startTime == startTime) &&
             (identical(other.endTime, endTime) || other.endTime == endTime) &&
-            (identical(other.subject, subject) || other.subject == subject) &&
-            (identical(other.isAllDay, isAllDay) ||
-                other.isAllDay == isAllDay));
+            (identical(other.event, event) || other.event == event));
   }
 
-  @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, startTime, endTime, subject, isAllDay);
+  int get hashCode => Object.hash(runtimeType, startTime, endTime, event);
 
   @JsonKey(ignore: true)
   @override
@@ -259,60 +193,37 @@ class _$GeneralCalendarEvent extends GeneralCalendarEvent {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            DateTime startTime, DateTime endTime, String subject, bool isAllDay)
+    required TResult Function(DateTime startTime, DateTime endTime, Event event)
         event,
-    required TResult Function(
-            @JsonKey(
-                fromJson: TaskJsonMapper.fromJson,
-                toJson: TaskJsonMapper.toJson)
-            Task task,
-            DateTime startTime,
-            DateTime endTime,
-            bool isAllDay)
+    required TResult Function(Task task, DateTime startTime, DateTime endTime,
+            String? colorHex, bool isAllDay)
         task,
   }) {
-    return event(startTime, endTime, subject, isAllDay);
+    return event(startTime, endTime, this.event);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(DateTime startTime, DateTime endTime, String subject,
-            bool isAllDay)?
-        event,
-    TResult? Function(
-            @JsonKey(
-                fromJson: TaskJsonMapper.fromJson,
-                toJson: TaskJsonMapper.toJson)
-            Task task,
-            DateTime startTime,
-            DateTime endTime,
-            bool isAllDay)?
+    TResult? Function(DateTime startTime, DateTime endTime, Event event)? event,
+    TResult? Function(Task task, DateTime startTime, DateTime endTime,
+            String? colorHex, bool isAllDay)?
         task,
   }) {
-    return event?.call(startTime, endTime, subject, isAllDay);
+    return event?.call(startTime, endTime, this.event);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(DateTime startTime, DateTime endTime, String subject,
-            bool isAllDay)?
-        event,
-    TResult Function(
-            @JsonKey(
-                fromJson: TaskJsonMapper.fromJson,
-                toJson: TaskJsonMapper.toJson)
-            Task task,
-            DateTime startTime,
-            DateTime endTime,
-            bool isAllDay)?
+    TResult Function(DateTime startTime, DateTime endTime, Event event)? event,
+    TResult Function(Task task, DateTime startTime, DateTime endTime,
+            String? colorHex, bool isAllDay)?
         task,
     required TResult orElse(),
   }) {
     if (event != null) {
-      return event(startTime, endTime, subject, isAllDay);
+      return event(startTime, endTime, this.event);
     }
     return orElse();
   }
@@ -347,33 +258,20 @@ class _$GeneralCalendarEvent extends GeneralCalendarEvent {
     }
     return orElse();
   }
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$GeneralCalendarEventToJson(
-      this,
-    );
-  }
 }
 
 abstract class GeneralCalendarEvent extends CalendarEvent {
   const factory GeneralCalendarEvent(
       {required final DateTime startTime,
       required final DateTime endTime,
-      required final String subject,
-      final bool isAllDay}) = _$GeneralCalendarEvent;
+      required final Event event}) = _$GeneralCalendarEvent;
   const GeneralCalendarEvent._() : super._();
-
-  factory GeneralCalendarEvent.fromJson(Map<String, dynamic> json) =
-      _$GeneralCalendarEvent.fromJson;
 
   @override
   DateTime get startTime;
   @override
   DateTime get endTime;
-  String get subject;
-  @override
-  bool get isAllDay;
+  Event get event;
   @override
   @JsonKey(ignore: true)
   _$$GeneralCalendarEventCopyWith<_$GeneralCalendarEvent> get copyWith =>
@@ -389,11 +287,10 @@ abstract class _$$TaskCalendarEventCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(
-          fromJson: TaskJsonMapper.fromJson, toJson: TaskJsonMapper.toJson)
-      Task task,
+      {Task task,
       DateTime startTime,
       DateTime endTime,
+      String? colorHex,
       bool isAllDay});
 }
 
@@ -411,6 +308,7 @@ class __$$TaskCalendarEventCopyWithImpl<$Res>
     Object? task = null,
     Object? startTime = null,
     Object? endTime = null,
+    Object? colorHex = freezed,
     Object? isAllDay = null,
   }) {
     return _then(_$TaskCalendarEvent(
@@ -426,6 +324,10 @@ class __$$TaskCalendarEventCopyWithImpl<$Res>
           ? _value.endTime
           : endTime // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      colorHex: freezed == colorHex
+          ? _value.colorHex
+          : colorHex // ignore: cast_nullable_to_non_nullable
+              as String?,
       isAllDay: null == isAllDay
           ? _value.isAllDay
           : isAllDay // ignore: cast_nullable_to_non_nullable
@@ -435,40 +337,32 @@ class __$$TaskCalendarEventCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
 class _$TaskCalendarEvent extends TaskCalendarEvent {
   const _$TaskCalendarEvent(
-      {@JsonKey(
-          fromJson: TaskJsonMapper.fromJson, toJson: TaskJsonMapper.toJson)
-      required this.task,
+      {required this.task,
       required this.startTime,
       required this.endTime,
-      this.isAllDay = false,
-      final String? $type})
-      : $type = $type ?? 'task',
-        super._();
+      this.colorHex,
+      this.isAllDay = false})
+      : super._();
 
-  factory _$TaskCalendarEvent.fromJson(Map<String, dynamic> json) =>
-      _$$TaskCalendarEventFromJson(json);
-
-// ignore: invalid_annotation_target
   @override
-  @JsonKey(fromJson: TaskJsonMapper.fromJson, toJson: TaskJsonMapper.toJson)
   final Task task;
   @override
   final DateTime startTime;
   @override
   final DateTime endTime;
+// ignore: invalid_annotation_target
+  @override
+  final String? colorHex;
   @override
   @JsonKey()
   final bool isAllDay;
 
-  @JsonKey(name: 'runtimeType')
-  final String $type;
-
   @override
   String toString() {
-    return 'CalendarEvent.task(task: $task, startTime: $startTime, endTime: $endTime, isAllDay: $isAllDay)';
+    return 'CalendarEvent.task(task: $task, startTime: $startTime, endTime: $endTime, colorHex: $colorHex, isAllDay: $isAllDay)';
   }
 
   @override
@@ -480,14 +374,15 @@ class _$TaskCalendarEvent extends TaskCalendarEvent {
             (identical(other.startTime, startTime) ||
                 other.startTime == startTime) &&
             (identical(other.endTime, endTime) || other.endTime == endTime) &&
+            (identical(other.colorHex, colorHex) ||
+                other.colorHex == colorHex) &&
             (identical(other.isAllDay, isAllDay) ||
                 other.isAllDay == isAllDay));
   }
 
-  @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, task, startTime, endTime, isAllDay);
+      Object.hash(runtimeType, task, startTime, endTime, colorHex, isAllDay);
 
   @JsonKey(ignore: true)
   @override
@@ -498,60 +393,37 @@ class _$TaskCalendarEvent extends TaskCalendarEvent {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            DateTime startTime, DateTime endTime, String subject, bool isAllDay)
+    required TResult Function(DateTime startTime, DateTime endTime, Event event)
         event,
-    required TResult Function(
-            @JsonKey(
-                fromJson: TaskJsonMapper.fromJson,
-                toJson: TaskJsonMapper.toJson)
-            Task task,
-            DateTime startTime,
-            DateTime endTime,
-            bool isAllDay)
+    required TResult Function(Task task, DateTime startTime, DateTime endTime,
+            String? colorHex, bool isAllDay)
         task,
   }) {
-    return task(this.task, startTime, endTime, isAllDay);
+    return task(this.task, startTime, endTime, colorHex, isAllDay);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(DateTime startTime, DateTime endTime, String subject,
-            bool isAllDay)?
-        event,
-    TResult? Function(
-            @JsonKey(
-                fromJson: TaskJsonMapper.fromJson,
-                toJson: TaskJsonMapper.toJson)
-            Task task,
-            DateTime startTime,
-            DateTime endTime,
-            bool isAllDay)?
+    TResult? Function(DateTime startTime, DateTime endTime, Event event)? event,
+    TResult? Function(Task task, DateTime startTime, DateTime endTime,
+            String? colorHex, bool isAllDay)?
         task,
   }) {
-    return task?.call(this.task, startTime, endTime, isAllDay);
+    return task?.call(this.task, startTime, endTime, colorHex, isAllDay);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(DateTime startTime, DateTime endTime, String subject,
-            bool isAllDay)?
-        event,
-    TResult Function(
-            @JsonKey(
-                fromJson: TaskJsonMapper.fromJson,
-                toJson: TaskJsonMapper.toJson)
-            Task task,
-            DateTime startTime,
-            DateTime endTime,
-            bool isAllDay)?
+    TResult Function(DateTime startTime, DateTime endTime, Event event)? event,
+    TResult Function(Task task, DateTime startTime, DateTime endTime,
+            String? colorHex, bool isAllDay)?
         task,
     required TResult orElse(),
   }) {
     if (task != null) {
-      return task(this.task, startTime, endTime, isAllDay);
+      return task(this.task, startTime, endTime, colorHex, isAllDay);
     }
     return orElse();
   }
@@ -586,36 +458,23 @@ class _$TaskCalendarEvent extends TaskCalendarEvent {
     }
     return orElse();
   }
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$TaskCalendarEventToJson(
-      this,
-    );
-  }
 }
 
 abstract class TaskCalendarEvent extends CalendarEvent {
   const factory TaskCalendarEvent(
-      {@JsonKey(
-          fromJson: TaskJsonMapper.fromJson, toJson: TaskJsonMapper.toJson)
-      required final Task task,
+      {required final Task task,
       required final DateTime startTime,
       required final DateTime endTime,
+      final String? colorHex,
       final bool isAllDay}) = _$TaskCalendarEvent;
   const TaskCalendarEvent._() : super._();
 
-  factory TaskCalendarEvent.fromJson(Map<String, dynamic> json) =
-      _$TaskCalendarEvent.fromJson;
-
-// ignore: invalid_annotation_target
-  @JsonKey(fromJson: TaskJsonMapper.fromJson, toJson: TaskJsonMapper.toJson)
   Task get task;
   @override
   DateTime get startTime;
   @override
-  DateTime get endTime;
-  @override
+  DateTime get endTime; // ignore: invalid_annotation_target
+  String? get colorHex;
   bool get isAllDay;
   @override
   @JsonKey(ignore: true)

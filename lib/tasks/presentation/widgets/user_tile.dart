@@ -1,19 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:integrations_repository/integrations_repository.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class UserTile extends StatelessWidget {
-  const UserTile({required this.user, super.key});
-  final User user;
+  const UserTile({
+    required this.platformUrl,
+    required this.avatarUrl,
+    required this.displayName,
+    required this.email,
+    super.key,
+  });
+  final String? platformUrl;
+  final String? avatarUrl;
+  final String? displayName;
+  final String? email;
+
   @override
   Widget build(BuildContext context) {
     return ListTile(
       contentPadding: EdgeInsets.zero,
-      onTap: () => launchUrlString(user.platformURL),
-      leading: CircleAvatar(
-        backgroundImage: NetworkImage(user.avatarUrl),
-      ),
-      title: Text(user.displayName),
+      onTap: () => platformUrl != null ? launchUrlString(platformUrl!) : null,
+      leading: avatarUrl != null
+          ? CircleAvatar(
+              backgroundImage: NetworkImage(avatarUrl!),
+            )
+          : null,
+      title: displayName != null ? Text(displayName!) : Text(email ?? ''),
     );
   }
 }

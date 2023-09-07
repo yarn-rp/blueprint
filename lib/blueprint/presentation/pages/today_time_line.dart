@@ -1,9 +1,11 @@
-import 'dart:developer';
+import 'dart:math';
 
 import 'package:blueprint/blueprint/entities/calendar_event.dart';
 import 'package:blueprint/blueprint/presentation/widgets/general_calendar_event_tile.dart';
 import 'package:blueprint/blueprint/presentation/widgets/task_event_tile.dart';
 import 'package:blueprint/blueprint/state_management/todays_blueprint/todays_blueprint_cubit.dart';
+import 'package:blueprint/calendar/presentation/views/event_details.dart';
+import 'package:blueprint/core/utils/color/hex_color_extension.dart';
 import 'package:blueprint/tasks/presentation/pages/task_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -77,34 +79,22 @@ class _TodaysBlueprintState extends State<TodayTimeline>
 
     return BlocBuilder<TodaysBlueprintCubit, TodaysBlueprintState>(
       builder: (context, state) {
-        log('working times: ${state.workTimes}');
+        print(
+          'Presentation events: ${state.calendarEvents.map(
+                (e) => (e.subject, e.startTime),
+              ).toList()}',
+        );
         return SfCalendar(
           controller: calendarController,
           dataSource: state.toDataSource,
           allowDragAndDrop: true,
           allowAppointmentResize: true,
-          minDate: now.copyWith(hour: 0, minute: 0, second: 0, millisecond: 0),
-          maxDate: now.copyWith(
-            hour: 23,
-            minute: 59,
-            second: 59,
-            millisecond: 999,
+          appointmentTextStyle: Theme.of(context).textTheme.bodyMedium!,
+          todayTextStyle: Theme.of(context).textTheme.bodyMedium!,
+          blackoutDatesTextStyle: Theme.of(context).textTheme.bodyMedium!,
+          weekNumberStyle: WeekNumberStyle(
+            textStyle: Theme.of(context).textTheme.bodyMedium!,
           ),
-          specialRegions: [
-            ...state.workTimes.map(
-              (workTime) => TimeRegion(
-                text: 'Working Time',
-                startTime: DateTime.now().copyWith(
-                  hour: workTime.start.hour,
-                  minute: workTime.start.minute,
-                ),
-                endTime: DateTime.now().copyWith(
-                  hour: workTime.end.hour,
-                  minute: workTime.end.minute,
-                ),
-              ),
-            ),
-          ],
 
           onTap: (calendarTapDetails) async {
             if (calendarTapDetails.targetElement ==
@@ -114,8 +104,25 @@ class _TodaysBlueprintState extends State<TodayTimeline>
                 return;
               }
               await appointment.map(
-                event: (event) {
-                  // TODO(yarn-rp): do something
+                event: (appointment) async {
+                  await showDialog<void>(
+                    context: context,
+                    builder: (context) {
+                      return Dialog(
+                        surfaceTintColor: Theme.of(context).canvasColor,
+                        child: ConstrainedBox(
+                          constraints: BoxConstraints(
+                            maxWidth: 1200,
+                            maxHeight: MediaQuery.of(context).size.height,
+                          ),
+                          child: GeneralEventCalendarEventDetails(
+                            appointment: appointment,
+                            onClose: () => Navigator.of(context).pop(),
+                          ),
+                        ),
+                      );
+                    },
+                  );
                 },
                 task: (appointment) async {
                   await showDialog<void>(
@@ -217,30 +224,50 @@ class _TodaysBlueprintState extends State<TodayTimeline>
             BuildContext context,
             CalendarAppointmentDetails calendarAppointmentDetails,
           ) {
-            final appointment = calendarAppointmentDetails.appointments.first;
+            final appointment = calendarAppointmentDetails.appointments.last;
             if (appointment is! CalendarEvent) {
+              print('got something that is not a calendar event');
               return const SizedBox();
             }
+
             final isAfter = appointment.endTime.isAfter(now);
+            final originalColor = appointment.color != null
+                ? HexColor.fromHex(
+                    appointment.color!,
+                  )
+                : Theme.of(context).colorScheme.secondary;
+
             return appointment.map(
               event: (appointment) => GeneralCalendarEventTile(
                 appointment: appointment,
                 isSmallVersion: appointment.endTime
                         .difference(appointment.startTime)
-                        .inMinutes <
+                        .inMinutes <=
                     30,
+                color:
+                    isAfter ? originalColor : originalColor?.withOpacity(0.5),
               ),
               task: (appointment) => TaskEventTile(
                 appointment: appointment,
-                color: isAfter
-                    ? Theme.of(context).colorScheme.surfaceVariant
-                    : Theme.of(context).colorScheme.surface,
+                color:
+                    isAfter ? originalColor : originalColor?.withOpacity(0.5),
               ),
             );
           },
           timeSlotViewSettings: TimeSlotViewSettings(
+            timeTextStyle: Theme.of(context).textTheme.labelMedium,
             minimumAppointmentDuration: const Duration(minutes: 15),
-            timeIntervalHeight: MediaQuery.of(context).size.height / 14,
+            timeIntervalHeight: state.calendarEvents.isEmpty
+                ? 100
+                : state.calendarEvents
+                    .map(
+                      (value) => max(
+                        value.endTime.difference(value.startTime).inMinutes * 5,
+                        80,
+                      ),
+                    )
+                    .reduce(min)
+                    .toDouble(),
           ),
         );
       },

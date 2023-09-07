@@ -15,14 +15,17 @@ dependencies:
   cached_network_image: ^3.2.3
   cloud_firestore: ^4.8.4
   cloud_functions: ^4.3.4
+  calendar_repository:
+    path: ./packages/calendar_repository
   collapsible_sidebar: ^2.0.3+3
   collection: ^1.17.0
   dynamic_color: ^1.6.3
-  firebase_auth: ^4.5.0
-  firebase_core: ^2.11.0
+  firebase_auth: ^4.9.0
+  firebase_core: ^2.15.0
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.2
+  flutter_html: ^3.0.0-beta.2
   flutter_localizations:
     sdk: flutter
   flutter_markdown: ^0.6.14
@@ -30,8 +33,13 @@ dependencies:
   flutter_web_auth: ^0.5.0
   freezed: ^2.3.2
   freezed_annotation: ^2.2.0
+  flutter_secure_key_pair_storage:
+    path: ./packages/flutter_secure_key_pair_storage
   get_it: ^7.6.0
+  google_calendar_service:
+    path: ./packages/google_calendar_service
   google_fonts: ^4.0.3
+  google_sign_in: ^6.1.4
   hydrated_bloc: ^9.1.0
   injectable: ^2.1.1
   integrations_repository:
@@ -42,7 +50,9 @@ dependencies:
   markdown: ^7.1.1
   meta: ^1.9.1
   path_provider: ^2.0.14
+  share_plus: ^7.1.0
   sidebarx: ^0.15.0
+  stream_transform: ^2.1.0
   syncfusion_flutter_calendar: ^21.1.38
   url_launcher: ^6.1.10
 

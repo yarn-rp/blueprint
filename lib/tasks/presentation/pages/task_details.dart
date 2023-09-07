@@ -348,8 +348,57 @@ class TaskDetails extends StatelessWidget {
                                 const SizedBox(
                                   height: 16,
                                 ),
-                                UserTile(
-                                  user: task.creator,
+                                Wrap(
+                                  runSpacing: 8,
+                                  spacing: 8,
+                                  children: [
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          const Text('Creator'),
+                                          const SizedBox(
+                                            height: 16,
+                                          ),
+                                          UserTile(
+                                            platformUrl:
+                                                task.creator.platformURL,
+                                            avatarUrl: task.creator.avatarUrl,
+                                            displayName:
+                                                task.creator.displayName,
+                                            email: null,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 16,
+                                    ),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          const Text('Assignees'),
+                                          const SizedBox(
+                                            height: 16,
+                                          ),
+                                          ...task.assigned.map(
+                                            (e) => UserTile(
+                                              platformUrl: e.platformURL,
+                                              avatarUrl: e.avatarUrl,
+                                              displayName: e.displayName,
+                                              email: null,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 32,
                                 ),
                               ],
                             ),
@@ -365,7 +414,14 @@ class TaskDetails extends StatelessWidget {
                                 const SizedBox(
                                   height: 16,
                                 ),
-                                ...task.assigned.map((e) => UserTile(user: e)),
+                                ...task.assigned.map(
+                                  (e) => UserTile(
+                                    platformUrl: e.platformURL,
+                                    avatarUrl: e.avatarUrl,
+                                    displayName: e.displayName,
+                                    email: null,
+                                  ),
+                                ),
                               ],
                             ),
                           ),

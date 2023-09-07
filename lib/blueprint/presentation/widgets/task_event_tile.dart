@@ -25,7 +25,7 @@ class TaskEventTile extends StatelessWidget {
       ),
       child: ListTile(
         leading: PriorityWidget(priority: appointment.task.priority),
-        isThreeLine: appointment.task.title.length > 50,
+        isThreeLine: true,
         title: Text(
           appointment.task.title,
           maxLines: 1,

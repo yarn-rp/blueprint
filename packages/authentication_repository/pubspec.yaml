@@ -14,7 +14,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_facebook_auth: 4.4.1
-  google_sign_in: ^5.4.2
+  google_sign_in: ^6.1.4
   sign_in_with_apple: ^4.2.0
 
 dev_dependencies:
