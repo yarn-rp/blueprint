@@ -5,6 +5,8 @@ import 'package:blueprint/core/firebase_options/firebase_options_prd.dart'
     as firebase_prod_options;
 import 'package:blueprint/core/firebase_options/firebase_options_stg.dart'
     as firebase_stg_options;
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:injectable/injectable.dart';
@@ -46,6 +48,18 @@ abstract class FirebaseModule {
 
   @lazySingleton
   FirebaseAuth firebaseAuth(FirebaseApp app) => FirebaseAuth.instanceFor(
+        app: app,
+      );
+
+  @lazySingleton
+  FirebaseFirestore firebaseFirestore(FirebaseApp app) =>
+      FirebaseFirestore.instanceFor(
+        app: app,
+      );
+
+  @lazySingleton
+  FirebaseFunctions firebaseFunctions(FirebaseApp app) =>
+      FirebaseFunctions.instanceFor(
         app: app,
       );
 }

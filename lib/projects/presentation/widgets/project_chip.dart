@@ -19,10 +19,11 @@ class ProjectChip extends StatelessWidget {
         label: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            CachedNetworkImage(
-              imageUrl: project.integration.platform.iconUrl,
-              height: 16,
-            ),
+            if (project.platform?.iconUrl != null)
+              CachedNetworkImage(
+                imageUrl: project.platform!.iconUrl,
+                height: 16,
+              ),
             const SizedBox(width: 8),
             Text(
               project.name,

@@ -1,7 +1,4 @@
 {
-    "cSpell.words": [
-        "Asana",
-        "endtemplate"
-    ],
-    "formatOnSave": true,
+  "cSpell.words": ["Asana", "endtemplate", "Firestore"],
+  "formatOnSave": true
 }

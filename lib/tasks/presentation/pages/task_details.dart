@@ -95,8 +95,7 @@ class TaskDetails extends StatelessWidget {
                       onPressed: () => launchUrl(task.taskURL),
                       icon: const Icon(Icons.link),
                       label: Text(
-                        'View in '
-                        '${task.project.integration.platform.displayName}',
+                        'View in ${task.project.platform?.displayName ?? "Platform"}',
                       ),
                     )
                   ],
@@ -168,277 +167,245 @@ class TaskDetails extends StatelessWidget {
               ),
               Expanded(
                 flex: 4,
-                child: Column(
-                  children: [
-                    Expanded(
-                      flex: 3,
-                      child: Container(
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color:
-                                Theme.of(context).dividerColor.withOpacity(0.3),
+                child: Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Theme.of(context).dividerColor.withOpacity(0.3),
+                    ),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: ListView(
+                    children: [
+                      Text(
+                        'Details',
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      // Divider
+                      const Divider(
+                        endIndent: 0,
+                        indent: 0,
+                      ),
+
+                      const SizedBox(
+                        height: 16,
+                      ),
+
+                      Wrap(
+                        spacing: 8,
+                        children: [
+                          ProjectChip(project: task.project),
+                          ...task.labels.map((e) => LabelChip(label: e)),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text('Time logged'),
+                          const SizedBox(
+                            height: 16,
                           ),
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                        child: ListView(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          children: [
+                          // A percentage bar showing the time logged
+                          if (task.loggedTime != null &&
+                              task.estimatedTime != null)
                             Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  'Details',
-                                  style:
-                                      Theme.of(context).textTheme.titleMedium,
-                                ),
-                                // Divider
-                                const Divider(
-                                  endIndent: 0,
-                                  indent: 0,
-                                ),
-
-                                const SizedBox(
-                                  height: 16,
-                                ),
-
-                                Wrap(
-                                  spacing: 8,
-                                  children: [
-                                    ProjectChip(project: task.project),
-                                    ...task.labels
-                                        .map((e) => LabelChip(label: e)),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 16,
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Text('Time logged'),
-                                    const SizedBox(
-                                      height: 16,
-                                    ),
-                                    // A percentage bar showing the time logged
-                                    if (task.loggedTime != null &&
-                                        task.estimatedTime != null)
-                                      Column(
-                                        children: [
-                                          LinearProgressIndicator(
-                                            value: task.loggedTime!
-                                                    .inMilliseconds /
-                                                task.estimatedTime!
-                                                    .inMilliseconds,
-                                            valueColor:
-                                                AlwaysStoppedAnimation<Color>(
-                                              Theme.of(context)
-                                                  .colorScheme
-                                                  .primary,
-                                            ),
-                                            backgroundColor: Theme.of(context)
-                                                .colorScheme
-                                                .primary
-                                                .withOpacity(
-                                                  0.3,
-                                                ),
-                                          ),
-                                          const SizedBox(
-                                            height: 8,
-                                          ),
-                                          if (task.loggedTime != null &&
-                                              task.estimatedTime != null)
-                                            Row(
-                                              children: [
-                                                if (task.loggedTime != null)
-                                                  Text(
-                                                    // ignore: lines_longer_than_80_chars
-                                                    '${task.loggedTime!.inHours}h ${task.loggedTime!.inMinutes % 60}m',
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .bodySmall,
-                                                  ),
-                                                const Spacer(),
-                                                if (task.estimatedTime != null)
-                                                  Text(
-                                                    // ignore: lines_longer_than_80_chars
-                                                    '${task.estimatedTime!.inHours}h ${task.estimatedTime!.inMinutes % 60}m',
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .bodySmall,
-                                                  ),
-                                              ],
-                                            )
-                                        ],
+                                LinearProgressIndicator(
+                                  value: task.loggedTime!.inMilliseconds /
+                                      task.estimatedTime!.inMilliseconds,
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                    Theme.of(context).colorScheme.primary,
+                                  ),
+                                  backgroundColor: Theme.of(context)
+                                      .colorScheme
+                                      .primary
+                                      .withOpacity(
+                                        0.3,
                                       ),
-                                  ],
                                 ),
-                                // Starting date and due date of the task
                                 const SizedBox(
-                                  height: 32,
+                                  height: 8,
                                 ),
-                                Wrap(
-                                  spacing: 16,
-                                  runSpacing: 16,
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        const Text('Starting date'),
-                                        const SizedBox(
-                                          height: 16,
-                                        ),
-                                        // Use jiffy to format the date
+                                if (task.loggedTime != null &&
+                                    task.estimatedTime != null)
+                                  Row(
+                                    children: [
+                                      if (task.loggedTime != null)
                                         Text(
-                                          Jiffy(task.startDate)
-                                              .format('dd MMM yyyy hh:mm a'),
+                                          '${task.loggedTime!.inHours}h ${task.loggedTime!.inMinutes % 60}m',
                                           style: Theme.of(context)
                                               .textTheme
                                               .bodySmall,
                                         ),
-                                      ],
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        const Text('Due date'),
-                                        const SizedBox(
-                                          height: 16,
+                                      const Spacer(),
+                                      if (task.estimatedTime != null)
+                                        Text(
+                                          '${task.estimatedTime!.inHours}h ${task.estimatedTime!.inMinutes % 60}m',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall,
                                         ),
-                                        Row(
-                                          children: [
-                                            Text(
-                                              Jiffy(
-                                                task.dueDate,
-                                              ).fromNow(),
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodySmall
-                                                  ?.copyWith(
-                                                    color: Theme.of(context)
-                                                        .highlightColor,
-                                                  ),
-                                            ),
-                                            const Text(' - '),
-                                            Expanded(
-                                              child: Text(
-                                                Jiffy(task.dueDate).format(
-                                                  'dd MMM yyyy hh:mm a',
-                                                ),
-                                                maxLines: 1,
-                                                overflow: TextOverflow.ellipsis,
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodySmall,
-                                              ),
-                                            ),
-                                          ],
+                                    ],
+                                  )
+                              ],
+                            ),
+                        ],
+                      ),
+                      // Starting date and due date of the task
+                      const SizedBox(
+                        height: 32,
+                      ),
+                      Wrap(
+                        spacing: 16,
+                        runSpacing: 16,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text('Starting date'),
+                              const SizedBox(
+                                height: 16,
+                              ),
+                              // Use jiffy to format the date
+                              Text(
+                                Jiffy(task.startDate)
+                                    .format('dd MMM yyyy hh:mm a'),
+                                style: Theme.of(context).textTheme.bodySmall,
+                              ),
+                            ],
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text('Due date'),
+                              const SizedBox(
+                                height: 16,
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    Jiffy(
+                                      task.dueDate,
+                                    ).fromNow(),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodySmall
+                                        ?.copyWith(
+                                          color:
+                                              Theme.of(context).highlightColor,
                                         ),
-                                      ],
+                                  ),
+                                  const Text(' - '),
+                                  Expanded(
+                                    child: Text(
+                                      Jiffy(task.dueDate).format(
+                                        'dd MMM yyyy hh:mm a',
+                                      ),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style:
+                                          Theme.of(context).textTheme.bodySmall,
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
 
-                                // Priority of the task
-                                const SizedBox(
-                                  height: 32,
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Text('Priority'),
-                                    const SizedBox(
-                                      height: 16,
-                                    ),
-                                    PriorityWidget.label(
-                                      priority: task.priority,
-                                    )
-                                  ],
-                                ),
+                      // Priority of the task
+                      const SizedBox(
+                        height: 32,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text('Priority'),
+                          const SizedBox(
+                            height: 16,
+                          ),
+                          PriorityWidget.label(
+                            priority: task.priority,
+                          )
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      Wrap(
+                        runSpacing: 8,
+                        spacing: 8,
+                        children: [
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text('Creator'),
                                 const SizedBox(
                                   height: 16,
                                 ),
-                                Wrap(
-                                  runSpacing: 8,
-                                  spacing: 8,
-                                  children: [
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          const Text('Creator'),
-                                          const SizedBox(
-                                            height: 16,
-                                          ),
-                                          UserTile(
-                                            user: task.creator,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      width: 16,
-                                    ),
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          const Text('Assignees'),
-                                          const SizedBox(
-                                            height: 16,
-                                          ),
-                                          ...task.assigned
-                                              .map((e) => UserTile(user: e)),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 32,
+                                UserTile(
+                                  user: task.creator,
                                 ),
                               ],
                             ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    // Updated at and created at of the task
-                    // Use jiffy to format the date
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              'Created at ${Jiffy(task.createdAt).format('dd '
-                                  'MMM yyyy hh:mm a')}',
-                              style: Theme.of(context).textTheme.bodySmall,
-                            ),
                           ),
                           const SizedBox(
-                            height: 8,
+                            width: 16,
                           ),
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              'Updated at ${Jiffy(task.updatedAt).format('dd '
-                                  'MMM yyyy hh:mm a')}',
-                              style: Theme.of(context).textTheme.bodySmall,
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text('Assignees'),
+                                const SizedBox(
+                                  height: 16,
+                                ),
+                                ...task.assigned.map((e) => UserTile(user: e)),
+                              ],
                             ),
                           ),
                         ],
                       ),
-                    ),
-                  ],
+                      const SizedBox(
+                        height: 32,
+                      ),
+                      const Divider(),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      // Updated at and created at of the task
+                      // Use jiffy to format the date
+                      Flexible(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'Created at ${Jiffy(task.createdAt).format('dd MMM yyyy hh:mm a')}',
+                                style: Theme.of(context).textTheme.bodySmall,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 8,
+                            ),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'Updated at ${Jiffy(task.updatedAt).format('dd MMM yyyy hh:mm a')}',
+                                style: Theme.of(context).textTheme.bodySmall,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],

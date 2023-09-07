@@ -9,7 +9,7 @@ class UserTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       contentPadding: EdgeInsets.zero,
-      onTap: () => launchUrlString(user.platformUrl),
+      onTap: () => launchUrlString(user.platformURL),
       leading: CircleAvatar(
         backgroundImage: NetworkImage(user.avatarUrl),
       ),

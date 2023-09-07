@@ -1,4 +1,4 @@
-import 'package:platform_integration_repository/platform_integration_repository.dart';
+import 'package:integrations_repository/src/entities/entities.dart';
 
 /// {@template integrations_exceptions}
 /// Exceptions thrown by the integrations repository.
