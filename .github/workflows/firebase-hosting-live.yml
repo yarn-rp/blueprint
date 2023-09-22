@@ -13,7 +13,12 @@ on:
         type: string
     secrets:
       FIREBASE_SERVICE_ACCOUNT:
+        description: Firebase Service Account
         required: true
+      GITHUB_TOKEN:
+        description: GitHub Token
+        required: true
+        
 jobs:
   build_and_preview:
     runs-on: ubuntu-latest
