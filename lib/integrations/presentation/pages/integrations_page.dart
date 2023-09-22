@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:blueprint/integrations/presentation/widgets/platform_integration_tile.dart';
 import 'package:blueprint/integrations/state_management/available_platforms/available_platforms_cubit.dart';
-import 'package:blueprint/integrations/state_management/integrations_repository/integrations_cubit.dart';
+import 'package:blueprint/integrations/state_management/integrations_cubit/integrations_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_calendar_service/google_calendar_service.dart';

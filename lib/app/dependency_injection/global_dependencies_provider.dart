@@ -2,7 +2,7 @@ import 'package:blueprint/app/dependency_injection/init.dart';
 import 'package:blueprint/authentication/state_management/authentication_cubit/authentication_cubit.dart';
 import 'package:blueprint/blueprint/state_management/todays_blueprint/todays_blueprint_cubit.dart';
 import 'package:blueprint/integrations/state_management/available_platforms/available_platforms_cubit.dart';
-import 'package:blueprint/integrations/state_management/integrations_repository/integrations_cubit.dart';
+import 'package:blueprint/integrations/state_management/integrations_cubit/integrations_cubit.dart';
 import 'package:blueprint/settings/state_management/bloc/settings_bloc.dart';
 import 'package:blueprint/tasks/state_management/cubit/tasks_cubit.dart';
 import 'package:flutter/material.dart';
