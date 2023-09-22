@@ -21,4 +21,3 @@ jobs:
       target: lib/main_development.dart
     secrets:  
       FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_DEV }}
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
