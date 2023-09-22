@@ -4,6 +4,7 @@
 permissions: write-all
 
 name: Deploy to Firebase Hosting on staging merge
+
 'on':
   push:
     branches:
