@@ -5,8 +5,6 @@ permissions: write-all
 
 name: Deploy to Firebase Hosting on develop merge
 
-permissions: write-all
-
 'on':
   push:
     branches:
@@ -17,5 +15,5 @@ jobs:
     with:
       project_id: polletask-dev
       target: lib/main_development.dart
-    secrets:
+    secrets:  
       FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_DEV }}
