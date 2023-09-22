@@ -13,7 +13,12 @@ on:
         type: string
     secrets:
       FIREBASE_SERVICE_ACCOUNT:
+        description: Firebase Service Account
         required: true
+      GITHUB_TOKEN:
+        description: GitHub Token
+        required: true
+        
 jobs:
   build_and_preview:
     runs-on: ubuntu-latest
@@ -27,7 +32,7 @@ jobs:
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SECRET_ACCOUNT }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
           projectId: ${{ inputs.project_id }}
           channelId: live
       - uses: actions/checkout@v3
