@@ -7,13 +7,13 @@ import 'package:stream_transform/stream_transform.dart';
 /// {@template integrations_repository}
 /// A Very Good Project created by Very Good CLI.
 /// {@endtemplate}
-class IntegrationsRepository<
+class LocalIntegrationsRepository<
     PlatformType extends Platform,
     IntegrationType extends Integration<PlatformType>,
     PlatformIntegrationServiceType extends PlatformIntegrationService<
         PlatformType, IntegrationType>> {
   /// {@macro integrations_repository}
-  IntegrationsRepository({
+  LocalIntegrationsRepository({
     Iterable<PlatformIntegrationServiceType>? services,
   }) {
     _platformMap = Map.fromEntries(

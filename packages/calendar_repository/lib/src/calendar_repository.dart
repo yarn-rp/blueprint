@@ -8,7 +8,7 @@ import 'package:stream_transform/stream_transform.dart';
 /// This repository can be used to manage multiple calendars of the same
 /// platform, for example, multiple Google calendars.
 /// {@endtemplate}
-class CalendarRepository extends IntegrationsRepository<CalendarPlatform,
+class CalendarRepository extends LocalIntegrationsRepository<CalendarPlatform,
     CalendarIntegration, CalendarService> {
   /// {@macro calendar_repository}
   CalendarRepository({

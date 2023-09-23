@@ -12,6 +12,7 @@ Platform _$PlatformFromJson(Map<String, dynamic> json) => Platform(
       iconUrl: json['iconUrl'] as String,
       authentication:
           Authentication.fromJson(json['auth'] as Map<String, dynamic>),
+      platformType: $enumDecode(_$PlatformTypeEnumMap, json['type']),
     );
 
 Map<String, dynamic> _$PlatformToJson(Platform instance) => <String, dynamic>{
@@ -19,7 +20,13 @@ Map<String, dynamic> _$PlatformToJson(Platform instance) => <String, dynamic>{
       'name': instance.displayName,
       'iconUrl': instance.iconUrl,
       'auth': instance.authentication,
+      'type': _$PlatformTypeEnumMap[instance.platformType]!,
     };
+
+const _$PlatformTypeEnumMap = {
+  PlatformType.task: 'task',
+  PlatformType.event: 'event',
+};
 
 Basic _$BasicFromJson(Map<String, dynamic> json) => Basic(
       username: json['username'] as String,

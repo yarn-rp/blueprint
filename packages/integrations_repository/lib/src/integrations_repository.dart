@@ -40,12 +40,28 @@ class IntegrationsRepository {
 
   late final FirebaseFunctions _firebaseFunctions;
 
+  /// Returns a stream of all integrations from all sources. This stream reacts
+  /// to changes in the integrations, like additions or removals.
+  Stream<Iterable<Integration>> getAllIntegrations() {
+    return Stream.value([]);
+  }
+
   /// Returns a stream of all integrations from all repositories.
   Stream<Iterable<Platform>> getAllPlatforms() {
     print('Fething all platforms');
     final snaps = _platformsCollection.snapshots();
-    print('snaps: $snaps');
-    return snaps.map((event) => event.docs.map((e) => e.data()));
+
+    try {
+      return snaps.map(
+        (event) => event.docs.map((e) {
+          print('Platform data: ${e.data()}');
+          return e.data();
+        }),
+      );
+    } catch (e) {
+      print('Error fetching platforms: $e');
+      rethrow;
+    }
   }
 
   /// Adds a new [integration] to the repository.

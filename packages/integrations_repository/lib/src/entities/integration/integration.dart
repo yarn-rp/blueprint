@@ -32,10 +32,14 @@ class OAuth2Integration extends Integration {
   List<Object?> get props => [platform];
 
   @override
-  Map<String, dynamic> toConnectApiParams() => {
-        'code': token,
-        //TODO: change this on backend side since displayName should not be used
-        // as a key.
-        'platform': platform.displayName,
-      };
+  Map<String, dynamic> toConnectApiParams() {
+    final platformPartialJson = platform.toJson();
+
+    return {
+      'code': token,
+      //TODO: change this on backend side since displayName should not be used
+      // as a key.
+      ...platformPartialJson,
+    };
+  }
 }

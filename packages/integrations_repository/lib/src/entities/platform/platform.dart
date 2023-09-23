@@ -1,3 +1,4 @@
+import 'package:integrations_repository/src/entities/platform/platform_type.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'platform.g.dart';
@@ -13,6 +14,7 @@ class Platform {
     required this.displayName,
     required this.iconUrl,
     required this.authentication,
+    required this.platformType,
   });
 
   /// From json
@@ -29,8 +31,13 @@ class Platform {
   /// The URL of the icon for the platform.
   final String iconUrl;
 
+  /// The authentication method for the platform.
   @JsonKey(name: 'auth')
   final Authentication authentication;
+
+  /// The type of the platform.
+  @JsonKey(name: 'type')
+  final PlatformType platformType;
 
   /// To json
   Map<String, dynamic> toJson() => _$PlatformToJson(this);
