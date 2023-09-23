@@ -2,8 +2,8 @@ import 'dart:developer';
 
 import 'package:blueprint/blueprint/entities/calendar_event.dart';
 import 'package:blueprint/settings/entities/working_calendar.dart';
-import 'package:calendar_repository/calendar_repository.dart';
 import 'package:collection/collection.dart';
+import 'package:event_repository/event_repository.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
@@ -42,7 +42,7 @@ class TodaysBlueprintCubit extends Cubit<TodaysBlueprintState> {
     });
   }
   final List<WorkTime> workTimes;
-  final CalendarRepository calendarRepository;
+  final EventRepository calendarRepository;
 
   void addTaskToTodaysBlueprint(Task task) {
     late Duration estimatedTime;

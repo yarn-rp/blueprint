@@ -1,8 +1,8 @@
 import 'package:blueprint/blueprint/entities/calendar_event.dart';
-import 'package:blueprint/calendar/presentation/widgets/appointment_time.dart';
-import 'package:blueprint/calendar/presentation/widgets/attendee_tile.dart';
-import 'package:blueprint/calendar/presentation/widgets/conference_entrypoints.dart';
 import 'package:blueprint/core/utils/color/hex_color_extension.dart';
+import 'package:blueprint/events/presentation/widgets/appointment_time.dart';
+import 'package:blueprint/events/presentation/widgets/attendee_tile.dart';
+import 'package:blueprint/events/presentation/widgets/conference_entrypoints.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -230,10 +230,10 @@ class GeneralEventCalendarEventDetails extends StatelessWidget {
                                                 vertical: 4,
                                               ),
                                               child: AttendeeTile(
-                                                platformUrl: user.platformUrl,
+                                                // platformUrl: user.platformUrl,
                                                 attendantStatus: status,
-                                                displayName: user.displayName,
-                                                email: user.email,
+                                                // displayName: user.displayName,
+                                                email: user,
                                               ),
                                             );
                                           }),

@@ -40,7 +40,7 @@ import 'package:blueprint/settings/state_management/bloc/settings_bloc.dart'
 import 'package:blueprint/tasks/module/task_module.dart' as _i31;
 import 'package:blueprint/tasks/state_management/cubit/tasks_cubit.dart'
     as _i22;
-import 'package:calendar_repository/calendar_repository.dart' as _i8;
+import 'package:event_repository/event_repository.dart' as _i8;
 import 'package:cloud_firestore/cloud_firestore.dart' as _i12;
 import 'package:cloud_functions/cloud_functions.dart' as _i13;
 import 'package:firebase_auth/firebase_auth.dart' as _i11;

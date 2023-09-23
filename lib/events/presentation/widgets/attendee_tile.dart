@@ -1,12 +1,12 @@
-import 'package:calendar_repository/calendar_repository.dart';
+import 'package:event_repository/event_repository.dart';
 import 'package:flutter/material.dart';
 
 class AttendeeTile extends StatelessWidget {
   const AttendeeTile({
-    required this.platformUrl,
     required this.attendantStatus,
-    required this.displayName,
     required this.email,
+    this.platformUrl,
+    this.displayName,
     super.key,
   });
   final String? platformUrl;

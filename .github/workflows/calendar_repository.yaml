@@ -1,4 +1,4 @@
-name: calendar_repository
+name: event_repository
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -7,13 +7,13 @@ concurrency:
 on:
   pull_request:
     paths:
-      - 'packages/calendar_repository/**'
-      - '.github/workflows/calendar_repository.yaml'
+      - 'packages/event_repository/**'
+      - '.github/workflows/event_repository.yaml'
 jobs:
   build:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/flutter_package.yml@v1
     with:
       flutter_version: 3.3.10
       flutter_channel: stable
-      working_directory: packages/calendar_repository
+      working_directory: packages/event_repository
       min_coverage: 40
