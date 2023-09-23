@@ -54,6 +54,8 @@ dependencies:
   sidebarx: ^0.15.0
   stream_transform: ^2.1.0
   syncfusion_flutter_calendar: ^21.1.38
+  task_repository:
+    path: ./packages/task_repository
   url_launcher: ^6.1.10
 
 dev_dependencies:
