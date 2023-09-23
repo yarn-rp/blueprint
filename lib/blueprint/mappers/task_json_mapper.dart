@@ -1,4 +1,4 @@
-import 'package:integrations_repository/integrations_repository.dart';
+import 'package:task_repository/task_repository.dart';
 
 abstract class TaskJsonMapper {
   static Map<String, dynamic> toJson(Task task) {

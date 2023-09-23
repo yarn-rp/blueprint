@@ -1,8 +1,8 @@
-import 'package:blueprint/projects/presentation/widgets/project_chip.dart';
+// import 'package:blueprint/projects/presentation/widgets/project_chip.dart';
 import 'package:blueprint/tasks/presentation/widgets/priority_widget.dart';
 import 'package:blueprint/tasks/presentation/widgets/status_chip.dart';
 import 'package:flutter/material.dart';
-import 'package:integrations_repository/integrations_repository.dart';
+import 'package:task_repository/task_repository.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TaskTile extends StatelessWidget {
@@ -46,7 +46,7 @@ class TaskTile extends StatelessWidget {
             child: Wrap(
               spacing: 8,
               children: [
-                ProjectChip(project: task.project),
+                // ProjectChip(project: task.project),
                 ...task.labels.map(
                   (e) => LabelChip(label: e),
                 )

@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:integrations_repository/integrations_repository.dart';
+import 'package:task_repository/task_repository.dart';
 
 part 'tasks_cubit.freezed.dart';
 part 'tasks_state.dart';
@@ -52,5 +52,5 @@ class TasksCubit extends Cubit<TasksState> {
     return super.close();
   }
 
-  final IntegrationsRepository _projectRepository;
+  final TaskRepository _projectRepository;
 }

@@ -1,4 +1,3 @@
-import 'package:authentication_repository/authentication_repository.dart';
 import 'package:blueprint/integrations/state_management/available_platforms/available_platforms_cubit.dart';
 import 'package:blueprint/integrations/state_management/integrations_cubit/integrations_cubit.dart';
 import 'package:calendar_repository/calendar_repository.dart'
@@ -33,12 +32,9 @@ abstract class IntegrationsModule {
   IntegrationsRepository integrationsRepository(
     FirebaseFirestore firestore,
     FirebaseFunctions functions,
-    AuthenticationRepositoryContract authenticationRepository,
   ) =>
       IntegrationsRepository(
         firestore: firestore,
         firebaseFunctions: functions,
-        currentUserIdStream: authenticationRepository.authenticationStream
-            .map((user) => user?.id),
       );
 }

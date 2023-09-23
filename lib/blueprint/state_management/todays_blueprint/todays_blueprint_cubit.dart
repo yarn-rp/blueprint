@@ -6,8 +6,8 @@ import 'package:calendar_repository/calendar_repository.dart';
 import 'package:collection/collection.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
-import 'package:integrations_repository/integrations_repository.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
+import 'package:task_repository/task_repository.dart';
 
 part 'todays_blueprint_cubit.freezed.dart';
 part 'todays_blueprint_state.dart';
