@@ -124,6 +124,10 @@ class GoogleCalendarService
     }
   }
 
+  /// This method is used to get conference data from Google Calendar events.
+  ///
+  /// It takes a GoogleCalendarIntegration object and a Google Calendar Event object as parameters.
+  /// It returns a Future that resolves to a ConferenceData object or null if the event has no conference data.
   FutureOr<ConferenceData?> _getConferenceData(
     GoogleCalendarIntegration integration,
     gCalendar.Event gEvent,
