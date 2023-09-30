@@ -8,8 +8,12 @@ environment:
   flutter: 3.10.0
 
 dependencies:
+  dynamic_color: ^1.6.7
+  equatable: ^2.0.5
   flutter:
     sdk: flutter
+  google_fonts: ^4.0.3
+
 
 dev_dependencies:
   flutter_test:
