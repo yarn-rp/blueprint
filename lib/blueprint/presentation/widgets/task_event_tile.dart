@@ -18,9 +18,13 @@ class TaskEventTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final backgroundColor = color ?? Theme.of(context).colorScheme.secondary;
+    final foregroundColor =
+        backgroundColor.computeLuminance() > 0.5 ? Colors.black : Colors.white;
+
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: color,
+        color: backgroundColor,
         borderRadius: const BorderRadius.all(Radius.circular(4)),
       ),
       child: ListTile(
@@ -30,7 +34,9 @@ class TaskEventTile extends StatelessWidget {
           appointment.task.title,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
-          style: Theme.of(context).textTheme.titleMedium,
+          style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                color: foregroundColor,
+              ),
         ),
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
@@ -51,7 +57,9 @@ class TaskEventTile extends StatelessWidget {
               '${DateFormat('hh:mm a').format(appointment.startTime)} - '
               '${DateFormat('hh:mm a').format(appointment.endTime)}',
               textAlign: TextAlign.left,
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(),
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: foregroundColor,
+                  ),
             )
           ],
         ),

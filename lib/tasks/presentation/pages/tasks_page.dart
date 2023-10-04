@@ -69,19 +69,19 @@ class _TasksPageState extends State<TasksPage>
                             );
                           },
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),
               ),
               if (isWide)
-                const Expanded(
+                Expanded(
                   flex: 3,
                   child: Padding(
-                    padding: EdgeInsets.only(right: 16),
+                    padding: const EdgeInsets.only(right: 16),
                     child: TodayTimeline(),
                   ),
-                )
+                ),
             ],
           ),
         );

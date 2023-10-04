@@ -1,12 +1,10 @@
+import 'package:app_ui/app_ui.dart';
 import 'package:blueprint/app/routes/routes.dart';
 import 'package:blueprint/authentication/state_management/authentication_cubit/authentication_cubit.dart';
 import 'package:blueprint/core/l10n/l10n.dart';
-import 'package:blueprint/core/styles/styles.dart';
 import 'package:blueprint/settings/state_management/bloc/settings_bloc.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class App extends StatefulWidget {
   const App({super.key});
@@ -33,23 +31,10 @@ class _AppState extends State<App> {
         return BlocSelector<SettingsBloc, SettingsState, AppBrightness>(
           selector: (state) => state.brightness,
           builder: (context, brightness) {
-            // make sure you don't initiate your router
-            // inside of the build function.
-            final customTextTheme =
-                kIsWeb ? GoogleFonts.nunitoTextTheme(textTheme) : textTheme;
-
             return MaterialApp.router(
-              theme: ThemeData(
-                useMaterial3: true,
-                colorScheme: lightColorScheme,
-                textTheme: customTextTheme,
-              ),
+              theme: lightTheme,
               themeMode: brightness.themeMode,
-              darkTheme: ThemeData(
-                useMaterial3: true,
-                colorScheme: darkColorScheme,
-                textTheme: customTextTheme,
-              ),
+              darkTheme: darkTheme,
               localizationsDelegates: AppLocalizations.localizationsDelegates,
               supportedLocales: AppLocalizations.supportedLocales,
               routerConfig: appRouter.config(),

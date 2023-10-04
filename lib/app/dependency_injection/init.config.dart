@@ -54,9 +54,9 @@ import 'package:google_sign_in/google_sign_in.dart' as _i7;
 import 'package:injectable/injectable.dart' as _i2;
 import 'package:integrations_repository/integrations_repository.dart' as _i15;
 
-const String _dev = 'dev';
 const String _prod = 'prod';
 const String _stg = 'stg';
+const String _dev = 'dev';
 
 extension GetItInjectableX on _i1.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -82,12 +82,12 @@ extension GetItInjectableX on _i1.GetIt {
     gh.lazySingleton<_i3.FacebookAuthenticationProvider>(
         () => authenticationModule.facebookAuthenticationProvider());
     gh.singleton<_i4.FirebaseOptions>(
-      firebaseModule.stagingFirebaseOptions,
-      registerFor: {_stg},
-    );
-    gh.singleton<_i4.FirebaseOptions>(
       firebaseModule.developmentFirebaseOptions,
       registerFor: {_dev},
+    );
+    gh.singleton<_i4.FirebaseOptions>(
+      firebaseModule.stagingFirebaseOptions,
+      registerFor: {_stg},
     );
     gh.singleton<_i4.FirebaseOptions>(
       firebaseModule.productionFirebaseOptions,

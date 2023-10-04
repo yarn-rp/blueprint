@@ -27,7 +27,7 @@ abstract class TodaysBlueprintState with _$TodaysBlueprintState {
     required DateTime addedAt,
   }) = _Error;
 
-  _EventsDataSource get toDataSource => _EventsDataSource([...calendarEvents]);
+  EventsDataSource get toDataSource => EventsDataSource([...calendarEvents]);
 
   CalendarEvent? get currentEvent {
     final now = DateTime.now();
@@ -51,8 +51,8 @@ abstract class TodaysBlueprintState with _$TodaysBlueprintState {
   }
 }
 
-class _EventsDataSource extends CalendarDataSource<CalendarEvent> {
-  _EventsDataSource(List<CalendarEvent> source) {
+class EventsDataSource extends CalendarDataSource<CalendarEvent> {
+  EventsDataSource(List<CalendarEvent> source) {
     appointments = source;
   }
 

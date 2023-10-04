@@ -5,12 +5,14 @@ publish_to: none
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
-  flutter: 3.10.0
+  flutter: 3.13.6
 
 dependencies:
   authentication_repository:
     path: ./packages/authentication_repository
-  auto_route: ^6.2.1
+  auto_route: ^7.8.3
+  app_ui:
+    path: ./packages/app_ui
   bloc: ^8.1.1
   cached_network_image: ^3.2.3
   cloud_firestore: ^4.8.4
@@ -38,7 +40,6 @@ dependencies:
   get_it: ^7.6.0
   google_calendar_service:
     path: ./packages/google_calendar_service
-  google_fonts: ^4.0.3
   google_sign_in: ^6.1.4
   hydrated_bloc: ^9.1.0
   injectable: ^2.1.1
@@ -57,7 +58,7 @@ dependencies:
   url_launcher: ^6.1.10
 
 dev_dependencies:
-  auto_route_generator: ^6.2.0
+  auto_route_generator: ^7.3.1
   bloc_test: ^9.1.4
   build_runner: ^2.3.3
   flutter_test:
