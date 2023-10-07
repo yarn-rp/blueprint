@@ -16,6 +16,11 @@ final navigationPages = [
     icon: Icons.task_sharp,
     route: const TasksRoute(),
   ),
+  NavigationPageData(
+    text: 'Integrations',
+    icon: Icons.integration_instructions,
+    route: const IntegrationsRoute(),
+  ),
 ];
 
 class NavigationPageData<T> {
@@ -67,6 +72,7 @@ class _InitialPageState extends State<InitialPage> {
             routes: const [
               TodaysBlueprintRoute(),
               TasksRoute(),
+              IntegrationsRoute(),
             ],
             transitionBuilder: (context, child, animation) => FadeTransition(
               opacity: animation,

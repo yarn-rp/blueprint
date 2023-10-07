@@ -15,28 +15,39 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
-    SettingsRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const SettingsPage(),
-      );
-    },
-    TasksRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const TasksPage(),
-      );
-    },
     InitialRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const InitialPage(),
       );
     },
+    IntegrateWithPlatformRoute.name: (routeData) {
+      final pathParams = routeData.inheritedPathParams;
+      final queryParams = routeData.queryParams;
+      final args = routeData.argsAs<IntegrateWithPlatformRouteArgs>(
+          orElse: () => IntegrateWithPlatformRouteArgs(
+                platformId: pathParams.getString('platformId'),
+                code: queryParams.optString('code'),
+              ));
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: IntegrateWithPlatformPage(
+          platformId: args.platformId,
+          code: args.code,
+          key: args.key,
+        ),
+      );
+    },
     IntegrationsRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const IntegrationsPage(),
+      );
+    },
+    SettingsRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const SettingsPage(),
       );
     },
     SignInRoute.name: (routeData) {
@@ -59,6 +70,12 @@ abstract class _$AppRouter extends RootStackRouter {
         ),
       );
     },
+    TasksRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const TasksPage(),
+      );
+    },
     TodaysBlueprintRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -66,34 +83,6 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
   };
-}
-
-/// generated route for
-/// [SettingsPage]
-class SettingsRoute extends PageRouteInfo<void> {
-  const SettingsRoute({List<PageRouteInfo>? children})
-      : super(
-          SettingsRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'SettingsRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [TasksPage]
-class TasksRoute extends PageRouteInfo<void> {
-  const TasksRoute({List<PageRouteInfo>? children})
-      : super(
-          TasksRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'TasksRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for
@@ -111,6 +100,52 @@ class InitialRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [IntegrateWithPlatformPage]
+class IntegrateWithPlatformRoute
+    extends PageRouteInfo<IntegrateWithPlatformRouteArgs> {
+  IntegrateWithPlatformRoute({
+    required String platformId,
+    String? code,
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
+          IntegrateWithPlatformRoute.name,
+          args: IntegrateWithPlatformRouteArgs(
+            platformId: platformId,
+            code: code,
+            key: key,
+          ),
+          rawPathParams: {'platformId': platformId},
+          rawQueryParams: {'code': code},
+          initialChildren: children,
+        );
+
+  static const String name = 'IntegrateWithPlatformRoute';
+
+  static const PageInfo<IntegrateWithPlatformRouteArgs> page =
+      PageInfo<IntegrateWithPlatformRouteArgs>(name);
+}
+
+class IntegrateWithPlatformRouteArgs {
+  const IntegrateWithPlatformRouteArgs({
+    required this.platformId,
+    this.code,
+    this.key,
+  });
+
+  final String platformId;
+
+  final String? code;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'IntegrateWithPlatformRouteArgs{platformId: $platformId, code: $code, key: $key}';
+  }
+}
+
+/// generated route for
 /// [IntegrationsPage]
 class IntegrationsRoute extends PageRouteInfo<void> {
   const IntegrationsRoute({List<PageRouteInfo>? children})
@@ -120,6 +155,20 @@ class IntegrationsRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'IntegrationsRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [SettingsPage]
+class SettingsRoute extends PageRouteInfo<void> {
+  const SettingsRoute({List<PageRouteInfo>? children})
+      : super(
+          SettingsRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'SettingsRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
@@ -196,6 +245,20 @@ class SignUpRouteArgs {
   String toString() {
     return 'SignUpRouteArgs{onResult: $onResult, key: $key}';
   }
+}
+
+/// generated route for
+/// [TasksPage]
+class TasksRoute extends PageRouteInfo<void> {
+  const TasksRoute({List<PageRouteInfo>? children})
+      : super(
+          TasksRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'TasksRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for
