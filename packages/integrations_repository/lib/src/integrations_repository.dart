@@ -3,24 +3,25 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:integrations_repository/src/entities/entities.dart';
-import 'package:stream_transform/stream_transform.dart';
 
 const _platformsCollectionName = 'platforms';
 
 const _usersCollectionName = 'users';
 
-Task taskFromFirestore(
-  DocumentSnapshot<Map<String, dynamic>> snapshot,
-  SnapshotOptions? _,
-) {
-  final data = snapshot.data()!;
-  return Task.fromJson(data);
-}
-
-Map<String, dynamic> taskToFirestore(Task task, SetOptions? _) => task.toJson();
+/// A converter for the [Platform] entity.
+final platformConverter = (
+  fromFirestore: (
+    DocumentSnapshot<Map<String, dynamic>> snapshot,
+    SnapshotOptions? options,
+  ) {
+    final data = snapshot.data()!;
+    return Platform.fromJson(data);
+  },
+  toFirestore: (Platform platform, _) => platform.toJson(),
+);
 
 /// {@template integrations_repository}
-/// A Very Good Project created by Very Good CLI.
+/// Repository in charge of handling integrations in the blueprint platform.
 /// {@endtemplate}
 class IntegrationsRepository {
   /// {@macro integrations_repository}
@@ -33,17 +34,8 @@ class IntegrationsRepository {
     _usersCollection = firestore.collection(_usersCollectionName);
     _platformsCollection =
         firestore.collection(_platformsCollectionName).withConverter(
-              fromFirestore: (snapshot, _) {
-                try {
-                  final data = snapshot.data()!;
-                  print('data: $data');
-                  return Platform.fromJson(data);
-                } catch (e) {
-                  print('Error parsing platform: $e');
-                  rethrow;
-                }
-              },
-              toFirestore: (platform, _) => platform.toJson(),
+              fromFirestore: platformConverter.fromFirestore,
+              toFirestore: platformConverter.toFirestore,
             );
   }
 
@@ -64,55 +56,9 @@ class IntegrationsRepository {
 
   /// Returns a stream of all integrations from all repositories.
   Stream<Iterable<Platform>> getAllPlatforms() {
-    print('Fething all platforms');
     final snaps = _platformsCollection.snapshots();
-    print('snaps: $snaps');
     return snaps.map((event) => event.docs.map((e) => e.data()));
   }
-
-  /// Returns a stream of all the projects that are linked to the app
-  Stream<Iterable<Project>> getAllProjects() {
-    return Stream.value([]);
-  }
-
-  /// Returns a stream of all tasks that are related to the current user in all
-  /// the projects that are linked to the app.
-  Stream<Iterable<Task>> getAllTasksRelatedToMe() =>
-      currentUserIdStream.switchMap<Iterable<Task>>(
-        (userId) {
-          print('userId: $userId');
-          if (userId == null) {
-            return const Stream.empty();
-          }
-          final userData = _usersCollection.doc(userId);
-          // TODO: change this for plans when plan oriented DB is implemented
-          final tasksSubCollection =
-              userData.collection('tasks').withConverter<Task>(
-                    fromFirestore: taskFromFirestore,
-                    toFirestore: taskToFirestore,
-                  );
-
-          final platformsStream = getAllPlatforms();
-
-          return platformsStream.switchMap(
-            (platforms) => tasksSubCollection.snapshots().map(
-                  (tasks) => tasks.docs.map((task) {
-                    final taskEntity = task.data();
-                    final taskPlatform = platforms.firstWhere(
-                      (platform) =>
-                          platform.displayName ==
-                          taskEntity.project.platformName,
-                    );
-                    return taskEntity.copyWith(
-                      project: taskEntity.project.copyWith(
-                        platform: taskPlatform,
-                      ),
-                    );
-                  }),
-                ),
-          );
-        },
-      );
 
   /// Adds a new [integration] to the repository.
   Future<void> addIntegration(Integration integration) async {
@@ -122,16 +68,12 @@ class IntegrationsRepository {
       final callable =
           _firebaseFunctions.httpsCallable('authenticators-connect');
       final params = integration.toConnectApiParams();
-      print('params: $params');
 
       await callable<void>(
         params,
       );
-      print('Integration added to firebase functions');
     } on FirebaseFunctionsException catch (exception) {
-      print(
-        'Error adding integration to firebase functions: ${exception.code} ${exception.message} ${exception.details}',
-      );
+      print(exception);
     } catch (exception) {
       print(exception);
     }
@@ -139,26 +81,4 @@ class IntegrationsRepository {
 
   /// Deletes an [integration] from the repository.
   Future<void> deleteIntegration(Integration integration) async {}
-
-  /// Returns all the tasks that are linked to an specific [project].
-  Future<Iterable<Task>> _getProjectTasksRelatedToMe(Project project) {
-    // TODO: implement _getProjectTasksRelatedToMe
-    return Future.value([]);
-  }
-
-  /// Returns all the projects that are under the give repository.
-  /// If the integration is not found, because it does not belong to the
-  /// repository, it returns an empty list.
-  Stream<List<Project>> _getPlatformProjects(
-    Platform platform,
-  ) {
-    return Stream.value([]);
-  }
-
-  /// Returns all the projects that are linked to an specific [integration].
-  Future<Iterable<Project>> _getProjectsFromIntegration(
-    Integration integration,
-  ) async {
-    return [];
-  }
 }
