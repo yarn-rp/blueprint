@@ -16,96 +16,54 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$IntegrationsState {
-  Iterable<Integration<Platform>> get integrations =>
+  Iterable<Platform> get availablePlatforms =>
       throw _privateConstructorUsedError;
-  Iterable<CalendarIntegration<CalendarPlatform>> get calendarIntegrations =>
-      throw _privateConstructorUsedError;
-  Iterable<CalendarPlatform> get calendarPlatforms =>
-      throw _privateConstructorUsedError;
+  Iterable<Integration> get integrations => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            Iterable<Integration<Platform>> integrations,
-            Iterable<CalendarIntegration<CalendarPlatform>>
-                calendarIntegrations,
-            Iterable<CalendarPlatform> calendarPlatforms)
+    required TResult Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)
         initial,
-    required TResult Function(
-            Iterable<Integration<Platform>> integrations,
-            Iterable<CalendarIntegration<CalendarPlatform>>
-                calendarIntegrations,
-            Iterable<CalendarPlatform> calendarPlatforms)
+    required TResult Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)
         loading,
-    required TResult Function(
-            Iterable<Integration<Platform>> integrations,
-            Iterable<CalendarIntegration<CalendarPlatform>>
-                calendarIntegrations,
-            Iterable<CalendarPlatform> calendarPlatforms)
+    required TResult Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)
         loaded,
-    required TResult Function(
-            Iterable<Integration<Platform>> integrations,
-            Iterable<CalendarIntegration<CalendarPlatform>>
-                calendarIntegrations,
-            Iterable<CalendarPlatform> calendarPlatforms,
-            String message)
+    required TResult Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations, String message)
         error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(
-            Iterable<Integration<Platform>> integrations,
-            Iterable<CalendarIntegration<CalendarPlatform>>
-                calendarIntegrations,
-            Iterable<CalendarPlatform> calendarPlatforms)?
+    TResult? Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)?
         initial,
-    TResult? Function(
-            Iterable<Integration<Platform>> integrations,
-            Iterable<CalendarIntegration<CalendarPlatform>>
-                calendarIntegrations,
-            Iterable<CalendarPlatform> calendarPlatforms)?
+    TResult? Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)?
         loading,
-    TResult? Function(
-            Iterable<Integration<Platform>> integrations,
-            Iterable<CalendarIntegration<CalendarPlatform>>
-                calendarIntegrations,
-            Iterable<CalendarPlatform> calendarPlatforms)?
+    TResult? Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)?
         loaded,
-    TResult? Function(
-            Iterable<Integration<Platform>> integrations,
-            Iterable<CalendarIntegration<CalendarPlatform>>
-                calendarIntegrations,
-            Iterable<CalendarPlatform> calendarPlatforms,
-            String message)?
+    TResult? Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations, String message)?
         error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(
-            Iterable<Integration<Platform>> integrations,
-            Iterable<CalendarIntegration<CalendarPlatform>>
-                calendarIntegrations,
-            Iterable<CalendarPlatform> calendarPlatforms)?
+    TResult Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)?
         initial,
-    TResult Function(
-            Iterable<Integration<Platform>> integrations,
-            Iterable<CalendarIntegration<CalendarPlatform>>
-                calendarIntegrations,
-            Iterable<CalendarPlatform> calendarPlatforms)?
+    TResult Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)?
         loading,
-    TResult Function(
-            Iterable<Integration<Platform>> integrations,
-            Iterable<CalendarIntegration<CalendarPlatform>>
-                calendarIntegrations,
-            Iterable<CalendarPlatform> calendarPlatforms)?
+    TResult Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)?
         loaded,
-    TResult Function(
-            Iterable<Integration<Platform>> integrations,
-            Iterable<CalendarIntegration<CalendarPlatform>>
-                calendarIntegrations,
-            Iterable<CalendarPlatform> calendarPlatforms,
-            String message)?
+    TResult Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations, String message)?
         error,
     required TResult orElse(),
   }) =>
@@ -148,9 +106,8 @@ abstract class $IntegrationsStateCopyWith<$Res> {
       _$IntegrationsStateCopyWithImpl<$Res, IntegrationsState>;
   @useResult
   $Res call(
-      {Iterable<Integration<Platform>> integrations,
-      Iterable<CalendarIntegration<CalendarPlatform>> calendarIntegrations,
-      Iterable<CalendarPlatform> calendarPlatforms});
+      {Iterable<Platform> availablePlatforms,
+      Iterable<Integration> integrations});
 }
 
 /// @nodoc
@@ -166,23 +123,18 @@ class _$IntegrationsStateCopyWithImpl<$Res, $Val extends IntegrationsState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? availablePlatforms = null,
     Object? integrations = null,
-    Object? calendarIntegrations = null,
-    Object? calendarPlatforms = null,
   }) {
     return _then(_value.copyWith(
+      availablePlatforms: null == availablePlatforms
+          ? _value.availablePlatforms
+          : availablePlatforms // ignore: cast_nullable_to_non_nullable
+              as Iterable<Platform>,
       integrations: null == integrations
           ? _value.integrations
           : integrations // ignore: cast_nullable_to_non_nullable
-              as Iterable<Integration<Platform>>,
-      calendarIntegrations: null == calendarIntegrations
-          ? _value.calendarIntegrations
-          : calendarIntegrations // ignore: cast_nullable_to_non_nullable
-              as Iterable<CalendarIntegration<CalendarPlatform>>,
-      calendarPlatforms: null == calendarPlatforms
-          ? _value.calendarPlatforms
-          : calendarPlatforms // ignore: cast_nullable_to_non_nullable
-              as Iterable<CalendarPlatform>,
+              as Iterable<Integration>,
     ) as $Val);
   }
 }
@@ -196,9 +148,8 @@ abstract class _$$IntegrationsInitialCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {Iterable<Integration<Platform>> integrations,
-      Iterable<CalendarIntegration<CalendarPlatform>> calendarIntegrations,
-      Iterable<CalendarPlatform> calendarPlatforms});
+      {Iterable<Platform> availablePlatforms,
+      Iterable<Integration> integrations});
 }
 
 /// @nodoc
@@ -212,23 +163,18 @@ class __$$IntegrationsInitialCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? availablePlatforms = null,
     Object? integrations = null,
-    Object? calendarIntegrations = null,
-    Object? calendarPlatforms = null,
   }) {
     return _then(_$IntegrationsInitial(
+      null == availablePlatforms
+          ? _value.availablePlatforms
+          : availablePlatforms // ignore: cast_nullable_to_non_nullable
+              as Iterable<Platform>,
       null == integrations
           ? _value.integrations
           : integrations // ignore: cast_nullable_to_non_nullable
-              as Iterable<Integration<Platform>>,
-      null == calendarIntegrations
-          ? _value.calendarIntegrations
-          : calendarIntegrations // ignore: cast_nullable_to_non_nullable
-              as Iterable<CalendarIntegration<CalendarPlatform>>,
-      null == calendarPlatforms
-          ? _value.calendarPlatforms
-          : calendarPlatforms // ignore: cast_nullable_to_non_nullable
-              as Iterable<CalendarPlatform>,
+              as Iterable<Integration>,
     ));
   }
 }
@@ -236,19 +182,16 @@ class __$$IntegrationsInitialCopyWithImpl<$Res>
 /// @nodoc
 
 class _$IntegrationsInitial implements IntegrationsInitial {
-  const _$IntegrationsInitial(
-      this.integrations, this.calendarIntegrations, this.calendarPlatforms);
+  const _$IntegrationsInitial(this.availablePlatforms, this.integrations);
 
   @override
-  final Iterable<Integration<Platform>> integrations;
+  final Iterable<Platform> availablePlatforms;
   @override
-  final Iterable<CalendarIntegration<CalendarPlatform>> calendarIntegrations;
-  @override
-  final Iterable<CalendarPlatform> calendarPlatforms;
+  final Iterable<Integration> integrations;
 
   @override
   String toString() {
-    return 'IntegrationsState.initial(integrations: $integrations, calendarIntegrations: $calendarIntegrations, calendarPlatforms: $calendarPlatforms)';
+    return 'IntegrationsState.initial(availablePlatforms: $availablePlatforms, integrations: $integrations)';
   }
 
   @override
@@ -257,19 +200,16 @@ class _$IntegrationsInitial implements IntegrationsInitial {
         (other.runtimeType == runtimeType &&
             other is _$IntegrationsInitial &&
             const DeepCollectionEquality()
-                .equals(other.integrations, integrations) &&
+                .equals(other.availablePlatforms, availablePlatforms) &&
             const DeepCollectionEquality()
-                .equals(other.calendarIntegrations, calendarIntegrations) &&
-            const DeepCollectionEquality()
-                .equals(other.calendarPlatforms, calendarPlatforms));
+                .equals(other.integrations, integrations));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(integrations),
-      const DeepCollectionEquality().hash(calendarIntegrations),
-      const DeepCollectionEquality().hash(calendarPlatforms));
+      const DeepCollectionEquality().hash(availablePlatforms),
+      const DeepCollectionEquality().hash(integrations));
 
   @JsonKey(ignore: true)
   @override
@@ -281,99 +221,60 @@ class _$IntegrationsInitial implements IntegrationsInitial {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            Iterable<Integration<Platform>> integrations,
-            Iterable<CalendarIntegration<CalendarPlatform>>
-                calendarIntegrations,
-            Iterable<CalendarPlatform> calendarPlatforms)
+    required TResult Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)
         initial,
-    required TResult Function(
-            Iterable<Integration<Platform>> integrations,
-            Iterable<CalendarIntegration<CalendarPlatform>>
-                calendarIntegrations,
-            Iterable<CalendarPlatform> calendarPlatforms)
+    required TResult Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)
         loading,
-    required TResult Function(
-            Iterable<Integration<Platform>> integrations,
-            Iterable<CalendarIntegration<CalendarPlatform>>
-                calendarIntegrations,
-            Iterable<CalendarPlatform> calendarPlatforms)
+    required TResult Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)
         loaded,
-    required TResult Function(
-            Iterable<Integration<Platform>> integrations,
-            Iterable<CalendarIntegration<CalendarPlatform>>
-                calendarIntegrations,
-            Iterable<CalendarPlatform> calendarPlatforms,
-            String message)
+    required TResult Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations, String message)
         error,
   }) {
-    return initial(integrations, calendarIntegrations, calendarPlatforms);
+    return initial(availablePlatforms, integrations);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(
-            Iterable<Integration<Platform>> integrations,
-            Iterable<CalendarIntegration<CalendarPlatform>>
-                calendarIntegrations,
-            Iterable<CalendarPlatform> calendarPlatforms)?
+    TResult? Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)?
         initial,
-    TResult? Function(
-            Iterable<Integration<Platform>> integrations,
-            Iterable<CalendarIntegration<CalendarPlatform>>
-                calendarIntegrations,
-            Iterable<CalendarPlatform> calendarPlatforms)?
+    TResult? Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)?
         loading,
-    TResult? Function(
-            Iterable<Integration<Platform>> integrations,
-            Iterable<CalendarIntegration<CalendarPlatform>>
-                calendarIntegrations,
-            Iterable<CalendarPlatform> calendarPlatforms)?
+    TResult? Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)?
         loaded,
-    TResult? Function(
-            Iterable<Integration<Platform>> integrations,
-            Iterable<CalendarIntegration<CalendarPlatform>>
-                calendarIntegrations,
-            Iterable<CalendarPlatform> calendarPlatforms,
-            String message)?
+    TResult? Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations, String message)?
         error,
   }) {
-    return initial?.call(integrations, calendarIntegrations, calendarPlatforms);
+    return initial?.call(availablePlatforms, integrations);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(
-            Iterable<Integration<Platform>> integrations,
-            Iterable<CalendarIntegration<CalendarPlatform>>
-                calendarIntegrations,
-            Iterable<CalendarPlatform> calendarPlatforms)?
+    TResult Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)?
         initial,
-    TResult Function(
-            Iterable<Integration<Platform>> integrations,
-            Iterable<CalendarIntegration<CalendarPlatform>>
-                calendarIntegrations,
-            Iterable<CalendarPlatform> calendarPlatforms)?
+    TResult Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)?
         loading,
-    TResult Function(
-            Iterable<Integration<Platform>> integrations,
-            Iterable<CalendarIntegration<CalendarPlatform>>
-                calendarIntegrations,
-            Iterable<CalendarPlatform> calendarPlatforms)?
+    TResult Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)?
         loaded,
-    TResult Function(
-            Iterable<Integration<Platform>> integrations,
-            Iterable<CalendarIntegration<CalendarPlatform>>
-                calendarIntegrations,
-            Iterable<CalendarPlatform> calendarPlatforms,
-            String message)?
+    TResult Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations, String message)?
         error,
     required TResult orElse(),
   }) {
     if (initial != null) {
-      return initial(integrations, calendarIntegrations, calendarPlatforms);
+      return initial(availablePlatforms, integrations);
     }
     return orElse();
   }
@@ -417,19 +318,13 @@ class _$IntegrationsInitial implements IntegrationsInitial {
 }
 
 abstract class IntegrationsInitial implements IntegrationsState {
-  const factory IntegrationsInitial(
-          final Iterable<Integration<Platform>> integrations,
-          final Iterable<CalendarIntegration<CalendarPlatform>>
-              calendarIntegrations,
-          final Iterable<CalendarPlatform> calendarPlatforms) =
-      _$IntegrationsInitial;
+  const factory IntegrationsInitial(final Iterable<Platform> availablePlatforms,
+      final Iterable<Integration> integrations) = _$IntegrationsInitial;
 
   @override
-  Iterable<Integration<Platform>> get integrations;
+  Iterable<Platform> get availablePlatforms;
   @override
-  Iterable<CalendarIntegration<CalendarPlatform>> get calendarIntegrations;
-  @override
-  Iterable<CalendarPlatform> get calendarPlatforms;
+  Iterable<Integration> get integrations;
   @override
   @JsonKey(ignore: true)
   _$$IntegrationsInitialCopyWith<_$IntegrationsInitial> get copyWith =>
@@ -445,9 +340,8 @@ abstract class _$$IntegrationsLoadingCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {Iterable<Integration<Platform>> integrations,
-      Iterable<CalendarIntegration<CalendarPlatform>> calendarIntegrations,
-      Iterable<CalendarPlatform> calendarPlatforms});
+      {Iterable<Platform> availablePlatforms,
+      Iterable<Integration> integrations});
 }
 
 /// @nodoc
@@ -461,23 +355,18 @@ class __$$IntegrationsLoadingCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? availablePlatforms = null,
     Object? integrations = null,
-    Object? calendarIntegrations = null,
-    Object? calendarPlatforms = null,
   }) {
     return _then(_$IntegrationsLoading(
+      null == availablePlatforms
+          ? _value.availablePlatforms
+          : availablePlatforms // ignore: cast_nullable_to_non_nullable
+              as Iterable<Platform>,
       null == integrations
           ? _value.integrations
           : integrations // ignore: cast_nullable_to_non_nullable
-              as Iterable<Integration<Platform>>,
-      null == calendarIntegrations
-          ? _value.calendarIntegrations
-          : calendarIntegrations // ignore: cast_nullable_to_non_nullable
-              as Iterable<CalendarIntegration<CalendarPlatform>>,
-      null == calendarPlatforms
-          ? _value.calendarPlatforms
-          : calendarPlatforms // ignore: cast_nullable_to_non_nullable
-              as Iterable<CalendarPlatform>,
+              as Iterable<Integration>,
     ));
   }
 }
@@ -485,19 +374,16 @@ class __$$IntegrationsLoadingCopyWithImpl<$Res>
 /// @nodoc
 
 class _$IntegrationsLoading implements IntegrationsLoading {
-  const _$IntegrationsLoading(
-      this.integrations, this.calendarIntegrations, this.calendarPlatforms);
+  const _$IntegrationsLoading(this.availablePlatforms, this.integrations);
 
   @override
-  final Iterable<Integration<Platform>> integrations;
+  final Iterable<Platform> availablePlatforms;
   @override
-  final Iterable<CalendarIntegration<CalendarPlatform>> calendarIntegrations;
-  @override
-  final Iterable<CalendarPlatform> calendarPlatforms;
+  final Iterable<Integration> integrations;
 
   @override
   String toString() {
-    return 'IntegrationsState.loading(integrations: $integrations, calendarIntegrations: $calendarIntegrations, calendarPlatforms: $calendarPlatforms)';
+    return 'IntegrationsState.loading(availablePlatforms: $availablePlatforms, integrations: $integrations)';
   }
 
   @override
@@ -506,19 +392,16 @@ class _$IntegrationsLoading implements IntegrationsLoading {
         (other.runtimeType == runtimeType &&
             other is _$IntegrationsLoading &&
             const DeepCollectionEquality()
-                .equals(other.integrations, integrations) &&
+                .equals(other.availablePlatforms, availablePlatforms) &&
             const DeepCollectionEquality()
-                .equals(other.calendarIntegrations, calendarIntegrations) &&
-            const DeepCollectionEquality()
-                .equals(other.calendarPlatforms, calendarPlatforms));
+                .equals(other.integrations, integrations));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(integrations),
-      const DeepCollectionEquality().hash(calendarIntegrations),
-      const DeepCollectionEquality().hash(calendarPlatforms));
+      const DeepCollectionEquality().hash(availablePlatforms),
+      const DeepCollectionEquality().hash(integrations));
 
   @JsonKey(ignore: true)
   @override
@@ -530,99 +413,60 @@ class _$IntegrationsLoading implements IntegrationsLoading {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            Iterable<Integration<Platform>> integrations,
-            Iterable<CalendarIntegration<CalendarPlatform>>
-                calendarIntegrations,
-            Iterable<CalendarPlatform> calendarPlatforms)
+    required TResult Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)
         initial,
-    required TResult Function(
-            Iterable<Integration<Platform>> integrations,
-            Iterable<CalendarIntegration<CalendarPlatform>>
-                calendarIntegrations,
-            Iterable<CalendarPlatform> calendarPlatforms)
+    required TResult Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)
         loading,
-    required TResult Function(
-            Iterable<Integration<Platform>> integrations,
-            Iterable<CalendarIntegration<CalendarPlatform>>
-                calendarIntegrations,
-            Iterable<CalendarPlatform> calendarPlatforms)
+    required TResult Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)
         loaded,
-    required TResult Function(
-            Iterable<Integration<Platform>> integrations,
-            Iterable<CalendarIntegration<CalendarPlatform>>
-                calendarIntegrations,
-            Iterable<CalendarPlatform> calendarPlatforms,
-            String message)
+    required TResult Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations, String message)
         error,
   }) {
-    return loading(integrations, calendarIntegrations, calendarPlatforms);
+    return loading(availablePlatforms, integrations);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(
-            Iterable<Integration<Platform>> integrations,
-            Iterable<CalendarIntegration<CalendarPlatform>>
-                calendarIntegrations,
-            Iterable<CalendarPlatform> calendarPlatforms)?
+    TResult? Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)?
         initial,
-    TResult? Function(
-            Iterable<Integration<Platform>> integrations,
-            Iterable<CalendarIntegration<CalendarPlatform>>
-                calendarIntegrations,
-            Iterable<CalendarPlatform> calendarPlatforms)?
+    TResult? Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)?
         loading,
-    TResult? Function(
-            Iterable<Integration<Platform>> integrations,
-            Iterable<CalendarIntegration<CalendarPlatform>>
-                calendarIntegrations,
-            Iterable<CalendarPlatform> calendarPlatforms)?
+    TResult? Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)?
         loaded,
-    TResult? Function(
-            Iterable<Integration<Platform>> integrations,
-            Iterable<CalendarIntegration<CalendarPlatform>>
-                calendarIntegrations,
-            Iterable<CalendarPlatform> calendarPlatforms,
-            String message)?
+    TResult? Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations, String message)?
         error,
   }) {
-    return loading?.call(integrations, calendarIntegrations, calendarPlatforms);
+    return loading?.call(availablePlatforms, integrations);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(
-            Iterable<Integration<Platform>> integrations,
-            Iterable<CalendarIntegration<CalendarPlatform>>
-                calendarIntegrations,
-            Iterable<CalendarPlatform> calendarPlatforms)?
+    TResult Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)?
         initial,
-    TResult Function(
-            Iterable<Integration<Platform>> integrations,
-            Iterable<CalendarIntegration<CalendarPlatform>>
-                calendarIntegrations,
-            Iterable<CalendarPlatform> calendarPlatforms)?
+    TResult Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)?
         loading,
-    TResult Function(
-            Iterable<Integration<Platform>> integrations,
-            Iterable<CalendarIntegration<CalendarPlatform>>
-                calendarIntegrations,
-            Iterable<CalendarPlatform> calendarPlatforms)?
+    TResult Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)?
         loaded,
-    TResult Function(
-            Iterable<Integration<Platform>> integrations,
-            Iterable<CalendarIntegration<CalendarPlatform>>
-                calendarIntegrations,
-            Iterable<CalendarPlatform> calendarPlatforms,
-            String message)?
+    TResult Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations, String message)?
         error,
     required TResult orElse(),
   }) {
     if (loading != null) {
-      return loading(integrations, calendarIntegrations, calendarPlatforms);
+      return loading(availablePlatforms, integrations);
     }
     return orElse();
   }
@@ -666,19 +510,13 @@ class _$IntegrationsLoading implements IntegrationsLoading {
 }
 
 abstract class IntegrationsLoading implements IntegrationsState {
-  const factory IntegrationsLoading(
-          final Iterable<Integration<Platform>> integrations,
-          final Iterable<CalendarIntegration<CalendarPlatform>>
-              calendarIntegrations,
-          final Iterable<CalendarPlatform> calendarPlatforms) =
-      _$IntegrationsLoading;
+  const factory IntegrationsLoading(final Iterable<Platform> availablePlatforms,
+      final Iterable<Integration> integrations) = _$IntegrationsLoading;
 
   @override
-  Iterable<Integration<Platform>> get integrations;
+  Iterable<Platform> get availablePlatforms;
   @override
-  Iterable<CalendarIntegration<CalendarPlatform>> get calendarIntegrations;
-  @override
-  Iterable<CalendarPlatform> get calendarPlatforms;
+  Iterable<Integration> get integrations;
   @override
   @JsonKey(ignore: true)
   _$$IntegrationsLoadingCopyWith<_$IntegrationsLoading> get copyWith =>
@@ -694,9 +532,8 @@ abstract class _$$IntegrationsLoadedCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {Iterable<Integration<Platform>> integrations,
-      Iterable<CalendarIntegration<CalendarPlatform>> calendarIntegrations,
-      Iterable<CalendarPlatform> calendarPlatforms});
+      {Iterable<Platform> availablePlatforms,
+      Iterable<Integration> integrations});
 }
 
 /// @nodoc
@@ -710,23 +547,18 @@ class __$$IntegrationsLoadedCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? availablePlatforms = null,
     Object? integrations = null,
-    Object? calendarIntegrations = null,
-    Object? calendarPlatforms = null,
   }) {
     return _then(_$IntegrationsLoaded(
+      null == availablePlatforms
+          ? _value.availablePlatforms
+          : availablePlatforms // ignore: cast_nullable_to_non_nullable
+              as Iterable<Platform>,
       null == integrations
           ? _value.integrations
           : integrations // ignore: cast_nullable_to_non_nullable
-              as Iterable<Integration<Platform>>,
-      null == calendarIntegrations
-          ? _value.calendarIntegrations
-          : calendarIntegrations // ignore: cast_nullable_to_non_nullable
-              as Iterable<CalendarIntegration<CalendarPlatform>>,
-      null == calendarPlatforms
-          ? _value.calendarPlatforms
-          : calendarPlatforms // ignore: cast_nullable_to_non_nullable
-              as Iterable<CalendarPlatform>,
+              as Iterable<Integration>,
     ));
   }
 }
@@ -734,19 +566,16 @@ class __$$IntegrationsLoadedCopyWithImpl<$Res>
 /// @nodoc
 
 class _$IntegrationsLoaded implements IntegrationsLoaded {
-  const _$IntegrationsLoaded(
-      this.integrations, this.calendarIntegrations, this.calendarPlatforms);
+  const _$IntegrationsLoaded(this.availablePlatforms, this.integrations);
 
   @override
-  final Iterable<Integration<Platform>> integrations;
+  final Iterable<Platform> availablePlatforms;
   @override
-  final Iterable<CalendarIntegration<CalendarPlatform>> calendarIntegrations;
-  @override
-  final Iterable<CalendarPlatform> calendarPlatforms;
+  final Iterable<Integration> integrations;
 
   @override
   String toString() {
-    return 'IntegrationsState.loaded(integrations: $integrations, calendarIntegrations: $calendarIntegrations, calendarPlatforms: $calendarPlatforms)';
+    return 'IntegrationsState.loaded(availablePlatforms: $availablePlatforms, integrations: $integrations)';
   }
 
   @override
@@ -755,19 +584,16 @@ class _$IntegrationsLoaded implements IntegrationsLoaded {
         (other.runtimeType == runtimeType &&
             other is _$IntegrationsLoaded &&
             const DeepCollectionEquality()
-                .equals(other.integrations, integrations) &&
+                .equals(other.availablePlatforms, availablePlatforms) &&
             const DeepCollectionEquality()
-                .equals(other.calendarIntegrations, calendarIntegrations) &&
-            const DeepCollectionEquality()
-                .equals(other.calendarPlatforms, calendarPlatforms));
+                .equals(other.integrations, integrations));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(integrations),
-      const DeepCollectionEquality().hash(calendarIntegrations),
-      const DeepCollectionEquality().hash(calendarPlatforms));
+      const DeepCollectionEquality().hash(availablePlatforms),
+      const DeepCollectionEquality().hash(integrations));
 
   @JsonKey(ignore: true)
   @override
@@ -779,99 +605,60 @@ class _$IntegrationsLoaded implements IntegrationsLoaded {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            Iterable<Integration<Platform>> integrations,
-            Iterable<CalendarIntegration<CalendarPlatform>>
-                calendarIntegrations,
-            Iterable<CalendarPlatform> calendarPlatforms)
+    required TResult Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)
         initial,
-    required TResult Function(
-            Iterable<Integration<Platform>> integrations,
-            Iterable<CalendarIntegration<CalendarPlatform>>
-                calendarIntegrations,
-            Iterable<CalendarPlatform> calendarPlatforms)
+    required TResult Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)
         loading,
-    required TResult Function(
-            Iterable<Integration<Platform>> integrations,
-            Iterable<CalendarIntegration<CalendarPlatform>>
-                calendarIntegrations,
-            Iterable<CalendarPlatform> calendarPlatforms)
+    required TResult Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)
         loaded,
-    required TResult Function(
-            Iterable<Integration<Platform>> integrations,
-            Iterable<CalendarIntegration<CalendarPlatform>>
-                calendarIntegrations,
-            Iterable<CalendarPlatform> calendarPlatforms,
-            String message)
+    required TResult Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations, String message)
         error,
   }) {
-    return loaded(integrations, calendarIntegrations, calendarPlatforms);
+    return loaded(availablePlatforms, integrations);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(
-            Iterable<Integration<Platform>> integrations,
-            Iterable<CalendarIntegration<CalendarPlatform>>
-                calendarIntegrations,
-            Iterable<CalendarPlatform> calendarPlatforms)?
+    TResult? Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)?
         initial,
-    TResult? Function(
-            Iterable<Integration<Platform>> integrations,
-            Iterable<CalendarIntegration<CalendarPlatform>>
-                calendarIntegrations,
-            Iterable<CalendarPlatform> calendarPlatforms)?
+    TResult? Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)?
         loading,
-    TResult? Function(
-            Iterable<Integration<Platform>> integrations,
-            Iterable<CalendarIntegration<CalendarPlatform>>
-                calendarIntegrations,
-            Iterable<CalendarPlatform> calendarPlatforms)?
+    TResult? Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)?
         loaded,
-    TResult? Function(
-            Iterable<Integration<Platform>> integrations,
-            Iterable<CalendarIntegration<CalendarPlatform>>
-                calendarIntegrations,
-            Iterable<CalendarPlatform> calendarPlatforms,
-            String message)?
+    TResult? Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations, String message)?
         error,
   }) {
-    return loaded?.call(integrations, calendarIntegrations, calendarPlatforms);
+    return loaded?.call(availablePlatforms, integrations);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(
-            Iterable<Integration<Platform>> integrations,
-            Iterable<CalendarIntegration<CalendarPlatform>>
-                calendarIntegrations,
-            Iterable<CalendarPlatform> calendarPlatforms)?
+    TResult Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)?
         initial,
-    TResult Function(
-            Iterable<Integration<Platform>> integrations,
-            Iterable<CalendarIntegration<CalendarPlatform>>
-                calendarIntegrations,
-            Iterable<CalendarPlatform> calendarPlatforms)?
+    TResult Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)?
         loading,
-    TResult Function(
-            Iterable<Integration<Platform>> integrations,
-            Iterable<CalendarIntegration<CalendarPlatform>>
-                calendarIntegrations,
-            Iterable<CalendarPlatform> calendarPlatforms)?
+    TResult Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)?
         loaded,
-    TResult Function(
-            Iterable<Integration<Platform>> integrations,
-            Iterable<CalendarIntegration<CalendarPlatform>>
-                calendarIntegrations,
-            Iterable<CalendarPlatform> calendarPlatforms,
-            String message)?
+    TResult Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations, String message)?
         error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(integrations, calendarIntegrations, calendarPlatforms);
+      return loaded(availablePlatforms, integrations);
     }
     return orElse();
   }
@@ -915,19 +702,13 @@ class _$IntegrationsLoaded implements IntegrationsLoaded {
 }
 
 abstract class IntegrationsLoaded implements IntegrationsState {
-  const factory IntegrationsLoaded(
-          final Iterable<Integration<Platform>> integrations,
-          final Iterable<CalendarIntegration<CalendarPlatform>>
-              calendarIntegrations,
-          final Iterable<CalendarPlatform> calendarPlatforms) =
-      _$IntegrationsLoaded;
+  const factory IntegrationsLoaded(final Iterable<Platform> availablePlatforms,
+      final Iterable<Integration> integrations) = _$IntegrationsLoaded;
 
   @override
-  Iterable<Integration<Platform>> get integrations;
+  Iterable<Platform> get availablePlatforms;
   @override
-  Iterable<CalendarIntegration<CalendarPlatform>> get calendarIntegrations;
-  @override
-  Iterable<CalendarPlatform> get calendarPlatforms;
+  Iterable<Integration> get integrations;
   @override
   @JsonKey(ignore: true)
   _$$IntegrationsLoadedCopyWith<_$IntegrationsLoaded> get copyWith =>
@@ -943,9 +724,8 @@ abstract class _$$IntegrationsErrorCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {Iterable<Integration<Platform>> integrations,
-      Iterable<CalendarIntegration<CalendarPlatform>> calendarIntegrations,
-      Iterable<CalendarPlatform> calendarPlatforms,
+      {Iterable<Platform> availablePlatforms,
+      Iterable<Integration> integrations,
       String message});
 }
 
@@ -960,24 +740,19 @@ class __$$IntegrationsErrorCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? availablePlatforms = null,
     Object? integrations = null,
-    Object? calendarIntegrations = null,
-    Object? calendarPlatforms = null,
     Object? message = null,
   }) {
     return _then(_$IntegrationsError(
+      null == availablePlatforms
+          ? _value.availablePlatforms
+          : availablePlatforms // ignore: cast_nullable_to_non_nullable
+              as Iterable<Platform>,
       null == integrations
           ? _value.integrations
           : integrations // ignore: cast_nullable_to_non_nullable
-              as Iterable<Integration<Platform>>,
-      null == calendarIntegrations
-          ? _value.calendarIntegrations
-          : calendarIntegrations // ignore: cast_nullable_to_non_nullable
-              as Iterable<CalendarIntegration<CalendarPlatform>>,
-      null == calendarPlatforms
-          ? _value.calendarPlatforms
-          : calendarPlatforms // ignore: cast_nullable_to_non_nullable
-              as Iterable<CalendarPlatform>,
+              as Iterable<Integration>,
       null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -989,21 +764,19 @@ class __$$IntegrationsErrorCopyWithImpl<$Res>
 /// @nodoc
 
 class _$IntegrationsError implements IntegrationsError {
-  const _$IntegrationsError(this.integrations, this.calendarIntegrations,
-      this.calendarPlatforms, this.message);
+  const _$IntegrationsError(
+      this.availablePlatforms, this.integrations, this.message);
 
   @override
-  final Iterable<Integration<Platform>> integrations;
+  final Iterable<Platform> availablePlatforms;
   @override
-  final Iterable<CalendarIntegration<CalendarPlatform>> calendarIntegrations;
-  @override
-  final Iterable<CalendarPlatform> calendarPlatforms;
+  final Iterable<Integration> integrations;
   @override
   final String message;
 
   @override
   String toString() {
-    return 'IntegrationsState.error(integrations: $integrations, calendarIntegrations: $calendarIntegrations, calendarPlatforms: $calendarPlatforms, message: $message)';
+    return 'IntegrationsState.error(availablePlatforms: $availablePlatforms, integrations: $integrations, message: $message)';
   }
 
   @override
@@ -1012,20 +785,17 @@ class _$IntegrationsError implements IntegrationsError {
         (other.runtimeType == runtimeType &&
             other is _$IntegrationsError &&
             const DeepCollectionEquality()
+                .equals(other.availablePlatforms, availablePlatforms) &&
+            const DeepCollectionEquality()
                 .equals(other.integrations, integrations) &&
-            const DeepCollectionEquality()
-                .equals(other.calendarIntegrations, calendarIntegrations) &&
-            const DeepCollectionEquality()
-                .equals(other.calendarPlatforms, calendarPlatforms) &&
             (identical(other.message, message) || other.message == message));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      const DeepCollectionEquality().hash(availablePlatforms),
       const DeepCollectionEquality().hash(integrations),
-      const DeepCollectionEquality().hash(calendarIntegrations),
-      const DeepCollectionEquality().hash(calendarPlatforms),
       message);
 
   @JsonKey(ignore: true)
@@ -1037,102 +807,60 @@ class _$IntegrationsError implements IntegrationsError {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(
-            Iterable<Integration<Platform>> integrations,
-            Iterable<CalendarIntegration<CalendarPlatform>>
-                calendarIntegrations,
-            Iterable<CalendarPlatform> calendarPlatforms)
+    required TResult Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)
         initial,
-    required TResult Function(
-            Iterable<Integration<Platform>> integrations,
-            Iterable<CalendarIntegration<CalendarPlatform>>
-                calendarIntegrations,
-            Iterable<CalendarPlatform> calendarPlatforms)
+    required TResult Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)
         loading,
-    required TResult Function(
-            Iterable<Integration<Platform>> integrations,
-            Iterable<CalendarIntegration<CalendarPlatform>>
-                calendarIntegrations,
-            Iterable<CalendarPlatform> calendarPlatforms)
+    required TResult Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)
         loaded,
-    required TResult Function(
-            Iterable<Integration<Platform>> integrations,
-            Iterable<CalendarIntegration<CalendarPlatform>>
-                calendarIntegrations,
-            Iterable<CalendarPlatform> calendarPlatforms,
-            String message)
+    required TResult Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations, String message)
         error,
   }) {
-    return error(
-        integrations, calendarIntegrations, calendarPlatforms, message);
+    return error(availablePlatforms, integrations, message);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(
-            Iterable<Integration<Platform>> integrations,
-            Iterable<CalendarIntegration<CalendarPlatform>>
-                calendarIntegrations,
-            Iterable<CalendarPlatform> calendarPlatforms)?
+    TResult? Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)?
         initial,
-    TResult? Function(
-            Iterable<Integration<Platform>> integrations,
-            Iterable<CalendarIntegration<CalendarPlatform>>
-                calendarIntegrations,
-            Iterable<CalendarPlatform> calendarPlatforms)?
+    TResult? Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)?
         loading,
-    TResult? Function(
-            Iterable<Integration<Platform>> integrations,
-            Iterable<CalendarIntegration<CalendarPlatform>>
-                calendarIntegrations,
-            Iterable<CalendarPlatform> calendarPlatforms)?
+    TResult? Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)?
         loaded,
-    TResult? Function(
-            Iterable<Integration<Platform>> integrations,
-            Iterable<CalendarIntegration<CalendarPlatform>>
-                calendarIntegrations,
-            Iterable<CalendarPlatform> calendarPlatforms,
-            String message)?
+    TResult? Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations, String message)?
         error,
   }) {
-    return error?.call(
-        integrations, calendarIntegrations, calendarPlatforms, message);
+    return error?.call(availablePlatforms, integrations, message);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(
-            Iterable<Integration<Platform>> integrations,
-            Iterable<CalendarIntegration<CalendarPlatform>>
-                calendarIntegrations,
-            Iterable<CalendarPlatform> calendarPlatforms)?
+    TResult Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)?
         initial,
-    TResult Function(
-            Iterable<Integration<Platform>> integrations,
-            Iterable<CalendarIntegration<CalendarPlatform>>
-                calendarIntegrations,
-            Iterable<CalendarPlatform> calendarPlatforms)?
+    TResult Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)?
         loading,
-    TResult Function(
-            Iterable<Integration<Platform>> integrations,
-            Iterable<CalendarIntegration<CalendarPlatform>>
-                calendarIntegrations,
-            Iterable<CalendarPlatform> calendarPlatforms)?
+    TResult Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)?
         loaded,
-    TResult Function(
-            Iterable<Integration<Platform>> integrations,
-            Iterable<CalendarIntegration<CalendarPlatform>>
-                calendarIntegrations,
-            Iterable<CalendarPlatform> calendarPlatforms,
-            String message)?
+    TResult Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations, String message)?
         error,
     required TResult orElse(),
   }) {
     if (error != null) {
-      return error(
-          integrations, calendarIntegrations, calendarPlatforms, message);
+      return error(availablePlatforms, integrations, message);
     }
     return orElse();
   }
@@ -1177,18 +905,14 @@ class _$IntegrationsError implements IntegrationsError {
 
 abstract class IntegrationsError implements IntegrationsState {
   const factory IntegrationsError(
-      final Iterable<Integration<Platform>> integrations,
-      final Iterable<CalendarIntegration<CalendarPlatform>>
-          calendarIntegrations,
-      final Iterable<CalendarPlatform> calendarPlatforms,
+      final Iterable<Platform> availablePlatforms,
+      final Iterable<Integration> integrations,
       final String message) = _$IntegrationsError;
 
   @override
-  Iterable<Integration<Platform>> get integrations;
+  Iterable<Platform> get availablePlatforms;
   @override
-  Iterable<CalendarIntegration<CalendarPlatform>> get calendarIntegrations;
-  @override
-  Iterable<CalendarPlatform> get calendarPlatforms;
+  Iterable<Integration> get integrations;
   String get message;
   @override
   @JsonKey(ignore: true)

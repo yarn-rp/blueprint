@@ -1,7 +1,7 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:blueprint/core/utils/color/hex_color_extension.dart';
 import 'package:flutter/material.dart';
-import 'package:integrations_repository/integrations_repository.dart';
+import 'package:task_repository/task_repository.dart';
 
 class LabelChip extends StatelessWidget {
   const LabelChip({

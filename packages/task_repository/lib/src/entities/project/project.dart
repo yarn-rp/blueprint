@@ -1,6 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:integrations_repository/integrations_repository.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:task_repository/src/entities/platform/platform.dart';
 
 part 'project.g.dart';
 

@@ -1,6 +1,6 @@
 import 'package:calendar_repository/calendar_repository.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:integrations_repository/integrations_repository.dart';
+import 'package:task_repository/task_repository.dart';
 
 part 'calendar_event.freezed.dart';
 

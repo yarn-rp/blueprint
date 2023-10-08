@@ -1,11 +1,10 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:blueprint/integrations/presentation/widgets/platform_integration_tile.dart';
-import 'package:blueprint/integrations/state_management/available_platforms/available_platforms_cubit.dart';
 import 'package:blueprint/integrations/state_management/integrations_repository/integrations_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_calendar_service/google_calendar_service.dart';
 import 'package:integrations_repository/integrations_repository.dart';
+
+import '../widgets/create_integration_modals/platform_integration_tile.dart';
 
 @RoutePage()
 class IntegrationsPage extends StatefulWidget {
@@ -34,19 +33,7 @@ class _IntegrationsPageState extends State<IntegrationsPage>
             style: Theme.of(context).textTheme.titleLarge,
           ),
           const SizedBox(height: 16),
-          BlocBuilder<IntegrationsCubit, IntegrationsState>(
-            builder: (context, state) {
-              final integrations = state.calendarIntegrations;
-              return Wrap(
-                runSpacing: 16,
-                spacing: 16,
-                children: [
-                  for (final integration in integrations)
-                    Text(integration.platform.displayName),
-                ],
-              );
-            },
-          ),
+          const MyIntegrations(),
           const Divider(),
           const SizedBox(height: 16),
           Text(
@@ -54,84 +41,7 @@ class _IntegrationsPageState extends State<IntegrationsPage>
             style: Theme.of(context).textTheme.titleLarge,
           ),
           const SizedBox(height: 16),
-          BlocBuilder<AvailablePlatformsCubit, AvailablePlatformsState>(
-            builder: (context, state) {
-              return state.map(
-                initial: (_) => const SizedBox.shrink(),
-                loading: (_) => const Center(
-                  child: CircularProgressIndicator(),
-                ),
-                loaded: (state) => Wrap(
-                  runSpacing: 16,
-                  spacing: 16,
-                  children: [
-                    ...state.platforms.map((platform) {
-                      switch (platform.authentication) {
-                        case OAuth2():
-                          return OAuth2PlatformTile(
-                            platform: platform,
-                            integrationName: platform.displayName,
-                            description:
-                                'Connect your ${platform.displayName} account to Blueprint',
-                            onIntegrationCreated: (integration) {
-                              // context
-                              //     .read<IntegrationsCubit>()
-                              //     .addIntegration(integration);
-                            },
-                          );
-
-                        default:
-                          throw UnimplementedError(
-                            'Platform $platform is not implemented',
-                          );
-                      }
-                    }),
-                  ],
-                ),
-                error: (_) => const Center(
-                  child: Text('Error loading platforms'),
-                ),
-              );
-            },
-          ),
-          BlocBuilder<IntegrationsCubit, IntegrationsState>(
-            builder: (context, state) {
-              final platforms = state.calendarPlatforms;
-              return Wrap(
-                runSpacing: 16,
-                spacing: 16,
-                children: [
-                  for (final platform in platforms)
-                    GestureDetector(
-                      onTap: () {
-                        if (platform is GoogleCalendarPlatform) {
-                          context
-                              .read<IntegrationsCubit>()
-                              .startIntegrationWithPlatform(
-                                platform,
-                              );
-                        }
-                      },
-                      child: Card(
-                        child: Padding(
-                          padding: const EdgeInsets.all(16),
-                          child: Column(
-                            children: [
-                              Image.network(platform.iconUrl),
-                              const SizedBox(height: 16),
-                              Text(
-                                platform.displayName,
-                                style: Theme.of(context).textTheme.titleLarge,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                ],
-              );
-            },
-          ),
+          const AvailablePlatforms(),
         ],
       ),
     );
@@ -139,6 +49,63 @@ class _IntegrationsPageState extends State<IntegrationsPage>
 
   @override
   bool get wantKeepAlive => true;
+}
+
+class AvailablePlatforms extends StatelessWidget {
+  const AvailablePlatforms({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final availablePlatforms = context.select(
+      (IntegrationsCubit cubit) => cubit.state.availablePlatforms,
+    );
+
+    return Wrap(runSpacing: 16, spacing: 16, children: [
+      ...availablePlatforms.map((platform) {
+        switch (platform.authentication) {
+          case OAuth2():
+            return OAuth2PlatformTile(
+              platform: platform,
+              integrationName: platform.displayName,
+              description:
+                  'Connect your ${platform.displayName} account to Blueprint',
+              onIntegrationCreated: (integration) {
+                context.read<IntegrationsCubit>().addIntegration(integration);
+              },
+            );
+
+          default:
+            throw UnimplementedError(
+              'Platform $platform is not implemented',
+            );
+        }
+      }),
+    ]);
+  }
+}
+
+class MyIntegrations extends StatelessWidget {
+  const MyIntegrations({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final integrations = context.select(
+      (IntegrationsCubit cubit) => cubit.state.integrations,
+    );
+
+    return Wrap(
+      runSpacing: 16,
+      spacing: 16,
+      children: [
+        for (final integration in integrations)
+          Text(integration.platform.displayName),
+      ],
+    );
+  }
 }
 
 class IntegrationCard extends StatelessWidget {

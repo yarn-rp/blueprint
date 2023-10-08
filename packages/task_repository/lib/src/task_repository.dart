@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:integrations_repository/integrations_repository.dart';
 import 'package:stream_transform/stream_transform.dart';
 import 'package:task_repository/src/entities/entities.dart';
 

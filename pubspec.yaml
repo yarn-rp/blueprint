@@ -15,10 +15,10 @@ dependencies:
     path: ./packages/app_ui
   bloc: ^8.1.1
   cached_network_image: ^3.2.3
-  cloud_firestore: ^4.8.4
-  cloud_functions: ^4.3.4
   calendar_repository:
     path: ./packages/calendar_repository
+  cloud_firestore: ^4.8.4
+  cloud_functions: ^4.3.4
   collapsible_sidebar: ^2.0.3+3
   collection: ^1.17.0
   dynamic_color: ^1.6.3
@@ -38,9 +38,6 @@ dependencies:
   flutter_secure_key_pair_storage:
     path: ./packages/flutter_secure_key_pair_storage
   get_it: ^7.6.0
-  google_calendar_service:
-    path: ./packages/google_calendar_service
-  google_sign_in: ^6.1.4
   hydrated_bloc: ^9.1.0
   injectable: ^2.1.1
   integrations_repository:
@@ -55,6 +52,8 @@ dependencies:
   sidebarx: ^0.15.0
   stream_transform: ^2.1.0
   syncfusion_flutter_calendar: ^21.1.38
+  task_repository:
+    path: ./packages/task_repository
   url_launcher: ^6.1.10
 
 dev_dependencies:

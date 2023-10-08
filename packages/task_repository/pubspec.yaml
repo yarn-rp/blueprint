@@ -11,6 +11,8 @@ dependencies:
   cloud_firestore: ^4.9.3
   flutter:
     sdk: flutter
+  integrations_repository:
+    path: ../integrations_repository
   json_annotation: ^4.8.1
   stream_transform: ^2.1.0
 

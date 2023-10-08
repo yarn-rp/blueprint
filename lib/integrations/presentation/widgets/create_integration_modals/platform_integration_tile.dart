@@ -83,7 +83,6 @@ class OAuth2PlatformTile<PlatformType extends Platform>
     BuildContext context,
   ) async {
     final authentication = platform.authentication as OAuth2;
-    print('Authenticating with ${authentication.url}');
 
     final result = await FlutterWebAuth.authenticate(
       url: authentication.url,

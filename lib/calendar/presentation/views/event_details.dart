@@ -230,10 +230,10 @@ class GeneralEventCalendarEventDetails extends StatelessWidget {
                                                 vertical: 4,
                                               ),
                                               child: AttendeeTile(
-                                                platformUrl: user.platformUrl,
+                                                platformUrl: null,
                                                 attendantStatus: status,
-                                                displayName: user.displayName,
-                                                email: user.email,
+                                                displayName: null,
+                                                email: user,
                                               ),
                                             );
                                           }),
