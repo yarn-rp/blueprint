@@ -1,0 +1,19 @@
+name: task_repository
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  pull_request:
+    paths:
+      - 'packages/task_repository/**'
+      - '.github/workflows/task_repository.yaml'
+jobs:
+  build:
+    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/flutter_package.yml@v1
+    with:
+      flutter_version: 3.3.10
+      flutter_channel: stable
+      working_directory: packages/task_repository
+      min_coverage: 40
