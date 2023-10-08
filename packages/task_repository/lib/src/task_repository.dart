@@ -47,7 +47,8 @@ class TaskRepository {
             return const Stream.empty();
           }
           final userData = _usersCollection.doc(userId);
-          // TODO: change this for plans when plan oriented DB is implemented
+          // TODO(yarn-rp): change this for plans when plan oriented DB is
+          // implemented
           final tasksSubCollection =
               userData.collection('tasks').withConverter<Task>(
                     fromFirestore: taskConverter.fromFirestore,

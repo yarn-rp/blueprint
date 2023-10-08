@@ -1,8 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:json_annotation/json_annotation.dart';
 import 'package:task_repository/src/entities/entities.dart';
 import 'package:task_repository/src/utils/timestamp_converter.dart';
-import 'package:json_annotation/json_annotation.dart';
 
 part 'task.g.dart';
 

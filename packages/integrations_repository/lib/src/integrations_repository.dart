@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
@@ -41,6 +42,7 @@ class IntegrationsRepository {
 
   /// The platforms collection reference.
   late final CollectionReference<Platform> _platformsCollection;
+  // ignore: unused_field
   late final CollectionReference _usersCollection;
 
   /// Stream of the current user id.
@@ -63,8 +65,6 @@ class IntegrationsRepository {
   /// Adds a new [integration] to the repository.
   Future<void> addIntegration(Integration integration) async {
     try {
-      print('Adding integration to firebase functions');
-
       final callable =
           _firebaseFunctions.httpsCallable('authenticators-connect');
       final params = integration.toConnectApiParams();
@@ -73,9 +73,17 @@ class IntegrationsRepository {
         params,
       );
     } on FirebaseFunctionsException catch (exception) {
-      print(exception);
+      log(
+        'Error while connecting integration: ${exception.message}',
+        name: 'IntegrationsRepository',
+      );
+      rethrow;
     } catch (exception) {
-      print(exception);
+      log(
+        'Error while connecting integration: $exception',
+        name: 'IntegrationsRepository',
+      );
+      rethrow;
     }
   }
 

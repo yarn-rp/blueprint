@@ -25,7 +25,6 @@ class TodaysBlueprintCubit extends Cubit<TodaysBlueprintState> {
           ),
         ) {
     calendarRepository.getTodayEvents().listen((events) {
-      print('Returned events: ${events.map((e) => e.subject).toList()}');
       emit(
         TodaysBlueprintState.loaded(
           calendarEvents: events.map<CalendarEvent>((event) {

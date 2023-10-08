@@ -1,3 +1,5 @@
+// ignore_for_file: lines_longer_than_80_chars
+
 import 'package:blueprint/blueprint/entities/calendar_event.dart';
 import 'package:blueprint/calendar/presentation/widgets/appointment_time.dart';
 import 'package:blueprint/calendar/presentation/widgets/attendee_tile.dart';

@@ -1,10 +1,9 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:blueprint/integrations/presentation/widgets/create_integration_modals/platform_integration_tile.dart';
 import 'package:blueprint/integrations/state_management/integrations_repository/integrations_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:integrations_repository/integrations_repository.dart';
-
-import 'package:blueprint/integrations/presentation/widgets/create_integration_modals/platform_integration_tile.dart';
 
 @RoutePage()
 class IntegrationsPage extends StatefulWidget {
@@ -62,27 +61,31 @@ class AvailablePlatforms extends StatelessWidget {
       (IntegrationsCubit cubit) => cubit.state.availablePlatforms,
     );
 
-    return Wrap(runSpacing: 16, spacing: 16, children: [
-      ...availablePlatforms.map((platform) {
-        switch (platform.authentication) {
-          case OAuth2():
-            return OAuth2PlatformTile(
-              platform: platform,
-              integrationName: platform.displayName,
-              description:
-                  'Connect your ${platform.displayName} account to Blueprint',
-              onIntegrationCreated: (integration) {
-                context.read<IntegrationsCubit>().addIntegration(integration);
-              },
-            );
+    return Wrap(
+      runSpacing: 16,
+      spacing: 16,
+      children: [
+        ...availablePlatforms.map((platform) {
+          switch (platform.authentication) {
+            case OAuth2():
+              return OAuth2PlatformTile(
+                platform: platform,
+                integrationName: platform.displayName,
+                description:
+                    'Connect your ${platform.displayName} account to Blueprint',
+                onIntegrationCreated: (integration) {
+                  context.read<IntegrationsCubit>().addIntegration(integration);
+                },
+              );
 
-          default:
-            throw UnimplementedError(
-              'Platform $platform is not implemented',
-            );
-        }
-      }),
-    ],);
+            default:
+              throw UnimplementedError(
+                'Platform $platform is not implemented',
+              );
+          }
+        }),
+      ],
+    );
   }
 }
 

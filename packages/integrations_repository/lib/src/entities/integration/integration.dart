@@ -40,8 +40,8 @@ class OAuth2Integration extends Integration {
   @override
   Map<String, dynamic> toConnectApiParams() => {
         'code': token,
-        //TODO: change this on backend side since displayName should not be used
-        // as a key.
+        // TODO(yarn-rp): change this on backend side since displayName
+        // should not be used as a key.
         'platform': platform.displayName,
       };
 }

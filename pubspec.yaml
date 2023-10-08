@@ -8,11 +8,11 @@ environment:
   flutter: 3.13.6
 
 dependencies:
+  app_ui:
+    path: ./packages/app_ui
   authentication_repository:
     path: ./packages/authentication_repository
   auto_route: ^7.8.3
-  app_ui:
-    path: ./packages/app_ui
   bloc: ^8.1.1
   cached_network_image: ^3.2.3
   calendar_repository:
