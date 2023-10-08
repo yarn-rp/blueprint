@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:integrations_repository/integrations_repository.dart';
 
@@ -29,21 +28,31 @@ class IntegrationsCubit extends Cubit<IntegrationsState> {
   }
   final IntegrationsRepository integrationRepository;
 
-  Future<void> addIntegration(Integration integration) async {
+  /// Integrates with [platformId] using the given [params].
+  Future<void> integrateWithPlatform(
+    String platformId,
+    Map<String, dynamic> params,
+  ) async {
     emit(
       IntegrationsState.loading(
         state.availablePlatforms,
         state.integrations,
       ),
     );
+
     try {
-      await integrationRepository.addIntegration(integration);
-    } catch (e) {
+      await integrationRepository.integrateWithPlatform(
+        platformId,
+        params,
+      );
+    } catch (error, stackTrace) {
+      addError(error, stackTrace);
+
       emit(
         IntegrationsState.error(
           state.availablePlatforms,
           state.integrations,
-          e.toString(),
+          error.toString(),
         ),
       );
     }
