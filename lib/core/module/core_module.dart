@@ -13,7 +13,8 @@ abstract class CoreModule {
     try {
       return GoogleSignIn(
         clientId: kIsWeb
-            ? '333437725100-3i5ul6dvb0gnkj031j2vukmfbud5qva9.apps.googleusercontent.com'
+            ? '333437725100-3i5ul6dvb0gnkj031j2vukmfbud5qva9.apps.'
+                'googleusercontent.com'
             : null,
         scopes: [
           'email',
@@ -22,7 +23,6 @@ abstract class CoreModule {
         ],
       );
     } catch (e) {
-      print('Error creating GoogleSignIn: $e');
       rethrow;
     }
   }
