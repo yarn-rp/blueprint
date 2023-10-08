@@ -58,7 +58,7 @@ class GeneralEventCalendarEventDetails extends StatelessWidget {
                   ),
                 ],
               ),
-            )
+            ),
           ],
           leading: Padding(
             padding: EdgeInsets.symmetric(horizontal: padding)
@@ -238,7 +238,7 @@ class GeneralEventCalendarEventDetails extends StatelessWidget {
                                             );
                                           }),
                                         ],
-                                      )
+                                      ),
                                   ],
                                 ),
                                 const SizedBox(
@@ -374,7 +374,7 @@ class RichTextBody extends StatelessWidget {
         md.ExtensionSet.gitHubFlavored.blockSyntaxes,
         <md.InlineSyntax>[
           md.EmojiSyntax(),
-          ...md.ExtensionSet.gitHubFlavored.inlineSyntaxes
+          ...md.ExtensionSet.gitHubFlavored.inlineSyntaxes,
         ],
       ),
       onTapLink: (String url, String? title, String? id) {

@@ -60,7 +60,7 @@ class TaskDetails extends StatelessWidget {
                   ),
                 ],
               ),
-            )
+            ),
           ],
           leading: Padding(
             padding: EdgeInsets.symmetric(horizontal: padding)
@@ -97,7 +97,7 @@ class TaskDetails extends StatelessWidget {
                       label: Text(
                         'View in ${task.project.platform?.displayName ?? "Platform"}',
                       ),
-                    )
+                    ),
                   ],
                 ),
               ],
@@ -249,7 +249,7 @@ class TaskDetails extends StatelessWidget {
                                               .bodySmall,
                                         ),
                                     ],
-                                  )
+                                  ),
                               ],
                             ),
                         ],
@@ -330,7 +330,7 @@ class TaskDetails extends StatelessWidget {
                           ),
                           PriorityWidget.label(
                             priority: task.priority,
-                          )
+                          ),
                         ],
                       ),
                       const SizedBox(

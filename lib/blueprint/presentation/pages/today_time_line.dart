@@ -57,12 +57,12 @@ class _TodaysBlueprintState extends State<TodayTimeline>
                         SizedBox(
                           height: 600,
                           child: calendar,
-                        )
+                        ),
                       ],
                     ),
                   )
                 : calendar,
-          )
+          ),
         ],
       ),
     );
@@ -90,10 +90,10 @@ class _TodaysBlueprintState extends State<TodayTimeline>
           allowDragAndDrop: true,
           allowAppointmentResize: true,
           appointmentTextStyle: Theme.of(context).textTheme.bodyMedium!,
-          todayTextStyle: Theme.of(context).textTheme.bodyMedium!,
-          blackoutDatesTextStyle: Theme.of(context).textTheme.bodyMedium!,
+          todayTextStyle: Theme.of(context).textTheme.bodyMedium,
+          blackoutDatesTextStyle: Theme.of(context).textTheme.bodyMedium,
           weekNumberStyle: WeekNumberStyle(
-            textStyle: Theme.of(context).textTheme.bodyMedium!,
+            textStyle: Theme.of(context).textTheme.bodyMedium,
           ),
 
           onTap: (calendarTapDetails) async {

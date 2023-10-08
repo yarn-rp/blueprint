@@ -1,4 +1,3 @@
-import 'package:calendar_repository/calendar_repository.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 /// {@template flutter_secure_key_pair_storage}

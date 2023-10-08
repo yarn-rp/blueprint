@@ -51,7 +51,7 @@ void main() {
             calendarEvents: [],
             workTimes: [],
             addedAt: DateTime.now(),
-          )
+          ),
         ]),
         initialState: TodaysBlueprintState.initial(
           calendarEvents: [],

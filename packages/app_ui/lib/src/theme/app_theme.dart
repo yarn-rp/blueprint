@@ -1,7 +1,7 @@
 import 'package:app_ui/src/colors/colors.dart';
 import 'package:flutter/material.dart';
 
-import '../typography/typography.dart';
+import 'package:app_ui/src/typography/typography.dart';
 
 /// {@template app_theme}
 /// The light theme for the app.

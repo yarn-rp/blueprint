@@ -183,7 +183,7 @@ class TodaysBlueprintCubit extends Cubit<TodaysBlueprintState> {
           movedEvent.copyWith(
             startTime: newStartingDate,
             endTime: newEndingDate,
-          )
+          ),
         ],
         addedAt: DateTime.now(),
       ),

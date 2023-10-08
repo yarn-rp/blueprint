@@ -57,7 +57,7 @@ class GeneralCalendarEventTile extends StatelessWidget {
                         color: foregroundColor,
                       ),
                 ),
-              )
+              ),
             ],
           ),
         ),
@@ -116,7 +116,7 @@ class GeneralCalendarEventTile extends StatelessWidget {
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
                     color: foregroundColor,
                   ),
-            )
+            ),
           ],
         ),
       ),

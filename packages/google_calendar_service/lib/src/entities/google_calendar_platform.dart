@@ -1,4 +1,3 @@
-import 'package:calendar_repository/calendar_repository.dart';
 
 /// {@template google_calendar_platform}
 /// Google Calendar platform.

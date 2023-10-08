@@ -10,9 +10,6 @@ part 'user.g.dart';
 /// {@endtemplate}
 @JsonSerializable()
 class User {
-  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
-
-  Map<String, dynamic> toJson() => _$UserToJson(this);
 
   /// {@macro project_user}
   const User(
@@ -20,6 +17,9 @@ class User {
     this.displayName,
     this.avatarUrl,
   );
+  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+
+  Map<String, dynamic> toJson() => _$UserToJson(this);
 
   /// The URL of the user's profile in the platform.
   final String platformURL;

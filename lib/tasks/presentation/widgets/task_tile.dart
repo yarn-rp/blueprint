@@ -48,7 +48,7 @@ class TaskTile extends StatelessWidget {
                 // ProjectChip(project: task.project),
                 ...task.labels.map(
                   (e) => LabelChip(label: e),
-                )
+                ),
               ],
             ),
           ),

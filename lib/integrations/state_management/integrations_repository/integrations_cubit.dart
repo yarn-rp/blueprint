@@ -7,7 +7,6 @@ part 'integrations_cubit.freezed.dart';
 part 'integrations_state.dart';
 
 class IntegrationsCubit extends Cubit<IntegrationsState> {
-  final IntegrationsRepository integrationRepository;
   IntegrationsCubit(
     this.integrationRepository,
   ) : super(const IntegrationsState.initial([], [])) {
@@ -28,6 +27,7 @@ class IntegrationsCubit extends Cubit<IntegrationsState> {
           ),
         );
   }
+  final IntegrationsRepository integrationRepository;
 
   Future<void> addIntegration(Integration integration) async {
     emit(

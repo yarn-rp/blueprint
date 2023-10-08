@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:integrations_repository/integrations_repository.dart';
 
-import '../widgets/create_integration_modals/platform_integration_tile.dart';
+import 'package:blueprint/integrations/presentation/widgets/create_integration_modals/platform_integration_tile.dart';
 
 @RoutePage()
 class IntegrationsPage extends StatefulWidget {
@@ -82,7 +82,7 @@ class AvailablePlatforms extends StatelessWidget {
             );
         }
       }),
-    ]);
+    ],);
   }
 }
 

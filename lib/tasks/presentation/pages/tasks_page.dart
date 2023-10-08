@@ -75,10 +75,10 @@ class _TasksPageState extends State<TasksPage>
                 ),
               ),
               if (isWide)
-                Expanded(
+                const Expanded(
                   flex: 3,
                   child: Padding(
-                    padding: const EdgeInsets.only(right: 16),
+                    padding: EdgeInsets.only(right: 16),
                     child: TodayTimeline(),
                   ),
                 ),
