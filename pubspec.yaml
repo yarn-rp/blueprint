@@ -55,6 +55,7 @@ dependencies:
   task_repository:
     path: ./packages/task_repository
   url_launcher: ^6.1.10
+  url_strategy: ^0.2.0
 
 dev_dependencies:
   auto_route_generator: ^7.3.1

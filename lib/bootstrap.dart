@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:url_strategy/url_strategy.dart';
 
 class AppBlocObserver extends BlocObserver {
   const AppBlocObserver();
@@ -33,6 +34,10 @@ Future<void> bootstrap(
 
   // Configure all dependencies using get_it.
   await configureDependencies(sl, environment: environment);
+
+  // Set the URL strategy for web. It's safe to call this function when running
+  // on mobile or desktop as well.
+  setPathUrlStrategy();
 
   // Initialize HydratedBloc.
   HydratedBloc.storage = await HydratedStorage.build(
