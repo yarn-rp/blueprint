@@ -1,60 +1,70 @@
 import 'package:calendar_repository/src/entities/entities.dart';
-import 'package:calendar_repository/src/service/calendar_service.dart';
-import 'package:local_integrations_repository/local_integrations_repository.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+import 'package:integrations_repository/integrations_repository.dart';
 import 'package:stream_transform/stream_transform.dart';
+
+const _usersCollectionName = 'users';
+
+/// Event converter for firestore.
+final eventConverter = (
+  fromFirestore: (
+    DocumentSnapshot<Map<String, dynamic>> snapshot,
+    SnapshotOptions? options,
+  ) {
+    final data = snapshot.data()!;
+    return Event.fromJson(data);
+  },
+  toFirestore: (Event event, SetOptions? options) => event.toJson(),
+);
 
 /// {@template calendar_repository}
 /// Repository which manages calendar events of the same Type.
 /// This repository can be used to manage multiple calendars of the same
 /// platform, for example, multiple Google calendars.
 /// {@endtemplate}
-class CalendarRepository extends IntegrationsRepository<CalendarPlatform,
-    CalendarIntegration, CalendarService> {
+class CalendarRepository {
   /// {@macro calendar_repository}
   CalendarRepository({
-    required List<CalendarService> services,
-  }) : super(services: services);
+    required FirebaseFirestore firestore,
+    required this.platformsStream,
+    required this.currentUserIdStream,
+  }) {
+    _usersCollection = firestore.collection(_usersCollectionName);
+  }
+
+  late final CollectionReference _usersCollection;
+
+  /// Stream of the current user id.
+  final Stream<String?> currentUserIdStream;
+
+  /// Stream of all platforms.
+  final Stream<Iterable<Platform>> platformsStream;
 
   /// Get all events of the day from the calendars managed by this repository.
   Stream<Iterable<Event>> getTodayEvents() {
-    final servicesTodayEvents = services.map(
-      (e) => e.getTodayEvents(),
-    );
+    return currentUserIdStream.switchMap((userId) {
+      if (userId == null) {
+        return const Stream.empty();
+      }
 
-    return servicesTodayEvents.reduce(
-      (previous, current) => previous.combineLatest(
-        current,
-        (a, b) => [...a, ...b].toList()
-          ..removeWhere((element) {
-            if (element.isAllDay ?? false) return false;
+      final userData = _usersCollection.doc(userId);
 
-            // remove not today events
-            final today = DateTime.now().copyWith(
-              hour: 0,
-              minute: 0,
-              second: 0,
-              millisecond: 0,
-            );
-            final start = element.startTime!;
-            final end = element.endTime!;
+      final tasksSubCollection =
+          userData.collection('events').withConverter<Event>(
+                fromFirestore: eventConverter.fromFirestore,
+                toFirestore: eventConverter.toFirestore,
+              );
 
-            return start.isBefore(today) || end.isBefore(today);
-          })
-          ..sort((a, b) {
-            final aStart = a.startTime;
-            final bStart = b.startTime;
+      final now = DateTime.now();
+      final startOfDay = DateTime(now.year, now.month, now.day);
+      final endOfDay = DateTime(now.year, now.month, now.day + 1);
 
-            if (aStart == null && bStart == null) {
-              return 0;
-            } else if (aStart == null) {
-              return 1;
-            } else if (bStart == null) {
-              return -1;
-            }
-
-            return aStart.compareTo(bStart);
-          }),
-      ),
-    );
+      return tasksSubCollection
+          .where('startTime', isGreaterThanOrEqualTo: startOfDay)
+          .where('startTime', isLessThan: endOfDay)
+          .snapshots()
+          .map((snapshot) => snapshot.docs.map((doc) => doc.data()));
+    });
   }
 }

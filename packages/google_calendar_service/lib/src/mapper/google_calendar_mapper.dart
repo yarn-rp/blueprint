@@ -1,4 +1,3 @@
-import 'package:calendar_repository/calendar_repository.dart';
 import 'package:google_calendar_service/google_calendar_service.dart';
 
 /// {@template google_calendar_integration_mapper}

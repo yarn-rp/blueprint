@@ -66,6 +66,6 @@ class AppRouter extends _$AppRouter {
               page: IntegrationsRoute.page,
             ),
           ],
-        )
+        ),
       ];
 }

@@ -58,7 +58,7 @@ class TodaysBlueprintPage extends StatelessWidget {
                       const SizedBox(
                         height: 2480,
                         child: TodayTimeline(),
-                      )
+                      ),
                   ],
                 );
               },
@@ -110,7 +110,7 @@ class NextOnBlueprint extends StatelessWidget {
                     showSmallVersions: true,
                   ),
                 ),
-              )
+              ),
       ],
     );
   }

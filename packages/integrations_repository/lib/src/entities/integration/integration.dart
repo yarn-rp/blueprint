@@ -20,12 +20,18 @@ abstract class Integration extends Equatable {
   Map<String, dynamic> toConnectApiParams();
 }
 
+/// {@template oauth2_integration}
+/// An integration that uses OAuth2 for authentication.
+/// {@endtemplate}
 class OAuth2Integration extends Integration {
+  /// {@macro oauth2_integration}
   OAuth2Integration(super.platform, this.token)
       : assert(
           platform.authentication is OAuth2,
           'Authentication must be OAuth2',
         );
+
+  /// The OAuth2 token.
   final String token;
 
   @override
@@ -34,8 +40,8 @@ class OAuth2Integration extends Integration {
   @override
   Map<String, dynamic> toConnectApiParams() => {
         'code': token,
-        //TODO: change this on backend side since displayName should not be used
-        // as a key.
+        // TODO(yarn-rp): change this on backend side since displayName
+        // should not be used as a key.
         'platform': platform.displayName,
       };
 }

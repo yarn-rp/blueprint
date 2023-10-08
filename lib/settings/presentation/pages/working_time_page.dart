@@ -62,7 +62,7 @@ class _WorkingTimeState extends State<WorkingTime> {
             ScheduledTimeTile(
               workTime: workingCalendar.events[selectedWeekDay]!.firstOrNull,
               day: selectedWeekDay,
-            )
+            ),
           ],
         );
       },
@@ -211,7 +211,7 @@ class _ModifyWorkTimeBodyState extends State<ModifyWorkTimeBody> {
                     setState(() => workTime = workTime.copyWith(start: time));
                   },
                   initialTime: workTime.start,
-                )
+                ),
               ],
             ),
           ),
@@ -224,7 +224,7 @@ class _ModifyWorkTimeBodyState extends State<ModifyWorkTimeBody> {
                     setState(() => workTime = workTime.copyWith(end: time));
                   },
                   initialTime: workTime.end,
-                )
+                ),
               ],
             ),
           ),

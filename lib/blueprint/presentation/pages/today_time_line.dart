@@ -57,12 +57,12 @@ class _TodaysBlueprintState extends State<TodayTimeline>
                         SizedBox(
                           height: 600,
                           child: calendar,
-                        )
+                        ),
                       ],
                     ),
                   )
                 : calendar,
-          )
+          ),
         ],
       ),
     );
@@ -79,21 +79,16 @@ class _TodaysBlueprintState extends State<TodayTimeline>
 
     return BlocBuilder<TodaysBlueprintCubit, TodaysBlueprintState>(
       builder: (context, state) {
-        print(
-          'Presentation events: ${state.calendarEvents.map(
-                (e) => (e.subject, e.startTime),
-              ).toList()}',
-        );
         return SfCalendar(
           controller: calendarController,
           dataSource: state.toDataSource,
           allowDragAndDrop: true,
           allowAppointmentResize: true,
           appointmentTextStyle: Theme.of(context).textTheme.bodyMedium!,
-          todayTextStyle: Theme.of(context).textTheme.bodyMedium!,
-          blackoutDatesTextStyle: Theme.of(context).textTheme.bodyMedium!,
+          todayTextStyle: Theme.of(context).textTheme.bodyMedium,
+          blackoutDatesTextStyle: Theme.of(context).textTheme.bodyMedium,
           weekNumberStyle: WeekNumberStyle(
-            textStyle: Theme.of(context).textTheme.bodyMedium!,
+            textStyle: Theme.of(context).textTheme.bodyMedium,
           ),
 
           onTap: (calendarTapDetails) async {
@@ -226,7 +221,6 @@ class _TodaysBlueprintState extends State<TodayTimeline>
           ) {
             final appointment = calendarAppointmentDetails.appointments.last;
             if (appointment is! CalendarEvent) {
-              print('got something that is not a calendar event');
               return const SizedBox();
             }
 

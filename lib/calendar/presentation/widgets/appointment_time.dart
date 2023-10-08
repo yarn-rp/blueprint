@@ -15,7 +15,8 @@ class CalendarEventTime extends StatelessWidget {
           Jiffy(appointment.startTime).MMMMEEEEd,
         ),
         Text(
-          ' : ${Jiffy(appointment.startTime).format('h:mm a')} - ${Jiffy(appointment.endTime).format('h:mm a')}',
+          ' : ${Jiffy(appointment.startTime).format('h:mm a')} - '
+          '${Jiffy(appointment.endTime).format('h:mm a')}',
         ),
       ],
     );

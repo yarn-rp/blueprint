@@ -8,12 +8,14 @@ environment:
   flutter: 3.10.0
 
 dependencies:
+  cloud_firestore: ^4.9.3
+  cloud_functions: ^4.4.2
   equatable: ^2.0.5
   flutter:
     sdk: flutter
+  integrations_repository: 
+    path: ../integrations_repository
   json_annotation: ^4.8.1
-  local_integrations_repository:
-    path: ../local_integrations_repository
   stream_transform: ^2.1.0
 
 dev_dependencies:

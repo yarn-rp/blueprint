@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:calendar_repository/calendar_repository.dart';
 import 'package:google_calendar_service/src/entities/entities.dart';
 import 'package:googleapis/calendar/v3.dart' as gCalendar;
 import 'package:googleapis/people/v1.dart' as gPeople;

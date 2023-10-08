@@ -1,3 +1,5 @@
+// ignore_for_file: lines_longer_than_80_chars
+
 import 'package:blueprint/blueprint/entities/calendar_event.dart';
 import 'package:blueprint/calendar/presentation/widgets/appointment_time.dart';
 import 'package:blueprint/calendar/presentation/widgets/attendee_tile.dart';
@@ -58,7 +60,7 @@ class GeneralEventCalendarEventDetails extends StatelessWidget {
                   ),
                 ],
               ),
-            )
+            ),
           ],
           leading: Padding(
             padding: EdgeInsets.symmetric(horizontal: padding)
@@ -230,15 +232,15 @@ class GeneralEventCalendarEventDetails extends StatelessWidget {
                                                 vertical: 4,
                                               ),
                                               child: AttendeeTile(
-                                                platformUrl: user.platformUrl,
+                                                platformUrl: null,
                                                 attendantStatus: status,
-                                                displayName: user.displayName,
-                                                email: user.email,
+                                                displayName: null,
+                                                email: user,
                                               ),
                                             );
                                           }),
                                         ],
-                                      )
+                                      ),
                                   ],
                                 ),
                                 const SizedBox(
@@ -374,7 +376,7 @@ class RichTextBody extends StatelessWidget {
         md.ExtensionSet.gitHubFlavored.blockSyntaxes,
         <md.InlineSyntax>[
           md.EmojiSyntax(),
-          ...md.ExtensionSet.gitHubFlavored.inlineSyntaxes
+          ...md.ExtensionSet.gitHubFlavored.inlineSyntaxes,
         ],
       ),
       onTapLink: (String url, String? title, String? id) {

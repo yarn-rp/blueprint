@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// Light color scheme for the app
 const lightColorScheme = ColorScheme(
   brightness: Brightness.light,
   primary: Color(0xFF006397),
@@ -34,6 +35,7 @@ const lightColorScheme = ColorScheme(
   scrim: Color(0xFF000000),
 );
 
+/// Dark color scheme for the app
 const darkColorScheme = ColorScheme(
   brightness: Brightness.dark,
   primary: Color(0xFF92CCFF),

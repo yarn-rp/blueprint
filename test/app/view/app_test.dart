@@ -17,7 +17,7 @@ class MockTodaysBlueprintCubit extends MockCubit<TodaysBlueprintState>
     implements TodaysBlueprintCubit {}
 
 void main() {
-  group('App', () {
+  group('AppView', () {
     testWidgets('renders CounterPage', (tester) async {
       final authenticationBloc = MockAuthenticationCubit();
       final settingsBloc = MockSettingsBloc();
@@ -51,7 +51,7 @@ void main() {
             calendarEvents: [],
             workTimes: [],
             addedAt: DateTime.now(),
-          )
+          ),
         ]),
         initialState: TodaysBlueprintState.initial(
           calendarEvents: [],
@@ -71,12 +71,12 @@ void main() {
               value: todaysBlueprintCubit,
             ),
           ],
-          child: const App(),
+          child: const AppView(),
         ),
       );
       await tester.pumpAndSettle();
 
-      expect(find.byType(App), findsOneWidget);
+      expect(find.byType(AppView), findsOneWidget);
     });
   });
 }

@@ -6,8 +6,9 @@ import 'package:calendar_repository/calendar_repository.dart';
 import 'package:collection/collection.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
-import 'package:integrations_repository/integrations_repository.dart';
+
 import 'package:syncfusion_flutter_calendar/calendar.dart';
+import 'package:task_repository/task_repository.dart';
 
 part 'todays_blueprint_cubit.freezed.dart';
 part 'todays_blueprint_state.dart';
@@ -24,7 +25,6 @@ class TodaysBlueprintCubit extends Cubit<TodaysBlueprintState> {
           ),
         ) {
     calendarRepository.getTodayEvents().listen((events) {
-      print('Returned events: ${events.map((e) => e.subject).toList()}');
       emit(
         TodaysBlueprintState.loaded(
           calendarEvents: events.map<CalendarEvent>((event) {
@@ -182,7 +182,7 @@ class TodaysBlueprintCubit extends Cubit<TodaysBlueprintState> {
           movedEvent.copyWith(
             startTime: newStartingDate,
             endTime: newEndingDate,
-          )
+          ),
         ],
         addedAt: DateTime.now(),
       ),
