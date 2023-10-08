@@ -1,10 +1,15 @@
 import 'package:calendar_repository/src/entities/entities.dart';
 import 'package:equatable/equatable.dart';
+import 'package:integrations_repository/integrations_repository.dart'
+    show Platform;
+import 'package:json_annotation/json_annotation.dart';
+
+part 'event.g.dart';
 
 /// {@template event}
 /// A class that represents an event in the calendar.
 /// {@endtemplate}
-
+@JsonSerializable()
 class Event extends Equatable {
   /// {@macro event}
   const Event({
@@ -24,6 +29,12 @@ class Event extends Equatable {
           startTime != null || isAllDay != null && isAllDay == true,
           'event should be all day or have a start date',
         );
+
+  /// Converts a [Map<String, dynamic>] into a [Event].
+  factory Event.fromJson(Map<String, dynamic> json) => _$EventFromJson(json);
+
+  /// Converts a [Event] into a [Map<String, dynamic>].
+  Map<String, dynamic> toJson() => _$EventToJson(this);
 
   /// The start time of the event.
   final DateTime? startTime;
@@ -46,14 +57,14 @@ class Event extends Equatable {
   /// The organizer of the event.
   final User? organizer;
 
-  /// The list of attendees of the event.
-  final Map<User, AttendantStatus>? attendees;
+  /// The list of attendees of the event. The key is the email of the attendee.
+  final Map<String, AttendantStatus>? attendees;
 
   /// The link to the event in the platform.
   final String? platformLink;
 
   /// The platform of the event.
-  final CalendarPlatform platform;
+  final Platform platform;
 
   /// The meeting data of the event. If null, means that the event is not a
   /// meeting.
