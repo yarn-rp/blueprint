@@ -50,6 +50,8 @@ class IntegrationsRepository {
 
   late final FirebaseFunctions _firebaseFunctions;
 
+  Stream<Iterable<Platform>>? _platformsSubscription;
+
   /// Returns a stream of all integrations from all sources. This stream reacts
   /// to changes in the integrations, like additions or removals.
   Stream<Iterable<Integration>> getAllIntegrations() {
@@ -58,12 +60,44 @@ class IntegrationsRepository {
 
   /// Returns a stream of all integrations from all repositories.
   Stream<Iterable<Platform>> getAllPlatforms() {
-    final snaps = _platformsCollection.snapshots();
-    return snaps.map((event) => event.docs.map((e) => e.data()));
+    if (_platformsSubscription == null) {
+      final snaps = _platformsCollection.snapshots();
+      _platformsSubscription = snaps.map(
+        (event) => event.docs.map((e) => e.data()),
+      );
+    }
+    return _platformsSubscription!;
+  }
+
+  Future<void> integrateWithPlatform(
+    String platformId,
+    Map<String, dynamic> params,
+  ) async {
+    final platforms = await getAllPlatforms().first;
+
+    final platform = platforms.firstWhere(
+      (element) => element.id == platformId,
+      orElse: () => throw Exception('Platform not found'),
+    );
+
+    return switch ((platform.authentication, params)) {
+      (OAuth2(), {'code': final String code}) => _addIntegration(
+          OAuth2Integration(
+            platform,
+            code,
+          ),
+        ),
+      (
+        Basic(),
+        {'username': final String username, 'password': final String password}
+      ) =>
+        _addIntegration(BasicIntegration(platform, username, password)),
+      _ => throw Exception('Invalid params'),
+    };
   }
 
   /// Adds a new [integration] to the repository.
-  Future<void> addIntegration(Integration integration) async {
+  Future<void> _addIntegration(Integration integration) async {
     try {
       final callable =
           _firebaseFunctions.httpsCallable('authenticators-connect');

@@ -73,9 +73,7 @@ class AvailablePlatforms extends StatelessWidget {
                 integrationName: platform.displayName,
                 description:
                     'Connect your ${platform.displayName} account to Blueprint',
-                onIntegrationCreated: (integration) {
-                  context.read<IntegrationsCubit>().addIntegration(integration);
-                },
+                onIntegrationCreated: (integration) {},
               );
 
             default:

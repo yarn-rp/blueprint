@@ -20,6 +20,32 @@ abstract class Integration extends Equatable {
   Map<String, dynamic> toConnectApiParams();
 }
 
+/// {@template basic_integration}
+/// An integration that uses basic authentication.
+/// {@endtemplate}
+class BasicIntegration extends Integration {
+  /// {@macro basic_integration}
+  const BasicIntegration(
+    super.platform,
+    this.username,
+    this.password,
+  );
+
+  final String username;
+  final String password;
+
+  @override
+  List<Object?> get props => [platform, username, password];
+
+  @override
+  Map<String, dynamic> toConnectApiParams() => {
+        'username': username,
+        'password': password,
+        // ignore: unnecessary_this
+        'platform': this.platform.displayName,
+      };
+}
+
 /// {@template oauth2_integration}
 /// An integration that uses OAuth2 for authentication.
 /// {@endtemplate}

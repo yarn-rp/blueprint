@@ -10,6 +10,7 @@ class IntegrationsState with _$IntegrationsState {
     Iterable<Platform> availablePlatforms,
     Iterable<Integration> integrations,
   ) = IntegrationsLoading;
+
   const factory IntegrationsState.loaded(
     Iterable<Platform> availablePlatforms,
     Iterable<Integration> integrations,

@@ -504,13 +504,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.6.18"
-  flutter_secure_key_pair_storage:
-    dependency: "direct main"
-    description:
-      path: "packages/flutter_secure_key_pair_storage"
-      relative: true
-    source: path
-    version: "0.1.0+1"
   flutter_secure_storage:
     dependency: "direct main"
     description:
@@ -634,7 +627,7 @@ packages:
     source: hosted
     version: "0.2.1+1"
   google_sign_in:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: google_sign_in
       sha256: f45038d27bcad37498f282295ae97eece23c9349fc16649154067b87b9f1fd03
