@@ -1,6 +1,6 @@
-import 'package:blueprint/blueprint/entities/calendar_event.dart';
 import 'package:flutter/material.dart';
 import 'package:jiffy/jiffy.dart';
+import 'package:blueprint_repository/blueprint_repository.dart';
 
 class CalendarEventTime extends StatelessWidget {
   const CalendarEventTime({required this.appointment, super.key});

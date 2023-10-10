@@ -1,14 +1,13 @@
 import 'dart:developer';
 
-import 'package:blueprint/blueprint/entities/calendar_event.dart';
 import 'package:blueprint/settings/entities/working_calendar.dart';
 import 'package:calendar_repository/calendar_repository.dart';
 import 'package:collection/collection.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
-
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:task_repository/task_repository.dart';
+import 'package:blueprint_repository/blueprint_repository.dart';
 
 part 'todays_blueprint_cubit.freezed.dart';
 part 'todays_blueprint_state.dart';
