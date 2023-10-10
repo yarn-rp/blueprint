@@ -108,22 +108,22 @@ class _$CalendarEventCopyWithImpl<$Res, $Val extends CalendarEvent>
 }
 
 /// @nodoc
-abstract class _$$GeneralCalendarEventImplCopyWith<$Res>
+abstract class _$$GeneralCalendarEventCopyWith<$Res>
     implements $CalendarEventCopyWith<$Res> {
-  factory _$$GeneralCalendarEventImplCopyWith(_$GeneralCalendarEventImpl value,
-          $Res Function(_$GeneralCalendarEventImpl) then) =
-      __$$GeneralCalendarEventImplCopyWithImpl<$Res>;
+  factory _$$GeneralCalendarEventCopyWith(_$GeneralCalendarEvent value,
+          $Res Function(_$GeneralCalendarEvent) then) =
+      __$$GeneralCalendarEventCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({DateTime startTime, DateTime endTime, Event event});
 }
 
 /// @nodoc
-class __$$GeneralCalendarEventImplCopyWithImpl<$Res>
-    extends _$CalendarEventCopyWithImpl<$Res, _$GeneralCalendarEventImpl>
-    implements _$$GeneralCalendarEventImplCopyWith<$Res> {
-  __$$GeneralCalendarEventImplCopyWithImpl(_$GeneralCalendarEventImpl _value,
-      $Res Function(_$GeneralCalendarEventImpl) _then)
+class __$$GeneralCalendarEventCopyWithImpl<$Res>
+    extends _$CalendarEventCopyWithImpl<$Res, _$GeneralCalendarEvent>
+    implements _$$GeneralCalendarEventCopyWith<$Res> {
+  __$$GeneralCalendarEventCopyWithImpl(_$GeneralCalendarEvent _value,
+      $Res Function(_$GeneralCalendarEvent) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -133,7 +133,7 @@ class __$$GeneralCalendarEventImplCopyWithImpl<$Res>
     Object? endTime = null,
     Object? event = null,
   }) {
-    return _then(_$GeneralCalendarEventImpl(
+    return _then(_$GeneralCalendarEvent(
       startTime: null == startTime
           ? _value.startTime
           : startTime // ignore: cast_nullable_to_non_nullable
@@ -152,8 +152,8 @@ class __$$GeneralCalendarEventImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$GeneralCalendarEventImpl extends GeneralCalendarEvent {
-  const _$GeneralCalendarEventImpl(
+class _$GeneralCalendarEvent extends GeneralCalendarEvent {
+  const _$GeneralCalendarEvent(
       {required this.startTime, required this.endTime, required this.event})
       : super._();
 
@@ -173,7 +173,7 @@ class _$GeneralCalendarEventImpl extends GeneralCalendarEvent {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$GeneralCalendarEventImpl &&
+            other is _$GeneralCalendarEvent &&
             (identical(other.startTime, startTime) ||
                 other.startTime == startTime) &&
             (identical(other.endTime, endTime) || other.endTime == endTime) &&
@@ -186,10 +186,9 @@ class _$GeneralCalendarEventImpl extends GeneralCalendarEvent {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$GeneralCalendarEventImplCopyWith<_$GeneralCalendarEventImpl>
-      get copyWith =>
-          __$$GeneralCalendarEventImplCopyWithImpl<_$GeneralCalendarEventImpl>(
-              this, _$identity);
+  _$$GeneralCalendarEventCopyWith<_$GeneralCalendarEvent> get copyWith =>
+      __$$GeneralCalendarEventCopyWithImpl<_$GeneralCalendarEvent>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -265,7 +264,7 @@ abstract class GeneralCalendarEvent extends CalendarEvent {
   const factory GeneralCalendarEvent(
       {required final DateTime startTime,
       required final DateTime endTime,
-      required final Event event}) = _$GeneralCalendarEventImpl;
+      required final Event event}) = _$GeneralCalendarEvent;
   const GeneralCalendarEvent._() : super._();
 
   @override
@@ -275,16 +274,16 @@ abstract class GeneralCalendarEvent extends CalendarEvent {
   Event get event;
   @override
   @JsonKey(ignore: true)
-  _$$GeneralCalendarEventImplCopyWith<_$GeneralCalendarEventImpl>
-      get copyWith => throw _privateConstructorUsedError;
+  _$$GeneralCalendarEventCopyWith<_$GeneralCalendarEvent> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$TaskCalendarEventImplCopyWith<$Res>
+abstract class _$$TaskCalendarEventCopyWith<$Res>
     implements $CalendarEventCopyWith<$Res> {
-  factory _$$TaskCalendarEventImplCopyWith(_$TaskCalendarEventImpl value,
-          $Res Function(_$TaskCalendarEventImpl) then) =
-      __$$TaskCalendarEventImplCopyWithImpl<$Res>;
+  factory _$$TaskCalendarEventCopyWith(
+          _$TaskCalendarEvent value, $Res Function(_$TaskCalendarEvent) then) =
+      __$$TaskCalendarEventCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -296,11 +295,11 @@ abstract class _$$TaskCalendarEventImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$TaskCalendarEventImplCopyWithImpl<$Res>
-    extends _$CalendarEventCopyWithImpl<$Res, _$TaskCalendarEventImpl>
-    implements _$$TaskCalendarEventImplCopyWith<$Res> {
-  __$$TaskCalendarEventImplCopyWithImpl(_$TaskCalendarEventImpl _value,
-      $Res Function(_$TaskCalendarEventImpl) _then)
+class __$$TaskCalendarEventCopyWithImpl<$Res>
+    extends _$CalendarEventCopyWithImpl<$Res, _$TaskCalendarEvent>
+    implements _$$TaskCalendarEventCopyWith<$Res> {
+  __$$TaskCalendarEventCopyWithImpl(
+      _$TaskCalendarEvent _value, $Res Function(_$TaskCalendarEvent) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -312,7 +311,7 @@ class __$$TaskCalendarEventImplCopyWithImpl<$Res>
     Object? colorHex = freezed,
     Object? isAllDay = null,
   }) {
-    return _then(_$TaskCalendarEventImpl(
+    return _then(_$TaskCalendarEvent(
       task: null == task
           ? _value.task
           : task // ignore: cast_nullable_to_non_nullable
@@ -339,8 +338,8 @@ class __$$TaskCalendarEventImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$TaskCalendarEventImpl extends TaskCalendarEvent {
-  const _$TaskCalendarEventImpl(
+class _$TaskCalendarEvent extends TaskCalendarEvent {
+  const _$TaskCalendarEvent(
       {required this.task,
       required this.startTime,
       required this.endTime,
@@ -370,7 +369,7 @@ class _$TaskCalendarEventImpl extends TaskCalendarEvent {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$TaskCalendarEventImpl &&
+            other is _$TaskCalendarEvent &&
             (identical(other.task, task) || other.task == task) &&
             (identical(other.startTime, startTime) ||
                 other.startTime == startTime) &&
@@ -388,9 +387,8 @@ class _$TaskCalendarEventImpl extends TaskCalendarEvent {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$TaskCalendarEventImplCopyWith<_$TaskCalendarEventImpl> get copyWith =>
-      __$$TaskCalendarEventImplCopyWithImpl<_$TaskCalendarEventImpl>(
-          this, _$identity);
+  _$$TaskCalendarEventCopyWith<_$TaskCalendarEvent> get copyWith =>
+      __$$TaskCalendarEventCopyWithImpl<_$TaskCalendarEvent>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -468,7 +466,7 @@ abstract class TaskCalendarEvent extends CalendarEvent {
       required final DateTime startTime,
       required final DateTime endTime,
       final String? colorHex,
-      final bool isAllDay}) = _$TaskCalendarEventImpl;
+      final bool isAllDay}) = _$TaskCalendarEvent;
   const TaskCalendarEvent._() : super._();
 
   Task get task;
@@ -480,6 +478,6 @@ abstract class TaskCalendarEvent extends CalendarEvent {
   bool get isAllDay;
   @override
   @JsonKey(ignore: true)
-  _$$TaskCalendarEventImplCopyWith<_$TaskCalendarEventImpl> get copyWith =>
+  _$$TaskCalendarEventCopyWith<_$TaskCalendarEvent> get copyWith =>
       throw _privateConstructorUsedError;
 }

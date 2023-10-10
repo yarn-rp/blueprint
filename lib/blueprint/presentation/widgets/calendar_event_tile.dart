@@ -1,6 +1,5 @@
-import 'package:blueprint_repository/blueprint_repository.dart';
+import 'package:blueprint/blueprint/entities/calendar_event.dart';
 import 'package:blueprint/blueprint/presentation/widgets/general_calendar_event_tile.dart';
-
 import 'package:blueprint/blueprint/presentation/widgets/task_event_tile.dart';
 import 'package:blueprint/calendar/presentation/views/event_details.dart';
 import 'package:blueprint/core/utils/color/hex_color_extension.dart';
