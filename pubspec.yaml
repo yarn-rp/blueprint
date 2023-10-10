@@ -53,6 +53,8 @@ dependencies:
   syncfusion_flutter_calendar: ^21.1.38
   task_repository:
     path: ./packages/task_repository
+  blueprint_repository:
+    path: ./packages/blueprint_repository
   url_launcher: ^6.1.10
   url_strategy: ^0.2.0
 
