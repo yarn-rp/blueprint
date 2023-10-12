@@ -1,26 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:stream_transform/stream_transform.dart';
 
 import 'entities/entities.dart';
 
 const _usersCollectionName = 'users';
-final blueprintConverter = (
-  fromFirestore: (
-    DocumentSnapshot<Map<String, dynamic>> snapshot,
-    SnapshotOptions? options,
-  ) {
-    final data = snapshot.data()!;
-
-    ///Create the blueprint list,converting firestore data
-    /// into CalendarEvent model and adding into the list
-    final blueprints = <CalendarEvent>[];
-    data.entries.forEach((element) => blueprints
-        .add(CalendarEvent.fromJson(element as Map<String, dynamic>)));
-    return blueprints;
-  },
-  toFirestore: (CalendarEvent event, SetOptions? options) => event.toJson(),
-);
 
 /// {@template blueprint_repository}
 /// Repository to handle blueprints on the platform.
@@ -47,17 +30,15 @@ class TodaysBlueprintRepository {
         return const Stream.empty();
       }
 
-      ///fetch the current user data
-      final userData = _usersCollection.doc(userId);
-      final snapshot = userData.get();
+      final userDoc = _usersCollection.doc(userId);
 
-      ///Parsing data to blueprints
-      final blueprints = blueprintConverter.fromFirestore(
-          snapshot as DocumentSnapshot<Map<String, dynamic>>,
-          SnapshotOptions());
+      return userDoc.snapshots().map((snapshot) {
+        final userData = snapshot.data() as Map<String, dynamic>?;
+        final blueprint =
+            userData?['blueprint'] as List<Map<String, dynamic>>? ?? [];
 
-      ///Adding the blueprint list to the Stream then close the connection
-      return Stream.value(blueprints);
+        return blueprint.map<CalendarEvent>(CalendarEvent.fromJson).toList();
+      });
     });
   }
 
