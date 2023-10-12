@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:blueprint_repository/src/entities/entities.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:stream_transform/stream_transform.dart';
@@ -42,11 +44,23 @@ class TodaysBlueprintRepository {
 
   /// Saves the todays blueprint to database
   Future<void> saveBlueprints(List<CalendarEvent> blueprint) async {
-    final userId = await _currentUserIdStream.last;
-    final userData = _usersCollection.doc(userId);
+    try {
+      final userId = await _currentUserIdStream.first;
 
-    await userData.set({
-      'blueprint': blueprint.map((e) => e.toJson()).toList(),
-    });
+      final userDoc = _usersCollection.doc(userId);
+      final userData = (await userDoc.get()).data() as Map<String, dynamic>?;
+
+      final blueprintsJson = blueprint.map((e) => e.toJson()).toList();
+
+      print('storing blueprint $blueprintsJson');
+      await userDoc.set({
+        ...?userData,
+        'blueprint': blueprintsJson,
+      });
+
+      print('Blueprint saved');
+    } catch (e, stackTrace) {
+      print('Error setting blueprint $e, $stackTrace');
+    }
   }
 }

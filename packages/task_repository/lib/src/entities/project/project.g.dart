@@ -26,7 +26,7 @@ Map<String, dynamic> _$ProjectToJson(Project instance) => <String, dynamic>{
       'id': instance.id,
       'platformId': instance.platformId,
       'platformURL': instance.platformURL.toString(),
-      'platform': instance.platform,
+      'platform': instance.platform?.toJson(),
       'platformName': instance.platformName,
       'name': instance.name,
       'description': instance.description,

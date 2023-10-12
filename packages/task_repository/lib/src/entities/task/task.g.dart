@@ -40,7 +40,7 @@ Map<String, dynamic> _$TaskToJson(Task instance) => <String, dynamic>{
       'createdAt': const TimestampConverter().toJson(instance.createdAt),
       'updatedAt': const TimestampConverter().toJson(instance.updatedAt),
       'id': instance.id,
-      'project': instance.project,
+      'project': instance.project.toJson(),
       'taskURL': instance.taskURL.toString(),
       'title': instance.title,
       'description': instance.description,
@@ -50,10 +50,10 @@ Map<String, dynamic> _$TaskToJson(Task instance) => <String, dynamic>{
           instance.dueDate, const TimestampConverter().toJson),
       'estimatedTime': instance.estimatedTime?.inMicroseconds,
       'loggedTime': instance.loggedTime?.inMicroseconds,
-      'assigned': instance.assigned,
-      'creator': instance.creator,
+      'assigned': instance.assigned.map((e) => e.toJson()).toList(),
+      'creator': instance.creator.toJson(),
       'isCompleted': instance.isCompleted,
-      'labels': instance.labels.toList(),
+      'labels': instance.labels.map((e) => e.toJson()).toList(),
       'priority': instance.priority,
     };
 
