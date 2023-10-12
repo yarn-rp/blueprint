@@ -14,9 +14,9 @@ class CalendarEvent with _$CalendarEvent {
   // Private constructor to prevent instantiation.
   const CalendarEvent._();
   const factory CalendarEvent.event({
+    required Event event,
     required DateTime startTime,
     required DateTime endTime,
-    required Event event,
   }) = GeneralCalendarEvent;
 
   const factory CalendarEvent.task({
