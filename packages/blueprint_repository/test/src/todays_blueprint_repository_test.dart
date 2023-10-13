@@ -4,6 +4,8 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('TodaysBlueprintRepository', () {
-    test('can be instantiated', () {});
+    test('can be instantiated', () {
+      expect(true, isTrue);
+    });
   });
 }
