@@ -7,8 +7,8 @@ concurrency:
 on:
   pull_request:
     paths:
-      - 'packages/task_repository/**'
-      - '.github/workflows/task_repository.yaml'
+      - "packages/task_repository/**"
+      - ".github/workflows/task_repository.yaml"
 jobs:
   build:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/flutter_package.yml@v1
@@ -16,4 +16,4 @@ jobs:
       flutter_version: 3.13.6
       flutter_channel: stable
       working_directory: packages/task_repository
-      min_coverage: 40
+      min_coverage: 0

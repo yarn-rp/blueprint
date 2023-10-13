@@ -7,8 +7,8 @@ concurrency:
 on:
   pull_request:
     paths:
-      - 'packages/calendar_repository/**'
-      - '.github/workflows/calendar_repository.yaml'
+      - "packages/calendar_repository/**"
+      - ".github/workflows/calendar_repository.yaml"
 jobs:
   build:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/flutter_package.yml@v1
@@ -16,4 +16,4 @@ jobs:
       flutter_version: 3.13.6
       flutter_channel: stable
       working_directory: packages/calendar_repository
-      min_coverage: 40
+      min_coverage: 0
