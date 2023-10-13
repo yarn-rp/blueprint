@@ -1,18 +1,12 @@
 import 'dart:math';
 
 import 'package:auto_route/auto_route.dart';
-
 import 'package:blueprint/blueprint/presentation/pages/today_time_line.dart';
 import 'package:blueprint/blueprint/presentation/widgets/calendar_event_tile.dart';
 import 'package:blueprint/blueprint/state_management/todays_blueprint/todays_blueprint_cubit.dart';
-import 'package:calendar_repository/calendar_repository.dart';
+import 'package:blueprint_repository/blueprint_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:blueprint_repository/blueprint_repository.dart';
-
-import 'package:task_repository/task_repository.dart';
-
-import '../../../app/dependency_injection/init.dart';
 
 @RoutePage()
 class TodaysBlueprintPage extends StatelessWidget {
@@ -25,46 +19,6 @@ class TodaysBlueprintPage extends StatelessWidget {
     return Scaffold(
       body: Row(
         children: [
-          ElevatedButton(
-            onPressed: () {
-              final repository = sl<TodaysBlueprintRepository>();
-              print('got repository $repository');
-
-              repository.saveBlueprints([
-                CalendarEvent.task(
-                    startTime: DateTime.now(),
-                    endTime: DateTime.now(),
-                    task: Task(
-                      id: 'id',
-                      title: 'title',
-                      description: 'description',
-                      assigned: [
-                        User('asdfj;as', 'asdflkj', 'asdfsdf'),
-                      ],
-                      creator: User('asdfj;as', 'asdflkj', 'asdfsdf'),
-                      createdAt: DateTime.now(),
-                      updatedAt: DateTime.now(),
-                      dueDate: DateTime.now(),
-                      estimatedTime: Duration.zero,
-                      isCompleted: false,
-                      labels: [],
-                      loggedTime: Duration.zero,
-                      priority: 0,
-                      project: Project(
-                          id: 'asdf',
-                          platformId: 'asdf',
-                          description: 'asdf',
-                          platformURL: Uri.parse('https://task.com'),
-                          platformName: 'asdfsdf',
-                          name: 'asfd',
-                          colorHex: '#0000000'),
-                      startDate: DateTime.now(),
-                      taskURL: Uri.parse('https://task.com'),
-                    )),
-              ]);
-            },
-            child: Text('test'),
-          ),
           Flexible(
             flex: 4,
             child: BlocBuilder<TodaysBlueprintCubit, TodaysBlueprintState>(

@@ -6,10 +6,10 @@ import 'package:blueprint/blueprint/state_management/todays_blueprint/todays_blu
 import 'package:blueprint/calendar/presentation/views/event_details.dart';
 import 'package:blueprint/core/utils/color/hex_color_extension.dart';
 import 'package:blueprint/tasks/presentation/pages/task_details.dart';
+import 'package:blueprint_repository/blueprint_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
-import 'package:blueprint_repository/blueprint_repository.dart';
 
 class TodayTimeline extends StatefulWidget {
   const TodayTimeline({
