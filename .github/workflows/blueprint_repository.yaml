@@ -10,6 +10,17 @@ on:
       - "packages/blueprint_repository/**"
       - ".github/workflows/blueprint_repository.yaml"
 jobs:
+  check_coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check for existing and non-empty coverage file
+        id: test_coverage_file
+        run: |
+          if [ -s blueprint_repository/coverage/lcov.info ]; then
+            echo "result=true" >> $GITHUB_ENV
+          else
+            echo "result=false" >> $GITHUB_ENV
+          fi
   build:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/flutter_package.yml@v1
     with:

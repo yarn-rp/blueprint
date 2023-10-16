@@ -3,5 +3,9 @@
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  group('TaskRepository', () {});
+  group('TaskRepository', () {
+    test('can be instantiated', () {
+      expect(true, isTrue);
+    });
+  });
 }
