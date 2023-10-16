@@ -15,6 +15,6 @@ ConferenceData _$ConferenceDataFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$ConferenceDataToJson(ConferenceData instance) =>
     <String, dynamic>{
-      'entryPoints': instance.entryPoints.toList(),
+      'entryPoints': instance.entryPoints.map((e) => e.toJson()).toList(),
       'notes': instance.notes,
     };
