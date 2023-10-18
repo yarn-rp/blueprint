@@ -47,26 +47,25 @@ class IntegrateWithPlatformView extends StatelessWidget {
         title: const Text('Integrate with Platform'),
       ),
       body: BlocConsumer<IntegrationsCubit, IntegrationsState>(
-        listener: (context, state) {
-          state.maybeMap(
-            loaded: (state) {
-              if (state.integrations.isNotEmpty) {
-                context.router.pop();
-              }
-            },
-            orElse: () {},
-          );
-        },
+        listener: (context, state) => state.maybeMap<void>(
+          integratedPlatform: (state) => context.router.pop(state.platformId),
+          orElse: () {},
+        ),
         builder: (context, state) {
           return state.maybeMap(
             loading: (_) => const Center(
               child: CircularProgressIndicator(),
             ),
             error: (state) => Center(
-              child: Text(state.message),
+              child: Text('error state${state.message}'),
             ),
-            orElse: () => const Center(
-              child: Text('Something went wrong.'),
+            integratedPlatform: (state) => Center(
+              child:
+                  Text('Integration with ${state.platformId} went successful. '
+                      'You can now close this page.'),
+            ),
+            orElse: () => Center(
+              child: Text(state.toString()),
             ),
           );
         },
