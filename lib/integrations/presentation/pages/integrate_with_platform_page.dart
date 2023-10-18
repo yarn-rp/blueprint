@@ -49,13 +49,7 @@ class IntegrateWithPlatformView extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Integrate with Platform'),
       ),
-      body: BlocConsumer<IntegrationsCubit, IntegrationsState>(
-        listener: (context, state) => state.maybeMap<void>(
-          integratedPlatform: (state) {
-            js.context.callMethod('close');
-          },
-          orElse: () {},
-        ),
+      body: BlocBuilder<IntegrationsCubit, IntegrationsState>(
         builder: (context, state) {
           return state.maybeMap(
             loading: (_) => const Center(
@@ -65,9 +59,18 @@ class IntegrateWithPlatformView extends StatelessWidget {
               child: Text('error state${state.message}'),
             ),
             integratedPlatform: (state) => Center(
-              child:
+              child: Column(
+                children: [
                   Text('Integration with ${state.platformId} went successful. '
                       'You can now close this page.'),
+                  ElevatedButton(
+                    onPressed: () {
+                      js.context.callMethod('close');
+                    },
+                    child: const Text('Close'),
+                  ),
+                ],
+              ),
             ),
             orElse: () => Center(
               child: Text(state.toString()),
