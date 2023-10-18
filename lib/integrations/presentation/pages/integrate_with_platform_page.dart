@@ -60,9 +60,10 @@ class IntegrateWithPlatformView extends StatelessWidget {
             ),
             integratedPlatform: (state) => Center(
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Integration with ${state.platformId} went successful. '
-                      'You can now close this page.'),
+                  Text('Integration with ${state.platformId} went '
+                      'successful. You can now close this page.'),
                   ElevatedButton(
                     onPressed: () {
                       js.context.callMethod('close');
@@ -72,9 +73,7 @@ class IntegrateWithPlatformView extends StatelessWidget {
                 ],
               ),
             ),
-            orElse: () => Center(
-              child: Text(state.toString()),
-            ),
+            orElse: () => const SizedBox.shrink(),
           );
         },
       ),
