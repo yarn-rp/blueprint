@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:user_api_client/src/collections/collections.dart';
 import 'package:user_api_client/src/functions/functions.dart';
+import 'package:user_api_client/src/models/blueprint.dart';
 import 'package:user_api_client/src/models/models.dart';
 
 /// {@template user_api_client}
@@ -26,6 +27,7 @@ class UserApiClient {
       _idToken = idToken;
     });
   }
+
   late final CollectionReference<UserModel> _usersCollection;
   late final FirebaseFunctions _firebaseFunctions;
   late final StreamSubscription<String?> _idTokenSubscription;
@@ -65,28 +67,42 @@ class UserApiClient {
     final snap = _usersCollection
         .doc(_idToken)
         .collection(Collections.authenticators)
+        .withConverter(
+          fromFirestore: authenticatorConverter.fromFirestore,
+          toFirestore: authenticatorConverter.toFirestore,
+        )
         .snapshots();
 
-    return snap.map((event) {
-      final docsData = event.docs.map((e) => {...e.data(), 'id': e.id});
-
-      return docsData.map(
-        (data) {
-          final user = data['user'] as Map<String, dynamic>;
-
-          return (
-            id: data['id'] as String,
-            platformName: data['platformName'] as String,
-            type: data['type'] as String,
-            user: (
-              email: user['email'] as String,
-              name: user['name'] as String,
-            ),
-          );
-        },
-      ).toList();
-    });
+    return snap.map((event) => event.docs.map((e) => e.data()).toList());
   }
+
+  /// Streams the blueprint of the user
+  Stream<List<BlueprintItem>> getBlueprint() {
+    final snap = _usersCollection
+        .doc(_idToken)
+        .collection(Collections.blueprint)
+        .withConverter(
+          fromFirestore: blueprintConverter.fromFirestore,
+          toFirestore: blueprintConverter.toFirestore,
+        )
+        .snapshots();
+
+    return snap.map((event) => event.docs.map((e) => e.data()).toList());
+  }
+
+  // Stream<List<TaskModel>> getAllTask() {
+  //   final snap = _usersCollection
+  //       .doc(_idToken)
+  //       .collection(Collections.tasks)
+  //       .where('type', isEqualTo: 'task')
+  //       .withConverter(
+  //         fromFirestore: taskConverter.fromFirestore,
+  //         toFirestore: taskConverter.toFirestore,
+  //       )
+  //       .snapshots();
+
+  //   return snap.map((event) => event.docs.map((e) => e.data()).toList());
+  // }
 
   /// Deletes an integration from the database
   Future<void> removeAuthenticator(

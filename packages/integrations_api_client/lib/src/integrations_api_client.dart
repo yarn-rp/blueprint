@@ -3,7 +3,7 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
-import 'package:integrations_api_client/src/models/models.dart';
+import 'models/models.dart';
 
 /// {@template integrations_api_client}
 /// Client for the integrations API using Firestore.
