@@ -45,6 +45,13 @@ class IntegrationsCubit extends Cubit<IntegrationsState> {
         platformId,
         params,
       );
+      emit(
+        IntegrationsState.integratedPlatform(
+          platformId,
+          state.availablePlatforms,
+          state.integrations,
+        ),
+      );
     } catch (error, stackTrace) {
       addError(error, stackTrace);
 

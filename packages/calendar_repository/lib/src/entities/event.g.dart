@@ -33,11 +33,13 @@ Map<String, dynamic> _$EventToJson(Event instance) => <String, dynamic>{
       'description': instance.description,
       'isAllDay': instance.isAllDay,
       'colorHex': instance.colorHex,
-      'organizer': instance.organizer,
+      'organizer': instance.organizer?.toJson(),
       'attendees': instance.attendees
           ?.map((k, e) => MapEntry(k, _$AttendantStatusEnumMap[e]!)),
       'platformLink': instance.platformLink,
       'conferenceData': instance.conferenceData,
+      'platform': instance.platform.toJson(),
+      'conferenceData': instance.conferenceData?.toJson(),
       'attendantStatus': _$AttendantStatusEnumMap[instance.attendantStatus]!,
     };
 

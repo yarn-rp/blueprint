@@ -30,6 +30,11 @@ mixin _$IntegrationsState {
     required TResult Function(Iterable<Platform> availablePlatforms,
             Iterable<Integration> integrations)
         loaded,
+    required TResult Function(
+            String platformId,
+            Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)
+        integratedPlatform,
     required TResult Function(Iterable<Platform> availablePlatforms,
             Iterable<Integration> integrations, String message)
         error,
@@ -46,6 +51,9 @@ mixin _$IntegrationsState {
     TResult? Function(Iterable<Platform> availablePlatforms,
             Iterable<Integration> integrations)?
         loaded,
+    TResult? Function(String platformId, Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)?
+        integratedPlatform,
     TResult? Function(Iterable<Platform> availablePlatforms,
             Iterable<Integration> integrations, String message)?
         error,
@@ -62,6 +70,9 @@ mixin _$IntegrationsState {
     TResult Function(Iterable<Platform> availablePlatforms,
             Iterable<Integration> integrations)?
         loaded,
+    TResult Function(String platformId, Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)?
+        integratedPlatform,
     TResult Function(Iterable<Platform> availablePlatforms,
             Iterable<Integration> integrations, String message)?
         error,
@@ -73,6 +84,7 @@ mixin _$IntegrationsState {
     required TResult Function(IntegrationsInitial value) initial,
     required TResult Function(IntegrationsLoading value) loading,
     required TResult Function(IntegrationsLoaded value) loaded,
+    required TResult Function(IntegratedPlatform value) integratedPlatform,
     required TResult Function(IntegrationsError value) error,
   }) =>
       throw _privateConstructorUsedError;
@@ -81,6 +93,7 @@ mixin _$IntegrationsState {
     TResult? Function(IntegrationsInitial value)? initial,
     TResult? Function(IntegrationsLoading value)? loading,
     TResult? Function(IntegrationsLoaded value)? loaded,
+    TResult? Function(IntegratedPlatform value)? integratedPlatform,
     TResult? Function(IntegrationsError value)? error,
   }) =>
       throw _privateConstructorUsedError;
@@ -89,6 +102,7 @@ mixin _$IntegrationsState {
     TResult Function(IntegrationsInitial value)? initial,
     TResult Function(IntegrationsLoading value)? loading,
     TResult Function(IntegrationsLoaded value)? loaded,
+    TResult Function(IntegratedPlatform value)? integratedPlatform,
     TResult Function(IntegrationsError value)? error,
     required TResult orElse(),
   }) =>
@@ -230,6 +244,11 @@ class _$IntegrationsInitial implements IntegrationsInitial {
     required TResult Function(Iterable<Platform> availablePlatforms,
             Iterable<Integration> integrations)
         loaded,
+    required TResult Function(
+            String platformId,
+            Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)
+        integratedPlatform,
     required TResult Function(Iterable<Platform> availablePlatforms,
             Iterable<Integration> integrations, String message)
         error,
@@ -249,6 +268,9 @@ class _$IntegrationsInitial implements IntegrationsInitial {
     TResult? Function(Iterable<Platform> availablePlatforms,
             Iterable<Integration> integrations)?
         loaded,
+    TResult? Function(String platformId, Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)?
+        integratedPlatform,
     TResult? Function(Iterable<Platform> availablePlatforms,
             Iterable<Integration> integrations, String message)?
         error,
@@ -268,6 +290,9 @@ class _$IntegrationsInitial implements IntegrationsInitial {
     TResult Function(Iterable<Platform> availablePlatforms,
             Iterable<Integration> integrations)?
         loaded,
+    TResult Function(String platformId, Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)?
+        integratedPlatform,
     TResult Function(Iterable<Platform> availablePlatforms,
             Iterable<Integration> integrations, String message)?
         error,
@@ -285,6 +310,7 @@ class _$IntegrationsInitial implements IntegrationsInitial {
     required TResult Function(IntegrationsInitial value) initial,
     required TResult Function(IntegrationsLoading value) loading,
     required TResult Function(IntegrationsLoaded value) loaded,
+    required TResult Function(IntegratedPlatform value) integratedPlatform,
     required TResult Function(IntegrationsError value) error,
   }) {
     return initial(this);
@@ -296,6 +322,7 @@ class _$IntegrationsInitial implements IntegrationsInitial {
     TResult? Function(IntegrationsInitial value)? initial,
     TResult? Function(IntegrationsLoading value)? loading,
     TResult? Function(IntegrationsLoaded value)? loaded,
+    TResult? Function(IntegratedPlatform value)? integratedPlatform,
     TResult? Function(IntegrationsError value)? error,
   }) {
     return initial?.call(this);
@@ -307,6 +334,7 @@ class _$IntegrationsInitial implements IntegrationsInitial {
     TResult Function(IntegrationsInitial value)? initial,
     TResult Function(IntegrationsLoading value)? loading,
     TResult Function(IntegrationsLoaded value)? loaded,
+    TResult Function(IntegratedPlatform value)? integratedPlatform,
     TResult Function(IntegrationsError value)? error,
     required TResult orElse(),
   }) {
@@ -422,6 +450,11 @@ class _$IntegrationsLoading implements IntegrationsLoading {
     required TResult Function(Iterable<Platform> availablePlatforms,
             Iterable<Integration> integrations)
         loaded,
+    required TResult Function(
+            String platformId,
+            Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)
+        integratedPlatform,
     required TResult Function(Iterable<Platform> availablePlatforms,
             Iterable<Integration> integrations, String message)
         error,
@@ -441,6 +474,9 @@ class _$IntegrationsLoading implements IntegrationsLoading {
     TResult? Function(Iterable<Platform> availablePlatforms,
             Iterable<Integration> integrations)?
         loaded,
+    TResult? Function(String platformId, Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)?
+        integratedPlatform,
     TResult? Function(Iterable<Platform> availablePlatforms,
             Iterable<Integration> integrations, String message)?
         error,
@@ -460,6 +496,9 @@ class _$IntegrationsLoading implements IntegrationsLoading {
     TResult Function(Iterable<Platform> availablePlatforms,
             Iterable<Integration> integrations)?
         loaded,
+    TResult Function(String platformId, Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)?
+        integratedPlatform,
     TResult Function(Iterable<Platform> availablePlatforms,
             Iterable<Integration> integrations, String message)?
         error,
@@ -477,6 +516,7 @@ class _$IntegrationsLoading implements IntegrationsLoading {
     required TResult Function(IntegrationsInitial value) initial,
     required TResult Function(IntegrationsLoading value) loading,
     required TResult Function(IntegrationsLoaded value) loaded,
+    required TResult Function(IntegratedPlatform value) integratedPlatform,
     required TResult Function(IntegrationsError value) error,
   }) {
     return loading(this);
@@ -488,6 +528,7 @@ class _$IntegrationsLoading implements IntegrationsLoading {
     TResult? Function(IntegrationsInitial value)? initial,
     TResult? Function(IntegrationsLoading value)? loading,
     TResult? Function(IntegrationsLoaded value)? loaded,
+    TResult? Function(IntegratedPlatform value)? integratedPlatform,
     TResult? Function(IntegrationsError value)? error,
   }) {
     return loading?.call(this);
@@ -499,6 +540,7 @@ class _$IntegrationsLoading implements IntegrationsLoading {
     TResult Function(IntegrationsInitial value)? initial,
     TResult Function(IntegrationsLoading value)? loading,
     TResult Function(IntegrationsLoaded value)? loaded,
+    TResult Function(IntegratedPlatform value)? integratedPlatform,
     TResult Function(IntegrationsError value)? error,
     required TResult orElse(),
   }) {
@@ -614,6 +656,11 @@ class _$IntegrationsLoaded implements IntegrationsLoaded {
     required TResult Function(Iterable<Platform> availablePlatforms,
             Iterable<Integration> integrations)
         loaded,
+    required TResult Function(
+            String platformId,
+            Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)
+        integratedPlatform,
     required TResult Function(Iterable<Platform> availablePlatforms,
             Iterable<Integration> integrations, String message)
         error,
@@ -633,6 +680,9 @@ class _$IntegrationsLoaded implements IntegrationsLoaded {
     TResult? Function(Iterable<Platform> availablePlatforms,
             Iterable<Integration> integrations)?
         loaded,
+    TResult? Function(String platformId, Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)?
+        integratedPlatform,
     TResult? Function(Iterable<Platform> availablePlatforms,
             Iterable<Integration> integrations, String message)?
         error,
@@ -652,6 +702,9 @@ class _$IntegrationsLoaded implements IntegrationsLoaded {
     TResult Function(Iterable<Platform> availablePlatforms,
             Iterable<Integration> integrations)?
         loaded,
+    TResult Function(String platformId, Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)?
+        integratedPlatform,
     TResult Function(Iterable<Platform> availablePlatforms,
             Iterable<Integration> integrations, String message)?
         error,
@@ -669,6 +722,7 @@ class _$IntegrationsLoaded implements IntegrationsLoaded {
     required TResult Function(IntegrationsInitial value) initial,
     required TResult Function(IntegrationsLoading value) loading,
     required TResult Function(IntegrationsLoaded value) loaded,
+    required TResult Function(IntegratedPlatform value) integratedPlatform,
     required TResult Function(IntegrationsError value) error,
   }) {
     return loaded(this);
@@ -680,6 +734,7 @@ class _$IntegrationsLoaded implements IntegrationsLoaded {
     TResult? Function(IntegrationsInitial value)? initial,
     TResult? Function(IntegrationsLoading value)? loading,
     TResult? Function(IntegrationsLoaded value)? loaded,
+    TResult? Function(IntegratedPlatform value)? integratedPlatform,
     TResult? Function(IntegrationsError value)? error,
   }) {
     return loaded?.call(this);
@@ -691,6 +746,7 @@ class _$IntegrationsLoaded implements IntegrationsLoaded {
     TResult Function(IntegrationsInitial value)? initial,
     TResult Function(IntegrationsLoading value)? loading,
     TResult Function(IntegrationsLoaded value)? loaded,
+    TResult Function(IntegratedPlatform value)? integratedPlatform,
     TResult Function(IntegrationsError value)? error,
     required TResult orElse(),
   }) {
@@ -712,6 +768,228 @@ abstract class IntegrationsLoaded implements IntegrationsState {
   @override
   @JsonKey(ignore: true)
   _$$IntegrationsLoadedCopyWith<_$IntegrationsLoaded> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$IntegratedPlatformCopyWith<$Res>
+    implements $IntegrationsStateCopyWith<$Res> {
+  factory _$$IntegratedPlatformCopyWith(_$IntegratedPlatform value,
+          $Res Function(_$IntegratedPlatform) then) =
+      __$$IntegratedPlatformCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String platformId,
+      Iterable<Platform> availablePlatforms,
+      Iterable<Integration> integrations});
+}
+
+/// @nodoc
+class __$$IntegratedPlatformCopyWithImpl<$Res>
+    extends _$IntegrationsStateCopyWithImpl<$Res, _$IntegratedPlatform>
+    implements _$$IntegratedPlatformCopyWith<$Res> {
+  __$$IntegratedPlatformCopyWithImpl(
+      _$IntegratedPlatform _value, $Res Function(_$IntegratedPlatform) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? platformId = null,
+    Object? availablePlatforms = null,
+    Object? integrations = null,
+  }) {
+    return _then(_$IntegratedPlatform(
+      null == platformId
+          ? _value.platformId
+          : platformId // ignore: cast_nullable_to_non_nullable
+              as String,
+      null == availablePlatforms
+          ? _value.availablePlatforms
+          : availablePlatforms // ignore: cast_nullable_to_non_nullable
+              as Iterable<Platform>,
+      null == integrations
+          ? _value.integrations
+          : integrations // ignore: cast_nullable_to_non_nullable
+              as Iterable<Integration>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$IntegratedPlatform implements IntegratedPlatform {
+  const _$IntegratedPlatform(
+      this.platformId, this.availablePlatforms, this.integrations);
+
+  @override
+  final String platformId;
+  @override
+  final Iterable<Platform> availablePlatforms;
+  @override
+  final Iterable<Integration> integrations;
+
+  @override
+  String toString() {
+    return 'IntegrationsState.integratedPlatform(platformId: $platformId, availablePlatforms: $availablePlatforms, integrations: $integrations)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$IntegratedPlatform &&
+            (identical(other.platformId, platformId) ||
+                other.platformId == platformId) &&
+            const DeepCollectionEquality()
+                .equals(other.availablePlatforms, availablePlatforms) &&
+            const DeepCollectionEquality()
+                .equals(other.integrations, integrations));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      platformId,
+      const DeepCollectionEquality().hash(availablePlatforms),
+      const DeepCollectionEquality().hash(integrations));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$IntegratedPlatformCopyWith<_$IntegratedPlatform> get copyWith =>
+      __$$IntegratedPlatformCopyWithImpl<_$IntegratedPlatform>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)
+        initial,
+    required TResult Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)
+        loading,
+    required TResult Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)
+        loaded,
+    required TResult Function(
+            String platformId,
+            Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)
+        integratedPlatform,
+    required TResult Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations, String message)
+        error,
+  }) {
+    return integratedPlatform(platformId, availablePlatforms, integrations);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)?
+        initial,
+    TResult? Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)?
+        loading,
+    TResult? Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)?
+        loaded,
+    TResult? Function(String platformId, Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)?
+        integratedPlatform,
+    TResult? Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations, String message)?
+        error,
+  }) {
+    return integratedPlatform?.call(
+        platformId, availablePlatforms, integrations);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)?
+        initial,
+    TResult Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)?
+        loading,
+    TResult Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)?
+        loaded,
+    TResult Function(String platformId, Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)?
+        integratedPlatform,
+    TResult Function(Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations, String message)?
+        error,
+    required TResult orElse(),
+  }) {
+    if (integratedPlatform != null) {
+      return integratedPlatform(platformId, availablePlatforms, integrations);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(IntegrationsInitial value) initial,
+    required TResult Function(IntegrationsLoading value) loading,
+    required TResult Function(IntegrationsLoaded value) loaded,
+    required TResult Function(IntegratedPlatform value) integratedPlatform,
+    required TResult Function(IntegrationsError value) error,
+  }) {
+    return integratedPlatform(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(IntegrationsInitial value)? initial,
+    TResult? Function(IntegrationsLoading value)? loading,
+    TResult? Function(IntegrationsLoaded value)? loaded,
+    TResult? Function(IntegratedPlatform value)? integratedPlatform,
+    TResult? Function(IntegrationsError value)? error,
+  }) {
+    return integratedPlatform?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(IntegrationsInitial value)? initial,
+    TResult Function(IntegrationsLoading value)? loading,
+    TResult Function(IntegrationsLoaded value)? loaded,
+    TResult Function(IntegratedPlatform value)? integratedPlatform,
+    TResult Function(IntegrationsError value)? error,
+    required TResult orElse(),
+  }) {
+    if (integratedPlatform != null) {
+      return integratedPlatform(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class IntegratedPlatform implements IntegrationsState {
+  const factory IntegratedPlatform(
+      final String platformId,
+      final Iterable<Platform> availablePlatforms,
+      final Iterable<Integration> integrations) = _$IntegratedPlatform;
+
+  String get platformId;
+  @override
+  Iterable<Platform> get availablePlatforms;
+  @override
+  Iterable<Integration> get integrations;
+  @override
+  @JsonKey(ignore: true)
+  _$$IntegratedPlatformCopyWith<_$IntegratedPlatform> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -816,6 +1094,11 @@ class _$IntegrationsError implements IntegrationsError {
     required TResult Function(Iterable<Platform> availablePlatforms,
             Iterable<Integration> integrations)
         loaded,
+    required TResult Function(
+            String platformId,
+            Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)
+        integratedPlatform,
     required TResult Function(Iterable<Platform> availablePlatforms,
             Iterable<Integration> integrations, String message)
         error,
@@ -835,6 +1118,9 @@ class _$IntegrationsError implements IntegrationsError {
     TResult? Function(Iterable<Platform> availablePlatforms,
             Iterable<Integration> integrations)?
         loaded,
+    TResult? Function(String platformId, Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)?
+        integratedPlatform,
     TResult? Function(Iterable<Platform> availablePlatforms,
             Iterable<Integration> integrations, String message)?
         error,
@@ -854,6 +1140,9 @@ class _$IntegrationsError implements IntegrationsError {
     TResult Function(Iterable<Platform> availablePlatforms,
             Iterable<Integration> integrations)?
         loaded,
+    TResult Function(String platformId, Iterable<Platform> availablePlatforms,
+            Iterable<Integration> integrations)?
+        integratedPlatform,
     TResult Function(Iterable<Platform> availablePlatforms,
             Iterable<Integration> integrations, String message)?
         error,
@@ -871,6 +1160,7 @@ class _$IntegrationsError implements IntegrationsError {
     required TResult Function(IntegrationsInitial value) initial,
     required TResult Function(IntegrationsLoading value) loading,
     required TResult Function(IntegrationsLoaded value) loaded,
+    required TResult Function(IntegratedPlatform value) integratedPlatform,
     required TResult Function(IntegrationsError value) error,
   }) {
     return error(this);
@@ -882,6 +1172,7 @@ class _$IntegrationsError implements IntegrationsError {
     TResult? Function(IntegrationsInitial value)? initial,
     TResult? Function(IntegrationsLoading value)? loading,
     TResult? Function(IntegrationsLoaded value)? loaded,
+    TResult? Function(IntegratedPlatform value)? integratedPlatform,
     TResult? Function(IntegrationsError value)? error,
   }) {
     return error?.call(this);
@@ -893,6 +1184,7 @@ class _$IntegrationsError implements IntegrationsError {
     TResult Function(IntegrationsInitial value)? initial,
     TResult Function(IntegrationsLoading value)? loading,
     TResult Function(IntegrationsLoaded value)? loaded,
+    TResult Function(IntegratedPlatform value)? integratedPlatform,
     TResult Function(IntegrationsError value)? error,
     required TResult orElse(),
   }) {
