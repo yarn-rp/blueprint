@@ -4,7 +4,6 @@ import 'package:stream_transform/stream_transform.dart';
 
 const _usersCollectionName = 'users';
 
-
 /// {@template blueprint_repository}
 /// Repository to handle blueprints on the platform.
 /// {@endtemplate}
