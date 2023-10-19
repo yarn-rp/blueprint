@@ -1,4 +1,4 @@
-import 'entities/entities.dart';
+import 'package:blueprint_repository/src/entities/entities.dart';
 
 /// {@template blueprint_repository}
 /// Repository to handle blueprints on the platform.

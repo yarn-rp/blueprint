@@ -4,11 +4,11 @@ import 'package:blueprint/calendar/presentation/widgets/appointment_time.dart';
 import 'package:blueprint/calendar/presentation/widgets/attendee_tile.dart';
 import 'package:blueprint/calendar/presentation/widgets/conference_entrypoints.dart';
 import 'package:blueprint/core/utils/color/hex_color_extension.dart';
+import 'package:blueprint_repository/blueprint_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:markdown/markdown.dart' as md;
-import 'package:blueprint_repository/blueprint_repository.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class GeneralEventCalendarEventDetails extends StatelessWidget {
