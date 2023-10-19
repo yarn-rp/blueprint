@@ -1,6 +1,5 @@
-// ignore: avoid_web_libraries_in_flutter
+// ignore_for_file: avoid_web_libraries_in_flutter
 import 'dart:js' as js;
-
 import 'package:auto_route/auto_route.dart';
 import 'package:blueprint/app/dependency_injection/init.dart';
 import 'package:blueprint/integrations/state_management/integrations_repository/integrations_cubit.dart';
