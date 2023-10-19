@@ -1,0 +1,21 @@
+name: api_client
+description: A Very Good Project created by Very Good CLI.
+version: 0.1.0+1
+publish_to: none
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+  flutter: ">=3.10.0"
+
+dependencies:
+  cloud_firestore: ^4.9.3
+  cloud_functions: ^4.4.2
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  fake_cloud_firestore: ^2.4.1+1
+  flutter_test:
+    sdk: flutter
+  mocktail: ^1.0.0
+  very_good_analysis: ^5.1.0
