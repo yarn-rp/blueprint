@@ -5,12 +5,12 @@ part 'label.g.dart';
 /// Represents the status of the ticket.
 @JsonSerializable()
 class Label {
-
   /// Create a new instance of [Label]
   Label(
     this.name,
     this.colorHex,
   );
+
   /// Converts a [Map<String, dynamic>] into a [Label].
   factory Label.fromJson(Map<String, dynamic> json) => _$LabelFromJson(json);
 

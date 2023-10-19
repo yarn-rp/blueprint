@@ -15,6 +15,11 @@ class IntegrationsState with _$IntegrationsState {
     Iterable<Platform> availablePlatforms,
     Iterable<Integration> integrations,
   ) = IntegrationsLoaded;
+  const factory IntegrationsState.integratedPlatform(
+    String platformId,
+    Iterable<Platform> availablePlatforms,
+    Iterable<Integration> integrations,
+  ) = IntegratedPlatform;
   const factory IntegrationsState.error(
     Iterable<Platform> availablePlatforms,
     Iterable<Integration> integrations,

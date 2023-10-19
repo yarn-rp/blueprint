@@ -10,7 +10,6 @@ part 'user.g.dart';
 /// {@endtemplate}
 @JsonSerializable()
 class User {
-
   /// {@macro project_user}
   const User(
     this.platformURL,

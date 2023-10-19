@@ -1,3 +1,6 @@
+// ignore: avoid_web_libraries_in_flutter
+import 'dart:js' as js;
+
 import 'package:auto_route/auto_route.dart';
 import 'package:blueprint/app/dependency_injection/init.dart';
 import 'package:blueprint/integrations/state_management/integrations_repository/integrations_cubit.dart';
@@ -46,28 +49,31 @@ class IntegrateWithPlatformView extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Integrate with Platform'),
       ),
-      body: BlocConsumer<IntegrationsCubit, IntegrationsState>(
-        listener: (context, state) {
-          state.maybeMap(
-            loaded: (state) {
-              if (state.integrations.isNotEmpty) {
-                context.router.pop();
-              }
-            },
-            orElse: () {},
-          );
-        },
+      body: BlocBuilder<IntegrationsCubit, IntegrationsState>(
         builder: (context, state) {
           return state.maybeMap(
             loading: (_) => const Center(
               child: CircularProgressIndicator(),
             ),
             error: (state) => Center(
-              child: Text(state.message),
+              child: Text('error state${state.message}'),
             ),
-            orElse: () => const Center(
-              child: Text('Something went wrong.'),
+            integratedPlatform: (state) => Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('Integration with ${state.platformId} went '
+                      'successful. You can now close this page.'),
+                  ElevatedButton(
+                    onPressed: () {
+                      js.context.callMethod('close');
+                    },
+                    child: const Text('Close'),
+                  ),
+                ],
+              ),
             ),
+            orElse: () => const SizedBox.shrink(),
           );
         },
       ),
