@@ -7,9 +7,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 /// {@template platforms_api_client}
 /// Client for the platforms API using Firestore.
 /// {@endtemplate}
-class PlatformsClient {
+class PlatformsApiClient {
   /// {@macro platforms_api_client}
-  PlatformsClient({
+  PlatformsApiClient({
     required FirebaseFirestore firestore,
   }) : _platformsCollection =
             firestore.collection(Collections.platforms).withConverter(

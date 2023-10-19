@@ -11,9 +11,9 @@ import 'package:cloud_functions/cloud_functions.dart';
 /// {@template api_client}
 /// Client for the user API.
 /// {@endtemplate}
-class UserApiClient {
+class UsersApiClient {
   /// {@macro api_client}
-  UserApiClient({
+  UsersApiClient({
     required Stream<String?> idTokenStream,
     required FirebaseFirestore firestore,
     required FirebaseFunctions firebaseFunctions,
