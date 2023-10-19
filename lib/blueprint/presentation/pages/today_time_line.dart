@@ -47,14 +47,6 @@ class _TodaysBlueprintState extends State<TodayTimeline>
     return Scaffold(
       body: Row(
         children: <Widget>[
-          ElevatedButton(
-              onPressed: () {
-                final repo = sl<CalendarRepository>();
-                repo.getEvents().listen((event) {
-                  print("EVENTOS:$event");
-                });
-              },
-              child: Text('data')),
           Expanded(
             flex: 3,
             child: screenHeight < 800

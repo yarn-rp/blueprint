@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:calendar_repository/src/entities/entities.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:collection/collection.dart';
 
 import 'package:integrations_repository/integrations_repository.dart';
 import 'package:stream_transform/stream_transform.dart';
@@ -64,10 +67,7 @@ class CalendarRepository {
           .where('startTime', isGreaterThanOrEqualTo: startOfDay)
           .where('startTime', isLessThan: endOfDay)
           .snapshots()
-          .map((snapshot) => snapshot.docs.map((doc) {
-                print(doc);
-                return doc.data();
-              }));
+          .map((snapshot) => snapshot.docs.map((doc) => doc.data()));
     });
   }
 
@@ -79,15 +79,11 @@ class CalendarRepository {
 
       final userData = _usersCollection.doc(userId);
 
-      final eventsSubCollection =
-          userData.collection('events').withConverter<Event>(
-                fromFirestore: eventConverter.fromFirestore,
-                toFirestore: eventConverter.toFirestore,
-              );
+      final eventsSubCollection = userData.collection('events');
 
       final now = DateTime.now();
       final startOfDay = DateTime(now.year, now.month, now.day);
-      final endOfDay = DateTime(now.year, now.month, now.day + 7);
+      final endOfDay = DateTime(now.year, now.month, now.day + 1);
 
       return platformsStream.switchMap(
         (platforms) => eventsSubCollection
@@ -96,12 +92,21 @@ class CalendarRepository {
             .snapshots()
             .map((event) {
           return event.docs.map((e) {
-            final eventPlatform = platforms.firstWhere(
-              (element) => e.data().platform.id == element.id,
+            final data = e.data();
+            final platformId = data['platform'];
+
+            final eventPlatform = platforms.firstWhereOrNull(
+              (element) => platformId == element.id,
             );
 
-            final eventEnity = e.data();
-            return eventEnity.copyWith(platform: eventPlatform);
+            final eventEntity = Event.fromJson(
+              {
+                ...data,
+                if (eventPlatform != null) 'platform': eventPlatform.toJson(),
+              },
+            );
+
+            return eventEntity.copyWith(platform: eventPlatform);
           });
         }),
       );

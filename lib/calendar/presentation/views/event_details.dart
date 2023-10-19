@@ -113,7 +113,7 @@ class GeneralEventCalendarEventDetails extends StatelessWidget {
                           'View in ',
                         ),
                         Text(
-                          appointment.event.platform.displayName,
+                          appointment.event.platform?.displayName ?? '',
                         ),
                       ],
                     ),

@@ -18,8 +18,8 @@ class Event extends Equatable {
     required this.endTime,
     required this.subject,
     required this.isAllDay,
-    required this.platform,
     required this.attendantStatus,
+    this.platform,
     this.description,
     this.colorHex,
     this.organizer,
@@ -64,7 +64,7 @@ class Event extends Equatable {
   final String? colorHex;
 
   /// The organizer of the event.
-  final User? organizer;
+  final String? organizer;
 
   /// The list of attendees of the event. The key is the email of the attendee.
   final Map<String, AttendantStatus>? attendees;
@@ -73,7 +73,8 @@ class Event extends Equatable {
   final String? platformLink;
 
   /// The platform of the event.
-  final Platform platform;
+  @JsonKey(includeFromJson: false)
+  final Platform? platform;
 
   /// The meeting data of the event. If null, means that the event is not a
   /// meeting.
@@ -110,7 +111,7 @@ class Event extends Equatable {
     String? description,
     bool? isAllDay,
     String? colorHex,
-    User? organizer,
+    String? organizer,
     Map<String, AttendantStatus>? attendees,
     String? platformLink,
     Platform? platform,

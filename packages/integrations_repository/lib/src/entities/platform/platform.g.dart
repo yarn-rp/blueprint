@@ -18,7 +18,7 @@ Map<String, dynamic> _$PlatformToJson(Platform instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.displayName,
       'iconUrl': instance.iconUrl,
-      'auth': instance.authentication,
+      'auth': Authentication.toJson(instance.authentication),
     };
 
 Basic _$BasicFromJson(Map<String, dynamic> json) => Basic(
