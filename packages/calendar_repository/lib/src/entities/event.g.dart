@@ -7,12 +7,8 @@ part of 'event.dart';
 // **************************************************************************
 
 Event _$EventFromJson(Map<String, dynamic> json) => Event(
-      startTime: json['startTime'] == null
-          ? null
-          : DateTime.parse(json['startTime'] as String),
-      endTime: json['endTime'] == null
-          ? null
-          : DateTime.parse(json['endTime'] as String),
+      startTime: Event._timestampFromJson(json['startTime'] as Timestamp?),
+      endTime: Event._timestampFromJson(json['endTime'] as Timestamp?),
       subject: json['subject'] as String,
       isAllDay: json['isAllDay'] as bool?,
       platform: Platform.fromJson(json['platform'] as Map<String, dynamic>),
@@ -34,8 +30,8 @@ Event _$EventFromJson(Map<String, dynamic> json) => Event(
     );
 
 Map<String, dynamic> _$EventToJson(Event instance) => <String, dynamic>{
-      'startTime': instance.startTime?.toIso8601String(),
-      'endTime': instance.endTime?.toIso8601String(),
+      'startTime': Event._timestampToJson(instance.startTime),
+      'endTime': Event._timestampToJson(instance.endTime),
       'subject': instance.subject,
       'description': instance.description,
       'isAllDay': instance.isAllDay,

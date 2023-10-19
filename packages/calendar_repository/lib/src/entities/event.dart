@@ -1,4 +1,5 @@
 import 'package:calendar_repository/src/entities/entities.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:integrations_repository/integrations_repository.dart'
     show Platform;
@@ -37,9 +38,17 @@ class Event extends Equatable {
   Map<String, dynamic> toJson() => _$EventToJson(this);
 
   /// The start time of the event.
+  @JsonKey(
+    fromJson: _timestampFromJson,
+    toJson: _timestampToJson,
+  )
   final DateTime? startTime;
 
   /// The end time of the event.
+  @JsonKey(
+    fromJson: _timestampFromJson,
+    toJson: _timestampToJson,
+  )
   final DateTime? endTime;
 
   /// The subject of the event.
@@ -85,4 +94,42 @@ class Event extends Equatable {
         attendees,
         platformLink,
       ];
+  static DateTime? _timestampFromJson(Timestamp? value) {
+    // ignore: unnecessary_null_comparison, lines_longer_than_80_chars
+    return value?.toDate();
+  }
+
+  static dynamic _timestampToJson(DateTime? date) {
+    return date != null ? Timestamp.fromDate(date) : null;
+  }
+
+  Event copyWith({
+    DateTime? startTime,
+    DateTime? endTime,
+    String? subject,
+    String? description,
+    bool? isAllDay,
+    String? colorHex,
+    User? organizer,
+    Map<String, AttendantStatus>? attendees,
+    String? platformLink,
+    Platform? platform,
+    ConferenceData? conferenceData,
+    AttendantStatus? attendantStatus,
+  }) {
+    return Event(
+      startTime: startTime ?? this.startTime,
+      endTime: endTime ?? this.endTime,
+      subject: subject ?? this.subject,
+      isAllDay: isAllDay ?? this.isAllDay,
+      platform: platform ?? this.platform,
+      attendantStatus: attendantStatus ?? this.attendantStatus,
+      attendees: attendees ?? this.attendees,
+      colorHex: colorHex ?? this.colorHex,
+      conferenceData: conferenceData ?? this.conferenceData,
+      description: description ?? this.description,
+      organizer: organizer ?? this.organizer,
+      platformLink: platformLink ?? this.platformLink,
+    );
+  }
 }

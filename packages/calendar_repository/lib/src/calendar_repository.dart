@@ -64,7 +64,47 @@ class CalendarRepository {
           .where('startTime', isGreaterThanOrEqualTo: startOfDay)
           .where('startTime', isLessThan: endOfDay)
           .snapshots()
-          .map((snapshot) => snapshot.docs.map((doc) => doc.data()));
+          .map((snapshot) => snapshot.docs.map((doc) {
+                print(doc);
+                return doc.data();
+              }));
+    });
+  }
+
+  Stream<Iterable<Event>> getEvents() {
+    return currentUserIdStream.switchMap((userId) {
+      if (userId == null) {
+        return const Stream.empty();
+      }
+
+      final userData = _usersCollection.doc(userId);
+
+      final eventsSubCollection =
+          userData.collection('events').withConverter<Event>(
+                fromFirestore: eventConverter.fromFirestore,
+                toFirestore: eventConverter.toFirestore,
+              );
+
+      final now = DateTime.now();
+      final startOfDay = DateTime(now.year, now.month, now.day);
+      final endOfDay = DateTime(now.year, now.month, now.day + 7);
+
+      return platformsStream.switchMap(
+        (platforms) => eventsSubCollection
+            .where('startTime', isGreaterThanOrEqualTo: startOfDay)
+            .where('startTime', isLessThan: endOfDay)
+            .snapshots()
+            .map((event) {
+          return event.docs.map((e) {
+            final eventPlatform = platforms.firstWhere(
+              (element) => e.data().platform.id == element.id,
+            );
+
+            final eventEnity = e.data();
+            return eventEnity.copyWith(platform: eventPlatform);
+          });
+        }),
+      );
     });
   }
 }
