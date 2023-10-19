@@ -22,29 +22,20 @@ void main() {
     });
 
     group('getPlatforms', () {
-      final platforms = <PlatformModel>[
-        (
-          id: '1',
-          name: 'Platform 1',
-          iconUrl: 'https://platform1.com/logo.png',
-          type: 'calendar',
-          description: 'Platform 1 description',
-          auth: (
-            type: 'oauth2',
-            url: 'https://platform1.com/auth',
-          ),
-        ),
-        (
-          id: '2',
-          name: 'Platform 2',
-          iconUrl: 'https://platform2.com/logo.png',
-          type: 'task',
-          description: 'Platform 2 description',
-          auth: (
-            type: 'oauth2',
-            url: 'https://platform2.com/auth',
-          ),
-        ),
+      final platforms = [
+        {
+          'id': 'jira',
+          'name': 'jira',
+          'iconUrl':
+              'https://static00.iconduck.com/assets.00/jira-icon-512x512-kkpo6eik.png',
+          'type': 'task',
+          'description': '',
+          'auth': {
+            'type': 'oauth2',
+            'url':
+                'https://auth.atlassian.com/authorize?audience=api.atlassian.com&client_id=8ohszwsNEctmq9la0H4QrmfVlg03work%2Oread-jira-user%2Owrite-jira-work%2Omanage-jira-webhook&redirect_uri=https://polletask-dev.web.app/integrations/jira/create&state=120384019238401923840129',
+          },
+        },
       ];
 
       setUp(() async {
@@ -55,11 +46,7 @@ void main() {
           platforms.map(
             (platform) => firestore
                 .collection(Collections.platforms)
-                .withConverter(
-                  fromFirestore: platformConverter.fromFirestore,
-                  toFirestore: platformConverter.toFirestore,
-                )
-                .doc(platform.id)
+                .doc(platform['id'] as String?)
                 .set(platform),
           ),
         );
@@ -79,9 +66,21 @@ void main() {
 
         expect(
           result,
-          emits(
-            platforms,
-          ),
+          emits(<PlatformModel>[
+            (
+              id: 'jira',
+              name: 'jira',
+              iconUrl:
+                  'https://static00.iconduck.com/assets.00/jira-icon-512x512-kkpo6eik.png',
+              type: 'task',
+              description: '',
+              auth: (
+                type: 'oauth2',
+                url:
+                    'https://auth.atlassian.com/authorize?audience=api.atlassian.com&client_id=8ohszwsNEctmq9la0H4QrmfVlg03work%2Oread-jira-user%2Owrite-jira-work%2Omanage-jira-webhook&redirect_uri=https://polletask-dev.web.app/integrations/jira/create&state=120384019238401923840129',
+              )
+            ),
+          ]),
         );
       });
     });
