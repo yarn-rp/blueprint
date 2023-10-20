@@ -47,7 +47,7 @@ Future<void> bootstrap(
   );
 
   FlutterError.onError = (details) {
-    log('boostrap: ${details.exceptionAsString()}', stackTrace: details.stack);
+    log(details.exceptionAsString(), stackTrace: details.stack);
   };
 
   Bloc.observer = const AppBlocObserver();

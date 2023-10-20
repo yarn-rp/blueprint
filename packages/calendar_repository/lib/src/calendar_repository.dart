@@ -51,32 +51,6 @@ class CalendarRepository {
 
       final userData = _usersCollection.doc(userId);
 
-      final tasksSubCollection =
-          userData.collection('events').withConverter<Event>(
-                fromFirestore: eventConverter.fromFirestore,
-                toFirestore: eventConverter.toFirestore,
-              );
-
-      final now = DateTime.now();
-      final startOfDay = DateTime(now.year, now.month, now.day);
-      final endOfDay = DateTime(now.year, now.month, now.day + 1);
-
-      return tasksSubCollection
-          .where('startTime', isGreaterThanOrEqualTo: startOfDay)
-          .where('startTime', isLessThan: endOfDay)
-          .snapshots()
-          .map((snapshot) => snapshot.docs.map((doc) => doc.data()));
-    });
-  }
-
-  Stream<Iterable<Event>> getEvents() {
-    return currentUserIdStream.switchMap((userId) {
-      if (userId == null) {
-        return const Stream.empty();
-      }
-
-      final userData = _usersCollection.doc(userId);
-
       final eventsSubCollection = userData.collection('events');
 
       final now = DateTime.now();
@@ -104,7 +78,36 @@ class CalendarRepository {
               },
             );
 
-            return eventEntity.copyWith(platform: eventPlatform);
+            return eventEntity;
+          });
+        }),
+      );
+    });
+  }
+
+  Stream<Iterable<Event>> getEvents() {
+    return currentUserIdStream.switchMap((userId) {
+      if (userId == null) {
+        return const Stream.empty();
+      }
+      final userData = _usersCollection.doc(userId);
+      final eventsSubCollection = userData.collection('events');
+      return platformsStream.switchMap(
+        (platforms) => eventsSubCollection.snapshots().map((event) {
+          return event.docs.map((e) {
+            final data = e.data();
+            final platformId = data['platform'];
+            final eventPlatform = platforms.firstWhereOrNull(
+              (element) => platformId == element.id,
+            );
+            final eventEntity = Event.fromJson(
+              {
+                ...data,
+                if (eventPlatform != null) 'platform': eventPlatform.toJson(),
+              },
+            );
+
+            return eventEntity;
           });
         }),
       );

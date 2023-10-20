@@ -23,7 +23,7 @@ class TodaysBlueprintCubit extends Cubit<TodaysBlueprintState> {
             addedAt: DateTime.now(),
           ),
         ) {
-    calendarRepository.getEvents().listen((events) {
+    calendarRepository.getTodayEvents().listen((events) {
       emit(
         TodaysBlueprintState.loaded(
           calendarEvents: events.map<CalendarEvent>((event) {
@@ -31,7 +31,6 @@ class TodaysBlueprintCubit extends Cubit<TodaysBlueprintState> {
               startTime: event.startTime ?? DateTime.now(),
               endTime:
                   event.endTime ?? DateTime.now().add(const Duration(hours: 1)),
-              //  event.endTime ??
               event: event,
             );
           }).toList(),
