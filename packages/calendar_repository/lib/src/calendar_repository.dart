@@ -42,49 +42,6 @@ class CalendarRepository {
   /// Stream of all platforms.
   final Stream<Iterable<Platform>> platformsStream;
 
-  /// Get all events of the day from the calendars managed by this repository.
-  Stream<Iterable<Event>> getTodayEvents() {
-    return currentUserIdStream.switchMap((userId) {
-      if (userId == null) {
-        return const Stream.empty();
-      }
-
-      final userData = _usersCollection.doc(userId);
-
-      final eventsSubCollection = userData.collection('events');
-
-      final now = DateTime.now();
-      final startOfDay = DateTime(now.year, now.month, now.day);
-      final endOfDay = DateTime(now.year, now.month, now.day + 1);
-
-      return platformsStream.switchMap(
-        (platforms) => eventsSubCollection
-            .where('startTime', isGreaterThanOrEqualTo: startOfDay)
-            .where('startTime', isLessThan: endOfDay)
-            .snapshots()
-            .map((event) {
-          return event.docs.map((e) {
-            final data = e.data();
-            final platformId = data['platform'];
-
-            final eventPlatform = platforms.firstWhereOrNull(
-              (element) => platformId == element.id,
-            );
-
-            final eventEntity = Event.fromJson(
-              {
-                ...data,
-                if (eventPlatform != null) 'platform': eventPlatform.toJson(),
-              },
-            );
-
-            return eventEntity;
-          });
-        }),
-      );
-    });
-  }
-
   Stream<Iterable<Event>> getEvents() {
     return currentUserIdStream.switchMap((userId) {
       if (userId == null) {
