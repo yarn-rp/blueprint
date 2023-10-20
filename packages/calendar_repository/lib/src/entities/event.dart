@@ -1,4 +1,5 @@
 import 'package:calendar_repository/src/entities/entities.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:integrations_repository/integrations_repository.dart'
     show Platform;
@@ -17,8 +18,8 @@ class Event extends Equatable {
     required this.endTime,
     required this.subject,
     required this.isAllDay,
-    required this.platform,
     required this.attendantStatus,
+    this.platform,
     this.description,
     this.colorHex,
     this.organizer,
@@ -37,9 +38,17 @@ class Event extends Equatable {
   Map<String, dynamic> toJson() => _$EventToJson(this);
 
   /// The start time of the event.
+  @JsonKey(
+    fromJson: _timestampFromJson,
+    toJson: _timestampToJson,
+  )
   final DateTime? startTime;
 
   /// The end time of the event.
+  @JsonKey(
+    fromJson: _timestampFromJson,
+    toJson: _timestampToJson,
+  )
   final DateTime? endTime;
 
   /// The subject of the event.
@@ -55,7 +64,7 @@ class Event extends Equatable {
   final String? colorHex;
 
   /// The organizer of the event.
-  final User? organizer;
+  final String? organizer;
 
   /// The list of attendees of the event. The key is the email of the attendee.
   final Map<String, AttendantStatus>? attendees;
@@ -64,7 +73,8 @@ class Event extends Equatable {
   final String? platformLink;
 
   /// The platform of the event.
-  final Platform platform;
+  @JsonKey(includeFromJson: false)
+  final Platform? platform;
 
   /// The meeting data of the event. If null, means that the event is not a
   /// meeting.
@@ -85,4 +95,11 @@ class Event extends Equatable {
         attendees,
         platformLink,
       ];
+  static DateTime? _timestampFromJson(Timestamp? value) {
+    return value?.toDate();
+  }
+
+  static dynamic _timestampToJson(DateTime? date) {
+    return date != null ? Timestamp.fromDate(date) : null;
+  }
 }

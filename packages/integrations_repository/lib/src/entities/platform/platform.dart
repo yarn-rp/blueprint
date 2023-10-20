@@ -29,7 +29,11 @@ class Platform {
   /// The URL of the icon for the platform.
   final String iconUrl;
 
-  @JsonKey(name: 'auth')
+  @JsonKey(
+    name: 'auth',
+    fromJson: Authentication.fromJson,
+    toJson: Authentication.toJson,
+  )
   final Authentication authentication;
 
   /// To json
@@ -49,8 +53,12 @@ sealed class Authentication {
     }
   }
 
-  /// To json
-  Map<String, dynamic> toJson();
+  static Map<String, dynamic> toJson(Authentication authentication) {
+    return switch (authentication) {
+      Basic() => authentication.toJson(),
+      OAuth2() => authentication.toJson(),
+    };
+  }
 }
 
 @JsonSerializable()
@@ -64,7 +72,6 @@ class Basic extends Authentication {
   final String username;
   final String password;
 
-  @override
   Map<String, dynamic> toJson() => _$BasicToJson(this);
 }
 
@@ -77,7 +84,6 @@ class OAuth2 extends Authentication {
 
   factory OAuth2.fromJson(Map<String, dynamic> json) => _$OAuth2FromJson(json);
 
-  @override
   Map<String, dynamic> toJson() => _$OAuth2ToJson(this);
 
   final String url;

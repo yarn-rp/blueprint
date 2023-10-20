@@ -14,6 +14,8 @@ dependencies:
     path: ./packages/authentication_repository
   auto_route: ^7.8.3
   bloc: ^8.1.1
+  blueprint_repository:
+    path: ./packages/blueprint_repository
   cached_network_image: ^3.2.3
   calendar_repository:
     path: ./packages/calendar_repository
@@ -53,11 +55,9 @@ dependencies:
   syncfusion_flutter_calendar: ^21.1.38
   task_repository:
     path: ./packages/task_repository
-  blueprint_repository:
-    path: ./packages/blueprint_repository
+  universal_html: ^2.2.4
   url_launcher: ^6.1.10
   url_strategy: ^0.2.0
-  universal_html: ^2.2.4
 
 dev_dependencies:
   auto_route_generator: ^7.3.1
