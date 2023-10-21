@@ -105,10 +105,17 @@ class UsersApiClient {
   /// Deletes an integration from the database
   Future<void> removeAuthenticator(
     String authenticatorId,
-  ) =>
-      _usersCollection
-          .doc(_idToken)
-          .collection(Collections.authenticators)
-          .doc(authenticatorId)
-          .delete();
+  ) async {
+    final authenticatorDoc = _usersCollection
+        .doc(_idToken)
+        .collection(Collections.authenticators)
+        .doc(authenticatorId);
+
+    final authenticatorRef = await authenticatorDoc.get();
+    if (!authenticatorRef.exists) {
+      throw Exception('Authenticator does not exists');
+    }
+
+    return authenticatorDoc.delete();
+  }
 }

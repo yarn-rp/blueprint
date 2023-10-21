@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:api_client/api_client.dart';
+import 'package:api_client/src/collections/collections.dart';
 import 'package:api_client/src/functions/functions.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
@@ -36,14 +37,16 @@ void main() {
     });
 
     group('connect-authenticator', () {
+      const userId = 'some-id';
       late HttpsCallable callable;
+
       setUp(() {
         firestore = FakeFirebaseFirestore();
         firebaseFunctions = _MockFirebaseFunctions();
         usersApiClient = UsersApiClient(
           firestore: firestore,
           firebaseFunctions: firebaseFunctions,
-          idTokenStream: Stream.value(''),
+          idTokenStream: Stream.value(userId),
         );
 
         callable = _MockHttpsCallable();
@@ -115,6 +118,73 @@ void main() {
         ).called(1);
 
         verify(() => callable.call<void>(params)).called(1);
+      });
+    });
+
+    group('removeAuthenticator', () {
+      const userId = 'some-id';
+      const authenticatorId = 'some-authenticator-id';
+
+      setUp(() {
+        firestore = FakeFirebaseFirestore();
+        firebaseFunctions = _MockFirebaseFunctions();
+        usersApiClient = UsersApiClient(
+          firestore: firestore,
+          firebaseFunctions: firebaseFunctions,
+          idTokenStream: Stream.value(userId),
+        );
+      });
+
+      test('removes the authenticator from the user', () async {
+        const authenticator = (
+          accessToken: 'some-token',
+          platformName: 'github',
+          type: 'task',
+          user: (
+            email: null,
+            gid: 'some-id',
+            name: 'Yan Rodriguez',
+          ),
+        );
+
+        await firestore
+            .collection(Collections.users)
+            .doc(userId)
+            .collection(Collections.authenticators)
+            .doc(authenticatorId)
+            .set({
+          'accessToken': authenticator.accessToken,
+          'platformName': authenticator.platformName,
+          'type': authenticator.type,
+          'user': {
+            'email': authenticator.user.email,
+            'gid': authenticator.user.gid,
+            'name': authenticator.user.name,
+          },
+        });
+
+        await usersApiClient.removeAuthenticator(authenticatorId);
+
+        final authenticatorDoc = await firestore
+            .collection(Collections.users)
+            .doc(userId)
+            .collection(Collections.authenticators)
+            .doc(authenticatorId)
+            .get();
+
+        expect(
+          authenticatorDoc.exists,
+          isFalse,
+        );
+      });
+
+      test('throws exception if document does not exists', () {
+        expect(
+          () => usersApiClient.removeAuthenticator(authenticatorId),
+          throwsA(
+            isA<Exception>(),
+          ),
+        );
       });
     });
   });
