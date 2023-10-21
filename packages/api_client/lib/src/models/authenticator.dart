@@ -12,7 +12,10 @@ final authenticatorConverter = (
       id: snapshot.id,
       platformName: data['platformName'] as String,
       type: data['type'] as String,
-      user: data['user'] as AuthenticatorUserModel,
+      user: (
+        email: data['user']['email'] as String,
+        name: data['user']['name'] as String,
+      ),
     );
   },
   toFirestore: (
@@ -20,9 +23,12 @@ final authenticatorConverter = (
     SetOptions? options,
   ) {
     return {
-      'platformName': value.platformName,
       'type': value.type,
-      'user': value.user,
+      'platformName': value.platformName,
+      'user': {
+        'email': value.user.email,
+        'name': value.user.name,
+      }
     };
   },
 );

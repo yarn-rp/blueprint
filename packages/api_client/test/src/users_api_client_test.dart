@@ -2,6 +2,7 @@
 import 'package:api_client/api_client.dart';
 import 'package:api_client/src/collections/collections.dart';
 import 'package:api_client/src/functions/functions.dart';
+import 'package:api_client/src/models/models.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
@@ -123,7 +124,6 @@ void main() {
 
     group('removeAuthenticator', () {
       const userId = 'some-id';
-      const authenticatorId = 'some-authenticator-id';
 
       setUp(() {
         firestore = FakeFirebaseFirestore();
@@ -137,12 +137,11 @@ void main() {
 
       test('removes the authenticator from the user', () async {
         const authenticator = (
-          accessToken: 'some-token',
+          id: 'some-id',
           platformName: 'github',
           type: 'task',
           user: (
-            email: null,
-            gid: 'some-id',
+            email: 'some@email.com',
             name: 'Yan Rodriguez',
           ),
         );
@@ -151,25 +150,20 @@ void main() {
             .collection(Collections.users)
             .doc(userId)
             .collection(Collections.authenticators)
-            .doc(authenticatorId)
-            .set({
-          'accessToken': authenticator.accessToken,
-          'platformName': authenticator.platformName,
-          'type': authenticator.type,
-          'user': {
-            'email': authenticator.user.email,
-            'gid': authenticator.user.gid,
-            'name': authenticator.user.name,
-          },
-        });
+            .withConverter(
+              fromFirestore: authenticatorConverter.fromFirestore,
+              toFirestore: authenticatorConverter.toFirestore,
+            )
+            .doc(authenticator.id)
+            .set(authenticator);
 
-        await usersApiClient.removeAuthenticator(authenticatorId);
+        await usersApiClient.removeAuthenticator(authenticator.id);
 
         final authenticatorDoc = await firestore
             .collection(Collections.users)
             .doc(userId)
             .collection(Collections.authenticators)
-            .doc(authenticatorId)
+            .doc(authenticator.id)
             .get();
 
         expect(
@@ -180,9 +174,72 @@ void main() {
 
       test('throws exception if document does not exists', () {
         expect(
-          () => usersApiClient.removeAuthenticator(authenticatorId),
+          () => usersApiClient.removeAuthenticator('non-existent-id'),
           throwsA(
             isA<Exception>(),
+          ),
+        );
+      });
+    });
+
+    group('getConnectedAuthenticators', () {
+      const userId = 'some-id';
+
+      setUp(() {
+        firestore = FakeFirebaseFirestore();
+        firebaseFunctions = _MockFirebaseFunctions();
+        usersApiClient = UsersApiClient(
+          firestore: firestore,
+          firebaseFunctions: firebaseFunctions,
+          idTokenStream: Stream.value(userId),
+        );
+      });
+
+      test(
+        'streams snapshot of the authenticators user has under '
+        'authenticators sub-collection',
+        () {
+          const authenticator = (
+            id: 'some-id',
+            platformName: 'github',
+            type: 'task',
+            user: (
+              email: 'some@email.com',
+              name: 'Yan Rodriguez',
+            ),
+          );
+
+          firestore
+              .collection(Collections.users)
+              .doc(userId)
+              .collection(Collections.authenticators)
+              .withConverter(
+                fromFirestore: authenticatorConverter.fromFirestore,
+                toFirestore: authenticatorConverter.toFirestore,
+              )
+              .doc('some-id')
+              .set(authenticator);
+
+          final stream = usersApiClient.getConnectedAuthenticators();
+
+          expect(
+            stream,
+            emits(
+              [
+                authenticator,
+              ],
+            ),
+          );
+        },
+      );
+
+      test('emits empty list if user has no authenticators', () {
+        final stream = usersApiClient.getConnectedAuthenticators();
+
+        expect(
+          stream,
+          emits(
+            [],
           ),
         );
       });
