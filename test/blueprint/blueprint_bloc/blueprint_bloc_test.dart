@@ -42,7 +42,7 @@ void main() {
       });
 
       blocTest<BlueprintBloc, BlueprintState>(
-        'emits [BlueprintLoading, BlueprintNotScheduled] when blueprint is '
+        'emits [BlueprintNotScheduled] when blueprint is '
         'empty and previous events is empty',
         build: () => blueprintBloc,
         act: (bloc) => bloc.add(const GetBlueprint()),
@@ -51,16 +51,19 @@ void main() {
             (_) => Stream.value([]),
           );
         },
-        expect: () => const <BlueprintState>[
+        expect: () => <BlueprintState>[
           BlueprintNotScheduled(
             events: [],
           ),
         ],
+        verify: (_) {
+          verify(() => blueprintRepository.getBlueprint()).called(1);
+        },
       );
 
       blocTest<BlueprintBloc, BlueprintState>(
-        'emits [BlueprintLoading, BlueprintNotScheduled] with events when '
-        'get blueprint is empty and previous state is blueprint not scheduled '
+        'emits [BlueprintNotScheduled] with events when '
+        'get blueprint is empty and previous state is BlueprintScheduled '
         'with events not empty',
         build: () => blueprintBloc,
         act: (bloc) => bloc.add(const GetBlueprint()),
@@ -69,7 +72,8 @@ void main() {
             (_) => Stream.value([]),
           );
         },
-        seed: () => BlueprintNotScheduled(
+        seed: () => BlueprintScheduled(
+          items: [],
           events: [
             GeneralCalendarEvent(
               event: Event(
@@ -103,6 +107,41 @@ void main() {
             ],
           ),
         ],
+        verify: (_) {
+          verify(() => blueprintRepository.getBlueprint()).called(1);
+        },
+      );
+
+      blocTest<BlueprintBloc, BlueprintState>(
+        'emits [] with events when get blueprint is empty and previous '
+        'state is BlueprintNotScheduled with events not empty',
+        build: () => blueprintBloc,
+        act: (bloc) => bloc.add(const GetBlueprint()),
+        setUp: () {
+          when(() => blueprintRepository.getBlueprint()).thenAnswer(
+            (_) => Stream.value([]),
+          );
+        },
+        seed: () => BlueprintNotScheduled(
+          events: [
+            GeneralCalendarEvent(
+              event: Event(
+                subject: 'name',
+                description: 'description',
+                attendantStatus: AttendantStatus.accepted,
+                isAllDay: false,
+                startTime: DateTime(2023),
+                endTime: DateTime(2023).add(const Duration(hours: 1)),
+              ),
+              startTime: DateTime(2023),
+              endTime: DateTime(2023).add(const Duration(hours: 1)),
+            ),
+          ],
+        ),
+        expect: () => <BlueprintState>[],
+        verify: (_) {
+          verify(() => blueprintRepository.getBlueprint()).called(1);
+        },
       );
     });
   });

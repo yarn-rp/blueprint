@@ -25,6 +25,7 @@ class BlueprintBloc extends Bloc<BlueprintEvent, BlueprintState> {
     Emitter<BlueprintState> emit,
   ) async {
     final blueprintStream = _blueprintRepository.getBlueprint();
+
     return emit.forEach(
       blueprintStream,
       onData: (blueprint) {
@@ -37,7 +38,6 @@ class BlueprintBloc extends Bloc<BlueprintEvent, BlueprintState> {
         if (blueprint.isEmpty) {
           return BlueprintNotScheduled(events: previousEvents);
         }
-
         return BlueprintScheduled(items: blueprint, events: previousEvents);
       },
     );
@@ -48,6 +48,7 @@ class BlueprintBloc extends Bloc<BlueprintEvent, BlueprintState> {
     Emitter<BlueprintState> emit,
   ) async {
     final eventsStream = _calendarRepository.getEvents();
+
     return emit.forEach(
       eventsStream,
       onData: (events) {
@@ -55,10 +56,6 @@ class BlueprintBloc extends Bloc<BlueprintEvent, BlueprintState> {
           BlueprintScheduled(items: final items) => items,
           _ => <CalendarEvent>[],
         };
-
-        if (events.isEmpty) {
-          return BlueprintNotScheduled(events: []);
-        }
 
         return BlueprintScheduled(
           items: previousBlueprint,
