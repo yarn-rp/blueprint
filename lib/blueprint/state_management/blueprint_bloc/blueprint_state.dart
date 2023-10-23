@@ -11,13 +11,6 @@ class BlueprintInitial extends BlueprintState {
   List<Object?> get props => [];
 }
 
-class BlueprintLoading extends BlueprintState {
-  const BlueprintLoading();
-
-  @override
-  List<Object?> get props => [];
-}
-
 class BlueprintScheduled extends BlueprintState {
   const BlueprintScheduled({
     required this.items,

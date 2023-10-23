@@ -13,12 +13,6 @@ void main() {
       });
     });
 
-    group('BlueprintLoading', () {
-      test('supports value comparison', () {
-        expect(BlueprintLoading(), BlueprintLoading());
-      });
-    });
-
     group('BlueprintNotScheduled', () {
       test('support value equality', () {
         expect(
