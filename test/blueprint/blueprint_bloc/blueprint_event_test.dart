@@ -24,9 +24,39 @@ void main() {
       group('CreateBlueprint', () {
         test('supports value equality', () {
           expect(
-            CreateBlueprint(items: []),
+            CreateBlueprint(
+              items: [
+                CalendarEvent.event(
+                  startTime: DateTime(2023),
+                  endTime: DateTime(2023),
+                  event: Event(
+                    subject: 'name',
+                    description: 'description',
+                    attendantStatus: AttendantStatus.accepted,
+                    isAllDay: false,
+                    startTime: DateTime(2023),
+                    endTime: DateTime(2023),
+                  ),
+                ),
+              ],
+            ),
             equals(
-              CreateBlueprint(items: []),
+              CreateBlueprint(
+                items: [
+                  CalendarEvent.event(
+                    startTime: DateTime(2023),
+                    endTime: DateTime(2023),
+                    event: Event(
+                      subject: 'name',
+                      description: 'description',
+                      attendantStatus: AttendantStatus.accepted,
+                      isAllDay: false,
+                      startTime: DateTime(2023),
+                      endTime: DateTime(2023),
+                    ),
+                  ),
+                ],
+              ),
             ),
           );
 
@@ -34,17 +64,17 @@ void main() {
             CreateBlueprint(
               items: [
                 CalendarEvent.event(
-                  startTime: DateTime.now(),
-                  endTime: DateTime.now().add(const Duration(hours: 1)),
+                  startTime: DateTime(2023),
+                  endTime: DateTime(2023),
                   event: Event(
                     subject: 'name',
                     description: 'description',
                     attendantStatus: AttendantStatus.accepted,
                     isAllDay: false,
-                    startTime: DateTime.now(),
-                    endTime: DateTime.now().add(const Duration(hours: 1)),
+                    startTime: DateTime(2023),
+                    endTime: DateTime(2023),
                   ),
-                )
+                ),
               ],
             ),
             isNot(
@@ -52,15 +82,15 @@ void main() {
                 CreateBlueprint(
                   items: [
                     CalendarEvent.event(
-                      startTime: DateTime.now(),
-                      endTime: DateTime.now().add(const Duration(hours: 1)),
+                      startTime: DateTime(2023),
+                      endTime: DateTime(2023, 10, 10),
                       event: Event(
                         subject: 'Another event',
                         description: 'Another description',
                         attendantStatus: AttendantStatus.accepted,
                         isAllDay: false,
-                        startTime: DateTime.now(),
-                        endTime: DateTime.now().add(const Duration(hours: 1)),
+                        startTime: DateTime(2023),
+                        endTime: DateTime(2023, 10, 10),
                       ),
                     )
                   ],
