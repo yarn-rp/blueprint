@@ -1,3 +1,7 @@
+// ignore_for_file: unawaited_futures
+
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:blueprint_repository/blueprint_repository.dart';
 import 'package:calendar_repository/calendar_repository.dart';
@@ -15,6 +19,7 @@ class BlueprintBloc extends Bloc<BlueprintEvent, BlueprintState> {
     _blueprintRepository = blueprintRepository;
     on<GetBlueprint>(_onGetBlueprint);
     on<GetEvents>(_onGetEvent);
+    on<CreateBlueprint>(_onCreateBlueprint);
   }
 
   late final CalendarRepository _calendarRepository;
@@ -76,5 +81,16 @@ class BlueprintBloc extends Bloc<BlueprintEvent, BlueprintState> {
         );
       },
     );
+  }
+
+  Future<void> _onCreateBlueprint(
+    CreateBlueprint event,
+    Emitter<BlueprintState> emit,
+  ) async {
+    try {
+      _blueprintRepository.saveBlueprints(event.items);
+    } catch (exception) {
+      emit(BlueprintError(error: exception.toString()));
+    }
   }
 }

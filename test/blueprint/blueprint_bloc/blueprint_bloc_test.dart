@@ -20,6 +20,31 @@ void main() {
     blueprintRepository = _MockBlueprintRepository();
   });
 
+  final generalCalendarEvent = GeneralCalendarEvent(
+    event: Event(
+      subject: 'name',
+      description: 'description',
+      attendantStatus: AttendantStatus.accepted,
+      isAllDay: false,
+      startTime: DateTime(2023),
+      endTime: DateTime(2023).add(const Duration(hours: 1)),
+    ),
+    startTime: DateTime(2023),
+    endTime: DateTime(2023).add(const Duration(hours: 1)),
+  );
+  final calendarEvent = CalendarEvent.event(
+    event: Event(
+      subject: 'name',
+      description: 'description',
+      attendantStatus: AttendantStatus.accepted,
+      isAllDay: false,
+      startTime: DateTime(2023),
+      endTime: DateTime(2023).add(const Duration(hours: 1)),
+    ),
+    startTime: DateTime(2023),
+    endTime: DateTime(2023).add(const Duration(hours: 1)),
+  );
+
   group('BlueprintBloc', () {
     test('initial state is BlueprintInitial', () {
       expect(
@@ -74,37 +99,11 @@ void main() {
         },
         seed: () => BlueprintScheduled(
           items: [],
-          events: [
-            GeneralCalendarEvent(
-              event: Event(
-                subject: 'name',
-                description: 'description',
-                attendantStatus: AttendantStatus.accepted,
-                isAllDay: false,
-                startTime: DateTime(2023),
-                endTime: DateTime(2023).add(const Duration(hours: 1)),
-              ),
-              startTime: DateTime(2023),
-              endTime: DateTime(2023).add(const Duration(hours: 1)),
-            ),
-          ],
+          events: [generalCalendarEvent],
         ),
         expect: () => <BlueprintState>[
           BlueprintNotScheduled(
-            events: [
-              GeneralCalendarEvent(
-                event: Event(
-                  subject: 'name',
-                  description: 'description',
-                  attendantStatus: AttendantStatus.accepted,
-                  isAllDay: false,
-                  startTime: DateTime(2023),
-                  endTime: DateTime(2023).add(const Duration(hours: 1)),
-                ),
-                startTime: DateTime(2023),
-                endTime: DateTime(2023).add(const Duration(hours: 1)),
-              ),
-            ],
+            events: [generalCalendarEvent],
           ),
         ],
         verify: (_) {
@@ -123,24 +122,123 @@ void main() {
           );
         },
         seed: () => BlueprintNotScheduled(
-          events: [
-            GeneralCalendarEvent(
-              event: Event(
-                subject: 'name',
-                description: 'description',
-                attendantStatus: AttendantStatus.accepted,
-                isAllDay: false,
-                startTime: DateTime(2023),
-                endTime: DateTime(2023).add(const Duration(hours: 1)),
-              ),
-              startTime: DateTime(2023),
-              endTime: DateTime(2023).add(const Duration(hours: 1)),
-            ),
-          ],
+          events: [generalCalendarEvent],
         ),
         expect: () => <BlueprintState>[],
         verify: (_) {
           verify(() => blueprintRepository.getBlueprint()).called(1);
+        },
+      );
+    });
+
+    group('GetEvent', () {
+      late BlueprintBloc blueprintBloc;
+
+      setUp(() {
+        blueprintBloc = BlueprintBloc(
+          calendarRepository: calendarRepository,
+          blueprintRepository: blueprintRepository,
+        );
+      });
+      blocTest<BlueprintBloc, BlueprintState>(
+        'emit BlueprintScheduled with empty events',
+        build: () => blueprintBloc,
+        act: (bloc) => bloc.add(GetEvents()),
+        setUp: () {
+          when(() => calendarRepository.getEvents())
+              .thenAnswer((_) => Stream.value([]));
+        },
+        expect: () =>
+            <BlueprintState>[BlueprintScheduled(items: [], events: [])],
+        verify: (_) {
+          verify(() => calendarRepository.getEvents()).called(1);
+        },
+      );
+
+      blocTest<BlueprintBloc, BlueprintState>(
+        'emit BlueprintScheduled with the new events ',
+        build: () => blueprintBloc,
+        act: (bloc) => bloc.add(GetEvents()),
+        setUp: () {
+          when(() => calendarRepository.getEvents())
+              .thenAnswer((_) => Stream.value([]));
+        },
+        seed: BlueprintInitial.new,
+        expect: () => <BlueprintState>[
+          BlueprintScheduled(
+            items: [],
+            events: [],
+          ),
+        ],
+        verify: (_) {
+          verify(() => calendarRepository.getEvents()).called(1);
+        },
+      );
+    });
+
+    group('Create Blueprint', () {
+      late BlueprintBloc blueprintBloc;
+
+      setUp(() {
+        blueprintBloc = BlueprintBloc(
+          calendarRepository: calendarRepository,
+          blueprintRepository: blueprintRepository,
+        );
+      });
+
+      blocTest<BlueprintBloc, BlueprintState>(
+        'Emit nothing when created Blueprint successfully',
+        build: () => blueprintBloc,
+        seed: () => BlueprintNotScheduled(events: [generalCalendarEvent]),
+        act: (bloc) => bloc.add(
+          CreateBlueprint(
+            items: [calendarEvent],
+          ),
+        ),
+        setUp: () {
+          when(
+            () => blueprintRepository.saveBlueprints([calendarEvent]),
+          ).thenAnswer((_) => Future.value());
+        },
+        expect: () => <BlueprintState>[],
+        verify: (_) {
+          verify(
+            () => blueprintRepository.saveBlueprints(
+              [calendarEvent],
+            ),
+          ).called(1);
+        },
+      );
+
+      blocTest<BlueprintBloc, BlueprintState>(
+        'Emit BlueprintError when createBlueprint not successfully ',
+        build: () => blueprintBloc,
+        seed: () => BlueprintNotScheduled(
+          events: [
+            generalCalendarEvent,
+          ],
+        ),
+        act: (bloc) => bloc.add(
+          CreateBlueprint(
+            items: [calendarEvent],
+          ),
+        ),
+        setUp: () {
+          when(
+            () => blueprintRepository.saveBlueprints([calendarEvent]),
+          ).thenThrow(Exception());
+        },
+        expect: () => <BlueprintState>[
+          BlueprintError(
+            error: Exception().toString(),
+          ),
+        ],
+        verify: (_) {
+          verify(
+            () => blueprintRepository.saveBlueprints(
+              [calendarEvent],
+            ),
+          ).called(1);
         },
       );
     });
