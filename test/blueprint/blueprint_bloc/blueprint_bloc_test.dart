@@ -141,7 +141,7 @@ void main() {
         );
       });
       blocTest<BlueprintBloc, BlueprintState>(
-        'emit BlueprintScheduled with empty events',
+        'emit BlueprintScheduled when triggering GetEvents',
         build: () => blueprintBloc,
         act: (bloc) => bloc.add(GetEvents()),
         setUp: () {
@@ -156,7 +156,7 @@ void main() {
       );
 
       blocTest<BlueprintBloc, BlueprintState>(
-        'emit BlueprintScheduled with the new events ',
+        'emit BlueprintScheduled with the new events',
         build: () => blueprintBloc,
         act: (bloc) => bloc.add(GetEvents()),
         setUp: () {

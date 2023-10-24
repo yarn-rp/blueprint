@@ -109,7 +109,7 @@ void main() {
                   startTime: DateTime(2023),
                   endTime: DateTime(2023).add(const Duration(hours: 1)),
                 ),
-              )
+              ),
             ],
             events: [
               GeneralCalendarEvent(
@@ -139,7 +139,7 @@ void main() {
                   startTime: DateTime(2023),
                   endTime: DateTime(2023).add(const Duration(hours: 1)),
                 ),
-              )
+              ),
             ],
             events: [
               GeneralCalendarEvent(
@@ -172,7 +172,7 @@ void main() {
                   startTime: DateTime(2023),
                   endTime: DateTime(2023).add(const Duration(hours: 1)),
                 ),
-              )
+              ),
             ],
             events: [
               GeneralCalendarEvent(
@@ -204,7 +204,7 @@ void main() {
                       startTime: DateTime(2023),
                       endTime: DateTime(2023).add(const Duration(hours: 1)),
                     ),
-                  )
+                  ),
                 ],
                 events: [
                   GeneralCalendarEvent(

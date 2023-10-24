@@ -92,7 +92,7 @@ void main() {
                         startTime: DateTime(2023),
                         endTime: DateTime(2023, 10, 10),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),
