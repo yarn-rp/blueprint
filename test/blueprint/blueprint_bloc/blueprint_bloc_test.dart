@@ -78,7 +78,7 @@ void main() {
         },
         expect: () => <BlueprintState>[
           BlueprintNotScheduled(
-            events: [],
+            events: const [],
           ),
         ],
         verify: (_) {
@@ -98,7 +98,7 @@ void main() {
           );
         },
         seed: () => BlueprintScheduled(
-          items: [],
+          items: const [],
           events: [generalCalendarEvent],
         ),
         expect: () => <BlueprintState>[
@@ -148,15 +148,20 @@ void main() {
           when(() => calendarRepository.getEvents())
               .thenAnswer((_) => Stream.value([]));
         },
-        expect: () =>
-            <BlueprintState>[BlueprintScheduled(items: [], events: [])],
+        expect: () => <BlueprintState>[
+          BlueprintScheduled(
+            items: const [],
+            events: const [],
+          ),
+        ],
         verify: (_) {
           verify(() => calendarRepository.getEvents()).called(1);
         },
       );
 
       blocTest<BlueprintBloc, BlueprintState>(
-        'emit BlueprintScheduled with the new events',
+        'emit BlueprintScheduled with the new events '
+        'after initial state',
         build: () => blueprintBloc,
         act: (bloc) => bloc.add(GetEvents()),
         setUp: () {
@@ -166,8 +171,8 @@ void main() {
         seed: BlueprintInitial.new,
         expect: () => <BlueprintState>[
           BlueprintScheduled(
-            items: [],
-            events: [],
+            items: const [],
+            events: const [],
           ),
         ],
         verify: (_) {
