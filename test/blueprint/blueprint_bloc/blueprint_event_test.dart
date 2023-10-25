@@ -11,20 +11,20 @@ void main() {
     () {
       group('GetBlueprint', () {
         test('supports value equality', () {
-          expect(GetBlueprint(), equals(GetBlueprint()));
+          expect(BlueprintRequested(), equals(BlueprintRequested()));
         });
       });
 
       group('GetEvents', () {
         test('supports value equality', () {
-          expect(GetEvents(), equals(GetEvents()));
+          expect(EventsRequested(), equals(EventsRequested()));
         });
       });
 
       group('CreateBlueprint', () {
         test('supports value equality', () {
           expect(
-            CreateBlueprint(
+            BlueprintCreated(
               items: [
                 CalendarEvent.event(
                   startTime: DateTime(2023),
@@ -41,7 +41,7 @@ void main() {
               ],
             ),
             equals(
-              CreateBlueprint(
+              BlueprintCreated(
                 items: [
                   CalendarEvent.event(
                     startTime: DateTime(2023),
@@ -61,7 +61,7 @@ void main() {
           );
 
           expect(
-            CreateBlueprint(
+            BlueprintCreated(
               items: [
                 CalendarEvent.event(
                   startTime: DateTime(2023),
@@ -79,7 +79,7 @@ void main() {
             ),
             isNot(
               equals(
-                CreateBlueprint(
+                BlueprintCreated(
                   items: [
                     CalendarEvent.event(
                       startTime: DateTime(2023),

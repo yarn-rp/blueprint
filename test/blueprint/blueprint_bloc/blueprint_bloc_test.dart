@@ -68,9 +68,9 @@ void main() {
 
       blocTest<BlueprintBloc, BlueprintState>(
         'emits [BlueprintNotScheduled] when blueprint is '
-        'empty and previous events is empty',
+        'empty and previous events are empty',
         build: () => blueprintBloc,
-        act: (bloc) => bloc.add(const GetBlueprint()),
+        act: (bloc) => bloc.add(const BlueprintRequested()),
         setUp: () {
           when(() => blueprintRepository.getBlueprint()).thenAnswer(
             (_) => Stream.value([]),
@@ -91,7 +91,7 @@ void main() {
         'get blueprint is empty and previous state is BlueprintScheduled '
         'with events not empty',
         build: () => blueprintBloc,
-        act: (bloc) => bloc.add(const GetBlueprint()),
+        act: (bloc) => bloc.add(const BlueprintRequested()),
         setUp: () {
           when(() => blueprintRepository.getBlueprint()).thenAnswer(
             (_) => Stream.value([]),
@@ -112,10 +112,10 @@ void main() {
       );
 
       blocTest<BlueprintBloc, BlueprintState>(
-        'emits [] with events when get blueprint is empty and previous '
+        'emits [] when get blueprint is empty and previous '
         'state is BlueprintNotScheduled with events not empty',
         build: () => blueprintBloc,
-        act: (bloc) => bloc.add(const GetBlueprint()),
+        act: (bloc) => bloc.add(const BlueprintRequested()),
         setUp: () {
           when(() => blueprintRepository.getBlueprint()).thenAnswer(
             (_) => Stream.value([]),
@@ -131,7 +131,7 @@ void main() {
       );
     });
 
-    group('GetEvent', () {
+    group('GetEvents', () {
       late BlueprintBloc blueprintBloc;
 
       setUp(() {
@@ -141,34 +141,13 @@ void main() {
         );
       });
       blocTest<BlueprintBloc, BlueprintState>(
-        'emit BlueprintScheduled when triggering GetEvents',
+        'emit BlueprintScheduled when triggering EventsRequested Bloc event',
         build: () => blueprintBloc,
-        act: (bloc) => bloc.add(GetEvents()),
+        act: (bloc) => bloc.add(EventsRequested()),
         setUp: () {
           when(() => calendarRepository.getEvents())
               .thenAnswer((_) => Stream.value([]));
         },
-        expect: () => <BlueprintState>[
-          BlueprintScheduled(
-            items: const [],
-            events: const [],
-          ),
-        ],
-        verify: (_) {
-          verify(() => calendarRepository.getEvents()).called(1);
-        },
-      );
-
-      blocTest<BlueprintBloc, BlueprintState>(
-        'emit BlueprintScheduled with the new events '
-        'after initial state',
-        build: () => blueprintBloc,
-        act: (bloc) => bloc.add(GetEvents()),
-        setUp: () {
-          when(() => calendarRepository.getEvents())
-              .thenAnswer((_) => Stream.value([]));
-        },
-        seed: BlueprintInitial.new,
         expect: () => <BlueprintState>[
           BlueprintScheduled(
             items: const [],
@@ -192,11 +171,11 @@ void main() {
       });
 
       blocTest<BlueprintBloc, BlueprintState>(
-        'Emit nothing when created Blueprint successfully',
+        'Emit [] when saveBlueprints completes successfully',
         build: () => blueprintBloc,
         seed: () => BlueprintNotScheduled(events: [generalCalendarEvent]),
         act: (bloc) => bloc.add(
-          CreateBlueprint(
+          BlueprintCreated(
             items: [calendarEvent],
           ),
         ),
@@ -216,15 +195,10 @@ void main() {
       );
 
       blocTest<BlueprintBloc, BlueprintState>(
-        'Emit BlueprintError when createBlueprint not successfully ',
+        'Emit BlueprintError when createBlueprint completes not successfully ',
         build: () => blueprintBloc,
-        seed: () => BlueprintNotScheduled(
-          events: [
-            generalCalendarEvent,
-          ],
-        ),
         act: (bloc) => bloc.add(
-          CreateBlueprint(
+          BlueprintCreated(
             items: [calendarEvent],
           ),
         ),

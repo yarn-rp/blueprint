@@ -4,22 +4,22 @@ sealed class BlueprintEvent extends Equatable {
   const BlueprintEvent();
 }
 
-class GetBlueprint extends BlueprintEvent {
-  const GetBlueprint();
+class BlueprintRequested extends BlueprintEvent {
+  const BlueprintRequested();
 
   @override
   List<Object?> get props => [];
 }
 
-class GetEvents extends BlueprintEvent {
-  const GetEvents();
+class EventsRequested extends BlueprintEvent {
+  const EventsRequested();
 
   @override
   List<Object?> get props => [];
 }
 
-class CreateBlueprint extends BlueprintEvent {
-  const CreateBlueprint({
+class BlueprintCreated extends BlueprintEvent {
+  const BlueprintCreated({
     required this.items,
   });
 
