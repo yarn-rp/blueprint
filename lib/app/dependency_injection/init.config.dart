@@ -135,7 +135,7 @@ extension GetItInjectableX on _i1.GetIt {
     ));
     gh.factory<_i17.TasksCubit>(
         () => taskModule.taskCubit(gh<_i16.TaskRepository>()));
-    gh.lazySingleton<_i18.TodaysBlueprintRepository>(
+    gh.lazySingleton<_i18.BlueprintRepository>(
         () => blueprintModule.blueprintRepository(
               gh<_i9.FirebaseFirestore>(),
               gh<_i3.AuthenticationRepositoryContract>(),

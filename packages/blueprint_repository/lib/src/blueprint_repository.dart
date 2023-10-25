@@ -7,9 +7,9 @@ const _usersCollectionName = 'users';
 /// {@template blueprint_repository}
 /// Repository to handle blueprints on the platform.
 /// {@endtemplate}
-class TodaysBlueprintRepository {
+class BlueprintRepository {
   /// {@macro blueprint_repository}
-  TodaysBlueprintRepository({
+  BlueprintRepository({
     required Stream<String?> currentUserIdStream,
     required FirebaseFirestore firestore,
   }) {

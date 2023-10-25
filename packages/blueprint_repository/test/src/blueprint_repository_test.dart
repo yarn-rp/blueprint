@@ -4,8 +4,7 @@ import 'package:blueprint_repository/blueprint_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-class _MockBlueprintRepository extends Mock
-    implements TodaysBlueprintRepository {}
+class _MockBlueprintRepository extends Mock implements BlueprintRepository {}
 
 void main() {
   group('TodaysBlueprintRepository', () {
@@ -13,7 +12,7 @@ void main() {
     test('can be extended', () {
       expect(
         _MockBlueprintRepository(),
-        isA<TodaysBlueprintRepository>(),
+        isA<BlueprintRepository>(),
       );
     });
   });
