@@ -15,7 +15,9 @@
         "--target",
         "lib/main_development.dart",
         "--web-port",
-        "3000"
+        "3000",
+        "--dart-define-from-file",
+        "./firebase.json"
       ]
     },
     {
