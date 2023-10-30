@@ -15,7 +15,7 @@
         "--target",
         "lib/main_development.dart",
         "--web-port",
-        "8000"
+        "3000"
       ]
     },
     {
@@ -29,7 +29,7 @@
         "--target",
         "lib/main_staging.dart",
         "--web-port",
-        "8000"
+        "3000"
       ]
     },
     {
@@ -43,7 +43,7 @@
         "--target",
         "lib/main_production.dart",
         "--web-port",
-        "8000"
+        "3000"
       ]
     },
     {

@@ -63,3 +63,17 @@ abstract class FirebaseModule {
         app: app,
       );
 }
+
+@development
+@preResolve
+Future<void> setupFirebaseEmulators(
+  FirebaseAuth auth,
+  FirebaseFirestore firestore,
+  FirebaseFunctions functions,
+) async {
+  await auth.useAuthEmulator('localhost', 9099);
+  firestore.useFirestoreEmulator('localhost', 8080);
+  functions.useFunctionsEmulator('localhost', 5001);
+
+  return Future.value();
+}
