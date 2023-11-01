@@ -24,7 +24,7 @@ class PriorityWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final priorityLevel = priority;
-
+    final theme = Theme.of(context);
     late Icon priorityIcon;
     late String priorityText;
 
@@ -66,7 +66,7 @@ class PriorityWidget extends StatelessWidget {
         priorityText = 'Lowest';
     }
     final avatar = CircleAvatar(
-      backgroundColor: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+      backgroundColor: theme.colorScheme.primary.withOpacity(0.3),
       child: priorityIcon,
     );
     if (!showText) {
@@ -76,8 +76,7 @@ class PriorityWidget extends StatelessWidget {
     return Row(
       children: [
         CircleAvatar(
-          backgroundColor:
-              Theme.of(context).colorScheme.primary.withOpacity(0.3),
+          backgroundColor: theme.colorScheme.primary.withOpacity(0.3),
           child: priorityIcon,
         ),
         const SizedBox(
@@ -85,7 +84,7 @@ class PriorityWidget extends StatelessWidget {
         ),
         Text(
           priorityText,
-          style: Theme.of(context).textTheme.bodySmall,
+          style: theme.textTheme.bodySmall,
         ),
       ],
     );

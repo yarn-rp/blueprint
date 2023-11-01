@@ -18,8 +18,7 @@ class ItemTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // ignore: use_colored_box
-    return Container(
+    return ColoredBox(
       color: backgroundColor,
       child: ListTile(
         leading: PriorityWidget(priority: priority),
