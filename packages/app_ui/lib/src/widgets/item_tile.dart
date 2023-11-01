@@ -1,4 +1,4 @@
-import 'package:app_ui/src/widgets/widgets.dart';
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 
 class ItemTile extends StatelessWidget {
@@ -31,11 +31,21 @@ class ItemTile extends StatelessWidget {
             InkWell(
               onTap: () {},
               child: Container(
-                margin: const EdgeInsets.fromLTRB(2, 2, 16, 2),
-                padding: const EdgeInsets.fromLTRB(26, 10, 26, 10),
+                margin: const EdgeInsets.fromLTRB(
+                  AppSpacing.sm,
+                  AppSpacing.sm,
+                  AppSpacing.md,
+                  AppSpacing.sm,
+                ),
+                padding: const EdgeInsets.fromLTRB(
+                  AppSpacing.xlg,
+                  AppSpacing.sm,
+                  AppSpacing.xlg,
+                  AppSpacing.sm,
+                ),
                 decoration: BoxDecoration(
                   color: const Color.fromRGBO(210, 230, 255, 1),
-                  borderRadius: BorderRadius.circular(50),
+                  borderRadius: BorderRadius.circular(AppSpacing.xxxlg),
                   border: Border.all(color: Colors.transparent),
                 ),
                 child: Text(

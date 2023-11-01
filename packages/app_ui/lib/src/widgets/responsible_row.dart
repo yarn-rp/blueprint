@@ -1,3 +1,4 @@
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 
 class ResponsibleRow extends StatelessWidget {
@@ -21,17 +22,31 @@ class ResponsibleRow extends StatelessWidget {
     return Row(
       children: [
         Container(
-          margin: const EdgeInsets.fromLTRB(2, 2, 16, 2),
-          padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
+          margin: const EdgeInsets.fromLTRB(
+            AppSpacing.sm,
+            AppSpacing.sm,
+            AppSpacing.md,
+            AppSpacing.sm,
+          ),
+          padding: const EdgeInsets.fromLTRB(
+            AppSpacing.md,
+            AppSpacing.sm,
+            AppSpacing.md,
+            AppSpacing.sm,
+          ),
           decoration: BoxDecoration(
             border: Border.all(color: const Color(0xff303030)),
             color: backColorUser,
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(
+              AppSpacing.sm,
+            ),
           ),
           child: Row(
             children: [
               Container(
-                margin: const EdgeInsets.fromLTRB(0, 0, 8, 0),
+                margin: const EdgeInsets.only(
+                  right: AppSpacing.sm,
+                ),
                 width: 20,
                 height: 20,
                 child: Image.network(platformIcon),
@@ -45,12 +60,22 @@ class ResponsibleRow extends StatelessWidget {
           ),
         ),
         Container(
-          margin: const EdgeInsets.fromLTRB(2, 2, 16, 2),
-          padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
+          margin: const EdgeInsets.fromLTRB(
+            AppSpacing.sm,
+            AppSpacing.sm,
+            AppSpacing.md,
+            AppSpacing.sm,
+          ),
+          padding: const EdgeInsets.fromLTRB(
+            AppSpacing.md,
+            AppSpacing.sm,
+            AppSpacing.md,
+            AppSpacing.sm,
+          ),
           decoration: BoxDecoration(
             border: Border.all(color: const Color(0xff303030)),
             color: progressColor,
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(AppSpacing.sm),
           ),
           child: Row(
             children: [
