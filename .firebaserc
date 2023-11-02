@@ -11,7 +11,7 @@
           "blueprint-public-api"
         ],
         "app": [
-          "blueprint-public-app"
+          "polletask-dev"
         ]
       }
     }
