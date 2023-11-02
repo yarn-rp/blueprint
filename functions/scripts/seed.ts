@@ -1,6 +1,24 @@
 import * as admin from "firebase-admin";
+import * as fs from "fs";
+import * as path from "path";
 
-process.env.FIRESTORE_EMULATOR_HOST = "localhost:8080";
+const LOCALHOST = "localhost";
+
+const firebaseConfigPath = path.join("./../", "firebase.json"); // adjust the path as needed
+let emulatorHost = `${LOCALHOST}:8080`; // default value
+
+try {
+  const firebaseConfig = JSON.parse(fs.readFileSync(firebaseConfigPath, "utf8"));
+  if (firebaseConfig.emulators && firebaseConfig.emulators.firestore) {
+    const { port } = firebaseConfig.emulators.firestore;
+    emulatorHost = `${LOCALHOST}:${port}`;
+  }
+} catch (error) {
+  console.error("Error reading firebase.json:", error);
+}
+
+process.env.FIRESTORE_EMULATOR_HOST = emulatorHost;
+// TODO(yarn-rp): receive project id from command line
 process.env.GCLOUD_PROJECT = "polletask-dev";
 
 admin.initializeApp();
@@ -44,11 +62,12 @@ const seedFirestore = async () => {
     },
   ];
 
-  console.info("Seeding Platforms Started");
+  console.info("Seeding Platforms Started on port", emulatorHost);
   // save platforms
-  await db.collection("platforms").doc("jira").set(platforms[0]);
-  await db.collection("platforms").doc("github").set(platforms[1]);
-  await db.collection("platforms").doc("google-calendar").set(platforms[2]);
+  platforms.map(async (platform) => {
+    await db.collection("platforms").doc(platform.id).set(platform);
+  });
+
   console.log("Seeding Platforms Complete");
 };
 
