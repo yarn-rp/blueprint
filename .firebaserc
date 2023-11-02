@@ -9,6 +9,9 @@
       "hosting": {
         "api": [
           "blueprint-public-api"
+        ],
+        "app": [
+          "blueprint-public-app"
         ]
       }
     }

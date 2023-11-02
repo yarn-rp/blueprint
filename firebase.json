@@ -42,8 +42,8 @@
   },
   "hosting": [
     {
-      "public": "build/web",
       "target": "app",
+      "public": "build/web",
       "ignore": [
         "firebase.json",
         "**/.*",
