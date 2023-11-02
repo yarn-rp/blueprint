@@ -50,7 +50,9 @@ class ItemTile extends StatelessWidget {
                 child: Text(
                   btnText,
                   textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.bodyMedium,
+                  style: const TextStyle(
+                    color: Colors.black,
+                  ),
                 ),
               ),
             ),
