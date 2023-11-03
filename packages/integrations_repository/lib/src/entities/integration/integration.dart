@@ -41,8 +41,7 @@ class BasicIntegration extends Integration {
   Map<String, dynamic> toConnectApiParams() => {
         'username': username,
         'password': password,
-        // ignore: unnecessary_this
-        'platform': this.platform.displayName,
+        'platform': platform.id,
       };
 }
 
@@ -68,6 +67,6 @@ class OAuth2Integration extends Integration {
         'code': token,
         // TODO(yarn-rp): change this on backend side since displayName
         // should not be used as a key.
-        'platform': platform.displayName,
+        'platform': platform.id,
       };
 }
