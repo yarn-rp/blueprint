@@ -14,7 +14,7 @@ This is a task manager for multiple projects. It allows you to manage your tasks
 
 Before setting up the project, you need to have the following tools installed:
 
-- **Node.js** runtime environment (version 8 or higher)
+- **Node.js** runtime environment (version 16.x.x)
 - **Firebase CLI** tools
 - **Flutter** SDK. It's recommended to install [fvm](https://fvm.app/) for flutter version management. 
 
@@ -32,7 +32,7 @@ cd blueprint
 
 3. Install the required node packages.
 ```
-npm install
+yarn --cwd functions install
 ```
 4. Install all flutter packages
 ```
@@ -66,7 +66,15 @@ _\*Blueprint has official support only for web._
 
 There is another env called local which will use a combination of the development service account, and local emulators so we can test in a more isolated environment. This is the default environment to run for developers. 
 
-First, we are going to serve the firebase project running via emulators. The emulators config can be found on `firebase.json` file at the root of the project. If your local machine uses the declared ports for other functions, you can change these ports for some available ports on your machine. Just make sure that you **do not commit changes on `firebase.json` file** after it. 
+1. First, let's set the environment variables file `.env` with the `local.env` provided inside the `functions` folder
+
+```sh
+cp functions/local.env functions/.env 
+```
+
+2. Then, we are going to serve the firebase project running via emulators. The emulators config can be found on `firebase.json` file at the root of the project. If your local machine uses the declared ports for other functions, you can change these ports for some available ports on your machine. Just make sure that you **do not commit changes on `firebase.json` file** after it. 
+
+
 
 ```sh
 # Run Firebase Seeder
@@ -76,13 +84,13 @@ yarn --cwd functions serve:seed
 
 This command will initialize Firebase emulators and add seed the `Firestore` instance with important data to run the project. You can find all emulators UI data at `http://locahost:4000`
 
-Then, we are going to launch the project using the VSCode/Android Studio `Launch local` configuration, or by running the following command:
+3. Next, we are going to launch the project using the VSCode/Android Studio `Launch local` configuration, or by running the following command:
 
 ```sh
-# Run local Flutter CLient
+# Run local Flutter Client
 $ flutter run --flavor development --target lib/main_development.dart --web-port=3000 --dart-define-from-file=./firebase.json
 ```
 
 This should start a development session at `http://locahost:3000`. 
-e in a day and what you are going to do today. This report can be sent to your team so they know what you are doing.
+
 
