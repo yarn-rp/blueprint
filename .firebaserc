@@ -12,6 +12,9 @@
         ],
         "app": [
           "polletask-dev"
+        ],
+        "storybook": [
+          "blueprint-widgets-storybook"
         ]
       }
     }

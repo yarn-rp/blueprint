@@ -1,0 +1,46 @@
+name: storybook_preview
+
+permissions: write-all
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  pull_request:
+    paths:
+      - 'packages/app_ui/**'
+      - '.github/workflows/app_ui.yaml'
+jobs:
+  build_flutter_storybook:
+    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/flutter_package.yml@v1
+    with:
+      flutter_version: 3.13.6
+      flutter_channel: stable
+      working_directory: packages/app_ui/storybook
+      min_coverage: 0
+  deploy_storybook_web:
+    needs: build_flutter_storybook
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+      
+      - name: Install dependencies
+        run: flutter pub get
+        working-directory: packages/app_ui/storybook
+  
+      - name: Build Storybook Web
+        run: flutter build web --target=lib/main.dart
+        working-directory: packages/app_ui/storybook
+      - name: Deploy to Firebase
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_DEV }}
+          projectId: polletask-dev
+          target: storybook
+
+

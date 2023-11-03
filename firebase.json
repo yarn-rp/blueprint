@@ -77,6 +77,21 @@
           "region": "us-central1"
         }
       ]
+    },
+    {
+      "target": "storybook",
+      "public": "packages/app_ui/storybook/build/web",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
     }
   ]
 }

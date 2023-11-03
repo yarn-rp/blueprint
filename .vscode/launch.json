@@ -63,14 +63,10 @@
       ]
     },
     {
-      "name": "Launch in macOS",
+      "name": "Launch Storybook",
       "request": "launch",
       "type": "dart",
-      "program": "lib/main_development.dart",
-      "args": [
-        "--target",
-        "lib/main_development.dart"
-      ]
-    }
+      "program": "packages/app_ui/storybook/lib/main.dart",
+    },
   ]
 }
