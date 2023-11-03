@@ -1,14 +1,9 @@
 import * as admin from "firebase-admin";
-import * as fs from "fs";
-import * as path from "path";
-
+import * as firebaseConfig from "./../../firebase.json";
 const LOCALHOST = "localhost";
-
-const firebaseConfigPath = path.join("./../", "firebase.json"); // adjust the path as needed
 let emulatorHost = `${LOCALHOST}:8080`; // default value
 
 try {
-  const firebaseConfig = JSON.parse(fs.readFileSync(firebaseConfigPath, "utf8"));
   if (firebaseConfig.emulators && firebaseConfig.emulators.firestore) {
     const { port } = firebaseConfig.emulators.firestore;
     emulatorHost = `${LOCALHOST}:${port}`;
