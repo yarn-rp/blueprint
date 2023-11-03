@@ -1,0 +1,20 @@
+{
+  "projects": {
+    "develop": "polletask-dev",
+    "staging": "blueprint-stg",
+    "main": "blueprint-384623"
+  },
+  "targets": {
+    "polletask-dev": {
+      "hosting": {
+        "api": [
+          "blueprint-public-api"
+        ],
+        "app": [
+          "polletask-dev"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}
