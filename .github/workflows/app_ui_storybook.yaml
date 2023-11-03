@@ -10,13 +10,6 @@ on:
       - 'packages/app_ui/**'
       - '.github/workflows/app_ui.yaml'
 jobs:
-  build_app_ui:
-    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/flutter_package.yml@v1
-    with:
-      flutter_version: 3.13.6
-      flutter_channel: stable
-      working_directory: packages/app_ui
-      min_coverage: 0
   build_flutter_storybook:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/flutter_package.yml@v1
     with:
@@ -32,7 +25,7 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-      - run: flutter pub get
+      - run: flutter pub get --directory=packages/app_ui/storybook
       - run: flutter build web --target packages/app_ui/storybook/lib/main.dart 
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
