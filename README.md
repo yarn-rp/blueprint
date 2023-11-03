@@ -94,3 +94,54 @@ $ flutter run --flavor development --target lib/main_development.dart --web-port
 This should start a development session at `http://locahost:3000`. 
 
 
+
+
+## Flutter Storybook Documentation
+
+### Running the Storybook
+
+#### Using Launch Configuration
+
+To run the Storybook using the launch configuration, ensure you have the `launch.json` file set up in your `.vscode` directory.
+
+Example `launch.json`:
+```json
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Flutter Storybook",
+      "request": "launch",
+      "type": "dart",
+      "program": "packages/app_ui/storybook/lib/main.dart"
+    }
+  ]
+}
+``````
+Start the Storybook by selecting the 'Flutter Storybook' configuration in the VS Code debug panel and clicking the play button.
+
+Using Command Line
+To run the Storybook from the command line:
+
+```sh
+flutter run --target=packages/app_ui/storybook/lib/main.dart
+```
+
+This will compile and launch the Storybook on your default device or emulator.
+
+### Adding New Components
+To maintain a ubiquitous language with the design team, implement new widgets in the app_ui package using the same naming conventions.
+
+To include a new widget in the Storybook:
+
+1. Implement the widget in the app_ui package.
+2. Create a story file in the Storybook showcasing the widget's usage, states, and properties.
+3. Add the new story to the storybook/lib/main.dart file.
+
+### Storybook Workflows
+We have two GitHub Actions workflows for our Storybook:
+
+- On Pull Requests: A Storybook preview will be built on every that adds new widgets to the `app_ui` package.
+- On Merge to Main: The Storybook is deployed to the production URL defined in firebase.json upon merge.
+
+Check .github/workflows/ for workflow configurations and ensure to review Storybook changes with the same rigor as code changes.
