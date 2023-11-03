@@ -1,4 +1,6 @@
-name: app_ui
+name: storybook
+
+permissions: write-all
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
