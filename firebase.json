@@ -80,7 +80,7 @@
     },
     {
       "target": "storybook",
-      "public": "build/web",
+      "public": "packages/app_ui/storybook/build/web",
       "ignore": [
         "firebase.json",
         "**/.*",
