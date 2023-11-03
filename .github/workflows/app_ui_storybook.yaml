@@ -25,14 +25,20 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-      - run: flutter pub get --directory=packages/app_ui/storybook
-      - run: flutter build web --target packages/app_ui/storybook/lib/main.dart 
-      - uses: FirebaseExtended/action-hosting-deploy@v0
+      
+      - name: Install dependencies
+        run: flutter pub get
+        working-directory: packages/app_ui/storybook
+  
+      - name: Build Storybook Web
+        run: flutter build web --target=lib/main.dart
+        working-directory: packages/app_ui/storybook
+      - name: Deploy to Firebase
+        uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_DEV }}
           projectId: polletask-dev
           target: storybook
-      - uses: actions/checkout@v3
 
 
