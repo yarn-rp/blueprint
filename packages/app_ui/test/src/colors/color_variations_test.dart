@@ -8,7 +8,7 @@ void main() {
 
     group('darken', () {
       test('returns a darker version of the color', () {
-        final darkerColor = darken(color, .1);
+        final darkerColor = darken(color, .2);
         final darkerLuminance = darkerColor.computeLuminance();
 
         expect(darkerLuminance, lessThan(color.computeLuminance()));
@@ -17,7 +17,7 @@ void main() {
 
     group('lighten', () {
       test('returns a lighter version of the color', () {
-        final lighterColor = lighten(color, .1);
+        final lighterColor = lighten(color, .2);
         final lighterLuminance = lighterColor.computeLuminance();
 
         expect(lighterLuminance, greaterThan(color.computeLuminance()));
