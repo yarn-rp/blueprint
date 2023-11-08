@@ -3,7 +3,6 @@ import 'package:flutter/widgets.dart';
 
 class Carousel extends StatelessWidget {
   const Carousel({
-    required this.onImageTap,
     required this.images,
     super.key,
     this.imageWidth = 120,
@@ -11,8 +10,8 @@ class Carousel extends StatelessWidget {
     this.imageBorderRadius = 8,
   });
 
-  final List<(ImageProvider<Object>, String)> images;
-  final void Function(int)? onImageTap;
+  final List<(ImageProvider<Object>, String, VoidCallback)> images;
+
   final double imageWidth;
   final double imageHeight;
   final double imageBorderRadius;
@@ -23,32 +22,35 @@ class Carousel extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       shrinkWrap: true,
       itemBuilder: (context, index) {
-        final (imageProvider, imageTitle) = images[index];
+        final (imageProvider, imageTitle, imageCallback) = images[index];
 
-        return SizedBox(
-          width: imageWidth,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(imageBorderRadius),
-                child: SizedBox(
-                  width: imageWidth,
-                  height: imageHeight,
-                  child: Image(
-                    image: imageProvider,
-                    fit: BoxFit.cover,
+        return GestureDetector(
+          onTap: imageCallback,
+          child: SizedBox(
+            width: imageWidth,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(imageBorderRadius),
+                  child: SizedBox(
+                    width: imageWidth,
+                    height: imageHeight,
+                    child: Image(
+                      image: imageProvider,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(height: AppSpacing.sm),
-              Text(
-                imageTitle,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ],
+                const SizedBox(height: AppSpacing.sm),
+                Text(
+                  imageTitle,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
           ),
         );
       },
