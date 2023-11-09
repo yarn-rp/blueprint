@@ -1,4 +1,4 @@
-import 'dart:math';
+// ignore_for_file: avoid_dynamic_calls
 
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
@@ -57,8 +57,8 @@ class TodayEventSource extends CalendarDataSource<TodayEvent> {
 class TodayTimeline extends StatefulWidget {
   const TodayTimeline({
     required this.events,
-    this.onEventTap,
     required this.onEventUpdate,
+    this.onEventTap,
     super.key,
   });
 
@@ -221,38 +221,20 @@ class _TodaysBlueprintState extends State<TodayTimeline>
         final originalColor =
             appointment.color ?? Theme.of(context).colorScheme.surface;
 
-        final startTime = Jiffy.parseFromDateTime(appointment.startTime)
-            .format(pattern: 'hh:mm');
-        final endTime = Jiffy.parseFromDateTime(appointment.endTime).format(
-          pattern: 'hh:mm a',
-        );
+        final startTime = Jiffy(appointment.startTime).format('hh:mm');
+        final endTime = Jiffy(appointment.endTime).format('hh:mm a');
 
         final title = appointment.subject;
-        final subtitle = '${startTime} to ${endTime}';
+        final subtitle = '$startTime to $endTime';
         return Card(
           margin: EdgeInsets.zero,
-          color: originalColor,
+          color: isAfter ? originalColor : originalColor.withOpacity(0.5),
           child: EventListTile(
             leading: appointment.typeLabel,
             title: title,
             subtitle: subtitle,
           ),
         );
-
-        // return appointment.map(
-        //   event: (appointment) => GeneralCalendarEventTile(
-        //     appointment: appointment,
-        //     isSmallVersion: appointment.endTime
-        //             .difference(appointment.startTime)
-        //             .inMinutes <=
-        //         30,
-        //     color: isAfter ? originalColor : originalColor?.withOpacity(0.5),
-        //   ),
-        //   task: (appointment) => TaskEventTile(
-        //     appointment: appointment,
-        //     color: isAfter ? originalColor : originalColor?.withOpacity(0.5),
-        //   ),
-        // );
       },
       timeSlotViewSettings: TimeSlotViewSettings(
         timeTextStyle: textTheme.labelMedium,

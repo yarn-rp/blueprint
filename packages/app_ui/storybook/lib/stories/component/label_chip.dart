@@ -10,7 +10,7 @@ class LabelChipComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Component(
       title: 'Label',
-      child: Label(
+      child: LabelChip(
         backgroundColor: context.knobs.options(
           label: 'Color',
           initial: null,

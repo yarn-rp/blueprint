@@ -1,6 +1,5 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:storybook/src/component.dart';
 import 'package:storybook_flutter/storybook_flutter.dart';
 
@@ -29,22 +28,22 @@ class _TodaysTimelineComponentState extends State<TodaysTimelineComponent> {
           initial: 'Meeting with Design team',
         ),
         startTime: DateTime.now(),
-        endTime: DateTime.now().add(Duration(hours: 1)),
+        endTime: DateTime.now().add(const Duration(hours: 1)),
         color: null,
         typeLabel: EventTypeLabel.videoConference(),
       ),
       (
         subject: context.knobs.text(label: 'Event 2', initial: 'Go for a run'),
-        startTime: DateTime.now().add(Duration(hours: 1)),
-        endTime: DateTime.now().add(Duration(hours: 2)),
+        startTime: DateTime.now().add(const Duration(hours: 1)),
+        endTime: DateTime.now().add(const Duration(hours: 2)),
         color: Colors.amberAccent,
         typeLabel: EventTypeLabel.calendar(),
       ),
       (
         subject: context.knobs
             .text(label: 'Event 3', initial: 'Implement flutter storybook'),
-        startTime: DateTime.now().add(Duration(hours: 2)),
-        endTime: DateTime.now().add(Duration(hours: 4)),
+        startTime: DateTime.now().add(const Duration(hours: 2)),
+        endTime: DateTime.now().add(const Duration(hours: 4)),
         color: null,
         typeLabel: EventTypeLabel.task(
           priorityLevel: 1,

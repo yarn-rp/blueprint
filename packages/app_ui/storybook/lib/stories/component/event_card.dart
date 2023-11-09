@@ -19,7 +19,7 @@ class EventCardComponent extends StatelessWidget {
             ),
           ),
           labels: [
-            Label(
+            LabelChip(
               text: context.knobs.text(
                 label: 'Label',
                 initial: 'Label',
@@ -32,7 +32,7 @@ class EventCardComponent extends StatelessWidget {
                 ),
               ),
             ),
-            Label(
+            LabelChip(
               text: context.knobs.text(label: 'Label', initial: 'Label'),
             ),
           ],

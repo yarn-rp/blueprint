@@ -1,9 +1,9 @@
 // ignore_for_file: lines_longer_than_80_chars
 
+import 'package:app_ui/app_ui.dart';
 import 'package:blueprint/calendar/presentation/widgets/appointment_time.dart';
 import 'package:blueprint/calendar/presentation/widgets/attendee_tile.dart';
 import 'package:blueprint/calendar/presentation/widgets/conference_entrypoints.dart';
-import 'package:blueprint/core/utils/color/hex_color_extension.dart';
 import 'package:blueprint_repository/blueprint_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';

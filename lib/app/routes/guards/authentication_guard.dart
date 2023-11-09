@@ -18,6 +18,7 @@ class AuthGuard extends AutoRouteGuard {
     SignUpRoute.name,
     // ForgotPasswordRoute.name,
   ];
+
   @override
   Future<void> onNavigation(
     NavigationResolver resolver,
