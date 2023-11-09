@@ -28,7 +28,7 @@ class CarouselComponent extends StatelessWidget {
                       initial: 'https://source.unsplash.com/random'),
                 ),
                 context.knobs.text(label: 'Image Text', initial: 'Random Text'),
-                () => print('Image $index tapped'),
+                () {}
               );
             }),
           ],

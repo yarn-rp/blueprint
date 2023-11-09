@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class Label extends StatelessWidget {
-  const Label({
+class LabelChip extends StatelessWidget {
+  const LabelChip({
     required this.text,
     this.avatar,
     this.backgroundColor,

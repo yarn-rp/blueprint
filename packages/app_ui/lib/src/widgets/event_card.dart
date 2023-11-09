@@ -11,7 +11,7 @@ class EventCard extends StatelessWidget {
 
   final EventListTile title;
   final String dateAndTime;
-  final List<Label> labels;
+  final List<LabelChip> labels;
 
   @override
   Widget build(BuildContext context) {
