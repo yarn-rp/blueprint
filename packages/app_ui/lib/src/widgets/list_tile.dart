@@ -143,10 +143,14 @@ class EventListTile extends StatelessWidget {
         ),
         title: Text(
           title,
+          overflow: TextOverflow.ellipsis,
+          maxLines: 1,
           style: Theme.of(context).textTheme.bodyLarge,
         ),
         subtitle: Text(
           subtitle,
+          overflow: TextOverflow.ellipsis,
+          maxLines: 2,
           style: Theme.of(context).textTheme.bodyMedium,
         ),
         trailing: trailing,
