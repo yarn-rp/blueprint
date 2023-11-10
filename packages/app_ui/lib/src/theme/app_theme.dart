@@ -1,4 +1,5 @@
 import 'package:app_ui/src/colors/colors.dart';
+import 'package:app_ui/src/spacing/app_spacing.dart';
 
 import 'package:app_ui/src/typography/typography.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,9 @@ final lightTheme = ThemeData(
   colorScheme: lightColorScheme,
   textTheme: customTextTheme,
   searchBarTheme: SearchBarThemeData(
+    padding: const MaterialStatePropertyAll(
+      EdgeInsets.symmetric(horizontal: AppSpacing.lg),
+    ),
     backgroundColor: MaterialStateProperty.all(
       lightColorScheme.surface,
     ),
