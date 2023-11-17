@@ -30,6 +30,15 @@ abstract class AppSpacing {
   /// xxxlg pacing value (64pt)
   static const double xxxlg = 4 * spaceUnit;
 
+  /// The height of the app bar (72pt)
+  static const double appBarHeight = 72;
+
+  /// The width of the logo (160pt)
+  static const double logoWidth = 160;
+
+  /// The min width of the navigation drawer (320pt)
+  static const double navigationDrawerMinWidth = 320;
+
   /// buy tickets space value (80pt)
   static const double bottomSpace = 5 * spaceUnit;
 }

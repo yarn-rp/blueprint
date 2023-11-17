@@ -14,9 +14,8 @@ dependencies:
     path: ../../app_ui
   flutter:
     sdk: flutter
+  responsive_framework: ^1.1.1
   storybook_flutter: ^0.14.0
-
-
 dev_dependencies:
   flutter_test:
     sdk: flutter

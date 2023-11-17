@@ -1,12 +1,12 @@
 import * as admin from "firebase-admin";
 import * as firebaseConfig from "./../../firebase.json";
-const LOCALHOST = "localhost";
-let emulatorHost = `${LOCALHOST}:8080`; // default value
+const HOST = "localhost";
+let emulatorHost = `${HOST}:8080`; // default value
 
 try {
   if (firebaseConfig.emulators && firebaseConfig.emulators.firestore) {
     const { port } = firebaseConfig.emulators.firestore;
-    emulatorHost = `${LOCALHOST}:${port}`;
+    emulatorHost = `${HOST}:${port}`;
   }
 } catch (error) {
   console.error("Error reading firebase.json:", error);
