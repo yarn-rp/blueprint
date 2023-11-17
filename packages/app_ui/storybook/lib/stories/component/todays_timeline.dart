@@ -59,9 +59,11 @@ class _TodaysTimelineComponentState extends State<TodaysTimelineComponent> {
 
     return Component(
       maxHeight: size.height,
+      maxWidth: size.width,
       title: 'Todays timeline',
       child: SizedBox(
         height: size.height - 200,
+        width: size.width,
         child: Column(
           children: [
             Expanded(

@@ -74,6 +74,7 @@ class EventListTile extends StatelessWidget {
     required this.leading,
     required this.title,
     required this.subtitle,
+    this.isMini = false,
     this.onTap,
     super.key,
     this.trailing,
@@ -129,9 +130,38 @@ class EventListTile extends StatelessWidget {
   final String subtitle;
   final Widget? trailing;
   final VoidCallback? onTap;
+  final bool isMini;
 
   @override
   Widget build(BuildContext context) {
+    if (isMini) {
+      return ListTile(
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Flexible(
+              flex: 4,
+              child: Text(
+                title,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+            ),
+            const Spacer(),
+            Flexible(
+              flex: 4,
+              child: Text(
+                subtitle,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+            )
+          ],
+        ),
+      );
+    }
     return SizedBox(
       height: AppSpacing.xxxlg + AppSpacing.xs,
       child: ListTile(

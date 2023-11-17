@@ -175,7 +175,6 @@ class _TodaysBlueprintState extends State<TodayTimeline>
 
         widget.onEventUpdate(appointment, newStartTime, newEndTime);
       },
-
       onAppointmentResizeEnd: (appointmentResizeEndDetails) {
         final appointment = appointmentResizeEndDetails.appointment;
         if (appointment is! TodayEvent) {
@@ -226,10 +225,13 @@ class _TodaysBlueprintState extends State<TodayTimeline>
 
         final title = appointment.subject;
         final subtitle = '$startTime to $endTime';
+        final duration = appointment.endTime.difference(appointment.startTime);
+
         return Card(
           margin: EdgeInsets.zero,
           color: isAfter ? originalColor : originalColor.withOpacity(0.5),
           child: EventListTile(
+            isMini: duration.inMinutes < 45,
             leading: appointment.typeLabel,
             title: title,
             subtitle: subtitle,
