@@ -157,7 +157,7 @@ class EventListTile extends StatelessWidget {
                 maxLines: 2,
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
-            )
+            ),
           ],
         ),
       );

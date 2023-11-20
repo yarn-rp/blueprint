@@ -30,7 +30,7 @@
       "port": 5001
     },
     "firestore": {
-      "port": 8080
+      "port": 8000
     },
     "ui": {
       "enabled": true
@@ -44,11 +44,7 @@
     {
       "target": "app",
       "public": "build/web",
-      "ignore": [
-        "firebase.json",
-        "**/.*",
-        "**/node_modules/**"
-      ],
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
       "rewrites": [
         {
           "source": "**",
@@ -60,11 +56,7 @@
       "target": "api",
       "cleanUrls": true,
       "public": "public",
-      "ignore": [
-        "firebase.json",
-        "**/.*",
-        "**/node_modules/**"
-      ],
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
       "rewrites": [
         {
           "source": "/api/v1/me",
@@ -81,11 +73,7 @@
     {
       "target": "storybook",
       "public": "packages/app_ui/storybook/build/web",
-      "ignore": [
-        "firebase.json",
-        "**/.*",
-        "**/node_modules/**"
-      ],
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
       "rewrites": [
         {
           "source": "**",
