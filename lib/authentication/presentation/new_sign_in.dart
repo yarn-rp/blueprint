@@ -42,7 +42,7 @@ class _NewSignInViewState extends State<_NewSignInView> {
 
   final TextEditingController _passwordController = TextEditingController();
 
-  bool _showPassword = false;
+  bool _showPassword = true;
 
   @override
   Widget build(BuildContext context) {
