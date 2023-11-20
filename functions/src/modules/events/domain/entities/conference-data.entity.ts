@@ -47,6 +47,6 @@ export interface EntryPoint {
  * ```
  */
 export interface ConferenceData {
-  entryPoints: Iterable<EntryPoint>;
+  entryPoints: EntryPoint[];
   notes?: string;
 }
