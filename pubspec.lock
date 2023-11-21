@@ -205,10 +205,10 @@ packages:
     dependency: "direct main"
     description:
       name: collapsible_sidebar
-      sha256: "0b2a754eec3eb5ba7e733712ffa6ff99d28b2e2930fa5d42e76b0e7a29828b25"
+      sha256: cdaa339abbd14ded6c23ce7b4577767e444029be487659bfe97f4a88d8cb47d7
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.4"
+    version: "2.0.7"
   collection:
     dependency: "direct main"
     description:
