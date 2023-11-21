@@ -4,6 +4,7 @@ import 'package:blueprint/app/dependency_injection/init.dart';
 import 'package:blueprint/app/routes/guards/authentication_guard.dart';
 import 'package:blueprint/app/routes/routes.dart';
 import 'package:blueprint/authentication/state_management/sign_up_cubit/sign_up_cubit.dart';
+import 'package:blueprint/core/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -53,7 +54,7 @@ class _SignUpViewState extends State<_SignUpView> {
   Widget build(BuildContext context) {
     final signInCubit = context.watch<SignUpCubit>();
     final size = MediaQuery.sizeOf(context);
-
+    final lang = AppLocalizations.of(context);
     return Scaffold(
       body: Center(
         child: Column(
@@ -86,9 +87,9 @@ class _SignUpViewState extends State<_SignUpView> {
                       const SizedBox(height: AppSpacing.xxlg),
                       TextField(
                         controller: _emailController,
-                        decoration: const InputDecoration(
-                          labelText: 'Email',
-                          border: OutlineInputBorder(),
+                        decoration: InputDecoration(
+                          labelText: lang.email,
+                          border: const OutlineInputBorder(),
                         ),
                       ),
                       const SizedBox(height: AppSpacing.md),
@@ -96,7 +97,7 @@ class _SignUpViewState extends State<_SignUpView> {
                         controller: _passwordController,
                         obscureText: _showPassword,
                         decoration: InputDecoration(
-                          labelText: 'Password',
+                          labelText: lang.password,
                           suffixIcon: IconButton(
                             icon: Icon(
                               _showPassword
@@ -117,7 +118,7 @@ class _SignUpViewState extends State<_SignUpView> {
                         controller: _repeatPasswordController,
                         obscureText: _repeatShowPassword,
                         decoration: InputDecoration(
-                          labelText: 'Repeat Password',
+                          labelText: lang.repeat_password,
                           border: const OutlineInputBorder(),
                           suffixIcon: IconButton(
                             icon: Icon(
@@ -135,15 +136,15 @@ class _SignUpViewState extends State<_SignUpView> {
                       ),
                       const SizedBox(height: AppSpacing.md),
                       FilledButton(
-                        child: const Text('Sign Up'),
+                        child: Text(lang.sign_up),
                         onPressed: () {
                           final email = _emailController.text;
                           final password = _passwordController.text;
                           final repeatPassword = _repeatPasswordController.text;
                           if (password != repeatPassword) {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Passwords do not match'),
+                              SnackBar(
+                                content: Text(lang.pass_dont_match),
                               ),
                             );
                             return;
@@ -158,10 +159,10 @@ class _SignUpViewState extends State<_SignUpView> {
                         },
                       ),
                       const SizedBox(height: AppSpacing.xlg),
-                      const Text("Don't have an account?"),
+                      Text(lang.do_not_have_account),
                       const SizedBox(height: AppSpacing.md),
                       TextButton(
-                        child: const Text('Sign In'),
+                        child: Text(lang.sign_in),
                         onPressed: () => context.router.push(
                           SignInRoute(onResult: widget.onResult),
                         ),

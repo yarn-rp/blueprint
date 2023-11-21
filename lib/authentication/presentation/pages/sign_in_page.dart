@@ -4,6 +4,7 @@ import 'package:blueprint/app/dependency_injection/init.dart';
 import 'package:blueprint/app/routes/guards/authentication_guard.dart';
 import 'package:blueprint/app/routes/routes.dart';
 import 'package:blueprint/authentication/state_management/sign_in_cubit/sign_in_cubit.dart';
+import 'package:blueprint/core/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -48,6 +49,7 @@ class _SignInViewState extends State<_SignInView> {
   Widget build(BuildContext context) {
     final signInCubit = context.watch<SignInCubit>();
     final size = MediaQuery.sizeOf(context);
+    final lang = AppLocalizations.of(context);
     return Scaffold(
       body: Center(
         child: Column(
@@ -80,9 +82,9 @@ class _SignInViewState extends State<_SignInView> {
                       const SizedBox(height: AppSpacing.xxlg),
                       TextField(
                         controller: _emailController,
-                        decoration: const InputDecoration(
-                          labelText: 'Email',
-                          border: OutlineInputBorder(),
+                        decoration: InputDecoration(
+                          labelText: lang.email,
+                          border: const OutlineInputBorder(),
                         ),
                       ),
                       const SizedBox(height: AppSpacing.md),
@@ -90,7 +92,7 @@ class _SignInViewState extends State<_SignInView> {
                         controller: _passwordController,
                         obscureText: _showPassword,
                         decoration: InputDecoration(
-                          labelText: 'Password',
+                          labelText: lang.password,
                           suffixIcon: IconButton(
                             icon: Icon(
                               _showPassword
@@ -108,7 +110,7 @@ class _SignInViewState extends State<_SignInView> {
                       ),
                       const SizedBox(height: AppSpacing.lg),
                       FilledButton(
-                        child: const Text('Sign In'),
+                        child: Text(lang.sign_in),
                         onPressed: () {
                           final email = _emailController.text;
                           final password = _passwordController.text;
@@ -122,17 +124,17 @@ class _SignInViewState extends State<_SignInView> {
                         },
                       ),
                       const SizedBox(height: AppSpacing.xlg),
-                      const Text("Don't have an account?"),
+                      Text(lang.do_not_have_account),
                       const SizedBox(height: AppSpacing.md),
                       TextButton(
-                        child: const Text('Sign Up'),
+                        child: Text(lang.sign_up),
                         onPressed: () => context.router.push(
                           SignUpRoute(onResult: widget.onResult),
                         ),
                       ),
                       const SizedBox(height: AppSpacing.lg),
                       TextButton(
-                        child: const Text('Forget Password'),
+                        child: Text(lang.forget_pass),
                         onPressed: () {},
                       ),
                     ],
