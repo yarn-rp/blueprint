@@ -1,3 +1,4 @@
+import 'package:app_ui/app_ui.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:blueprint/app/dependency_injection/init.dart';
 import 'package:blueprint/app/routes/guards/authentication_guard.dart';
@@ -25,75 +26,121 @@ class SignInPage extends StatelessWidget {
   }
 }
 
-class _SignInView extends StatelessWidget {
-  _SignInView({
+class _SignInView extends StatefulWidget {
+  const _SignInView({
     required this.onResult,
   });
 
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
   final AuthenticationResultFunction onResult;
+
+  @override
+  State<_SignInView> createState() => _SignInViewState();
+}
+
+class _SignInViewState extends State<_SignInView> {
+  final TextEditingController _emailController = TextEditingController();
+
+  final TextEditingController _passwordController = TextEditingController();
+
+  bool _showPassword = true;
 
   @override
   Widget build(BuildContext context) {
     final signInCubit = context.watch<SignInCubit>();
-
+    final size = MediaQuery.sizeOf(context);
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Sign In'),
-      ),
-      body: BlocListener<SignInCubit, SignInState>(
-        listener: (context, state) {
-          if (state is SignInSuccessful) {
-            onResult(result: true);
-          } else if (state is SignInError) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(state.failure.toString()),
-              ),
-            );
-          }
-        },
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              TextField(
-                controller: _emailController,
-                decoration: const InputDecoration(
-                  labelText: 'Email',
-                ),
-              ),
-              const SizedBox(height: 16),
-              TextField(
-                controller: _passwordController,
-                obscureText: true,
-                decoration: const InputDecoration(
-                  labelText: 'Password',
-                ),
-              ),
-              const SizedBox(height: 16),
-              ElevatedButton(
-                child: const Text('Sign In'),
-                onPressed: () {
-                  final email = _emailController.text;
-                  final password = _passwordController.text;
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            BlocListener<SignInCubit, SignInState>(
+              listener: (context, state) {
+                if (state is SignInSuccessful) {
+                  widget.onResult(result: true);
+                } else if (state is SignInError) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(state.failure.toString()),
+                    ),
+                  );
+                }
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Container(
+                  padding: const EdgeInsets.all(20),
+                  width: size.width * 0.4,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      BlueprintLogo(
+                        width: size.width * 0.3,
+                        height: size.height * 0.15,
+                      ),
+                      const SizedBox(height: AppSpacing.xxlg),
+                      TextField(
+                        controller: _emailController,
+                        decoration: const InputDecoration(
+                          labelText: 'Email',
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+                      const SizedBox(height: AppSpacing.md),
+                      TextField(
+                        controller: _passwordController,
+                        obscureText: _showPassword,
+                        decoration: InputDecoration(
+                          labelText: 'Password',
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              _showPassword
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _showPassword = !_showPassword;
+                              });
+                            },
+                          ),
+                          border: const OutlineInputBorder(),
+                        ),
+                      ),
+                      const SizedBox(height: AppSpacing.lg),
+                      FilledButton(
+                        child: const Text('Sign In'),
+                        onPressed: () {
+                          final email = _emailController.text;
+                          final password = _passwordController.text;
 
-                  if (email.isNotEmpty && password.isNotEmpty) {
-                    signInCubit.signInWithEmailAndPassword(email, password);
-                  }
-                },
-              ),
-              const Text("Don't have an account?"),
-              TextButton(
-                child: const Text('Sign Up'),
-                onPressed: () => context.router.push(
-                  SignUpRoute(onResult: onResult),
+                          if (email.isNotEmpty && password.isNotEmpty) {
+                            signInCubit.signInWithEmailAndPassword(
+                              email,
+                              password,
+                            );
+                          }
+                        },
+                      ),
+                      const SizedBox(height: AppSpacing.xlg),
+                      const Text("Don't have an account?"),
+                      const SizedBox(height: AppSpacing.md),
+                      TextButton(
+                        child: const Text('Sign Up'),
+                        onPressed: () => context.router.push(
+                          SignUpRoute(onResult: widget.onResult),
+                        ),
+                      ),
+                      const SizedBox(height: AppSpacing.lg),
+                      TextButton(
+                        child: const Text('Forget Password'),
+                        onPressed: () {},
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
