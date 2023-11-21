@@ -110,12 +110,6 @@ class ListTileComponent extends StatelessWidget {
                 initial: 'List item subtitle',
               ),
               onTap: () {},
-              priorityLevel: context.knobs.sliderInt(
-                label: 'Priority Level',
-                initial: 1,
-                min: 1,
-                max: 5,
-              ),
               trailing: FilledButton(
                 child: Text(
                   context.knobs.text(

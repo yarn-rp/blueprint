@@ -226,23 +226,31 @@ class _TodaysBlueprintState extends State<TodayTimeline>
         final title = appointment.subject;
         final subtitle = '$startTime to $endTime';
         final duration = appointment.endTime.difference(appointment.startTime);
+        final backgroundColor =
+            isAfter ? originalColor : originalColor.withOpacity(0.5);
+
+        final foregroundColor = backgroundColor.computeLuminance() > 0.5
+            ? Colors.black
+            : Colors.white;
 
         return Card(
           margin: EdgeInsets.zero,
           color: isAfter ? originalColor : originalColor.withOpacity(0.5),
           child: EventListTile(
-            isMini: duration.inMinutes < 45,
+            isMini: duration.inMinutes < 30,
             leading: appointment.typeLabel,
             title: title,
             subtitle: subtitle,
+            textColor: foregroundColor,
           ),
         );
       },
       timeSlotViewSettings: TimeSlotViewSettings(
         timeTextStyle: textTheme.labelMedium,
         minimumAppointmentDuration: const Duration(minutes: 15),
-        timeIntervalHeight: 100,
+        timeIntervalHeight: 180,
       ),
+      todayHighlightColor: theme.colorScheme.tertiary,
     );
   }
 

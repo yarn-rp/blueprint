@@ -78,23 +78,23 @@ class EventListTile extends StatelessWidget {
     this.onTap,
     super.key,
     this.trailing,
+    this.textColor,
   });
 
   factory EventListTile.task({
     required String title,
     required String subtitle,
-    required int priorityLevel,
     VoidCallback? onTap,
     Widget? trailing,
+    Color? textColor,
   }) =>
       EventListTile(
-        leading: EventTypeLabel.task(
-          priorityLevel: priorityLevel,
-        ),
+        leading: EventTypeLabel.task(),
         title: title,
         subtitle: subtitle,
         onTap: onTap,
         trailing: trailing,
+        textColor: textColor,
       );
 
   factory EventListTile.videoConference({
@@ -102,6 +102,7 @@ class EventListTile extends StatelessWidget {
     required String subtitle,
     VoidCallback? onTap,
     Widget? trailing,
+    Color? textColor,
   }) =>
       EventListTile(
         leading: EventTypeLabel.videoConference(),
@@ -109,6 +110,7 @@ class EventListTile extends StatelessWidget {
         subtitle: subtitle,
         onTap: onTap,
         trailing: trailing,
+        textColor: textColor,
       );
 
   factory EventListTile.calendar({
@@ -116,6 +118,7 @@ class EventListTile extends StatelessWidget {
     required String subtitle,
     VoidCallback? onTap,
     Widget? trailing,
+    Color? textColor,
   }) =>
       EventListTile(
         leading: EventTypeLabel.calendar(),
@@ -123,6 +126,7 @@ class EventListTile extends StatelessWidget {
         subtitle: subtitle,
         onTap: onTap,
         trailing: trailing,
+        textColor: textColor,
       );
 
   final EventTypeLabel leading;
@@ -131,6 +135,7 @@ class EventListTile extends StatelessWidget {
   final Widget? trailing;
   final VoidCallback? onTap;
   final bool isMini;
+  final Color? textColor;
 
   @override
   Widget build(BuildContext context) {
@@ -141,12 +146,12 @@ class EventListTile extends StatelessWidget {
           children: [
             Flexible(
               flex: 4,
-              child: Text(
-                title,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-                style: Theme.of(context).textTheme.bodyLarge,
-              ),
+              child: Text(title,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        color: textColor,
+                      )),
             ),
             const Spacer(),
             Flexible(
@@ -154,8 +159,10 @@ class EventListTile extends StatelessWidget {
               child: Text(
                 subtitle,
                 overflow: TextOverflow.ellipsis,
-                maxLines: 2,
-                style: Theme.of(context).textTheme.bodyMedium,
+                maxLines: 1,
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: textColor,
+                    ),
               ),
             )
           ],
@@ -171,17 +178,19 @@ class EventListTile extends StatelessWidget {
           width: AppSpacing.xxlg,
           child: leading,
         ),
-        title: Text(
-          title,
-          overflow: TextOverflow.ellipsis,
-          maxLines: 1,
-          style: Theme.of(context).textTheme.bodyLarge,
-        ),
+        title: Text(title,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
+            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                  color: textColor,
+                )),
         subtitle: Text(
           subtitle,
           overflow: TextOverflow.ellipsis,
           maxLines: 2,
-          style: Theme.of(context).textTheme.bodyMedium,
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: textColor,
+              ),
         ),
         trailing: trailing,
         onTap: onTap,

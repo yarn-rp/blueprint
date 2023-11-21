@@ -8,10 +8,10 @@ class SearchBarComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
     return Component(
       title: 'Search',
       child: SearchBar(
-        backgroundColor: MaterialStatePropertyAll(theme.colorScheme.surface),
         trailing: const [
           Icon(
             Icons.search,
