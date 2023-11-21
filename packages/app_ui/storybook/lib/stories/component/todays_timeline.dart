@@ -45,9 +45,7 @@ class _TodaysTimelineComponentState extends State<TodaysTimelineComponent> {
         startTime: DateTime.now().add(const Duration(hours: 2)),
         endTime: DateTime.now().add(const Duration(hours: 4)),
         color: null,
-        typeLabel: EventTypeLabel.task(
-          priorityLevel: 1,
-        ),
+        typeLabel: EventTypeLabel.task(),
       ),
     ];
     super.didChangeDependencies();
