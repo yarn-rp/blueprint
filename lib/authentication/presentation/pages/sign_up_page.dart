@@ -52,6 +52,7 @@ class _SignUpViewState extends State<_SignUpView> {
   @override
   Widget build(BuildContext context) {
     final signInCubit = context.watch<SignUpCubit>();
+    final size = MediaQuery.sizeOf(context);
 
     return Scaffold(
       body: Center(
@@ -74,13 +75,13 @@ class _SignUpViewState extends State<_SignUpView> {
                 padding: const EdgeInsets.all(16),
                 child: Container(
                   padding: const EdgeInsets.all(20),
-                  width: MediaQuery.of(context).size.width * 0.4,
+                  width: size.width * 0.4,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       BlueprintLogo(
-                        width: MediaQuery.of(context).size.width * 0.3,
-                        height: MediaQuery.of(context).size.height * 0.15,
+                        width: size.width * 0.3,
+                        height: size.height * 0.15,
                       ),
                       const SizedBox(height: AppSpacing.xxlg),
                       TextField(
