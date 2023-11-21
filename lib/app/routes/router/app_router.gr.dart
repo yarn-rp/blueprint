@@ -64,7 +64,7 @@ abstract class _$AppRouter extends RootStackRouter {
       final args = routeData.argsAs<SignUpRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: SignUpPage(
+        child: NewSignUpPage(
           onResult: args.onResult,
           key: args.key,
         ),
