@@ -4,13 +4,13 @@
     "@counterAppBarTitle": {
         "description": "Texto mostrado en la AppBar de la página del contador"
     },
-    "do_not_have_account":"No tienes una cuenta?",
-    "forget_pass":"Olvidaste Contraseña", 
-    "sign_in":"Iniciar Sesión",
-    "sign_up" :"Registrarse",
+    "doNotHaveAccount":"Don't have an account?",
+    "forgotPassword":"Forgot Password", 
+    "signIn":"Sign In",
+    "signUp" :"Sign Up",
     "email":"Email",
-    "password":"Contraseña",
-    "pass_dont_match":"Las contraseñas no son iguales",
-    "repeat_password":"Repita la contraseña"
+    "password":"Password",
+    "passwordDontMatch":"Passwords don't match",
+    "repeatPassword":"Repeat Password"
 
 }

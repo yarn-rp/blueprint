@@ -54,7 +54,7 @@ class _SignUpViewState extends State<_SignUpView> {
   Widget build(BuildContext context) {
     final signInCubit = context.watch<SignUpCubit>();
     final size = MediaQuery.sizeOf(context);
-    final lang = AppLocalizations.of(context);
+    final l10n = AppLocalizations.of(context);
     return Scaffold(
       body: Center(
         child: Column(
@@ -88,7 +88,7 @@ class _SignUpViewState extends State<_SignUpView> {
                       TextField(
                         controller: _emailController,
                         decoration: InputDecoration(
-                          labelText: lang.email,
+                          labelText: l10n.email,
                           border: const OutlineInputBorder(),
                         ),
                       ),
@@ -97,7 +97,7 @@ class _SignUpViewState extends State<_SignUpView> {
                         controller: _passwordController,
                         obscureText: _showPassword,
                         decoration: InputDecoration(
-                          labelText: lang.password,
+                          labelText: l10n.password,
                           suffixIcon: IconButton(
                             icon: Icon(
                               _showPassword
@@ -118,7 +118,7 @@ class _SignUpViewState extends State<_SignUpView> {
                         controller: _repeatPasswordController,
                         obscureText: _repeatShowPassword,
                         decoration: InputDecoration(
-                          labelText: lang.repeat_password,
+                          labelText: l10n.repeatPassword,
                           border: const OutlineInputBorder(),
                           suffixIcon: IconButton(
                             icon: Icon(
@@ -136,7 +136,7 @@ class _SignUpViewState extends State<_SignUpView> {
                       ),
                       const SizedBox(height: AppSpacing.md),
                       FilledButton(
-                        child: Text(lang.sign_up),
+                        child: Text(l10n.signUp),
                         onPressed: () {
                           final email = _emailController.text;
                           final password = _passwordController.text;
@@ -144,7 +144,7 @@ class _SignUpViewState extends State<_SignUpView> {
                           if (password != repeatPassword) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
-                                content: Text(lang.pass_dont_match),
+                                content: Text(l10n.passwordDontMatch),
                               ),
                             );
                             return;
@@ -159,10 +159,10 @@ class _SignUpViewState extends State<_SignUpView> {
                         },
                       ),
                       const SizedBox(height: AppSpacing.xlg),
-                      Text(lang.do_not_have_account),
+                      Text(l10n.doNotHaveAccount),
                       const SizedBox(height: AppSpacing.md),
                       TextButton(
-                        child: Text(lang.sign_in),
+                        child: Text(l10n.signIn),
                         onPressed: () => context.router.push(
                           SignInRoute(onResult: widget.onResult),
                         ),
