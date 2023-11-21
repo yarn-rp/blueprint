@@ -7,22 +7,15 @@ part of 'event.dart';
 // **************************************************************************
 
 Event _$EventFromJson(Map<String, dynamic> json) => Event(
-      startTime: json['startTime'] == null
-          ? null
-          : DateTime.parse(json['startTime'] as String),
-      endTime: json['endTime'] == null
-          ? null
-          : DateTime.parse(json['endTime'] as String),
+      startTime: Event._timestampFromJson(json['startTime'] as Timestamp?),
+      endTime: Event._timestampFromJson(json['endTime'] as Timestamp?),
       subject: json['subject'] as String,
       isAllDay: json['isAllDay'] as bool?,
-      platform: Platform.fromJson(json['platform'] as Map<String, dynamic>),
       attendantStatus:
           $enumDecode(_$AttendantStatusEnumMap, json['attendantStatus']),
       description: json['description'] as String?,
       colorHex: json['colorHex'] as String?,
-      organizer: json['organizer'] == null
-          ? null
-          : User.fromJson(json['organizer'] as Map<String, dynamic>),
+      organizer: json['organizer'] as String?,
       attendees: (json['attendees'] as Map<String, dynamic>?)?.map(
         (k, e) => MapEntry(k, $enumDecode(_$AttendantStatusEnumMap, e)),
       ),
@@ -34,17 +27,18 @@ Event _$EventFromJson(Map<String, dynamic> json) => Event(
     );
 
 Map<String, dynamic> _$EventToJson(Event instance) => <String, dynamic>{
-      'startTime': instance.startTime?.toIso8601String(),
-      'endTime': instance.endTime?.toIso8601String(),
+      'startTime': Event._timestampToJson(instance.startTime),
+      'endTime': Event._timestampToJson(instance.endTime),
       'subject': instance.subject,
       'description': instance.description,
       'isAllDay': instance.isAllDay,
       'colorHex': instance.colorHex,
-      'organizer': instance.organizer?.toJson(),
+      'organizer': instance.organizer,
       'attendees': instance.attendees
           ?.map((k, e) => MapEntry(k, _$AttendantStatusEnumMap[e]!)),
       'platformLink': instance.platformLink,
-      'platform': instance.platform.toJson(),
+      'conferenceData': instance.conferenceData,
+      'platform': instance.platform?.toJson(),
       'conferenceData': instance.conferenceData?.toJson(),
       'attendantStatus': _$AttendantStatusEnumMap[instance.attendantStatus]!,
     };

@@ -1,5 +1,6 @@
 import 'package:calendar_repository/src/entities/entities.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:collection/collection.dart';
 
 import 'package:integrations_repository/integrations_repository.dart';
 import 'package:stream_transform/stream_transform.dart';
@@ -41,30 +42,32 @@ class CalendarRepository {
   /// Stream of all platforms.
   final Stream<Iterable<Platform>> platformsStream;
 
-  /// Get all events of the day from the calendars managed by this repository.
-  Stream<Iterable<Event>> getTodayEvents() {
+  Stream<Iterable<Event>> getEvents() {
     return currentUserIdStream.switchMap((userId) {
       if (userId == null) {
         return const Stream.empty();
       }
-
       final userData = _usersCollection.doc(userId);
+      final eventsSubCollection = userData.collection('events');
+      return platformsStream.switchMap(
+        (platforms) => eventsSubCollection.snapshots().map((event) {
+          return event.docs.map((e) {
+            final data = e.data();
+            final platformId = data['platform'];
+            final eventPlatform = platforms.firstWhereOrNull(
+              (element) => platformId == element.id,
+            );
+            final eventEntity = Event.fromJson(
+              {
+                ...data,
+                if (eventPlatform != null) 'platform': eventPlatform.toJson(),
+              },
+            );
 
-      final tasksSubCollection =
-          userData.collection('events').withConverter<Event>(
-                fromFirestore: eventConverter.fromFirestore,
-                toFirestore: eventConverter.toFirestore,
-              );
-
-      final now = DateTime.now();
-      final startOfDay = DateTime(now.year, now.month, now.day);
-      final endOfDay = DateTime(now.year, now.month, now.day + 1);
-
-      return tasksSubCollection
-          .where('startTime', isGreaterThanOrEqualTo: startOfDay)
-          .where('startTime', isLessThan: endOfDay)
-          .snapshots()
-          .map((snapshot) => snapshot.docs.map((doc) => doc.data()));
+            return eventEntity;
+          });
+        }),
+      );
     });
   }
 }

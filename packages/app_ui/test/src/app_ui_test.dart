@@ -3,5 +3,9 @@
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  group('AppUi', () {});
+  group('AppUi', () {
+    test('true is true', () {
+      expect(true, true);
+    });
+  });
 }

@@ -21,11 +21,11 @@ abstract class BlueprintModule {
       );
 
   @lazySingleton
-  TodaysBlueprintRepository blueprintRepository(
+  BlueprintRepository blueprintRepository(
     FirebaseFirestore firestore,
     AuthenticationRepositoryContract authenticationRepository,
   ) =>
-      TodaysBlueprintRepository(
+      BlueprintRepository(
         firestore: firestore,
         currentUserIdStream: authenticationRepository.authenticationStream
             .map((event) => event?.id),

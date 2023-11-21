@@ -12,11 +12,29 @@ dependencies:
   equatable: ^2.0.5
   flutter:
     sdk: flutter
+  flutter_svg: ^2.0.9
   google_fonts: ^4.0.3
+  jiffy: ^5.0.0
+  syncfusion_flutter_calendar: ^21.1.38
 
 
 dev_dependencies:
+  build_runner:
+  flutter_gen_runner:
   flutter_test:
     sdk: flutter
   mocktail: ^0.3.0
   very_good_analysis: ^5.0.0
+
+flutter_gen:
+  output: lib/gen/ # Optional (default: lib/gen/)
+  line_length: 80 # Optional (default: 80)
+
+  integrations:
+    flutter_svg: true
+
+flutter:
+  assets:
+    - assets/logo/logo_dark.svg
+    - assets/logo/logo_light.svg
+  uses-material-design: true

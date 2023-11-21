@@ -23,7 +23,7 @@ class TodaysBlueprintCubit extends Cubit<TodaysBlueprintState> {
             addedAt: DateTime.now(),
           ),
         ) {
-    calendarRepository.getTodayEvents().listen((events) {
+    calendarRepository.getEvents().listen((events) {
       emit(
         TodaysBlueprintState.loaded(
           calendarEvents: events.map<CalendarEvent>((event) {

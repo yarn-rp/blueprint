@@ -14,16 +14,19 @@ dependencies:
     path: ./packages/authentication_repository
   auto_route: ^7.8.3
   bloc: ^8.1.1
+  blueprint_repository:
+    path: ./packages/blueprint_repository
   cached_network_image: ^3.2.3
   calendar_repository:
     path: ./packages/calendar_repository
-  cloud_firestore: ^4.10.0
-  cloud_functions: ^4.5.0
+  cloud_firestore: ^4.12.1
+  cloud_functions: ^4.5.2
   collapsible_sidebar: ^2.0.3+3
   collection: ^1.17.0
   dynamic_color: ^1.6.3
-  firebase_auth: ^4.11.0
-  firebase_core: ^2.18.0
+  equatable: ^2.0.5
+  firebase_auth: ^4.12.0
+  firebase_core: ^2.20.0
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.2
@@ -53,8 +56,7 @@ dependencies:
   syncfusion_flutter_calendar: ^21.1.38
   task_repository:
     path: ./packages/task_repository
-  blueprint_repository:
-    path: ./packages/blueprint_repository
+  universal_html: ^2.2.4
   url_launcher: ^6.1.10
   url_strategy: ^0.2.0
 
@@ -66,7 +68,7 @@ dev_dependencies:
     sdk: flutter
   injectable_generator: ^2.1.5
   json_serializable: ^6.6.1
-  mocktail: ^0.3.0
+  mocktail: ^1.0.1
   very_good_analysis: ^4.0.0
 
 flutter:

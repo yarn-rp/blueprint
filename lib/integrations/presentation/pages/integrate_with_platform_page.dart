@@ -1,11 +1,9 @@
-// ignore: avoid_web_libraries_in_flutter
-import 'dart:js' as js;
-
 import 'package:auto_route/auto_route.dart';
 import 'package:blueprint/app/dependency_injection/init.dart';
 import 'package:blueprint/integrations/state_management/integrations_repository/integrations_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:universal_html/js.dart' as js;
 
 /// {@template integrate_with_platform_page}
 /// A page that allows users to integrate with various platforms.
