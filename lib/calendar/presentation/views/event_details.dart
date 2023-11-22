@@ -221,11 +221,10 @@ class GeneralEventCalendarEventDetails extends StatelessWidget {
                                           const SizedBox(
                                             height: 16,
                                           ),
-                                          ...appointment
-                                              .event.attendees!.entries
+                                          ...appointment.event.attendees!
                                               .map((attendee) {
-                                            final user = attendee.key;
-                                            final status = attendee.value;
+                                            final user = attendee.user;
+                                            final status = attendee.status;
                                             return Padding(
                                               padding:
                                                   const EdgeInsets.symmetric(
@@ -235,7 +234,7 @@ class GeneralEventCalendarEventDetails extends StatelessWidget {
                                                 platformUrl: null,
                                                 attendantStatus: status,
                                                 displayName: null,
-                                                email: user,
+                                                email: user.email,
                                               ),
                                             );
                                           }),

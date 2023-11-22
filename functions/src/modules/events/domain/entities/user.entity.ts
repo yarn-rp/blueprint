@@ -20,6 +20,7 @@ export interface User {
   email?: string;
 }
 
-export interface UserWithStatus extends User {
+export interface UserWithStatus {
   status: AttendantStatus;
+  user: User;
 }

@@ -25,8 +25,10 @@ export class GoogleCalendarMapper implements Mapper<GoogleCalendarEvent> {
       email: remoteEvent.organizer?.email || "",
     };
     const attendees = remoteEvent.attendees?.map((att) => ({
-      displayName: att.displayName || "",
-      email: att.email || "",
+      user: {
+        displayName: att.displayName || "",
+        email: att.email || "",
+      },
       status: (att.responseStatus as AttendantStatus) || AttendantStatus.NeedsAction,
     }));
 
