@@ -8,6 +8,8 @@ environment:
   flutter: 3.13.6
 
 dependencies:
+  api_client:
+    path: ./packages/api_client
   app_ui:
     path: ./packages/app_ui
   authentication_repository:
@@ -67,6 +69,8 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   injectable_generator: ^2.1.5
+  integration_test:
+    sdk: flutter
   json_serializable: ^6.6.1
   mocktail: ^1.0.1
   very_good_analysis: ^4.0.0
