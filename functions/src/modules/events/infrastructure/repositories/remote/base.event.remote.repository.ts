@@ -62,6 +62,10 @@ export abstract class BaseEventRemoteRepository<RemoteEvent> implements EventRem
   async pull(uid: string, authenticatorId: string): Promise<Event[]> {
     const accessToken = await this.getAccess(uid, authenticatorId);
     const nativeTasks = await this.getEvents(accessToken);
+    // using bind since iterative methods like map and forEach
+    // don't preserve the this context
+    // @see {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array#iterative_methods}
+    // for more information
     return nativeTasks.map(this.mapper.fromRemoteEvent.bind(this.mapper));
   }
 }
