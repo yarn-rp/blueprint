@@ -31,7 +31,12 @@ export const testEvent: Event = {
   isAllDay: false,
   colorHex: "#4285F4",
   organizer: testUser,
-  attendees: new Map([[testUser, AttendantStatus.Accepted]]),
+  attendees: [
+    {
+      ...testUser,
+      status: AttendantStatus.Accepted,
+    },
+  ],
   platformLink: "https://example.com/meeting",
   platform: PlatformName.GoogleCalendar,
   attendantStatus: AttendantStatus.Accepted,

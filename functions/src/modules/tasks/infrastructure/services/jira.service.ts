@@ -67,7 +67,7 @@ export class JiraRemoteRepository extends AbstractRemoteRepository<JiraTask> {
   }
 
   private async getCloudIds(accessToken: string): Promise<{ id: string; url: string }[]> {
-    const { data: clouds } = await axios.get<{ id: string; domain: string }[]>(this.CLOUDS_API_URL, {
+    const { data: clouds } = await axios.get<{ id: string; url: string }[]>(this.CLOUDS_API_URL, {
       headers: this.buildHeaders(accessToken),
     });
     console.log(clouds);
