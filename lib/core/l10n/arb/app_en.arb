@@ -3,5 +3,15 @@
     "counterAppBarTitle": "Counter",
     "@counterAppBarTitle": {
         "description": "Text shown in the AppBar of the Counter Page"
-    }
+    },
+    
+    "doNotHaveAccount":"Don't have an account?",
+    "forgotPassword":"Forgot Password", 
+    "signIn":"Sign In",
+    "signUp" :"Sign Up",
+    "email":"Email",
+    "password":"Password",
+    "passwordDontMatch":"Passwords don't match",
+    "repeatPassword":"Repeat Password"
+    
 }

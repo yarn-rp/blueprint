@@ -164,7 +164,7 @@ class EventListTile extends StatelessWidget {
                       color: textColor,
                     ),
               ),
-            )
+            ),
           ],
         ),
       );
