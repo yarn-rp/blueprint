@@ -73,16 +73,15 @@ class _SignUpViewState extends State<_SignUpView> {
                 }
               },
               child: Padding(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(AppSpacing.lg),
                 child: Container(
-                  padding: const EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(AppSpacing.xlg),
                   width: size.width * 0.4,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       BlueprintLogo(
                         width: size.width * 0.3,
-                        height: size.height * 0.15,
                       ),
                       const SizedBox(height: AppSpacing.xxlg),
                       TextField(
