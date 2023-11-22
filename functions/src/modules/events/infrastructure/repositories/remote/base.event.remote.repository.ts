@@ -41,8 +41,7 @@ export abstract class BaseEventRemoteRepository<RemoteEvent> implements EventRem
    *
    * @param accessToken - The access token to authenticate with
    * the remote source.
-   * @returns A Promise containing an array of
-   * RemoteEvent objects.
+   * @returns A Promise containing an array of RemoteEvent objects.
    */
   abstract getEvents(accessToken: string): Promise<RemoteEvent[]>;
 

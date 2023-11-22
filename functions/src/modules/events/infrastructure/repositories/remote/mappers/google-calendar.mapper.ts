@@ -53,8 +53,7 @@ export class GoogleCalendarMapper implements Mapper<GoogleCalendarEvent> {
   }
 
   /**
-   * Maps conference data from Google Calendar API to ConferenceData domain
-   * entity
+   * Maps conference data from Google Calendar API to ConferenceData domain entity
    * @param gConferenceData - the
    * conference data from the Google Calendar API
    * @returns the mapped conference data

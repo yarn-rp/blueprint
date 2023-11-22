@@ -70,7 +70,6 @@ export class JiraRemoteRepository extends AbstractRemoteRepository<JiraTask> {
     const { data: clouds } = await axios.get<{ id: string; url: string }[]>(this.CLOUDS_API_URL, {
       headers: this.buildHeaders(accessToken),
     });
-    console.log(clouds);
     return clouds;
   }
 
@@ -82,7 +81,6 @@ export class JiraRemoteRepository extends AbstractRemoteRepository<JiraTask> {
       const { data } = await axios.get<{ issues: JiraTask[] }>(searchUrl, {
         headers: this.buildHeaders(accessToken),
       });
-      console.log({ JiraTasks: data.issues });
       return data.issues.map((issue) => ({ ...issue, self: cloud.url }));
     });
     const tasksPerCloud = await Promise.all(jiraTasks);

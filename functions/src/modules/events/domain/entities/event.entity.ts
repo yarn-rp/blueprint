@@ -1,7 +1,7 @@
 import { AttendantStatus } from "./attendant-status.enum";
 import { ConferenceData } from "./conference-data.entity";
 import { PlatformName } from "./platform.enum";
-import { User } from "./user.entity";
+import { User, UserWithStatus } from "./user.entity";
 
 /**
  * Represents the properties of an event.
@@ -47,7 +47,7 @@ interface EventProps {
   isAllDay?: boolean;
   colorHex?: string;
   organizer?: User;
-  attendees?: (User & { status: AttendantStatus })[];
+  attendees?: UserWithStatus[];
   platformLink?: string;
 }
 
