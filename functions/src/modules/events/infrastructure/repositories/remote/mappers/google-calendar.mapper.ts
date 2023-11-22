@@ -24,16 +24,11 @@ export class GoogleCalendarMapper implements Mapper<GoogleCalendarEvent> {
       displayName: remoteEvent.organizer?.displayName || "",
       email: remoteEvent.organizer?.email || "",
     };
-    const attendees = new Map<User, AttendantStatus>();
-
-    remoteEvent.attendees?.forEach((att) => {
-      const user: User = {
-        displayName: att.displayName || "",
-        email: att.email || "",
-      };
-      const status = (att.responseStatus as AttendantStatus) || AttendantStatus.NeedsAction;
-      attendees.set(user, status);
-    });
+    const attendees = remoteEvent.attendees?.map((att) => ({
+      displayName: att.displayName || "",
+      email: att.email || "",
+      status: (att.responseStatus as AttendantStatus) || AttendantStatus.NeedsAction,
+    }));
 
     const platformLink = remoteEvent.htmlLink || undefined;
 

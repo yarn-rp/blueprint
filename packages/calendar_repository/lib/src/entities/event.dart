@@ -64,9 +64,13 @@ class Event extends Equatable {
   final String? colorHex;
 
   /// The organizer of the event.
+  @JsonKey(name: 'organizer.email')
   final String? organizer;
 
   /// The list of attendees of the event. The key is the email of the attendee.
+  @JsonKey(
+    fromJson: _attendeesFromJson,
+  )
   final Map<String, AttendantStatus>? attendees;
 
   /// The link to the event in the platform.
@@ -101,5 +105,18 @@ class Event extends Equatable {
 
   static dynamic _timestampToJson(DateTime? date) {
     return date != null ? Timestamp.fromDate(date) : null;
+  }
+
+  static Map<String, AttendantStatus> _attendeesFromJson(
+    List<dynamic> attendees,
+  ) {
+    //do the same using a collection literal with a 'for' element
+    return {
+      for (final e in attendees)
+        e['email'] as String: $enumDecode(
+          _$AttendantStatusEnumMap,
+          e['status'],
+        ),
+    };
   }
 }

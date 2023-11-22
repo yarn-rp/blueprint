@@ -47,7 +47,7 @@ interface EventProps {
   isAllDay?: boolean;
   colorHex?: string;
   organizer?: User;
-  attendees?: Map<User, AttendantStatus>;
+  attendees?: (User & { status: AttendantStatus })[];
   platformLink?: string;
 }
 
