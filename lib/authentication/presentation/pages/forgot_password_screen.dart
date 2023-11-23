@@ -2,6 +2,7 @@ import 'package:app_ui/app_ui.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:blueprint/app/dependency_injection/init.dart';
 import 'package:blueprint/app/routes/guards/authentication_guard.dart';
+import 'package:blueprint/app/routes/router/app_router.dart';
 import 'package:blueprint/authentication/state_management/forgot_password_cubit/forgot_password_cubit.dart';
 import 'package:blueprint/core/l10n/l10n.dart';
 import 'package:flutter/material.dart';
@@ -43,7 +44,21 @@ class _ForgotPasswordView extends StatelessWidget {
             BlocListener<ForgotPasswordCubit, ForgotPasswordState>(
               listener: (context, state) {
                 if (state is PasswordResetState) {
-                  onResult(result: true);
+                  showDialog<void>(
+                    context: context,
+                    builder: (context) {
+                      return BlockDialog(
+                        title: l10n.passwordRcovery,
+                        content: l10n.resetPasswordDialogMessege,
+                        btnText: l10n.accept,
+                        onPressed: () => context.router.push(
+                          SignInRoute(
+                            onResult: onResult,
+                          ),
+                        ),
+                      );
+                    },
+                  );
                 } else if (state is ErrorResettingPasswordState) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
