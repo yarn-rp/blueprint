@@ -1,6 +1,7 @@
 import { Mapper } from "../base.event.remote.repository";
-import { Event, User, AttendantStatus, PlatformName } from "../../../../domain/entities";
+import { Event, User, AttendantStatus, PlatformName, ConferenceData } from "../../../../domain/entities";
 import { GoogleCalendarEvent } from "../google-calendar.event.remote.repository";
+import { calendar_v3 as CalendarV3 } from "googleapis";
 
 /**
  * A mapper in charge of converting objects from Google Calendar Platform to
@@ -23,22 +24,17 @@ export class GoogleCalendarMapper implements Mapper<GoogleCalendarEvent> {
       displayName: remoteEvent.organizer?.displayName || "",
       email: remoteEvent.organizer?.email || "",
     };
-    const attendees = new Map<User, AttendantStatus>();
-
-    remoteEvent.attendees?.forEach((att) => {
-      const user: User = {
+    const attendees = remoteEvent.attendees?.map((att) => ({
+      user: {
         displayName: att.displayName || "",
         email: att.email || "",
-      };
-      const status = (att.responseStatus as AttendantStatus) || AttendantStatus.NeedsAction;
-      attendees.set(user, status);
-    });
+      },
+      status: (att.responseStatus as AttendantStatus) || AttendantStatus.NeedsAction,
+    }));
 
     const platformLink = remoteEvent.htmlLink || undefined;
 
-    // const conferenceData = this.getConferenceData(
-    //   remoteEvent.conferenceData || ({} as calendar_v3.Schema$ConferenceData),
-    // );
+    const conferenceData = this.getConferenceData(remoteEvent.conferenceData || undefined);
 
     const event: Event = {
       startTime,
@@ -52,20 +48,31 @@ export class GoogleCalendarMapper implements Mapper<GoogleCalendarEvent> {
       platformLink,
       platform: PlatformName.GoogleCalendar,
       attendantStatus: AttendantStatus.Accepted, // Replace with the real status
-      conferenceData: undefined,
+      conferenceData,
     };
 
     return event;
   }
 
   /**
-   * Maps conference data from Google Calendar API to ConferenceData domain
-   * entity
+   * Maps conference data from Google Calendar API to ConferenceData domain entity
    * @param gConferenceData - the
    * conference data from the Google Calendar API
    * @returns the mapped conference data
    */
-  // private getConferenceData(gConferenceData: calendar_v3.Schema$ConferenceData): ConferenceData | undefined {
-  //   return undefined;
-  // }
+  private getConferenceData(gConferenceData?: CalendarV3.Schema$ConferenceData): ConferenceData | undefined {
+    if (!gConferenceData) return undefined;
+    // map conference data from google to domain entity
+    return {
+      entryPoints:
+        gConferenceData.entryPoints?.map((entryPoint) => {
+          return {
+            entryPointType: entryPoint.entryPointType || "",
+            uri: entryPoint.uri || "",
+            label: entryPoint.label || "",
+          };
+        }) || [],
+      notes: gConferenceData.notes || "",
+    };
+  }
 }

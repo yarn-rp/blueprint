@@ -1,3 +1,5 @@
+import { AttendantStatus } from "./attendant-status.enum";
+
 /**
  * Represents a user in the event context.
  *
@@ -16,4 +18,9 @@ export interface User {
   displayName?: string;
   avatarUrl?: string;
   email?: string;
+}
+
+export interface UserWithStatus {
+  status: AttendantStatus;
+  user: User;
 }

@@ -66,22 +66,22 @@ export class JiraRemoteRepository extends AbstractRemoteRepository<JiraTask> {
     return `https://api.atlassian.com/ex/jira/${cloudId}/rest/api/3/search?jql=assignee=currentuser() AND status!=Done`;
   }
 
-  private async getCloudIds(accessToken: string): Promise<string[]> {
-    const { data: clouds } = await axios.get<{ id: string }[]>(this.CLOUDS_API_URL, {
+  private async getCloudIds(accessToken: string): Promise<{ id: string; url: string }[]> {
+    const { data: clouds } = await axios.get<{ id: string; url: string }[]>(this.CLOUDS_API_URL, {
       headers: this.buildHeaders(accessToken),
     });
-    return clouds.map((cloud) => cloud.id);
+    return clouds;
   }
 
   async getTasks(accessToken: string): Promise<JiraTask[]> {
     const clouds = await this.getCloudIds(accessToken);
 
-    const jiraTasks = clouds.map(async (cloudId) => {
-      const searchUrl = this.buildSearchUrl(cloudId);
+    const jiraTasks = clouds.map(async (cloud) => {
+      const searchUrl = this.buildSearchUrl(cloud.id);
       const { data } = await axios.get<{ issues: JiraTask[] }>(searchUrl, {
         headers: this.buildHeaders(accessToken),
       });
-      return data.issues;
+      return data.issues.map((issue) => ({ ...issue, self: cloud.url }));
     });
     const tasksPerCloud = await Promise.all(jiraTasks);
     return tasksPerCloud.flat();
@@ -189,14 +189,11 @@ function fromJiraApiUserToUser(user: JiraApiUser): User {
 
 /**
  * Builds a url that can be opened in a browser env to see the task.
- * @param {JiraTask} jiraIssue the Jira API issue object
- * @return {URL|null}the url that can be opened in a browser env to see the task
+ * @param jiraIssue - the Jira API issue object
+ * @returns the url that can be opened in a browser env to see the task
  */
 function getTaskUrl(jiraIssue: JiraTask): URL | null {
-  // FIXME: the domain is not the value expected.
-  // It should be the domain of the Jira instance, and instead it is the
-  // domain of the Jira API.
-  const domain = jiraIssue.self.split("/rest/api")[0];
+  const domain = jiraIssue.self;
   const issueKey = jiraIssue.key;
 
   if (issueKey == null) {
@@ -213,8 +210,8 @@ function getTaskUrl(jiraIssue: JiraTask): URL | null {
  *
  * Production should store projects in a database and assign a random color
  * to each project, so the projects keep the same color.
- * @param {string} projectName the name of the project
- * @return {string} the hex code of the color associated with the project name
+ * @param projectName - the name of the project
+ * @returns the hex code of the color associated with the project name
  */
 function colorFromProjectName(projectName: string): string {
   // Hash the projectName using a simple hash function
@@ -272,9 +269,9 @@ function rgbToHex(r: number, g: number, b: number) {
 /**
  * Maps a Jira API project to a blueprint project.
  * @see https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-projects/#api-rest-api-3-project-get
- * @param {JiraProject} project a jira representation of a project
- * @return {Project} a blueprint representation of a project
- * @throws {Error} if the project doesn't have an id, name or platformURL
+ * @param project - a jira representation of a project
+ * @returns a blueprint representation of a project
+ * @throws if the project doesn't have an id, name or platformURL
  */
 function fromJiraProjectToProject(project: JiraProject): Project {
   const projectId = project.id;
@@ -310,10 +307,10 @@ function fromJiraProjectToProject(project: JiraProject): Project {
 /**
  * Maps a Jira Issue to a Blueprint Task.
  * @see https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issues/#api-rest-api-3-issue-issueidorkey-get
- * @param {JiraTask} jiraIssue a jira representation of an issue
- * @return {Task} a blueprint representation of a task
- * @throws {Error} if the issue doesn't have any fields.
- * @throws {Error} if the project doesn't have an id, name or platformURL
+ * @param jiraIssue - a jira representation of an issue
+ * @returns a blueprint representation of a task
+ * @throws if the issue doesn't have any fields.
+ * @throws if the project doesn't have an id, name or platformURL
  */
 function fromJiraApiIssueToTask(jiraIssue: JiraTask): Task {
   if (!jiraIssue.fields) {

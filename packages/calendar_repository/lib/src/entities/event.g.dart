@@ -15,10 +15,12 @@ Event _$EventFromJson(Map<String, dynamic> json) => Event(
           $enumDecode(_$AttendantStatusEnumMap, json['attendantStatus']),
       description: json['description'] as String?,
       colorHex: json['colorHex'] as String?,
-      organizer: json['organizer'] as String?,
-      attendees: (json['attendees'] as Map<String, dynamic>?)?.map(
-        (k, e) => MapEntry(k, $enumDecode(_$AttendantStatusEnumMap, e)),
-      ),
+      organizer: json['organizer'] == null
+          ? null
+          : User.fromJson(json['organizer'] as Map<String, dynamic>),
+      attendees: (json['attendees'] as List<dynamic>?)
+          ?.map((e) => UserWithStatus.fromJson(e as Map<String, dynamic>))
+          .toList(),
       platformLink: json['platformLink'] as String?,
       conferenceData: json['conferenceData'] == null
           ? null
@@ -33,12 +35,9 @@ Map<String, dynamic> _$EventToJson(Event instance) => <String, dynamic>{
       'description': instance.description,
       'isAllDay': instance.isAllDay,
       'colorHex': instance.colorHex,
-      'organizer': instance.organizer,
-      'attendees': instance.attendees
-          ?.map((k, e) => MapEntry(k, _$AttendantStatusEnumMap[e]!)),
+      'organizer': instance.organizer?.toJson(),
+      'attendees': instance.attendees?.map((e) => e.toJson()).toList(),
       'platformLink': instance.platformLink,
-      'conferenceData': instance.conferenceData,
-      'platform': instance.platform?.toJson(),
       'conferenceData': instance.conferenceData?.toJson(),
       'attendantStatus': _$AttendantStatusEnumMap[instance.attendantStatus]!,
     };
