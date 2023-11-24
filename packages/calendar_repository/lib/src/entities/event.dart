@@ -1,4 +1,5 @@
 import 'package:calendar_repository/src/entities/entities.dart';
+import 'package:calendar_repository/src/entities/user_with_status.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:integrations_repository/integrations_repository.dart'
@@ -64,10 +65,10 @@ class Event extends Equatable {
   final String? colorHex;
 
   /// The organizer of the event.
-  final String? organizer;
+  final User? organizer;
 
   /// The list of attendees of the event. The key is the email of the attendee.
-  final Map<String, AttendantStatus>? attendees;
+  final List<UserWithStatus>? attendees;
 
   /// The link to the event in the platform.
   final String? platformLink;

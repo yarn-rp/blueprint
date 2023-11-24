@@ -41,8 +41,7 @@ export abstract class BaseEventRemoteRepository<RemoteEvent> implements EventRem
    *
    * @param accessToken - The access token to authenticate with
    * the remote source.
-   * @returnsA Promise containing an array of
-   * RemoteEvent objects.
+   * @returns A Promise containing an array of RemoteEvent objects.
    */
   abstract getEvents(accessToken: string): Promise<RemoteEvent[]>;
 
@@ -63,19 +62,21 @@ export abstract class BaseEventRemoteRepository<RemoteEvent> implements EventRem
   async pull(uid: string, authenticatorId: string): Promise<Event[]> {
     const accessToken = await this.getAccess(uid, authenticatorId);
     const nativeTasks = await this.getEvents(accessToken);
-    return nativeTasks.map(this.mapper.fromRemoteEvent);
+    // using bind since iterative methods like map and forEach
+    // don't preserve the this context
+    // @see {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array#iterative_methods}
+    // for more information
+    return nativeTasks.map(this.mapper.fromRemoteEvent.bind(this.mapper));
   }
 }
 
 /**
  * Mapper interface to map a RemoteEvent object to an Event entity.
- *
- * @template RemoteEvent The type of the event in the remote data source.
  */
 export interface Mapper<RemoteEvent> {
   /**
    * Maps a RemoteEvent object to an Event entity.
-   * @param {RemoteTask} remoteEvent The RemoteEvent object to map.
+   * @param remoteEvent - The RemoteEvent object to map.
    */
   fromRemoteEvent(remoteEvent: RemoteEvent): Event;
 }

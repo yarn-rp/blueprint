@@ -3,5 +3,20 @@
     "counterAppBarTitle": "Counter",
     "@counterAppBarTitle": {
         "description": "Text shown in the AppBar of the Counter Page"
-    }
+    },
+    
+    "doNotHaveAccount":"Don't have an account?",
+    "forgotPassword":"Forgot Password", 
+    "signIn":"Sign In",
+    "signUp" :"Sign Up",
+    "email":"Email",
+    "password":"Password",
+    "passwordDontMatch":"Passwords don't match",
+    "repeatPassword":"Repeat Password",
+    "resetPasswordMessage":"Enter email address that you used to register. We'll send you an email with link to reset your password.",
+    "sendEmail":"Send Email",
+    "resetPasswordDialogMessege":"An email has been sent with instructions to reset your password. Please check your inbox and spam folder",
+    "passwordRcovery":"Password Recovery",
+    "accept":"Accept"
+    
 }

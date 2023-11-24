@@ -146,12 +146,14 @@ class EventListTile extends StatelessWidget {
           children: [
             Flexible(
               flex: 4,
-              child: Text(title,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        color: textColor,
-                      )),
+              child: Text(
+                title,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      color: textColor,
+                    ),
+              ),
             ),
             const Spacer(),
             Flexible(
@@ -164,7 +166,7 @@ class EventListTile extends StatelessWidget {
                       color: textColor,
                     ),
               ),
-            )
+            ),
           ],
         ),
       );
@@ -178,12 +180,14 @@ class EventListTile extends StatelessWidget {
           width: AppSpacing.xxlg,
           child: leading,
         ),
-        title: Text(title,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 1,
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  color: textColor,
-                )),
+        title: Text(
+          title,
+          overflow: TextOverflow.ellipsis,
+          maxLines: 1,
+          style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                color: textColor,
+              ),
+        ),
         subtitle: Text(
           subtitle,
           overflow: TextOverflow.ellipsis,
