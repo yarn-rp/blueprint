@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:api_client/src/collections/collections.dart';
 import 'package:api_client/src/functions/functions.dart';
@@ -8,12 +7,12 @@ import 'package:api_client/src/models/models.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 
-/// {@template api_client}
-/// Client for the user API.
+/// {@template user_resource}
+/// User resource for the API client.
 /// {@endtemplate}
-class UsersApiClient {
-  /// {@macro api_client}
-  UsersApiClient({
+class UserResource {
+  /// {@macro user_resource}
+  UserResource({
     required Stream<String?> idTokenStream,
     required FirebaseFirestore firestore,
     required FirebaseFunctions firebaseFunctions,
@@ -40,24 +39,12 @@ class UsersApiClient {
 
   /// Calls the connect API to connect an integration with the given params
   Future<void> connectAuthenticator(Map<String, dynamic> params) async {
-    try {
-      final callable =
-          _firebaseFunctions.httpsCallable(Functions.connectAuthenticator);
+    final callable =
+        _firebaseFunctions.httpsCallable(Functions.connectAuthenticator);
 
-      await callable<void>(
-        params,
-      );
-    } on FirebaseFunctionsException catch (exception) {
-      log(
-        'Error while connecting integration: ${exception.message}',
-      );
-      rethrow;
-    } catch (exception) {
-      log(
-        'Error while connecting integration: $exception',
-      );
-      rethrow;
-    }
+    await callable<void>(
+      params,
+    );
   }
 
   /// Streams all the authenticators the user has connected

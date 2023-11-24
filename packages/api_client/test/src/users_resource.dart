@@ -17,22 +17,22 @@ class _MockHttpsCallableResult<T> extends Mock
     implements HttpsCallableResult<T> {}
 
 void main() {
-  group('UsersApiClient', () {
-    late UsersApiClient usersApiClient;
+  group('UserResource', () {
+    late UserResource userResource;
     late FirebaseFirestore firestore;
     late FirebaseFunctions firebaseFunctions;
 
     test('can be instantiated', () {
       firestore = FakeFirebaseFirestore();
       firebaseFunctions = _MockFirebaseFunctions();
-      usersApiClient = UsersApiClient(
+      userResource = UserResource(
         firestore: firestore,
         firebaseFunctions: firebaseFunctions,
         idTokenStream: Stream.value(''),
       );
 
       expect(
-        usersApiClient,
+        userResource,
         isNotNull,
       );
     });
@@ -44,7 +44,7 @@ void main() {
       setUp(() {
         firestore = FakeFirebaseFirestore();
         firebaseFunctions = _MockFirebaseFunctions();
-        usersApiClient = UsersApiClient(
+        userResource = UserResource(
           firestore: firestore,
           firebaseFunctions: firebaseFunctions,
           idTokenStream: Stream.value(userId),
@@ -62,7 +62,7 @@ void main() {
 
       test('calls the connectAuthenticator function', () async {
         final params = <String, dynamic>{};
-        await usersApiClient.connectAuthenticator(params);
+        await userResource.connectAuthenticator(params);
 
         verify(
           () => firebaseFunctions.httpsCallable(
@@ -73,40 +73,13 @@ void main() {
         verify(() => callable.call<void>(params)).called(1);
       });
 
-      test(
-        'onFirebaseFunctionsException logs message and throws error again',
-        () {
-          final firebaseException = FirebaseFunctionsException(
-            code: 'code',
-            message: 'message',
-          );
-          final params = <String, dynamic>{};
-          when(() => callable.call<void>(params)).thenThrow(firebaseException);
-
-          expect(
-            () => usersApiClient.connectAuthenticator(params),
-            throwsA(
-              firebaseException,
-            ),
-          );
-
-          verify(
-            () => firebaseFunctions.httpsCallable(
-              Functions.connectAuthenticator,
-            ),
-          ).called(1);
-
-          verify(() => callable.call<void>(params)).called(1);
-        },
-      );
-
       test('throws exception when function throws exception', () {
         final exception = Exception('oops');
         final params = <String, dynamic>{};
         when(() => callable.call<void>(params)).thenThrow(exception);
 
         expect(
-          () => usersApiClient.connectAuthenticator(params),
+          () => userResource.connectAuthenticator(params),
           throwsA(
             exception,
           ),
@@ -128,7 +101,7 @@ void main() {
       setUp(() {
         firestore = FakeFirebaseFirestore();
         firebaseFunctions = _MockFirebaseFunctions();
-        usersApiClient = UsersApiClient(
+        userResource = UserResource(
           firestore: firestore,
           firebaseFunctions: firebaseFunctions,
           idTokenStream: Stream.value(userId),
@@ -157,7 +130,7 @@ void main() {
             .doc(authenticator.id)
             .set(authenticator);
 
-        await usersApiClient.removeAuthenticator(authenticator.id);
+        await userResource.removeAuthenticator(authenticator.id);
 
         final authenticatorDoc = await firestore
             .collection(Collections.users)
@@ -174,7 +147,7 @@ void main() {
 
       test('throws exception if document does not exists', () {
         expect(
-          () => usersApiClient.removeAuthenticator('non-existent-id'),
+          () => userResource.removeAuthenticator('non-existent-id'),
           throwsA(
             isA<Exception>(),
           ),
@@ -188,7 +161,7 @@ void main() {
       setUp(() {
         firestore = FakeFirebaseFirestore();
         firebaseFunctions = _MockFirebaseFunctions();
-        usersApiClient = UsersApiClient(
+        userResource = UserResource(
           firestore: firestore,
           firebaseFunctions: firebaseFunctions,
           idTokenStream: Stream.value(userId),
@@ -220,7 +193,7 @@ void main() {
               .doc('some-id')
               .set(authenticator);
 
-          final stream = usersApiClient.getConnectedAuthenticators();
+          final stream = userResource.getConnectedAuthenticators();
 
           expect(
             stream,
@@ -234,7 +207,7 @@ void main() {
       );
 
       test('emits empty list if user has no authenticators', () {
-        final stream = usersApiClient.getConnectedAuthenticators();
+        final stream = userResource.getConnectedAuthenticators();
 
         expect(
           stream,
