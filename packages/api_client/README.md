@@ -6,7 +6,7 @@ A package for interacting with the Blueprint APIs
 
 The API Client package provides a set of tools for interacting with the Blueprints APIs. It offers a set of `resources`, ideally one for each domain context we have on the app. For now, you can find 2 resources on the app:
 
-- PlaformResource: the resource in charge of accessing the Platform database to retrieve all the available platforms the user has for integrating with.
+- PlatformResource: the resource in charge of accessing the Platform database to retrieve all the available platforms the user has for integrating with.
 - UserResource: the resource in charge of accessing user specific data on the database. 
 
 
