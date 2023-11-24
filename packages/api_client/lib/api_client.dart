@@ -1,5 +1,4 @@
-/// A Very Good Project created by Very Good CLI.
+/// API Client
 library api_client;
 
-export 'src/platforms_api_client.dart';
-export 'src/users_api_client.dart';
+export 'src/resources/resources.dart';

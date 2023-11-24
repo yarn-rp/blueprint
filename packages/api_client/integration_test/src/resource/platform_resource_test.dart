@@ -9,17 +9,17 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'helper/helper.dart';
+import '../../helper/helper.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('PlatformApiClient', () {
+  group('PlatformResource', () {
     late FirebaseFirestore firestore;
     late FirebaseFunctions functions;
     late FirebaseAuth auth;
 
-    late PlatformsApiClient platformsApiClient;
+    late PlatformResource platformsApiClient;
 
     setUp(() async {
       final (firebaseAuth, firebaseFirestore, firebaseFunctions) =
@@ -28,7 +28,7 @@ void main() {
       firestore = firebaseFirestore;
       functions = firebaseFunctions;
 
-      platformsApiClient = PlatformsApiClient(
+      platformsApiClient = PlatformResource(
         firestore: firestore,
       );
     });

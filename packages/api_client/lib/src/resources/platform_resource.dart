@@ -5,11 +5,11 @@ import 'package:api_client/src/models/models.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 /// {@template platforms_api_client}
-/// Client for the platforms API using Firestore.
+/// Resource for the platforms API using Firestore.
 /// {@endtemplate}
-class PlatformsApiClient {
+class PlatformResource {
   /// {@macro platforms_api_client}
-  PlatformsApiClient({
+  PlatformResource({
     required FirebaseFirestore firestore,
   }) : _platformsCollection =
             firestore.collection(Collections.platforms).withConverter(
