@@ -48,11 +48,9 @@ void platformResourceIntegrationTest() {
           result,
           emits(
             isA<List<PlatformModel>>().having(
-              (platforms) => platforms.any(
-                (platform) => platform.id == jiraPlatformId,
-              ),
+              (platforms) => platforms.map((e) => e.id),
               'platforms contains jira',
-              isTrue,
+              contains(jiraPlatformId),
             ),
           ),
         );
@@ -68,11 +66,9 @@ void platformResourceIntegrationTest() {
           result,
           emits(
             isA<List<PlatformModel>>().having(
-              (platforms) => platforms.any(
-                (platform) => platform.id == githubPlatformId,
-              ),
+              (platforms) => platforms.map((e) => e.id),
               'platforms contains github',
-              isTrue,
+              contains(githubPlatformId),
             ),
           ),
         );
@@ -88,11 +84,9 @@ void platformResourceIntegrationTest() {
           result,
           emits(
             isA<List<PlatformModel>>().having(
-              (platforms) => platforms.any(
-                (platform) => platform.id == googleCalendarPlatformId,
-              ),
-              'platforms contains gitlab',
-              isTrue,
+              (platforms) => platforms.map((e) => e.id),
+              'platforms contains google-calendar',
+              contains(googleCalendarPlatformId),
             ),
           ),
         );
