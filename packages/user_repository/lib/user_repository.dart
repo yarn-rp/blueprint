@@ -1,4 +1,4 @@
-/// A Very Good Project created by Very Good CLI.
+/// A repository that provides access to users
 library user_repository;
 
 export 'src/user_repository.dart';
