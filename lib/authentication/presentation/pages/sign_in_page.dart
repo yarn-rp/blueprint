@@ -134,7 +134,9 @@ class _SignInViewState extends State<_SignInView> {
                       const SizedBox(height: AppSpacing.lg),
                       TextButton(
                         child: Text(l10n.forgotPassword),
-                        onPressed: () {},
+                        onPressed: () => context.router.push(
+                          ForgotPasswordRoute(onResult: widget.onResult),
+                        ),
                       ),
                     ],
                   ),

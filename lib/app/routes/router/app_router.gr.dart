@@ -15,6 +15,16 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
+    ForgotPasswordRoute.name: (routeData) {
+      final args = routeData.argsAs<ForgotPasswordRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: ForgotPasswordPage(
+          onResult: args.onResult,
+          key: args.key,
+        ),
+      );
+    },
     InitialRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -83,6 +93,44 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
   };
+}
+
+/// generated route for
+/// [ForgotPasswordPage]
+class ForgotPasswordRoute extends PageRouteInfo<ForgotPasswordRouteArgs> {
+  ForgotPasswordRoute({
+    required void Function({bool? result}) onResult,
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
+          ForgotPasswordRoute.name,
+          args: ForgotPasswordRouteArgs(
+            onResult: onResult,
+            key: key,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'ForgotPasswordRoute';
+
+  static const PageInfo<ForgotPasswordRouteArgs> page =
+      PageInfo<ForgotPasswordRouteArgs>(name);
+}
+
+class ForgotPasswordRouteArgs {
+  const ForgotPasswordRouteArgs({
+    required this.onResult,
+    this.key,
+  });
+
+  final void Function({bool? result}) onResult;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'ForgotPasswordRouteArgs{onResult: $onResult, key: $key}';
+  }
 }
 
 /// generated route for

@@ -1,4 +1,5 @@
 export 'avatar_icon.dart';
+export 'block_dialog.dart';
 export 'blueprint_logo.dart';
 export 'carousel.dart';
 export 'desktop_navigation_drawer.dart';
