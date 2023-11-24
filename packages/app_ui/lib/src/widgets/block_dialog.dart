@@ -12,7 +12,7 @@ class BlockDialog extends StatelessWidget {
   final String title;
   final String content;
   final String btnText;
-  final Function onPressed;
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -46,8 +46,7 @@ class BlockDialog extends StatelessWidget {
             ),
             const SizedBox(height: AppSpacing.lg),
             FilledButton(
-              // ignore: unnecessary_lambdas, avoid_dynamic_calls
-              onPressed: () => onPressed(),
+              onPressed: onPressed,
               child: Text(btnText),
             ),
           ],

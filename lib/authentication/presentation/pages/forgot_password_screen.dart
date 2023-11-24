@@ -36,6 +36,7 @@ class _ForgotPasswordView extends StatelessWidget {
     final forgotPasswordCubit = context.watch<ForgotPasswordCubit>();
     final size = MediaQuery.sizeOf(context);
     final l10n = AppLocalizations.of(context);
+
     return Scaffold(
       body: Center(
         child: Column(
