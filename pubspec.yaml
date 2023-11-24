@@ -29,6 +29,8 @@ dependencies:
   equatable: ^2.0.5
   firebase_auth: ^4.12.0
   firebase_core: ^2.20.0
+  firebase_dev_access:
+    path: ./packages/firebase_dev_access
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.2
@@ -69,8 +71,6 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   injectable_generator: ^2.1.5
-  integration_test:
-    sdk: flutter
   json_serializable: ^6.6.1
   mocktail: ^1.0.1
   very_good_analysis: ^4.0.0
