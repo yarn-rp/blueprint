@@ -1,67 +1,126 @@
-# User Api Client
+# API Client
 
-[![style: very good analysis][very_good_analysis_badge]][very_good_analysis_link]
-[![Powered by Mason](https://img.shields.io/endpoint?url=https%3A%2F%2Ftinyurl.com%2Fmason-badge)](https://github.com/felangel/mason)
-[![License: MIT][license_badge]][license_link]
+A package for interacting with the Blueprint APIs
 
-A Very Good Project created by Very Good CLI.
+## Overview
 
-## Installation 💻
+The API Client package provides a set of tools for interacting with the Blueprints APIs. It offers a set of `resources`, ideally one for each domain context we have on the app. For now, you can find 2 resources on the app:
 
-**❗ In order to start using User Api Client you must have the [Flutter SDK][flutter_install_link] installed on your machine.**
+- PlaformResource: the resource in charge of accessing the Platform database to retrieve all the available platforms the user has for integrating with.
+- UserResource: the resource in charge of accessing user specific data on the database. 
 
-Install via `flutter pub add`:
 
-```sh
-dart pub add api_client
+## Installation
+
+To use the API Client package in your project, add it as a dependency in your `pubspec.yaml` file:
+```yaml
+dependencies:
+  api_client: ^1.0.0
 ```
 
----
-
-## Continuous Integration 🤖
-
-User Api Client comes with a built-in [GitHub Actions workflow][github_actions_link] powered by [Very Good Workflows][very_good_workflows_link] but you can also add your preferred CI/CD solution.
-
-Out of the box, on each pull request and push, the CI `formats`, `lints`, and `tests` the code. This ensures the code remains consistent and behaves correctly as you add functionality or make changes. The project uses [Very Good Analysis][very_good_analysis_link] for a strict set of analysis options used by our team. Code coverage is enforced using the [Very Good Workflows][very_good_coverage_link].
-
----
-
-## Running Tests 🧪
-
-For first time users, install the [very_good_cli][very_good_cli_link]:
-
-```sh
-dart pub global activate very_good_cli
+```bash
+flutter pub get
 ```
 
-To run all unit tests:
-
-```sh
-very_good test --coverage
+## Usage
+To use the API Client package in your code, import it as follows:
+```dart
+import 'package:api_client/api_client.dart';
 ```
 
-To view the generated coverage report you can use [lcov](https://github.com/linux-test-project/lcov).
 
-```sh
-# Generate Coverage Report
-genhtml coverage/lcov.info -o coverage/
+Then, you can start using the provided classes and utilities to interact with API clients in your application. 
 
-# Open Coverage Report
-open coverage/index.html
+### Models
+
+This package makes use of the newly implemented `records` on dart 3 to define data structure. With the records we can deconstruct easier, which is good for parsing, and we also avoid shadowing on the names since `Records` are equal by structure. 
+
+You can find all the models under the `models` folder.
+
+
+### Resources
+
+This package exposes a collection of resources for accessing the apis of Blueprint. You can find all the resources under the `resources` folder. 
+
+### Usage Example
+```dart
+class UserRepository {
+  final UserResource _userResource;
+
+  UserRepository({
+    required UserResource userResource,
+  }) : _userResource = userResource;
+
+  Stream<List<Authenticator>> getConnectedAuthenticators() {
+    final authenticatorsStream = _userResource.getConnectedAuthenticators();
+
+    return authenticatorsStream.map(
+      (authenticators) {
+        return authenticators.map(
+          (authenticator) {
+            final (:id, :platformName, :type, user: user) = authenticator;
+
+            return Authenticator(
+              id: id,
+              platformName: platformName,
+              type: type,
+              user: User(
+                email: user.email,
+                name: user.name,
+              ),
+            );
+          },
+        ).toList();
+      },
+    );
+  }
+
+  void connectAuthenticator(Map<String, dynamic> params) {
+    _userResource.connectAuthenticator(params);
+  }
+}
 ```
 
-[flutter_install_link]: https://docs.flutter.dev/get-started/install
-[github_actions_link]: https://docs.github.com/en/actions/learn-github-actions
-[license_badge]: https://img.shields.io/badge/license-MIT-blue.svg
-[license_link]: https://opensource.org/licenses/MIT
-[logo_black]: https://raw.githubusercontent.com/VGVentures/very_good_brand/main/styles/README/vgv_logo_black.png#gh-light-mode-only
-[logo_white]: https://raw.githubusercontent.com/VGVentures/very_good_brand/main/styles/README/vgv_logo_white.png#gh-dark-mode-only
-[mason_link]: https://github.com/felangel/mason
-[very_good_analysis_badge]: https://img.shields.io/badge/style-very_good_analysis-B22C89.svg
-[very_good_analysis_link]: https://pub.dev/packages/very_good_analysis
-[very_good_cli_link]: https://pub.dev/packages/very_good_cli
-[very_good_coverage_link]: https://github.com/marketplace/actions/very-good-coverage
-[very_good_ventures_link]: https://verygood.ventures
-[very_good_ventures_link_light]: https://verygood.ventures#gh-light-mode-only
-[very_good_ventures_link_dark]: https://verygood.ventures#gh-dark-mode-only
-[very_good_workflows_link]: https://github.com/VeryGoodOpenSource/very_good_workflows
+## Testing
+
+Testing is a crucial part on this package. Since this package is the connection point between external sources and internal code, it's crucial that we ensure everything works as expected. To achieve that, we are using 2 types of tests. 
+
+
+### Unit Tests
+
+Located on the `test` folder. This tests are the ones ensuring that the resources are working as expected as small unit pieces. 
+To run the tests, run the following command:
+```bash
+flutter test .
+```
+
+### End To End Tests
+
+Located on the `integration_test` folder, by leveraging the use of local env using firebase emulators, we have a collection of tests that control the entire system. This tests are not part of the ci pipeline yet, but may be in a future. The main idea with this type of tests, is ensuring that the system works correctly and that the `api_client` dependent packages will work correctly in compiling time. 
+
+To achieve that, this package depends on `firebase_dev_access`, a package with some utils to firebase local env.
+
+#### Installing dependencies
+
+To run these tests, you will have to install some external dependencies first:
+
+- [NodeJS](https://nodejs.org/en/download/)
+- [Chrome](https://www.google.com/chrome/)
+- [Chromedriver](https://sites.google.com/chromium.org/driver/)
+- [FirebaseCLI](https://firebase.google.com/docs/cli)
+
+#### Running tests
+
+- First start your local emulators. See main project Readme in case of doubts.
+- Start `chromedriver` service: 
+
+```bash 
+chromedriver --port=4444
+```
+
+- Run the tests:
+```bash
+flutter drive --driver=integration_driver/integration_test_driver.dart --target=integration_test/main.dart --dart-define-from-file=../.././firebase.json  -d chrome
+```
+
+This should open a chrome instance and run all the tests from the file. Please note that we are using relative imports, so in order to run this test you will have to be inside `packages/api_client`. 
