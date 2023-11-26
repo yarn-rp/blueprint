@@ -33,7 +33,7 @@ export const testEvent: Event = {
   organizer: testUser,
   attendees: [
     {
-      ...testUser,
+      user: testUser,
       status: AttendantStatus.Accepted,
     },
   ],

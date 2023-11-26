@@ -18,6 +18,12 @@ const createAfterSignUp = functions.auth.user().onCreate(async (user) => {
   });
 });
 
+const deleteUserOnCascade = functions.auth.user().onDelete(async (user) => {
+  const { uid } = user;
+
+  await firestore.collection("users").doc(uid).delete();
+});
+
 const createApiKey = functions.https.onCall(async (_, context) => {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const { uid } = context!.auth!;
@@ -32,6 +38,7 @@ const getByKey = withMiddlewares(ApiKeyCurrentUser)(async (req, res) => {
 
 export default {
   createAfterSignUp,
+  deleteUserOnCascade,
   createApiKey,
   getByKey,
 };
