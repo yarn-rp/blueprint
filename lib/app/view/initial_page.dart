@@ -97,7 +97,9 @@ class _InitialPageState extends State<InitialPage> {
                 ),
               ],
             );
-          } else {
+          }
+          //not sure what to show when it fails
+          else {
             return const SizedBox();
           }
         },

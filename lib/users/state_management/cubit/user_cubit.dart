@@ -12,10 +12,12 @@ class UserCubit extends Cubit<UserState> {
 
   Future<void> loadUserData() async {
     emit(const UserState.loading());
-    userRepository.getUserData().listen((event) {
-      emit(
-        UserState.loaded(user: event),
-      );
-    });
+
+    try {
+      final userData = await userRepository.getUserData().first;
+      emit(UserState.loaded(user: userData));
+    } catch (error) {
+      emit(UserState.error(error.toString()));
+    }
   }
 }
