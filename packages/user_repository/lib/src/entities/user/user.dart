@@ -9,7 +9,7 @@ class User {
   User({
     required this.displayName,
     required this.email,
-    required this.photoUrl,
+    required this.photoURL,
   });
 
   ///From Json method genereted in user.g.dart file
@@ -25,5 +25,5 @@ class User {
   final String email;
 
   ///Url of the user photo
-  final String photoUrl;
+  final String photoURL;
 }

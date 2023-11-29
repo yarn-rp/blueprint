@@ -2,17 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:stream_transform/stream_transform.dart';
 import 'package:user_repository/src/entities/user/user.dart';
 
-/// [User] converter for firestore
-final userConverter = (
-  fromFirestore: (
-    DocumentSnapshot<Map<String, dynamic>> snapshot,
-    SnapshotOptions? options,
-  ) {
-    final data = snapshot.data()!;
-    return User.fromJson(data);
-  },
-  toFirestore: (User user, SetOptions? options) => user.toJson(),
-);
 const String _usersCollectionName = 'users';
 
 /// {@template user_repository}
@@ -41,8 +30,9 @@ class UserRepository {
       final userDoc = _usersCollection.doc(userId);
 
       return userDoc.snapshots().map((snapshot) {
-        final userData = snapshot.data()! as User;
-        return userData;
+        final userData = snapshot.data()! as Map<String, dynamic>;
+        final userInstance = User.fromJson(userData);
+        return userInstance;
       });
     });
   }
