@@ -84,14 +84,14 @@ class _InitialPageState extends State<InitialPage> {
                       ),
                     ),
                     child: ProfileMenuView(
-                      userDisplayName: userData.displayName,
+                      userDisplayName: userData.displayName!,
                       userEmail: userData.email,
                       //don't know how we suppost to save the whole
                       //user name to get the letter of the lastname
                       //for now just grabbing the first and the second
                       //ones of the name
                       userInitials:
-                          userData.displayName.substring(0, 2).toUpperCase(),
+                          userData.displayName!.substring(0, 2).toUpperCase(),
                     ),
                   ),
                 ),
@@ -163,7 +163,7 @@ class _InitialPageState extends State<InitialPage> {
                               _scaffoldKey.currentState?.openEndDrawer();
                             },
                             child: AvatarIcon(
-                              text: state.user.displayName
+                              text: state.user.displayName!
                                   .substring(0, 2)
                                   .toUpperCase(),
                             ),

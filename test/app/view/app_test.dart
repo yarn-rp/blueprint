@@ -7,6 +7,7 @@ import 'package:blueprint/settings/state_management/bloc/settings_bloc.dart';
 import 'package:blueprint/users/state_management/cubit/user_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:user_repository/user_repository.dart';
 
 class MockAuthenticationCubit extends MockCubit<AuthenticationState>
     implements AuthenticationCubit {}
@@ -30,7 +31,9 @@ void main() {
       whenListen(
         userCubit,
         Stream.fromIterable([
-          const UserState.initial(),
+          UserState.loaded(
+            user: User(displayName: '', email: '', photoURL: ''),
+          ),
         ]),
         initialState: const UserState.initial(),
       );
@@ -81,7 +84,9 @@ void main() {
             BlocProvider<TodaysBlueprintCubit>.value(
               value: todaysBlueprintCubit,
             ),
-            BlocProvider<UserCubit>.value(value: userCubit),
+            BlocProvider<UserCubit>.value(
+              value: userCubit,
+            ),
           ],
           child: const AppView(),
         ),

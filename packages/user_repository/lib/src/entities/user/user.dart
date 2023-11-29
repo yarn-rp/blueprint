@@ -19,11 +19,11 @@ class User {
   Map<String, dynamic> toJson() => _$UserToJson(this);
 
   ///Name that a user use in the platform
-  final String displayName;
+  final String? displayName;
 
   ///Email of the user
   final String email;
 
   ///Url of the user photo
-  final String photoURL;
+  final String? photoURL;
 }
