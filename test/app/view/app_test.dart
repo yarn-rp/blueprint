@@ -7,6 +7,7 @@ import 'package:blueprint/settings/state_management/bloc/settings_bloc.dart';
 import 'package:blueprint/users/state_management/cubit/user_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:user_repository/user_repository.dart';
 
 class MockAuthenticationCubit extends MockCubit<AuthenticationState>
@@ -22,17 +23,19 @@ class MockUserCubit extends MockCubit<UserState> implements UserCubit {}
 
 void main() {
   group('AppView', () {
-    testWidgets('renders CounterPage', (tester) async {
+    testWidgets('renders app Page', (tester) async {
       final authenticationBloc = MockAuthenticationCubit();
       final settingsBloc = MockSettingsBloc();
       final todaysBlueprintCubit = MockTodaysBlueprintCubit();
       final userCubit = MockUserCubit();
 
+      when(userCubit.loadUserData).thenAnswer((_) async {});
+
       whenListen(
         userCubit,
         Stream.fromIterable([
           UserState.loaded(
-            user: User(displayName: '', email: '', photoURL: ''),
+            user: User(displayName: 'Yansaro', email: '', photoURL: ''),
           ),
         ]),
         initialState: const UserState.initial(),
