@@ -30,9 +30,9 @@ void main() {
       whenListen(
         userCubit,
         Stream.fromIterable([
-          const UserState.loading(),
+          const UserState.initial(),
         ]),
-        initialState: const UserState.loading(),
+        initialState: const UserState.initial(),
       );
       whenListen(
         authenticationBloc,
