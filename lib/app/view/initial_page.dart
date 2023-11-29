@@ -65,45 +65,6 @@ class _InitialPageState extends State<InitialPage> {
     final size = MediaQuery.sizeOf(context);
     return Scaffold(
       key: _scaffoldKey,
-      endDrawer: BlocBuilder<UserCubit, UserState>(
-        builder: (context, state) {
-          if (state is Loaded) {
-            final userData = state.user;
-            return Column(
-              children: [
-                Container(
-                  height: size.height * 0.32,
-                  padding: const EdgeInsets.only(
-                    top: AppSpacing.lg,
-                    right: AppSpacing.lg,
-                  ),
-                  child: Drawer(
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(AppSpacing.lg),
-                      ),
-                    ),
-                    child: ProfileMenuView(
-                      userDisplayName: userData.displayName!,
-                      userEmail: userData.email,
-                      //don't know how we suppost to save the whole
-                      //user name to get the letter of the lastname
-                      //for now just grabbing the first and the second
-                      //ones of the name
-                      userInitials:
-                          userData.displayName!.substring(0, 2).toUpperCase(),
-                    ),
-                  ),
-                ),
-              ],
-            );
-          }
-          //not sure what to show when it fails
-          else {
-            return const SizedBox();
-          }
-        },
-      ),
       body: Builder(
         builder: (context) {
           final isPhone = MediaQuery.of(context).size.width < 600;
@@ -160,12 +121,89 @@ class _InitialPageState extends State<InitialPage> {
                         if (state is Loaded) {
                           return InkWell(
                             onTap: () {
-                              _scaffoldKey.currentState?.openEndDrawer();
+                              final overlayEntry = OverlayEntry(
+                                // Create a new OverlayEntry.
+                                builder: (BuildContext context) {
+                                  // Align is used to position the highlight overlay
+                                  // relative to the NavigationBar destination.
+                                  return SafeArea(
+                                    child: Align(
+                                      alignment: AlignmentDirectional.topEnd,
+                                      heightFactor: 1.0,
+                                      child: DefaultTextStyle(
+                                        style: const TextStyle(
+                                          color: Colors.blue,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 14.0,
+                                        ),
+                                        child:
+                                            BlocBuilder<UserCubit, UserState>(
+                                          builder: (context, state) {
+                                            if (state is Loaded) {
+                                              final userData = state.user;
+                                              return Column(
+                                                children: [
+                                                  Container(
+                                                    height: size.height * 0.32,
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                      top: AppSpacing.lg,
+                                                      right: AppSpacing.lg,
+                                                    ),
+                                                    child: Drawer(
+                                                      shape:
+                                                          const RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius.all(
+                                                          Radius.circular(
+                                                              AppSpacing.lg),
+                                                        ),
+                                                      ),
+                                                      child: ProfileMenuView(
+                                                        userDisplayName: userData
+                                                                .displayName ??
+                                                            '',
+                                                        userEmail:
+                                                            userData.email,
+                                                        //don't know how we suppost to save the whole
+                                                        //user name to get the letter of the lastname
+                                                        //for now just grabbing the first and the second
+                                                        //ones of the name
+                                                        userInitials: userData
+                                                                .displayName
+                                                                ?.substring(
+                                                                    0, 2)
+                                                                .toUpperCase() ??
+                                                            '',
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              );
+                                            }
+                                            //not sure what to show when it fails
+                                            else {
+                                              return const SizedBox();
+                                            }
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+
+                              // Add the OverlayEntry to the Overlay.
+                              Overlay.of(context, debugRequiredFor: widget)
+                                  .insert(
+                                overlayEntry!,
+                              );
                             },
                             child: AvatarIcon(
-                              text: state.user.displayName!
-                                  .substring(0, 2)
-                                  .toUpperCase(),
+                              text: state.user.displayName
+                                      ?.substring(0, 2)
+                                      .toUpperCase() ??
+                                  '',
                             ),
                           );
                         } else {
@@ -277,3 +315,242 @@ class _SidebarPageState extends State<SidebarPage> {
     );
   }
 }
+
+// /// Flutter code sample for [Overlay].
+
+// void main() => runApp(const OverlayApp());
+
+// class OverlayApp extends StatelessWidget {
+//   const OverlayApp({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return const MaterialApp(
+//       home: OverlayExample(),
+//     );
+//   }
+// }
+
+// class OverlayExample extends StatefulWidget {
+//   const OverlayExample({super.key});
+
+//   @override
+//   State<OverlayExample> createState() => _OverlayExampleState();
+// }
+
+// class _OverlayExampleState extends State<OverlayExample> {
+//   OverlayEntry? overlayEntry;
+//   int currentPageIndex = 0;
+
+//   void createHighlightOverlay({
+//     required AlignmentDirectional alignment,
+//     required Color borderColor,
+//   }) {
+//     // Remove the existing OverlayEntry.
+//     removeHighlightOverlay();
+
+//     assert(overlayEntry == null);
+
+//     overlayEntry = OverlayEntry(
+//       // Create a new OverlayEntry.
+//       builder: (BuildContext context) {
+//         // Align is used to position the highlight overlay
+//         // relative to the NavigationBar destination.
+//         return SafeArea(
+//           child: Align(
+//             alignment: alignment,
+//             heightFactor: 1.0,
+//             child: DefaultTextStyle(
+//               style: const TextStyle(
+//                 color: Colors.blue,
+//                 fontWeight: FontWeight.bold,
+//                 fontSize: 14.0,
+//               ),
+//               child: Column(
+//                 mainAxisSize: MainAxisSize.min,
+//                 children: <Widget>[
+//                   const Text('Tap here for'),
+//                   Builder(builder: (BuildContext context) {
+//                     switch (currentPageIndex) {
+//                       case 0:
+//                         return const Column(
+//                           children: <Widget>[
+//                             Text(
+//                               'Explore page',
+//                               style: TextStyle(
+//                                 color: Colors.red,
+//                               ),
+//                             ),
+//                             Icon(
+//                               Icons.arrow_downward,
+//                               color: Colors.red,
+//                             ),
+//                           ],
+//                         );
+//                       case 1:
+//                         return const Column(
+//                           children: <Widget>[
+//                             Text(
+//                               'Commute page',
+//                               style: TextStyle(
+//                                 color: Colors.green,
+//                               ),
+//                             ),
+//                             Icon(
+//                               Icons.arrow_downward,
+//                               color: Colors.green,
+//                             ),
+//                           ],
+//                         );
+//                       case 2:
+//                         return const Column(
+//                           children: <Widget>[
+//                             Text(
+//                               'Saved page',
+//                               style: TextStyle(
+//                                 color: Colors.orange,
+//                               ),
+//                             ),
+//                             Icon(
+//                               Icons.arrow_downward,
+//                               color: Colors.orange,
+//                             ),
+//                           ],
+//                         );
+//                       default:
+//                         return const Text('No page selected.');
+//                     }
+//                   }),
+//                   SizedBox(
+//                     width: MediaQuery.of(context).size.width / 3,
+//                     height: 80.0,
+//                     child: Center(
+//                       child: Container(
+//                         decoration: BoxDecoration(
+//                           border: Border.all(
+//                             color: borderColor,
+//                             width: 4.0,
+//                           ),
+//                         ),
+//                       ),
+//                     ),
+//                   ),
+//                 ],
+//               ),
+//             ),
+//           ),
+//         );
+//       },
+//     );
+
+//     // Add the OverlayEntry to the Overlay.
+//     Overlay.of(context, debugRequiredFor: widget).insert(overlayEntry!);
+//   }
+
+//   // Remove the OverlayEntry.
+//   void removeHighlightOverlay() {
+//     overlayEntry?.remove();
+//     overlayEntry?.dispose();
+//     overlayEntry = null;
+//   }
+
+//   @override
+//   void dispose() {
+//     // Make sure to remove OverlayEntry when the widget is disposed.
+//     removeHighlightOverlay();
+//     super.dispose();
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text('Overlay Sample'),
+//       ),
+//       bottomNavigationBar: NavigationBar(
+//         selectedIndex: currentPageIndex,
+//         destinations: const <NavigationDestination>[
+//           NavigationDestination(
+//             icon: Icon(Icons.explore),
+//             label: 'Explore',
+//           ),
+//           NavigationDestination(
+//             icon: Icon(Icons.commute),
+//             label: 'Commute',
+//           ),
+//           NavigationDestination(
+//             selectedIcon: Icon(Icons.bookmark),
+//             icon: Icon(Icons.bookmark_border),
+//             label: 'Saved',
+//           ),
+//         ],
+//       ),
+//       body: Column(
+//         mainAxisAlignment: MainAxisAlignment.center,
+//         children: <Widget>[
+//           Text(
+//             'Use Overlay to highlight a NavigationBar destination',
+//             style: Theme.of(context).textTheme.bodyMedium,
+//           ),
+//           const SizedBox(height: 20.0),
+//           Row(
+//             mainAxisAlignment: MainAxisAlignment.center,
+//             children: <Widget>[
+//               // This creates a highlight Overlay for
+//               // the Explore item.
+//               ElevatedButton(
+//                 onPressed: () {
+//                   setState(() {
+//                     currentPageIndex = 0;
+//                   });
+//                   createHighlightOverlay(
+//                     alignment: AlignmentDirectional.bottomStart,
+//                     borderColor: Colors.red,
+//                   );
+//                 },
+//                 child: const Text('Explore'),
+//               ),
+//               const SizedBox(width: 20.0),
+//               // This creates a highlight Overlay for
+//               // the Commute item.
+//               ElevatedButton(
+//                 onPressed: () {
+//                   setState(() {
+//                     currentPageIndex = 1;
+//                   });
+//                   createHighlightOverlay(
+//                     alignment: AlignmentDirectional.bottomCenter,
+//                     borderColor: Colors.green,
+//                   );
+//                 },
+//                 child: const Text('Commute'),
+//               ),
+//               const SizedBox(width: 20.0),
+//               // This creates a highlight Overlay for
+//               // the Saved item.
+//               ElevatedButton(
+//                 onPressed: () {
+//                   setState(() {
+//                     currentPageIndex = 2;
+//                   });
+//                   createHighlightOverlay(
+//                     alignment: AlignmentDirectional.bottomEnd,
+//                     borderColor: Colors.orange,
+//                   );
+//                 },
+//                 child: const Text('Saved'),
+//               ),
+//             ],
+//           ),
+//           const SizedBox(height: 10.0),
+//           ElevatedButton(
+//             onPressed: () {
+//               removeHighlightOverlay();
+//             },
+//             child: const Text('Remove Overlay'),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
