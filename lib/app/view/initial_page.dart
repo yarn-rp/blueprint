@@ -1,3 +1,5 @@
+// ignore_for_file: lines_longer_than_80_chars
+
 import 'package:app_ui/app_ui.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:blueprint/app/routes/routes.dart';
@@ -157,7 +159,7 @@ class _InitialPageState extends State<InitialPage> {
                                                     ),
                                                     child: Drawer(
                                                       shape:
-                                                  const RoundedRectangleBorder(
+                                                          const RoundedRectangleBorder(
                                                         borderRadius:
                                                             BorderRadius.all(
                                                           Radius.circular(
@@ -166,7 +168,7 @@ class _InitialPageState extends State<InitialPage> {
                                                         ),
                                                       ),
                                                       child: ProfileMenuView(
-                                                    userDisplayName: userData
+                                                        userDisplayName: userData
                                                                 .displayName ??
                                                             '',
                                                         userEmail:
@@ -177,7 +179,7 @@ class _InitialPageState extends State<InitialPage> {
                                                                   0,
                                                                   2,
                                                                 )
-                                                             .toUpperCase() ??
+                                                                .toUpperCase() ??
                                                             '',
                                                       ),
                                                     ),
