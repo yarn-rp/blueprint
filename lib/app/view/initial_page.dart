@@ -166,7 +166,7 @@ class _InitialPageState extends State<InitialPage> {
                                                         ),
                                                       ),
                                                       child: ProfileMenuView(
-                                                     userDisplayName: userData
+                                                    userDisplayName: userData
                                                                 .displayName ??
                                                             '',
                                                         userEmail:
@@ -177,7 +177,7 @@ class _InitialPageState extends State<InitialPage> {
                                                                   0,
                                                                   2,
                                                                 )
-                                                            .toUpperCase() ??
+                                                             .toUpperCase() ??
                                                             '',
                                                       ),
                                                     ),
