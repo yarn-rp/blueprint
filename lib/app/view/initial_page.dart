@@ -59,10 +59,9 @@ class _InitialPageState extends State<InitialPage> {
   }
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
+  OverlayEntry? overlayEntry;
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.sizeOf(context);
     return Scaffold(
       key: _scaffoldKey,
       body: Builder(
@@ -121,21 +120,24 @@ class _InitialPageState extends State<InitialPage> {
                         if (state is Loaded) {
                           return InkWell(
                             onTap: () {
-                              final overlayEntry = OverlayEntry(
+                              overlayEntry = OverlayEntry(
                                 // Create a new OverlayEntry.
                                 builder: (BuildContext context) {
-                                  // Align is used to position the highlight overlay
+                                  // Align is used to position
+                                  // the highlight overlay
                                   // relative to the NavigationBar destination.
-                                  return SafeArea(
-                                    child: Align(
-                                      alignment: AlignmentDirectional.topEnd,
-                                      heightFactor: 1.0,
-                                      child: DefaultTextStyle(
-                                        style: const TextStyle(
-                                          color: Colors.blue,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 14.0,
-                                        ),
+                                  return GestureDetector(
+                                    behavior: HitTestBehavior.translucent,
+                                    onTap: () {
+                                      if (overlayEntry != null) {
+                                        overlayEntry!.remove();
+                                        overlayEntry = null;
+                                      }
+                                    },
+                                    child: SafeArea(
+                                      child: Align(
+                                        alignment: AlignmentDirectional.topEnd,
+                                        heightFactor: 1,
                                         child:
                                             BlocBuilder<UserCubit, UserState>(
                                           builder: (context, state) {
@@ -144,45 +146,45 @@ class _InitialPageState extends State<InitialPage> {
                                               return Column(
                                                 children: [
                                                   Container(
-                                                    height: size.height * 0.32,
+                                                    color: Theme.of(context)
+                                                        .dialogBackgroundColor,
+                                                    height: 210,
+                                                    width: 400,
                                                     padding:
                                                         const EdgeInsets.only(
-                                                      top: AppSpacing.lg,
-                                                      right: AppSpacing.lg,
+                                                      top: AppSpacing.xlg,
+                                                      right: AppSpacing.xlg,
                                                     ),
                                                     child: Drawer(
                                                       shape:
-                                                          const RoundedRectangleBorder(
+                                                const RoundedRectangleBorder(
                                                         borderRadius:
                                                             BorderRadius.all(
                                                           Radius.circular(
-                                                              AppSpacing.lg),
+                                                            AppSpacing.lg,
+                                                          ),
                                                         ),
                                                       ),
                                                       child: ProfileMenuView(
-                                                        userDisplayName: userData
+                                                     userDisplayName: userData
                                                                 .displayName ??
                                                             '',
                                                         userEmail:
                                                             userData.email,
-                                                        //don't know how we suppost to save the whole
-                                                        //user name to get the letter of the lastname
-                                                        //for now just grabbing the first and the second
-                                                        //ones of the name
                                                         userInitials: userData
                                                                 .displayName
                                                                 ?.substring(
-                                                                    0, 2)
-                                                                .toUpperCase() ??
+                                                                  0,
+                                                                  2,
+                                                                )
+                                                          .toUpperCase() ??
                                                             '',
                                                       ),
                                                     ),
                                                   ),
                                                 ],
                                               );
-                                            }
-                                            //not sure what to show when it fails
-                                            else {
+                                            } else {
                                               return const SizedBox();
                                             }
                                           },

@@ -1,7 +1,9 @@
+import 'package:app_ui/app_ui.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:blueprint/app/dependency_injection/init.dart';
 import 'package:blueprint/app/routes/routes.dart';
 import 'package:blueprint/authentication/state_management/sign_out_cubit/sign_out_cubit.dart';
+import 'package:blueprint/core/l10n/l10n.dart';
 import 'package:blueprint/settings/presentation/pages/working_time_page.dart';
 import 'package:blueprint/settings/state_management/bloc/settings_bloc.dart';
 import 'package:flutter/material.dart';
@@ -68,11 +70,24 @@ class ThemeSwitcher extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n=AppLocalizations.of(context);
     return BlocSelector<SettingsBloc, SettingsState, AppBrightness>(
       selector: (state) => state.brightness,
       builder: (context, brightness) {
         return SwitchListTile(
-          title: const Text('Enable Dark Mode'),
+          title: Row(
+            children: [
+              if (brightness == AppBrightness.dark)
+                const Icon(Icons.dark_mode)
+              else
+                const Icon(Icons.light_mode),
+              const Padding(padding: EdgeInsets.only(right: AppSpacing.md)),
+              if (brightness == AppBrightness.dark)
+                 Text(l10n.darkMode)
+              else
+                 Text(l10n.lightMode),
+            ],
+          ),
           value: brightness == AppBrightness.dark,
           onChanged: (bool value) {
             context.read<SettingsBloc>().add(

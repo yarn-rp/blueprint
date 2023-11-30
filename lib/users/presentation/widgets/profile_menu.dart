@@ -69,8 +69,14 @@ class _ProfileMenuState extends State<ProfileMenu> {
           const Divider(),
           const ThemeSwitcher(),
           ListTile(
-            leading: const Icon(Icons.exit_to_app),
-            title: Text(l10n.signOut),
+            leading: const Icon(
+              Icons.exit_to_app,
+              color: Colors.red,
+            ),
+            title: Text(
+              l10n.signOut,
+              style: const TextStyle(color: Colors.red),
+            ),
             onTap: () {
               context.read<SignOutCubit>().signOut();
             },
