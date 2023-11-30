@@ -70,7 +70,7 @@ class ThemeSwitcher extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n=AppLocalizations.of(context);
+    final l10n = AppLocalizations.of(context);
     return BlocSelector<SettingsBloc, SettingsState, AppBrightness>(
       selector: (state) => state.brightness,
       builder: (context, brightness) {
@@ -83,9 +83,9 @@ class ThemeSwitcher extends StatelessWidget {
                 const Icon(Icons.light_mode),
               const Padding(padding: EdgeInsets.only(right: AppSpacing.md)),
               if (brightness == AppBrightness.dark)
-                 Text(l10n.darkMode)
+                Text(l10n.darkMode)
               else
-                 Text(l10n.lightMode),
+                Text(l10n.lightMode),
             ],
           ),
           value: brightness == AppBrightness.dark,
