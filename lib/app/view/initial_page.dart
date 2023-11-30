@@ -157,7 +157,7 @@ class _InitialPageState extends State<InitialPage> {
                                                     ),
                                                     child: Drawer(
                                                       shape:
-                                                const RoundedRectangleBorder(
+                                                          const RoundedRectangleBorder(
                                                         borderRadius:
                                                             BorderRadius.all(
                                                           Radius.circular(
@@ -166,7 +166,7 @@ class _InitialPageState extends State<InitialPage> {
                                                         ),
                                                       ),
                                                       child: ProfileMenuView(
-                                                     userDisplayName: userData
+                                                        userDisplayName: userData
                                                                 .displayName ??
                                                             '',
                                                         userEmail:
@@ -177,7 +177,7 @@ class _InitialPageState extends State<InitialPage> {
                                                                   0,
                                                                   2,
                                                                 )
-                                                          .toUpperCase() ??
+                                                                .toUpperCase() ??
                                                             '',
                                                       ),
                                                     ),
