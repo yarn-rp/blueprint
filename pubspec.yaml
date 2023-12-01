@@ -8,6 +8,8 @@ environment:
   flutter: 3.13.6
 
 dependencies:
+  api_client:
+    path: ./packages/api_client
   app_ui:
     path: ./packages/app_ui
   authentication_repository:
@@ -27,6 +29,8 @@ dependencies:
   equatable: ^2.0.5
   firebase_auth: ^4.12.0
   firebase_core: ^2.20.0
+  firebase_dev_access:
+    path: ./packages/firebase_dev_access
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.2
