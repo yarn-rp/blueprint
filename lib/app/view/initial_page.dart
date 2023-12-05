@@ -64,6 +64,7 @@ class _InitialPageState extends State<InitialPage> {
   OverlayEntry? overlayEntry;
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
       key: _scaffoldKey,
       body: Builder(
@@ -71,11 +72,11 @@ class _InitialPageState extends State<InitialPage> {
           final isPhone = MediaQuery.of(context).size.width < 600;
 
           return Theme(
-            data: Theme.of(context).copyWith(
+            data: theme.copyWith(
               bottomNavigationBarTheme: BottomNavigationBarThemeData(
                 backgroundColor: const Color(0xFF121212),
                 unselectedItemColor: Colors.white54,
-                selectedItemColor: Theme.of(context).colorScheme.primary,
+                selectedItemColor: theme.colorScheme.primary,
               ),
             ),
             child: AutoTabsRouter(
@@ -148,8 +149,15 @@ class _InitialPageState extends State<InitialPage> {
                                               return Column(
                                                 children: [
                                                   Container(
-                                                    color: Theme.of(context)
-                                                        .dialogBackgroundColor,
+                                                    decoration:
+                                                        const BoxDecoration(
+                                                      color: Color.fromRGBO(
+                                                        255,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                      ),
+                                                    ),
                                                     height: 210,
                                                     width: 400,
                                                     padding:
@@ -158,6 +166,9 @@ class _InitialPageState extends State<InitialPage> {
                                                       right: AppSpacing.xlg,
                                                     ),
                                                     child: Drawer(
+                                                      elevation: 30,
+                                                      shadowColor:
+                                                          theme.shadowColor,
                                                       shape:
                                                           const RoundedRectangleBorder(
                                                         borderRadius:
