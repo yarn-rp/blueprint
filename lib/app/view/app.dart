@@ -10,6 +10,7 @@ import 'package:blueprint/tasks/state_management/cubit/tasks_cubit.dart';
 import 'package:blueprint/users/state_management/cubit/user_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_portal/flutter_portal.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -56,13 +57,15 @@ class AppView extends StatelessWidget {
               }) {},
             ),
           ),
-          child: MaterialApp.router(
-            theme: lightTheme,
-            themeMode: brightness.themeMode,
-            darkTheme: darkTheme,
-            localizationsDelegates: AppLocalizations.localizationsDelegates,
-            supportedLocales: AppLocalizations.supportedLocales,
-            routerConfig: appRouter.config(),
+          child: Portal(
+            child: MaterialApp.router(
+              theme: lightTheme,
+              themeMode: brightness.themeMode,
+              darkTheme: darkTheme,
+              localizationsDelegates: AppLocalizations.localizationsDelegates,
+              supportedLocales: AppLocalizations.supportedLocales,
+              routerConfig: appRouter.config(),
+            ),
           ),
         );
       },
