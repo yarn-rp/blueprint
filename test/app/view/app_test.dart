@@ -7,7 +7,6 @@ import 'package:blueprint/settings/state_management/bloc/settings_bloc.dart';
 import 'package:blueprint/users/state_management/cubit/user_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mocktail/mocktail.dart';
 import 'package:user_repository/user_repository.dart';
 
 class MockAuthenticationCubit extends MockCubit<AuthenticationState>

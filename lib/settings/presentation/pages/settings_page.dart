@@ -79,7 +79,7 @@ class ThemeSwitcher extends StatelessWidget {
             children: [
               const Icon(Icons.dark_mode),
               const Padding(padding: EdgeInsets.only(right: AppSpacing.md)),
-              Text(l10n.darkMode)
+              Text(l10n.darkMode),
             ],
           ),
           value: brightness == AppBrightness.dark,
