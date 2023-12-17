@@ -77,15 +77,9 @@ class ThemeSwitcher extends StatelessWidget {
         return SwitchListTile(
           title: Row(
             children: [
-              if (brightness == AppBrightness.dark)
-                const Icon(Icons.dark_mode)
-              else
-                const Icon(Icons.light_mode),
+              const Icon(Icons.dark_mode),
               const Padding(padding: EdgeInsets.only(right: AppSpacing.md)),
-              if (brightness == AppBrightness.dark)
-                Text(l10n.darkMode)
-              else
-                Text(l10n.lightMode),
+              Text(l10n.darkMode)
             ],
           ),
           value: brightness == AppBrightness.dark,
@@ -93,7 +87,7 @@ class ThemeSwitcher extends StatelessWidget {
             context.read<SettingsBloc>().add(
                   value
                       ? const ChangeBrightness(AppBrightness.dark)
-                      : const ChangeBrightness(AppBrightness.system),
+                      : const ChangeBrightness(AppBrightness.light),
                 );
           },
         );

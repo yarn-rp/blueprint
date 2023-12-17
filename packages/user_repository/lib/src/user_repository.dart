@@ -23,7 +23,7 @@ class UserRepository {
   /// Return a stream of the current user data. If user is not authenticated,
   /// the stream will emit null.
   Stream<User?> getUserData() {
-    return _currentUserIdStream.switchMap<User>((userId) {
+    return _currentUserIdStream.switchMap<User?>((userId) {
       if (userId == null) {
         return const Stream.empty();
       }
@@ -31,8 +31,15 @@ class UserRepository {
       final userDoc = _usersCollection.doc(userId);
 
       return userDoc.snapshots().map((snapshot) {
-        final userData = snapshot.data() as Map<String, dynamic>;
-        print('userData: $userData');
+        if (!snapshot.exists) {
+          return null;
+        }
+
+        final userData = snapshot.data() as Map<String, dynamic>?;
+        if (userData == null) {
+          return null;
+        }
+
         final userInstance = User.fromJson(userData);
         return userInstance;
       });

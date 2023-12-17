@@ -46,13 +46,24 @@ class AppView extends StatelessWidget {
         final brightness =
             context.select((SettingsBloc bloc) => bloc.state.brightness);
 
-        return MaterialApp.router(
-          theme: lightTheme,
-          themeMode: brightness.themeMode,
-          darkTheme: darkTheme,
-          localizationsDelegates: AppLocalizations.localizationsDelegates,
-          supportedLocales: AppLocalizations.supportedLocales,
-          routerConfig: appRouter.config(),
+        return BlocListener<AuthenticationCubit, AuthenticationState>(
+          listenWhen: (previous, current) =>
+              previous is AuthenticatedState && current is UnAuthenticatedState,
+          listener: (context, state) => appRouter.push(
+            SignInRoute(
+              onResult: ({
+                bool? result,
+              }) {},
+            ),
+          ),
+          child: MaterialApp.router(
+            theme: lightTheme,
+            themeMode: brightness.themeMode,
+            darkTheme: darkTheme,
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            routerConfig: appRouter.config(),
+          ),
         );
       },
     );
