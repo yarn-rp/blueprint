@@ -7,8 +7,10 @@ import 'package:blueprint/core/l10n/l10n.dart';
 import 'package:blueprint/integrations/state_management/integrations_repository/integrations_cubit.dart';
 import 'package:blueprint/settings/state_management/bloc/settings_bloc.dart';
 import 'package:blueprint/tasks/state_management/cubit/tasks_cubit.dart';
+import 'package:blueprint/users/state_management/cubit/user_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_portal/flutter_portal.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -24,6 +26,7 @@ class App extends StatelessWidget {
         BlocProvider.value(value: sl<TasksCubit>()),
         BlocProvider.value(value: sl<IntegrationsCubit>()),
         BlocProvider.value(value: sl<TodaysBlueprintCubit>()),
+        BlocProvider.value(value: sl<UserCubit>()),
       ],
       child: const AppView(),
     );
@@ -44,13 +47,26 @@ class AppView extends StatelessWidget {
         final brightness =
             context.select((SettingsBloc bloc) => bloc.state.brightness);
 
-        return MaterialApp.router(
-          theme: lightTheme,
-          themeMode: brightness.themeMode,
-          darkTheme: darkTheme,
-          localizationsDelegates: AppLocalizations.localizationsDelegates,
-          supportedLocales: AppLocalizations.supportedLocales,
-          routerConfig: appRouter.config(),
+        return BlocListener<AuthenticationCubit, AuthenticationState>(
+          listenWhen: (previous, current) =>
+              previous is AuthenticatedState && current is UnAuthenticatedState,
+          listener: (context, state) => appRouter.push(
+            SignInRoute(
+              onResult: ({
+                bool? result,
+              }) {},
+            ),
+          ),
+          child: Portal(
+            child: MaterialApp.router(
+              theme: lightTheme,
+              themeMode: brightness.themeMode,
+              darkTheme: darkTheme,
+              localizationsDelegates: AppLocalizations.localizationsDelegates,
+              supportedLocales: AppLocalizations.supportedLocales,
+              routerConfig: appRouter.config(),
+            ),
+          ),
         );
       },
     );

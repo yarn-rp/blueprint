@@ -1,7 +1,7 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 
-class TopAppBar extends StatelessWidget {
+class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
   const TopAppBar({
     super.key,
     this.trailing,
@@ -33,4 +33,7 @@ class TopAppBar extends StatelessWidget {
       ],
     );
   }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }

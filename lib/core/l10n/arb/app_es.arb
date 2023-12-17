@@ -16,5 +16,8 @@
     "sendEmail":"Send Email",
     "resetPasswordDialogMessege":"An email has been sent with instructions to reset your password. Please check your inbox and spam folder",
     "passwordRcovery":"Password Recovery",
-    "accept":"Accept"
+    "accept":"Accept",
+    "signOut":"Sign Out",
+     "darkMode":"Dark Mode",
+    "lightMode":"Light Mode"
 }
