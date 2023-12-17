@@ -2,9 +2,10 @@
 
 import 'package:app_ui/app_ui.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:blueprint/app/dependency_injection/init.dart';
 import 'package:blueprint/app/routes/routes.dart';
+import 'package:blueprint/authentication/state_management/sign_out_cubit/sign_out_cubit.dart';
 import 'package:blueprint/users/presentation/widgets/profile_menu.dart';
-import 'package:blueprint/users/state_management/cubit/user_cubit.dart';
 import 'package:collapsible_sidebar/collapsible_sidebar.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
@@ -53,15 +54,15 @@ class InitialPage extends StatefulWidget {
 
 class _InitialPageState extends State<InitialPage> {
   late int currentIndex;
+
   @override
   void initState() {
-    context.read<UserCubit>().loadUserData();
     currentIndex = 0;
     super.initState();
   }
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  OverlayEntry? overlayEntry;
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -115,116 +116,9 @@ class _InitialPageState extends State<InitialPage> {
                         )
                       : null,
                   appBar: TopAppBar(
-                    //title suppost to be the old search bar but is not
-                    //in the desing so waiting for a final desicion
-                    title: const Text(''),
-                    trailing: BlocBuilder<UserCubit, UserState>(
-                      builder: (context, state) {
-                        if (state is Loaded) {
-                          return InkWell(
-                            onTap: () {
-                              overlayEntry = OverlayEntry(
-                                // Create a new OverlayEntry.
-                                builder: (BuildContext context) {
-                                  // Align is used to position
-                                  // the highlight overlay
-                                  // relative to the NavigationBar destination.
-                                  return GestureDetector(
-                                    behavior: HitTestBehavior.translucent,
-                                    onTap: () {
-                                      if (overlayEntry != null) {
-                                        overlayEntry!.remove();
-                                        overlayEntry = null;
-                                      }
-                                    },
-                                    child: SafeArea(
-                                      child: Align(
-                                        alignment: AlignmentDirectional.topEnd,
-                                        heightFactor: 1,
-                                        child:
-                                            BlocBuilder<UserCubit, UserState>(
-                                          builder: (context, state) {
-                                            if (state is Loaded) {
-                                              final userData = state.user;
-                                              return Column(
-                                                children: [
-                                                  Container(
-                                                    decoration:
-                                                        const BoxDecoration(
-                                                      color: Color.fromRGBO(
-                                                        255,
-                                                        0,
-                                                        0,
-                                                        0,
-                                                      ),
-                                                    ),
-                                                    height: 210,
-                                                    width: 400,
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                      top: AppSpacing.xlg,
-                                                      right: AppSpacing.xlg,
-                                                    ),
-                                                    child: Drawer(
-                                                      elevation: 30,
-                                                      shadowColor:
-                                                          theme.shadowColor,
-                                                      shape:
-                                                          const RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius.all(
-                                                          Radius.circular(
-                                                            AppSpacing.lg,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      child: ProfileMenuView(
-                                                        userDisplayName: userData
-                                                                .displayName ??
-                                                            '',
-                                                        userEmail:
-                                                            userData.email,
-                                                        userInitials: userData
-                                                                .displayName
-                                                                ?.substring(
-                                                                  0,
-                                                                  2,
-                                                                )
-                                                                .toUpperCase() ??
-                                                            '',
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              );
-                                            } else {
-                                              return const SizedBox();
-                                            }
-                                          },
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                },
-                              );
-
-                              // Add the OverlayEntry to the Overlay.
-                              Overlay.of(context, debugRequiredFor: widget)
-                                  .insert(
-                                overlayEntry!,
-                              );
-                            },
-                            child: AvatarIcon(
-                              text: state.user.displayName
-                                      ?.substring(0, 2)
-                                      .toUpperCase() ??
-                                  '',
-                            ),
-                          );
-                        } else {
-                          return const AvatarIcon(text: '');
-                        }
-                      },
+                    trailing: BlocProvider(
+                      create: (context) => sl<SignOutCubit>(),
+                      child: const UserProfileView(),
                     ),
                   ),
                   body: isPhone

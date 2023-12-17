@@ -1,23 +1,44 @@
+import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:user_repository/user_repository.dart' as user_model_repo;
+import 'package:user_repository/user_repository.dart';
 
 part 'user_cubit_state.dart';
 part 'user_cubit.freezed.dart';
 
 class UserCubit extends Cubit<UserState> {
-  UserCubit({required this.userRepository}) : super(const UserState.initial());
+  UserCubit({
+    required UserRepository userRepository,
+  })  : _userRepository = userRepository,
+        super(const UserState.initial()) {
+    _init();
+  }
 
-  final user_model_repo.UserRepository userRepository;
+  final UserRepository _userRepository;
+  late final StreamSubscription<User?> _userSubscription;
 
-  Future<void> loadUserData() async {
-    emit(const UserState.loading());
+  void _init() {
+    final userStream = _userRepository.getUserData();
 
-    try {
-      final userData = await userRepository.getUserData().first;
-      emit(UserState.loaded(user: userData));
-    } catch (error) {
-      emit(UserState.error(error.toString()));
-    }
+    _userSubscription = userStream.listen(
+      (user) {
+        if (user == null) {
+          emit(const UserState.initial());
+        } else {
+          emit(UserState.loaded(user: user));
+        }
+      },
+      onError: (Object error) {
+        addError(error);
+        emit(UserState.error(error.toString()));
+      },
+      cancelOnError: false,
+    );
+  }
+
+  @override
+  Future<void> close() {
+    _userSubscription.cancel();
+    return super.close();
   }
 }

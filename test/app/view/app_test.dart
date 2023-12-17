@@ -29,8 +29,6 @@ void main() {
       final todaysBlueprintCubit = MockTodaysBlueprintCubit();
       final userCubit = MockUserCubit();
 
-      when(userCubit.loadUserData).thenAnswer((_) async {});
-
       whenListen(
         userCubit,
         Stream.fromIterable([
