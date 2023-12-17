@@ -1,3 +1,4 @@
+import 'package:app_ui/src/spacing/app_spacing.dart';
 import 'package:flutter/material.dart';
 
 typedef Destination = ({
@@ -32,22 +33,30 @@ class _DesktopNavigationBarState extends State<DesktopNavigationBar> {
 
   @override
   Widget build(BuildContext context) {
-    return NavigationDrawer(
-      onDestinationSelected: (index) {
-        setState(() {
-          _selectedIndex = index;
-        });
-        widget.onDestinationSelected(index);
-      },
-      selectedIndex: _selectedIndex,
-      children: [
-        ...widget.destinations.map(
-          (destination) => NavigationDrawerDestination(
-            icon: Icon(destination.icon),
-            label: Text(destination.label),
+    final theme = Theme.of(context);
+
+    return ColoredBox(
+      color: theme.colorScheme.surface,
+      child: NavigationDrawer(
+        onDestinationSelected: (index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+          widget.onDestinationSelected(index);
+        },
+        selectedIndex: _selectedIndex,
+        children: [
+          const SizedBox(
+            height: AppSpacing.lg,
           ),
-        ),
-      ],
+          ...widget.destinations.map(
+            (destination) => NavigationDrawerDestination(
+              icon: Icon(destination.icon),
+              label: Text(destination.label),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

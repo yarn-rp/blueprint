@@ -11,6 +11,16 @@ final lightTheme = ThemeData(
   useMaterial3: true,
   colorScheme: lightColorScheme,
   textTheme: customTextTheme,
+  appBarTheme: AppBarTheme(
+    backgroundColor: lightColorScheme.surface,
+    foregroundColor: lightColorScheme.onSurface,
+    elevation: 0,
+    titleTextStyle: customTextTheme.headlineLarge,
+  ),
+  navigationDrawerTheme: NavigationDrawerThemeData(
+    backgroundColor: lightColorScheme.surface,
+    elevation: 0,
+  ),
   searchBarTheme: SearchBarThemeData(
     padding: const MaterialStatePropertyAll(
       EdgeInsets.symmetric(horizontal: AppSpacing.lg),
@@ -35,6 +45,16 @@ final darkTheme = ThemeData(
   useMaterial3: true,
   colorScheme: darkColorScheme,
   textTheme: customTextTheme,
+  appBarTheme: AppBarTheme(
+    backgroundColor: darkColorScheme.surface,
+    foregroundColor: darkColorScheme.onSurface,
+    elevation: 0,
+    titleTextStyle: customTextTheme.headlineLarge,
+  ),
+  navigationDrawerTheme: NavigationDrawerThemeData(
+    backgroundColor: darkColorScheme.surface,
+    elevation: 0,
+  ),
   searchBarTheme: SearchBarThemeData(
     backgroundColor: MaterialStateProperty.all(
       darkColorScheme.surface,

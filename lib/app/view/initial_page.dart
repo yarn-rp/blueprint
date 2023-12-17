@@ -123,10 +123,21 @@ class _InitialPageState extends State<InitialPage> {
                   ),
                   body: isPhone
                       ? child
-                      : SidebarPage(
-                          navigationPages: navigationPages,
-                          onPageChanged: tabsRouter.setActiveIndex,
-                          child: child,
+                      : Row(
+                          children: [
+                            SizedBox(
+                              child: DesktopNavigationBar(
+                                onDestinationSelected:
+                                    tabsRouter.setActiveIndex,
+                                destinations: navigationPages
+                                    .map(
+                                      (e) => (label: e.text, icon: e.icon),
+                                    )
+                                    .toList(),
+                              ),
+                            ),
+                            Expanded(child: child),
+                          ],
                         ),
                 );
               },
