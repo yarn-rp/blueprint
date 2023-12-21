@@ -13,8 +13,6 @@ class TopAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return AppBar(
       elevation: 0,
       toolbarHeight: AppSpacing.appBarHeight,

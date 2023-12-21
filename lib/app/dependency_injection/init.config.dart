@@ -54,9 +54,9 @@ import 'package:integrations_repository/integrations_repository.dart' as _i13;
 import 'package:task_repository/task_repository.dart' as _i17;
 import 'package:user_repository/user_repository.dart' as _i19;
 
-const String _dev = 'dev';
-const String _prod = 'prod';
 const String _stg = 'stg';
+const String _prod = 'prod';
+const String _dev = 'dev';
 
 extension GetItInjectableX on _i1.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt

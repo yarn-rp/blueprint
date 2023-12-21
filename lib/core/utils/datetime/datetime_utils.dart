@@ -1,4 +1,5 @@
 import 'package:blueprint/settings/entities/working_calendar.dart';
+import 'package:jiffy/jiffy.dart';
 
 extension DateTimeWeekDays on DateTime {
   DaysOfWeek get dayOfWeek {
@@ -20,5 +21,10 @@ extension DateTimeWeekDays on DateTime {
       default:
         throw Exception('Invalid day of week');
     }
+  }
+
+  /// Rounds the minutes of the [DateTime] to the nearest [minutes] interval.
+  DateTime round({required int minutes}) {
+    return copyWith(minute: minutes * (Jiffy(this).minute / minutes).round());
   }
 }

@@ -15,6 +15,18 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
+    BlueprintRouterRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const BlueprintRouterPage(),
+      );
+    },
+    CreateBlueprintRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const CreateBlueprintPage(),
+      );
+    },
     ForgotPasswordRoute.name: (routeData) {
       final args = routeData.argsAs<ForgotPasswordRouteArgs>();
       return AutoRoutePage<dynamic>(
@@ -93,6 +105,34 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
   };
+}
+
+/// generated route for
+/// [BlueprintRouterPage]
+class BlueprintRouterRoute extends PageRouteInfo<void> {
+  const BlueprintRouterRoute({List<PageRouteInfo>? children})
+      : super(
+          BlueprintRouterRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'BlueprintRouterRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [CreateBlueprintPage]
+class CreateBlueprintRoute extends PageRouteInfo<void> {
+  const CreateBlueprintRoute({List<PageRouteInfo>? children})
+      : super(
+          CreateBlueprintRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'CreateBlueprintRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for

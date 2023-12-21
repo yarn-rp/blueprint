@@ -5,6 +5,7 @@ import 'package:blueprint/authentication/presentation/pages/forgot_password_scre
 import 'package:blueprint/authentication/presentation/pages/sign_in_page.dart';
 import 'package:blueprint/authentication/presentation/pages/sign_up_page.dart';
 import 'package:blueprint/authentication/state_management/authentication_cubit/authentication_cubit.dart';
+import 'package:blueprint/blueprint/presentation/pages/create_blueprint_page.dart';
 import 'package:blueprint/blueprint/presentation/pages/todays_blueprint.dart';
 import 'package:blueprint/integrations/presentation/pages/integrate_with_platform_page.dart';
 import 'package:blueprint/integrations/presentation/pages/integrations_page.dart';
@@ -59,8 +60,18 @@ class AppRouter extends _$AppRouter {
           guards: [authenticationGuard],
           children: [
             AutoRoute(
-              path: 'todays-blueprint',
-              page: TodaysBlueprintRoute.page,
+              path: 'blueprint',
+              page: BlueprintRouterRoute.page,
+              children: [
+                AutoRoute(
+                  path: '',
+                  page: TodaysBlueprintRoute.page,
+                ),
+                AutoRoute(
+                  path: 'create',
+                  page: CreateBlueprintRoute.page,
+                ),
+              ],
             ),
             AutoRoute(
               path: 'might-do',
@@ -73,4 +84,9 @@ class AppRouter extends _$AppRouter {
           ],
         ),
       ];
+}
+
+@RoutePage()
+class BlueprintRouterPage extends AutoRouter {
+  const BlueprintRouterPage({super.key});
 }
