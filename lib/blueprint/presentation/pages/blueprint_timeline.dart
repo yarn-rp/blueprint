@@ -49,7 +49,6 @@ class _Timeline extends StatelessWidget {
               startTime: e.startTime,
               endTime: e.endTime,
               color: HexColor.fromHex(e.color),
-              shouldDisplayTime: true,
               typeLabel: e.map(
                 event: (event) => event.event.conferenceData != null
                     ? EventTypeLabel.videoConference()

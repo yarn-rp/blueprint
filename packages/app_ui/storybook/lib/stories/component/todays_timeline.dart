@@ -31,7 +31,6 @@ class _TodaysTimelineComponentState extends State<TodaysTimelineComponent> {
         endTime: DateTime.now().add(const Duration(hours: 1)),
         color: null,
         typeLabel: EventTypeLabel.videoConference(),
-        shouldDisplayTime: true,
       ),
       (
         subject: context.knobs.text(label: 'Event 2', initial: 'Go for a run'),
@@ -39,7 +38,6 @@ class _TodaysTimelineComponentState extends State<TodaysTimelineComponent> {
         endTime: DateTime.now().add(const Duration(hours: 2)),
         color: Colors.amberAccent,
         typeLabel: EventTypeLabel.calendar(),
-        shouldDisplayTime: true,
       ),
       (
         subject: context.knobs
@@ -48,7 +46,6 @@ class _TodaysTimelineComponentState extends State<TodaysTimelineComponent> {
         endTime: DateTime.now().add(const Duration(hours: 4)),
         color: null,
         typeLabel: EventTypeLabel.task(),
-        shouldDisplayTime: true,
       ),
     ];
     super.didChangeDependencies();
@@ -69,7 +66,6 @@ class _TodaysTimelineComponentState extends State<TodaysTimelineComponent> {
           children: [
             Expanded(
               child: TodayTimeline(
-                
                 onEventUpdate: (event, startDate, endDate) {
                   final index = events.indexOf(event);
 
@@ -80,7 +76,6 @@ class _TodaysTimelineComponentState extends State<TodaysTimelineComponent> {
                       endTime: endDate,
                       color: event.color,
                       typeLabel: event.typeLabel,
-                      shouldDisplayTime: true,
                     );
                   });
                 },

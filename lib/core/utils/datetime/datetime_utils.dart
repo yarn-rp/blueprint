@@ -1,7 +1,7 @@
 import 'package:blueprint/settings/entities/working_calendar.dart';
 import 'package:jiffy/jiffy.dart';
 
-extension DateTimeWeekDays on DateTime {
+extension DateTimeX on DateTime {
   DaysOfWeek get dayOfWeek {
     switch (weekday) {
       case 1:

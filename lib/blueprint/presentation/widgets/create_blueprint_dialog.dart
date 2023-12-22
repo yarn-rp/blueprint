@@ -1,17 +1,55 @@
 import 'package:app_ui/app_ui.dart';
+import 'package:blueprint/core/l10n/l10n.dart';
+import 'package:blueprint_repository/blueprint_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:task_repository/task_repository.dart';
+
+final fakeData = <Task>[
+  Task(
+    createdAt: DateTime.now(),
+    updatedAt: DateTime.now(),
+    id: 'example_id',
+    project: Project(
+      id: 'example_project_id',
+      name: 'Example Project',
+      platformId: '',
+      platformURL: Uri(),
+      platformName: 'Github',
+      description: '',
+      colorHex: '#FF0000',
+    ),
+    taskURL: Uri.parse('https://example.com/task'),
+    title: 'Example Task',
+    description: 'This is an example task description.',
+    startDate: DateTime.now(),
+    dueDate: DateTime.now().add(const Duration(days: 7)),
+    estimatedTime: const Duration(hours: 2),
+    loggedTime: const Duration(minutes: 30),
+    assigned: [],
+    creator: User('', '', ''),
+    isCompleted: false,
+    labels: [
+      Label('Priority high', '#ef9930'),
+      Label('Beta 1', '#4f9856'),
+      Label('MVP', '#009857'),
+    ],
+    priority: 3,
+  ),
+];
 
 class CreateEventDialog extends StatelessWidget {
   const CreateEventDialog({
     required this.startTime,
     required this.endTime,
     required this.hidePortal,
+    required this.onAddTask,
     super.key,
   });
 
   final DateTime startTime;
   final DateTime endTime;
   final VoidCallback hidePortal;
+  final ValueChanged<CalendarEvent> onAddTask;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +59,12 @@ class CreateEventDialog extends StatelessWidget {
       child: MaterialDialog(
         child: Scaffold(
           bottomNavigationBar: _ActionsBar(
-            hidePortal: hidePortal,
+            onCancelPressed: hidePortal,
+            // ignore: unnecessary_lambdas
+            onAddPressed: () {
+              // TODO: call onAddTask with the selected task
+              hidePortal();
+            },
           ),
           appBar: AppBar(
             backgroundColor: theme.colorScheme.secondaryContainer,
@@ -61,136 +104,29 @@ class CreateEventDialog extends StatelessWidget {
                     horizontal: AppSpacing.xlg,
                     vertical: AppSpacing.md,
                   ),
-                  children: [
-                    EventCard(
-                      labels: const [
-                        LabelChip(
-                          text: 'In Progress',
-                          backgroundColor: Colors.blue,
+                  children: fakeData
+                      .map(
+                        (task) => EventCard(
+                          labels: [
+                            LabelChip(
+                              text: task.project.platformName,
+                              backgroundColor:
+                                  HexColor.fromHex(task.project.colorHex),
+                            ),
+                            ...task.labels.map(
+                              (e) => LabelChip(
+                                text: e.name,
+                                backgroundColor: HexColor.fromHex(e.colorHex),
+                              ),
+                            ),
+                          ],
+                          title: EventListTile.task(
+                            title: task.title,
+                            subtitle: task.description,
+                          ),
                         ),
-                        LabelChip(
-                            text: 'MVP', backgroundColor: Colors.green,),
-                      ],
-                      title: EventListTile.task(
-                        title: 'Implement Create Blueprint dialog',
-                        subtitle:
-                            'Implement dialog to create blueprint using Portal '
-                            'widget and build this amazing UI. ',
-                      ),
-                    ),
-                    EventCard(
-                      labels: const [
-                        LabelChip(
-                          text: 'TO DO',
-                          backgroundColor: Colors.yellow,
-                        ),
-                        LabelChip(
-                            text: 'MVP', backgroundColor: Colors.green,),
-                      ],
-                      title: EventListTile.task(
-                        title: 'Implement bloc for Create Blueprint',
-                        subtitle:
-                            'Implement bloc that manages the state of the '
-                            'Create Blueprint dialog.',
-                      ),
-                    ),
-                    EventCard(
-                      labels: const [
-                        LabelChip(
-                          text: 'In Progress',
-                          backgroundColor: Colors.blue,
-                        ),
-                        LabelChip(
-                            text: 'MVP', backgroundColor: Colors.green,),
-                      ],
-                      title: EventListTile.task(
-                        title: 'Implement Create Blueprint dialog',
-                        subtitle:
-                            'Implement dialog to create blueprint using Portal '
-                            'widget and build this amazing UI. ',
-                      ),
-                    ),
-                    EventCard(
-                      labels: const [
-                        LabelChip(
-                          text: 'TO DO',
-                          backgroundColor: Colors.yellow,
-                        ),
-                        LabelChip(
-                            text: 'MVP', backgroundColor: Colors.green,),
-                      ],
-                      title: EventListTile.task(
-                        title: 'Implement bloc for Create Blueprint',
-                        subtitle:
-                            'Implement bloc that manages the state of the '
-                            'Create Blueprint dialog.',
-                      ),
-                    ),
-                    EventCard(
-                      labels: const [
-                        LabelChip(
-                          text: 'In Progress',
-                          backgroundColor: Colors.blue,
-                        ),
-                        LabelChip(
-                            text: 'MVP', backgroundColor: Colors.green,),
-                      ],
-                      title: EventListTile.task(
-                        title: 'Implement Create Blueprint dialog',
-                        subtitle:
-                            'Implement dialog to create blueprint using Portal '
-                            'widget and build this amazing UI. ',
-                      ),
-                    ),
-                    EventCard(
-                      labels: const [
-                        LabelChip(
-                          text: 'TO DO',
-                          backgroundColor: Colors.yellow,
-                        ),
-                        LabelChip(
-                            text: 'MVP', backgroundColor: Colors.green,),
-                      ],
-                      title: EventListTile.task(
-                        title: 'Implement bloc for Create Blueprint',
-                        subtitle:
-                            'Implement bloc that manages the state of the '
-                            'Create Blueprint dialog.',
-                      ),
-                    ),
-                    EventCard(
-                      labels: const [
-                        LabelChip(
-                          text: 'In Progress',
-                          backgroundColor: Colors.blue,
-                        ),
-                        LabelChip(
-                            text: 'MVP', backgroundColor: Colors.green,),
-                      ],
-                      title: EventListTile.task(
-                        title: 'Implement Create Blueprint dialog',
-                        subtitle:
-                            'Implement dialog to create blueprint using Portal '
-                            'widget and build this amazing UI. ',
-                      ),
-                    ),
-                    EventCard(
-                      labels: const [
-                        LabelChip(
-                          text: 'TO DO',
-                          backgroundColor: Colors.yellow,
-                        ),
-                        LabelChip(
-                            text: 'MVP', backgroundColor: Colors.green,),
-                      ],
-                      title: EventListTile.task(
-                        title: 'Implement bloc for Create Blueprint',
-                        subtitle:
-                            'Implement bloc that manages the state of the '
-                            'Create Blueprint dialog.',
-                      ),
-                    ),
-                  ],
+                      )
+                      .toList(),
                 ),
               ),
             ],
@@ -203,10 +139,12 @@ class CreateEventDialog extends StatelessWidget {
 
 class _ActionsBar extends StatelessWidget {
   const _ActionsBar({
-    this.hidePortal,
+    required this.onCancelPressed,
+    required this.onAddPressed,
   });
 
-  final VoidCallback? hidePortal;
+  final VoidCallback onCancelPressed;
+  final VoidCallback? onAddPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -219,10 +157,12 @@ class _ActionsBar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           _CancelButton(
-            onPressed: hidePortal,
+            onPressed: onCancelPressed,
           ),
           const SizedBox(width: AppSpacing.sm),
-          const _AddTaskButton(),
+          _AddTaskButton(
+            onPressed: onAddPressed,
+          ),
         ],
       ),
     );
@@ -230,18 +170,19 @@ class _ActionsBar extends StatelessWidget {
 }
 
 class _AddTaskButton extends StatelessWidget {
-  const _AddTaskButton();
+  const _AddTaskButton({
+    required this.onPressed,
+  });
+
+  final VoidCallback? onPressed;
 
   @override
   Widget build(BuildContext context) {
-    return ButtonTheme(
-      height: 52,
-      child: FilledButton(
-        onPressed: () {},
-        child: const Text(
-          'Create',
-        ),
-      ),
+    final l10n = context.l10n;
+
+    return FilledButton(
+      onPressed: onPressed,
+      child: Text(l10n.create),
     );
   }
 }
@@ -256,11 +197,12 @@ class _CancelButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
 
     return TextButton(
       onPressed: onPressed,
       child: Text(
-        'Cancel',
+        l10n.cancel,
         style: theme.textTheme.bodyMedium?.copyWith(
           color: theme.colorScheme.primary,
         ),
@@ -275,12 +217,13 @@ class _SearchTasksInputs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Select a Task',
+          l10n.selectTask,
           style: theme.textTheme.titleMedium,
         ),
         const SizedBox(height: AppSpacing.md),
@@ -317,8 +260,10 @@ class _SortByFilterDropdown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return BlueprintDropdown<String>(
-      hintText: 'Sort By',
+      hintText: l10n.sortByDropdownHint,
       onChanged: (value) {},
       items: const [
         'Due Date',
@@ -333,8 +278,9 @@ class _IntegrationsFilterDropdown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return BlueprintDropdown<String>(
-      hintText: 'Integrations',
+      hintText: l10n.integrationsDropdownHint,
       onChanged: (value) {},
       items: const [
         'All',
@@ -351,13 +297,13 @@ class _SearchTaskBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SearchBar(
-      trailing: [
-        Icon(
-          Icons.search,
-        ),
+    final l10n = context.l10n;
+
+    return SearchBar(
+      trailing: const [
+        Icon(Icons.search),
       ],
-      hintText: 'Search',
+      hintText: l10n.search,
     );
   }
 }
@@ -407,12 +353,13 @@ class _StartTime extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Start time',
+          l10n.startTime,
           style: theme.textTheme.titleMedium,
         ),
         SizedBox(
@@ -440,12 +387,13 @@ class _EndTime extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final l10n = context.l10n;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'End time',
+          l10n.endTime,
           style: theme.textTheme.titleMedium,
         ),
         SizedBox(

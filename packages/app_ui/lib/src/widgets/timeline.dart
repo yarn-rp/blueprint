@@ -3,6 +3,7 @@
 import 'dart:math';
 
 import 'package:app_ui/app_ui.dart';
+import 'package:app_ui/src/utils/date_time.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_portal/flutter_portal.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
@@ -151,12 +152,8 @@ class _TodaysBlueprintState extends State<TodayTimeline>
 
         widget.onEventUpdate(
           appointment,
-          startTime.copyWith(
-            minute: (startTime.minute / dragUnit).round() * dragUnit,
-          ),
-          endTime.copyWith(
-            minute: (endTime.minute / dragUnit).round() * dragUnit,
-          ),
+          startTime.round(minutes: dragUnit),
+          endTime.round(minutes: dragUnit),
         );
       },
       onAppointmentResizeEnd: (appointmentResizeEndDetails) {
@@ -170,12 +167,8 @@ class _TodaysBlueprintState extends State<TodayTimeline>
 
         widget.onEventUpdate(
           appointment,
-          startTime.copyWith(
-            minute: (startTime.minute / dragUnit).round() * dragUnit,
-          ),
-          endTime.copyWith(
-            minute: (endTime.minute / dragUnit).round() * dragUnit,
-          ),
+          startTime.round(minutes: dragUnit),
+          endTime.round(minutes: dragUnit),
         );
       },
 
@@ -211,6 +204,7 @@ class EditableTimeline extends StatefulWidget {
   const EditableTimeline({
     required this.events,
     required this.onEventUpdate,
+    required this.newEventTemporaryName,
     this.intervalHeight = 180,
     this.onEventTap,
     this.createEventDialogBuilder,
@@ -218,6 +212,8 @@ class EditableTimeline extends StatefulWidget {
   });
 
   final List<TodayEvent> events;
+
+  final String newEventTemporaryName;
 
   // Widget to build using a PortalTarget
   final Widget Function(
@@ -332,7 +328,7 @@ class _EditableTimelineState extends State<EditableTimeline>
 
     setState(() {
       temporaryEvent = (
-        startTime: currentDate,
+        startTime: currentDate.truncate(minutes: dragUnit),
         startOffset: localPosition.dy,
         endTime: currentDate,
         endOffset: localPosition.dy,
@@ -357,11 +353,11 @@ class _EditableTimelineState extends State<EditableTimeline>
 
     final spaceDuration = Duration(minutes: spaceSizeInMinutes.toInt());
 
-    print('Updating on $direction with space duration $spaceDuration ');
-
-    switch ((direction, startTime, endTime)) {
-      case (final direction, final st, final et) when st.isAtSameMomentAs(et):
-        print('Same moment');
+    switch (temporaryEvent) {
+      case (null):
+        break;
+      case (final tEvent)
+          when tEvent.startTime.isAtSameMomentAs(tEvent.endTime):
         final (st, so, et, eo) = switch (direction) {
           VerticalDirection.up => (
               startTime.subtract(
@@ -393,7 +389,7 @@ class _EditableTimelineState extends State<EditableTimeline>
             endOffset: eo,
           );
         });
-      case (VerticalDirection.up, final startTime, final endTime):
+      case (final tEvent) when tEvent.startOffset >= localPosition.dy:
         setState(() {
           temporaryEvent = (
             startTime: startTime.subtract(spaceDuration),
@@ -402,8 +398,7 @@ class _EditableTimelineState extends State<EditableTimeline>
             endOffset: temporaryEvent!.endOffset,
           );
         });
-
-      case (VerticalDirection.down, final startTime, _):
+      case (final tEvent) when tEvent.startOffset < localPosition.dy:
         setState(() {
           temporaryEvent = (
             startTime: startTime,
@@ -465,12 +460,11 @@ class _EditableTimelineState extends State<EditableTimeline>
           dataSource: TodayEventSource([
             if (temporaryEvent != null)
               (
-                subject: 'New Event',
+                subject: widget.newEventTemporaryName,
                 startTime: temporaryEvent!.startTime,
                 endTime: temporaryEvent!.endTime,
                 color: theme.colorScheme.secondary,
                 typeLabel: EventTypeLabel.calendar(),
-                shouldDisplayTime: false,
               ),
             ...widget.events,
           ]),
@@ -523,12 +517,8 @@ class _EditableTimelineState extends State<EditableTimeline>
 
             widget.onEventUpdate(
               appointment,
-              startTime.copyWith(
-                minute: (startTime.minute / dragUnit).round() * dragUnit,
-              ),
-              endTime.copyWith(
-                minute: (endTime.minute / dragUnit).round() * dragUnit,
-              ),
+              startTime.round(minutes: dragUnit),
+              endTime.round(minutes: dragUnit),
             );
           },
           // Rounds the new appointment time to the nearest 15 minutes interval.
@@ -596,7 +586,13 @@ class _EditableTimelineState extends State<EditableTimeline>
                     _isCreteEventDialogVisible;
 
             final appointmentTile = AppointmentTile(
-              appointment: appointment,
+              appointment: (
+                color: appointment.color,
+                subject: appointment.subject,
+                typeLabel: appointment.typeLabel,
+                startTime: appointment.startTime.round(minutes: dragUnit),
+                endTime: appointment.endTime.round(minutes: dragUnit),
+              ),
             );
 
             if (!isTemporaryEvent) {
@@ -633,7 +629,10 @@ class _EditableTimelineState extends State<EditableTimeline>
                               height: constraints.maxHeight / 5 * 3,
                               width: constraints.maxWidth / 5 * 3,
                               child: widget.createEventDialogBuilder?.call(
-                                      context, appointment, hidePortal,) ??
+                                    context,
+                                    appointment,
+                                    hidePortal,
+                                  ) ??
                                   const SizedBox(),
                             ),
                           ),
@@ -674,7 +673,6 @@ typedef TodayEvent = ({
   DateTime endTime,
   Color? color,
   EventTypeLabel typeLabel,
-  bool shouldDisplayTime,
 });
 
 class TodayEventSource extends CalendarDataSource<TodayEvent> {
@@ -712,7 +710,6 @@ class TodayEventSource extends CalendarDataSource<TodayEvent> {
       endTime: appointment.endTime,
       color: customData.color,
       typeLabel: customData.typeLabel,
-      shouldDisplayTime: true
     );
   }
 }

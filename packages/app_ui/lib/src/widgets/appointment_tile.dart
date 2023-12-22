@@ -23,8 +23,7 @@ class AppointmentTile extends StatelessWidget {
     final endTime = Jiffy(appointment.endTime).format('hh:mm a');
 
     final title = appointment.subject;
-    final subtitle =
-        appointment.shouldDisplayTime ? '$startTime to $endTime' : '';
+    final subtitle = '$startTime to $endTime';
     final duration = appointment.endTime.difference(appointment.startTime);
     final backgroundColor =
         isAfter ? originalColor : originalColor.withOpacity(0.5);

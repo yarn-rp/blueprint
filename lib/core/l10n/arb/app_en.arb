@@ -1,15 +1,47 @@
 {
     "@@locale": "en",
+    "accept":"Accept",
+    "cancel": "Cancel",
+    "@cancel": {
+        "description": "Cancel word"
+    },
     "counterAppBarTitle": "Counter",
     "@counterAppBarTitle": {
         "description": "Text shown in the AppBar of the Counter Page"
     },
-    
+    "create": "Create",
+    "@create": {
+        "description": "Create word"
+    },
+    "createTodaysBlueprintTitle": "Create Today's Blueprint",
+    "@createTodaysBlueprintTitle": {
+        "description": "Title for the Create Today's Blueprint page"
+    },
+    "createTodaysBlueprintDescription": "Click or drag to create new entries",
+    "@createTodaysBlueprintDescription": {
+        "description": "Description for the Create Today's Blueprint page"
+    },
     "doNotHaveAccount":"Don't have an account?",
+    "email":"Email",
+    "endTime": "End Time",
+    "@endTime": {
+        "description": "End time for an event or task"
+    },
     "forgotPassword":"Forgot Password", 
+    "integrationsDropdownHint": "Integrations",
+    "@integrationsDropdownHint": {
+        "description": "Title for the integrations dropdown"
+    },
+    "newTaskTitle": "(Task Title)",
+    "@newTaskTitle": {
+        "description": "Title for creating a new task on the create blueprint"
+    },
+    "selectTask": "Select a Task",
+    "@selectTask": {
+        "description": "Select a Task title"
+    },
     "signIn":"Sign In",
     "signUp" :"Sign Up",
-    "email":"Email",
     "password":"Password",
     "passwordDontMatch":"Passwords don't match",
     "repeatPassword":"Repeat Password",
@@ -17,9 +49,19 @@
     "sendEmail":"Send Email",
     "resetPasswordDialogMessege":"An email has been sent with instructions to reset your password. Please check your inbox and spam folder",
     "passwordRcovery":"Password Recovery",
-    "accept":"Accept",
+    "search": "Search",
+    "@search": {
+        "description": "Search word"
+    },
     "signOut":"Sign Out",
+    "sortByDropdownHint": "Sort By",
+    "@sortByDropdownHint": {
+        "description": "Sort By word dropdown title"
+    },
+    "startTime": "Start Time",
+    "@startTime": {
+        "description": "Start time for an event or task"
+    },
     "darkMode":"Dark Mode",
     "lightMode":"Light Mode"
-    
 }
