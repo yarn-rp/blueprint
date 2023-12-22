@@ -166,7 +166,7 @@ class _UserAvatar extends StatelessWidget {
 }
 
 class _SignOutButton extends StatelessWidget {
-  const _SignOutButton({super.key});
+  const _SignOutButton();
 
   @override
   Widget build(BuildContext context) {
