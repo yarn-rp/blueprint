@@ -54,9 +54,10 @@ import 'package:integrations_repository/integrations_repository.dart' as _i13;
 import 'package:task_repository/task_repository.dart' as _i17;
 import 'package:user_repository/user_repository.dart' as _i19;
 
-const String _stg = 'stg';
-const String _prod = 'prod';
+const String _local = 'local';
 const String _dev = 'dev';
+const String _prod = 'prod';
+const String _stg = 'stg';
 
 extension GetItInjectableX on _i1.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -83,16 +84,20 @@ extension GetItInjectableX on _i1.GetIt {
     gh.lazySingleton<_i3.FacebookAuthenticationProvider>(
         () => authenticationModule.facebookAuthenticationProvider());
     gh.singleton<_i4.FirebaseOptions>(
-      firebaseModule.stagingFirebaseOptions,
-      registerFor: {_stg},
+      firebaseModule.localFirebaseOptions,
+      registerFor: {_local},
+    );
+    gh.singleton<_i4.FirebaseOptions>(
+      firebaseModule.developmentFirebaseOptions,
+      registerFor: {_dev},
     );
     gh.singleton<_i4.FirebaseOptions>(
       firebaseModule.productionFirebaseOptions,
       registerFor: {_prod},
     );
     gh.singleton<_i4.FirebaseOptions>(
-      firebaseModule.developmentFirebaseOptions,
-      registerFor: {_dev},
+      firebaseModule.stagingFirebaseOptions,
+      registerFor: {_stg},
     );
     gh.lazySingleton<_i5.FlutterSecureStorage>(
         () => coreModule.flutterSecureStorage());

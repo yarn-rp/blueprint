@@ -32,6 +32,11 @@ abstract class FirebaseModule {
       );
 
   @singleton
+  @local
+  FirebaseOptions get localFirebaseOptions =>
+      firebase_dev_options.DefaultFirebaseOptions.currentPlatform;
+
+  @singleton
   @development
   FirebaseOptions get developmentFirebaseOptions =>
       firebase_dev_options.DefaultFirebaseOptions.currentPlatform;
@@ -64,7 +69,7 @@ abstract class FirebaseModule {
       );
 }
 
-@development
+@local
 @preResolve
 Future<void> setupFirebaseEmulators(
   FirebaseAuth auth,

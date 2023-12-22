@@ -17,7 +17,9 @@ class UserProfileView extends StatelessWidget {
 
     return userState.maybeWhen(
       loaded: (user) => _UserLoaded(user: user),
-      orElse: () => const SizedBox.shrink(),
+      // this is a hack for the different envs using development firebase
+      // credentials.
+      orElse: () => const _SignOutButton(),
     );
   }
 }
@@ -105,45 +107,43 @@ class _UserProfileMenu extends StatelessWidget {
     final l10n = AppLocalizations.of(context);
     final theme = Theme.of(context);
 
-    return Positioned(
-      right: AppSpacing.xlg,
-      top: AppSpacing.xxxlg,
-      child: SizedBox(
-        width: 400,
-        child: Material(
-          color: theme.colorScheme.surface,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          shadowColor: Colors.black,
-          elevation: 14,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ListTile(
-                leading: AvatarIcon(
-                  text: user.initials,
-                ),
-                title: Text(user.displayName),
-                subtitle: Text(user.email),
+    return SizedBox(
+      width: 400,
+      child: Material(
+        color: theme.colorScheme.surface,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        shadowColor: Colors.black,
+        elevation: 14,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              leading: AvatarIcon(
+                text: user.initials,
               ),
-              const Divider(),
-              const ThemeSwitcher(),
-              ListTile(
-                leading: const Icon(
-                  Icons.exit_to_app,
-                  color: Colors.red,
-                ),
-                title: Text(
-                  l10n.signOut,
-                  style: const TextStyle(color: Colors.red),
-                ),
-                onTap: () {
-                  context.read<SignOutCubit>().signOut();
-                },
+              title: Text(user.displayName),
+              subtitle: Text(user.email),
+            ),
+            const Divider(),
+            const ThemeSwitcher(),
+            ListTile(
+              leading: Icon(
+                Icons.exit_to_app,
+                color: theme.colorScheme.error,
               ),
-            ],
-          ),
+              title: Text(
+                l10n.signOut,
+                style: TextStyle(
+                  color: theme.colorScheme.error,
+                ),
+              ),
+              onTap: () {
+                context.read<SignOutCubit>().signOut();
+              },
+            ),
+          ],
         ),
       ),
     );
@@ -160,5 +160,21 @@ class _UserAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AvatarIcon(text: user.initials);
+  }
+}
+
+class _SignOutButton extends StatelessWidget {
+  const _SignOutButton();
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      onPressed: () {
+        context.read<SignOutCubit>().signOut();
+      },
+      icon: const Icon(
+        Icons.exit_to_app,
+      ),
+    );
   }
 }
