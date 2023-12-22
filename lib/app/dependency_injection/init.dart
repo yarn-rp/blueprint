@@ -28,7 +28,6 @@ FutureOr<void> configureDependencies(
   );
 
   if (environment == AppEnvironment.local) {
-    print('Setting up firebase emulators for local...');
     await setupFirebaseEmulators(
       sl<FirebaseAuth>(),
       sl<FirebaseFirestore>(),

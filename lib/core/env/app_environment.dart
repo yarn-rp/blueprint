@@ -1,4 +1,3 @@
-import 'package:blueprint/app/view/app.dart';
 import 'package:injectable/injectable.dart';
 
 /// {@template app_environment}
