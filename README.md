@@ -88,7 +88,7 @@ This command will initialize Firebase emulators and add seed the `Firestore` ins
 
 ```sh
 # Run local Flutter Client
-$ flutter run --flavor development --target lib/main_development.dart --web-port=3000 --dart-define-from-file=./firebase.json
+$ flutter run --flavor development --target lib/main_local.dart --web-port=3000 --dart-define-from-file=./firebase.json
 ```
 
 This should start a development session at `http://locahost:3000`. 

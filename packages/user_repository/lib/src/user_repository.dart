@@ -24,6 +24,7 @@ class UserRepository {
   /// the stream will emit null.
   Stream<User?> getUserData() {
     return _currentUserIdStream.switchMap<User?>((userId) {
+      print('user id: $userId');
       if (userId == null) {
         return const Stream.empty();
       }
@@ -31,11 +32,8 @@ class UserRepository {
       final userDoc = _usersCollection.doc(userId);
 
       return userDoc.snapshots().map((snapshot) {
-        if (!snapshot.exists) {
-          return null;
-        }
-
         final userData = snapshot.data() as Map<String, dynamic>?;
+        print('userData: $userData');
         if (userData == null) {
           return null;
         }

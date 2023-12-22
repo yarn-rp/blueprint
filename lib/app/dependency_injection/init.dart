@@ -27,12 +27,12 @@ FutureOr<void> configureDependencies(
     environmentFilter: environmentFilter,
   );
 
-  switch (environment) {
-    case AppEnvironment.development:
-      await setupFirebaseEmulators(
-        sl<FirebaseAuth>(),
-        sl<FirebaseFirestore>(),
-        sl<FirebaseFunctions>(),
-      );
+  if (environment == AppEnvironment.local) {
+    print('Setting up firebase emulators for local...');
+    await setupFirebaseEmulators(
+      sl<FirebaseAuth>(),
+      sl<FirebaseFirestore>(),
+      sl<FirebaseFunctions>(),
+    );
   }
 }
