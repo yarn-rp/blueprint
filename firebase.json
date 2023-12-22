@@ -30,14 +30,14 @@
       "port": 5001
     },
     "firestore": {
-      "port": 8090
+      "port": 8080
     },
     "ui": {
       "enabled": true
     },
     "singleProjectMode": true,
     "pubsub": {
-      "port": 8088
+      "port": 8086
     }
   },
   "hosting": [
