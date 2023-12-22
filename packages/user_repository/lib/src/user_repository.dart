@@ -31,10 +31,6 @@ class UserRepository {
       final userDoc = _usersCollection.doc(userId);
 
       return userDoc.snapshots().map((snapshot) {
-        if (!snapshot.exists) {
-          return null;
-        }
-
         final userData = snapshot.data() as Map<String, dynamic>?;
         if (userData == null) {
           return null;

@@ -17,7 +17,9 @@ class UserProfileView extends StatelessWidget {
 
     return userState.maybeWhen(
       loaded: (user) => _UserLoaded(user: user),
-      orElse: () => const SizedBox.shrink(),
+      // this is a hack for the different envs using development firebase
+      // credentials.
+      orElse: () => const _SignOutButton(),
     );
   }
 }
@@ -158,5 +160,21 @@ class _UserAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AvatarIcon(text: user.initials);
+  }
+}
+
+class _SignOutButton extends StatelessWidget {
+  const _SignOutButton();
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      onPressed: () {
+        context.read<SignOutCubit>().signOut();
+      },
+      icon: const Icon(
+        Icons.exit_to_app,
+      ),
+    );
   }
 }
