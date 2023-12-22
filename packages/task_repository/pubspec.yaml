@@ -9,6 +9,7 @@ environment:
 
 dependencies:
   cloud_firestore: ^4.9.3
+  collection: ^1.18.0
   flutter:
     sdk: flutter
   integrations_repository:

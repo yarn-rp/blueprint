@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:integrations_repository/integrations_repository.dart';
 import 'package:task_repository/task_repository.dart';
 
 part 'tasks_cubit.freezed.dart';
@@ -28,7 +29,9 @@ class TasksCubit extends Cubit<TasksState> {
 
     emit(const TasksLoading([]));
     try {
-      final tasksStream = _taskRepository.getAllTasksRelatedToMe();
+      final tasksStream = _taskRepository.getAllTasksRelatedToMe(
+        sortBy: const SortBy(SortField.updatedAt, SortDirection.desc),
+      );
 
       _tasksSubscription = tasksStream.listen(
         (tasks) {
@@ -36,10 +39,7 @@ class TasksCubit extends Cubit<TasksState> {
             return;
           }
           emit(
-            TasksState.loaded(
-              tasks.toList()
-                ..sort((a, b) => a.updatedAt.isAfter(b.updatedAt) ? -1 : 1),
-            ),
+            TasksState.loaded(tasks.toList()),
           );
         },
       );
