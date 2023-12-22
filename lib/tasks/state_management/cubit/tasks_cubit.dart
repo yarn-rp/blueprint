@@ -28,7 +28,9 @@ class TasksCubit extends Cubit<TasksState> {
 
     emit(const TasksLoading([]));
     try {
-      final tasksStream = _taskRepository.getAllTasksRelatedToMe();
+      final tasksStream = _taskRepository.getAllTasksRelatedToMe(
+        sortBy: const SortBy(SortField.updatedAt, SortDirection.desc),
+      );
 
       _tasksSubscription = tasksStream.listen(
         (tasks) {
@@ -36,10 +38,7 @@ class TasksCubit extends Cubit<TasksState> {
             return;
           }
           emit(
-            TasksState.loaded(
-              tasks.toList()
-                ..sort((a, b) => a.updatedAt.isAfter(b.updatedAt) ? -1 : 1),
-            ),
+            TasksState.loaded(tasks.toList()),
           );
         },
       );
