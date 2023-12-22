@@ -1,7 +1,7 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:blueprint/app/routes/router/app_router.dart';
-import 'package:blueprint/blueprint/presentation/widgets/create_blueprint_dialog.dart';
+import 'package:blueprint/blueprint/presentation/widgets/create_event_dialog.dart';
 import 'package:blueprint/blueprint/state_management/todays_blueprint/todays_blueprint_cubit.dart';
 import 'package:blueprint/core/l10n/l10n.dart';
 import 'package:blueprint/core/utils/datetime/datetime_utils.dart';
