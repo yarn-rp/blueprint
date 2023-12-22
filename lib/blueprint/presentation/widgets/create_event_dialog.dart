@@ -26,7 +26,7 @@ final fakeData = <Task>[
     estimatedTime: const Duration(hours: 2),
     loggedTime: const Duration(minutes: 30),
     assigned: [],
-    creator: User('', '', ''),
+    creator: const User('', '', ''),
     isCompleted: false,
     labels: [
       Label('Priority high', '#ef9930'),
@@ -62,7 +62,7 @@ class CreateEventDialog extends StatelessWidget {
             onCancelPressed: hidePortal,
             // ignore: unnecessary_lambdas
             onAddPressed: () {
-              // TODO: call onAddTask with the selected task
+              // TODO(yarn-rp): call onAddTask with the selected task
               hidePortal();
             },
           ),
