@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:auto_route/auto_route.dart';
-import 'package:blueprint/blueprint/presentation/pages/today_time_line.dart';
+import 'package:blueprint/blueprint/presentation/pages/blueprint_timeline.dart';
 import 'package:blueprint/blueprint/presentation/widgets/calendar_event_tile.dart';
 import 'package:blueprint/blueprint/state_management/todays_blueprint/todays_blueprint_cubit.dart';
 import 'package:blueprint_repository/blueprint_repository.dart';
@@ -57,7 +57,7 @@ class TodaysBlueprintPage extends StatelessWidget {
                     if (!isWide)
                       const SizedBox(
                         height: 2480,
-                        child: TodayTimeline(),
+                        child: BlueprintTimeline(),
                       ),
                   ],
                 );
@@ -67,7 +67,7 @@ class TodaysBlueprintPage extends StatelessWidget {
           if (isWide)
             const Flexible(
               flex: 3,
-              child: TodayTimeline(),
+              child: BlueprintTimeline(),
             ),
         ],
       ),

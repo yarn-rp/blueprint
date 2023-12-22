@@ -48,7 +48,7 @@ class CalendarEventTile extends StatelessWidget {
           isSmallVersion: false,
           color: event.event.colorHex != null
               ? HexColor.fromHex(
-                  event.event.colorHex!,
+                  event.event.colorHex,
                 )
               : null,
         ),

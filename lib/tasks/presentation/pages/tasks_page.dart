@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:blueprint/blueprint/presentation/pages/today_time_line.dart';
+import 'package:blueprint/blueprint/presentation/pages/blueprint_timeline.dart';
 import 'package:blueprint/tasks/presentation/pages/task_details.dart';
 import 'package:blueprint/tasks/presentation/widgets/task_tile.dart';
 import 'package:blueprint/tasks/state_management/cubit/tasks_cubit.dart';
@@ -79,7 +79,7 @@ class _TasksPageState extends State<TasksPage>
                   flex: 3,
                   child: Padding(
                     padding: EdgeInsets.only(right: 16),
-                    child: TodayTimeline(),
+                    child: BlueprintTimeline(),
                   ),
                 ),
             ],

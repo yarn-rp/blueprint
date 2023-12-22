@@ -77,7 +77,7 @@ class GeneralEventCalendarEventDetails extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: appointment.event.colorHex != null
                             ? HexColor.fromHex(
-                                appointment.event.colorHex!,
+                                appointment.event.colorHex,
                               )
                             : Theme.of(context).colorScheme.secondary,
                         borderRadius: BorderRadius.circular(4),

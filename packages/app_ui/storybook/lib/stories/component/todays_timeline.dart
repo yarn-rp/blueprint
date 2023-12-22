@@ -75,7 +75,7 @@ class _TodaysTimelineComponentState extends State<TodaysTimelineComponent> {
                       startTime: startDate,
                       endTime: endDate,
                       color: event.color,
-                      typeLabel: event.typeLabel
+                      typeLabel: event.typeLabel,
                     );
                   });
                 },

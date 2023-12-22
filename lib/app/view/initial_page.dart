@@ -65,72 +65,72 @@ class _InitialPageState extends State<InitialPage> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return Scaffold(
       key: _scaffoldKey,
       body: Builder(
         builder: (context) {
           final isPhone = MediaQuery.of(context).size.width < 600;
 
-          return Theme(
-            data: theme.copyWith(
-              bottomNavigationBarTheme: BottomNavigationBarThemeData(
-                backgroundColor: const Color(0xFF121212),
-                unselectedItemColor: Colors.white54,
-                selectedItemColor: theme.colorScheme.primary,
-              ),
+          return AutoTabsRouter(
+            routes: const [
+              BlueprintRouterRoute(),
+              TasksRoute(),
+              IntegrationsRoute(),
+            ],
+            transitionBuilder: (context, child, animation) => FadeTransition(
+              opacity: animation,
+              // the passed child is technically our animated
+              //selected-tab page
+              child: child,
             ),
-            child: AutoTabsRouter(
-              routes: const [
-                TodaysBlueprintRoute(),
-                TasksRoute(),
-                IntegrationsRoute(),
-              ],
-              transitionBuilder: (context, child, animation) => FadeTransition(
-                opacity: animation,
-                // the passed child is technically our animated
-                //selected-tab page
-                child: child,
-              ),
-              builder: (context, child) {
-                // obtain the scoped TabsRouter controller using context
-                final tabsRouter = AutoTabsRouter.of(context);
-                // Here we're building our Scaffold inside of AutoTabsRouter
-                // to access the tabsRouter controller provided in this context
+            builder: (context, child) {
+              // obtain the scoped TabsRouter controller using context
+              final tabsRouter = AutoTabsRouter.of(context);
+              // Here we're building our Scaffold inside of AutoTabsRouter
+              // to access the tabsRouter controller provided in this context
 
-                return Scaffold(
-                  bottomNavigationBar: isPhone
-                      ? BottomNavigationBar(
-                          currentIndex: tabsRouter.activeIndex,
-                          onTap: tabsRouter.setActiveIndex,
-                          items: navigationPages
-                              .map(
-                                (e) => BottomNavigationBarItem(
-                                  icon: Icon(
-                                    e.icon,
-                                  ),
-                                  label: e.text,
+              return Scaffold(
+                bottomNavigationBar: isPhone
+                    ? BottomNavigationBar(
+                        currentIndex: tabsRouter.activeIndex,
+                        onTap: tabsRouter.setActiveIndex,
+                        items: navigationPages
+                            .map(
+                              (e) => BottomNavigationBarItem(
+                                icon: Icon(
+                                  e.icon,
                                 ),
-                              )
-                              .toList(),
-                        )
-                      : null,
-                  appBar: TopAppBar(
-                    trailing: BlocProvider(
-                      create: (context) => sl<SignOutCubit>(),
-                      child: const UserProfileView(),
-                    ),
+                                label: e.text,
+                              ),
+                            )
+                            .toList(),
+                      )
+                    : null,
+                appBar: TopAppBar(
+                  trailing: BlocProvider(
+                    create: (context) => sl<SignOutCubit>(),
+                    child: const UserProfileView(),
                   ),
-                  body: isPhone
-                      ? child
-                      : SidebarPage(
-                          navigationPages: navigationPages,
-                          onPageChanged: tabsRouter.setActiveIndex,
-                          child: child,
-                        ),
-                );
-              },
-            ),
+                ),
+                body: isPhone
+                    ? child
+                    : Row(
+                        children: [
+                          SizedBox(
+                            child: DesktopNavigationBar(
+                              onDestinationSelected: tabsRouter.setActiveIndex,
+                              destinations: navigationPages
+                                  .map(
+                                    (e) => (label: e.text, icon: e.icon),
+                                  )
+                                  .toList(),
+                            ),
+                          ),
+                          Expanded(child: child),
+                        ],
+                      ),
+              );
+            },
           );
         },
       ),

@@ -5,12 +5,12 @@ class EventCard extends StatelessWidget {
   const EventCard({
     required this.title,
     required this.labels,
-    required this.dateAndTime,
+    this.dateAndTime,
     super.key,
   });
 
   final EventListTile title;
-  final String dateAndTime;
+  final String? dateAndTime;
   final List<LabelChip> labels;
 
   @override
@@ -19,32 +19,34 @@ class EventCard extends StatelessWidget {
     final textTheme = theme.textTheme;
 
     return Card(
+      elevation: 1,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           title,
-          SizedBox(
-            height: 44,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.calendar_today,
-                    size: 20,
-                    color: theme.colorScheme.onSurfaceVariant,
-                  ),
-                  const SizedBox(width: AppSpacing.xs),
-                  Text(
-                    dateAndTime,
-                    style: textTheme.bodyMedium?.copyWith(
+          if (dateAndTime != null)
+            SizedBox(
+              height: 44,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.calendar_today,
+                      size: 20,
                       color: theme.colorScheme.onSurfaceVariant,
                     ),
-                  ),
-                ],
+                    const SizedBox(width: AppSpacing.xs),
+                    Text(
+                      dateAndTime!,
+                      style: textTheme.bodyMedium?.copyWith(
+                        color: theme.colorScheme.onSurfaceVariant,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
           SizedBox(
             height: AppSpacing.xxxlg,
             child: Padding(
