@@ -3,8 +3,21 @@ import 'package:blueprint/blueprint/state_management/todays_blueprint/todays_blu
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class BlueprintTimeline extends StatelessWidget {
+class BlueprintTimeline extends StatefulWidget {
   const BlueprintTimeline({super.key});
+
+  @override
+  State<BlueprintTimeline> createState() => _BlueprintTimelineState();
+}
+
+class _BlueprintTimelineState extends State<BlueprintTimeline> {
+  late ScrollController _scrollController;
+
+  @override
+  void initState() {
+    _scrollController = ScrollController();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +30,12 @@ class BlueprintTimeline extends StatelessWidget {
             flex: 3,
             child: screenHeight < 800
                 ? Scrollbar(
+                    // Scrollbar needs a scroll controller in order to
+                    // ensure visibility
+                    controller: _scrollController,
                     thumbVisibility: true,
                     child: ListView(
+                      controller: _scrollController,
                       children: const <Widget>[
                         SizedBox(
                           height: 600,
