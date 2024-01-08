@@ -21,6 +21,10 @@
     "@createTodaysBlueprintDescription": {
         "description": "Description for the Create Today's Blueprint page"
     },
+    "description": "Description",
+    "@description": {
+        "description": "Description word"
+    },
     "doNotHaveAccount":"Don't have an account?",
     "email":"Email",
     "endTime": "End Time",

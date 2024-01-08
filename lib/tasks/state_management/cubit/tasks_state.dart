@@ -1,10 +1,34 @@
 part of 'tasks_cubit.dart';
 
-@freezed
-abstract class TasksState with _$TasksState {
-  const factory TasksState.initial(Iterable<Task> tasks) = TasksInitial;
-  const factory TasksState.loading(Iterable<Task> tasks) = TasksLoading;
-  const factory TasksState.loaded(Iterable<Task> tasks) = TasksLoaded;
-  const factory TasksState.error(Iterable<Task> tasks, String message) =
-      TasksError;
+enum TasksStatus { initial, loading, loaded, error }
+
+class TasksState extends Equatable {
+  const TasksState({
+    this.tasks = const [],
+    this.status = TasksStatus.initial,
+    this.selectedTask,
+  });
+
+  final Iterable<Task> tasks;
+  final TasksStatus status;
+  final Task? selectedTask;
+
+  TasksState copyWith({
+    Iterable<Task>? tasks,
+    TasksStatus? status,
+    Task? selectedTask,
+  }) {
+    return TasksState(
+      tasks: tasks ?? this.tasks,
+      status: status ?? this.status,
+      selectedTask: selectedTask ?? this.selectedTask,
+    );
+  }
+
+  @override
+  List<Object?> get props => [
+        tasks,
+        status,
+        selectedTask,
+      ];
 }

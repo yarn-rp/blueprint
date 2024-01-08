@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:task_repository/task_repository.dart';
 
@@ -8,7 +9,7 @@ part 'tasks_cubit.freezed.dart';
 part 'tasks_state.dart';
 
 class TasksCubit extends Cubit<TasksState> {
-  TasksCubit(this._taskRepository) : super(const TasksState.initial([])) {
+  TasksCubit(this._taskRepository) : super(const TasksState()) {
     _loadTasks();
   }
 
@@ -18,6 +19,10 @@ class TasksCubit extends Cubit<TasksState> {
   /// subscription when the bloc is closed.
   StreamSubscription<Iterable<Task>>? _tasksSubscription;
 
+  Future<void> selectTask(Task task) async {
+    emit(state.copyWith(selectedTask: task));
+  }
+
   /// Subscribe to the stream of Tasks.
   Future<void> _loadTasks() async {
     if (_tasksSubscription != null) {
@@ -26,7 +31,8 @@ class TasksCubit extends Cubit<TasksState> {
       return;
     }
 
-    emit(const TasksLoading([]));
+    emit(state.copyWith(status: TasksStatus.loading));
+
     try {
       final tasksStream = _taskRepository.getAllTasksRelatedToMe(
         sortBy: const SortBy(SortField.updatedAt, SortDirection.desc),
@@ -38,12 +44,16 @@ class TasksCubit extends Cubit<TasksState> {
             return;
           }
           emit(
-            TasksState.loaded(tasks.toList()),
+            state.copyWith(
+              tasks: tasks,
+              status: TasksStatus.loaded,
+            ),
           );
         },
       );
-    } catch (e) {
-      emit(TasksState.error(state.tasks, e.toString()));
+    } catch (error, stackTrace) {
+      addError(error, stackTrace);
+      emit(state.copyWith(status: TasksStatus.error));
     }
   }
 

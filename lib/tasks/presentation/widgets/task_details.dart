@@ -1,10 +1,8 @@
-import 'package:blueprint/blueprint/state_management/todays_blueprint/todays_blueprint_cubit.dart';
-
-import 'package:blueprint/tasks/presentation/widgets/priority_widget.dart';
+import 'package:blueprint/core/l10n/l10n.dart';
+import 'package:blueprint/tasks/presentation/widgets/priority_chip.dart';
 import 'package:blueprint/tasks/presentation/widgets/status_chip.dart';
 import 'package:blueprint/tasks/presentation/widgets/user_tile.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:markdown/markdown.dart' as md;
@@ -18,6 +16,7 @@ class TaskDetails extends StatelessWidget {
     this.padding = 32,
     super.key,
   });
+
   final Task task;
   final VoidCallback onClose;
   final double padding;
@@ -29,85 +28,15 @@ class TaskDetails extends StatelessWidget {
       margin: EdgeInsets.zero,
       child: Scaffold(
         backgroundColor: Theme.of(context).canvasColor,
-        appBar: AppBar(
-          // leading: const SizedBox.shrink(),
-          automaticallyImplyLeading: false,
-          toolbarHeight: kToolbarHeight + kMinInteractiveDimension + padding,
-          backgroundColor: Colors.transparent,
-          centerTitle: false,
-          leadingWidth: double.infinity,
-          actions: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: padding),
-              child: Row(
-                children: [
-                  // Options
-                  PopupMenuButton(
-                    itemBuilder: (context) {
-                      return [
-                        const PopupMenuItem<void>(
-                          child: Text('Edit'),
-                        ),
-                        const PopupMenuItem<void>(
-                          child: Text('Delete'),
-                        ),
-                      ];
-                    },
-                  ),
-                  IconButton(
-                    onPressed: onClose,
-                    icon: const Icon(Icons.close),
-                  ),
-                ],
-              ),
-            ),
-          ],
-          leading: Padding(
-            padding: EdgeInsets.symmetric(horizontal: padding)
-                .copyWith(top: padding),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  task.title,
-                  style: Theme.of(context).textTheme.titleLarge,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-                Row(
-                  children: [
-                    FilledButton.icon(
-                      onPressed: () {
-                        context
-                            .read<TodaysBlueprintCubit>()
-                            .addTaskToTodaysBlueprint(task);
-                      },
-                      icon: const Icon(Icons.add),
-                      label: const Text('Add to Today'),
-                    ),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                    FilledButton.tonalIcon(
-                      onPressed: () => launchUrl(task.taskURL),
-                      icon: const Icon(Icons.link),
-                      label: Text(
-                        'View in '
-                        '${task.project.platform?.displayName ?? "Platform"}',
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
+        appBar: _TaskDetailsAppBar(
+          padding: padding,
+          onClose: onClose,
+          platformTaskUrl: task.taskURL,
+          platformName: task.project.platformName,
+          taskTitle: task.title,
         ),
         body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: padding)
-              .copyWith(bottom: padding),
+          padding: EdgeInsets.all(padding),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -117,30 +46,8 @@ class TaskDetails extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 16)
                       .copyWith(right: 64),
                   children: [
-                    Text(
-                      'Description',
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    Card(
-                      margin: EdgeInsets.zero,
-                      child: InkWell(
-                        child: Padding(
-                          padding: const EdgeInsets.all(24),
-                          child: MarkdownBody(
-                            selectable: true,
-                            data: task.description,
-                            extensionSet: md.ExtensionSet(
-                              md.ExtensionSet.commonMark.blockSyntaxes,
-                              [
-                                md.EmojiSyntax(),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
+                    _TaskDescription(
+                      description: task.description,
                     ),
                     const SizedBox(
                       height: 32,
@@ -332,8 +239,8 @@ class TaskDetails extends StatelessWidget {
                           const SizedBox(
                             height: 16,
                           ),
-                          PriorityWidget.label(
-                            priority: task.priority,
+                          PriorityChip(
+                            task: task,
                           ),
                         ],
                       ),
@@ -478,4 +385,99 @@ class TaskDetails extends StatelessWidget {
       ),
     );
   }
+}
+
+class _TaskDescription extends StatelessWidget {
+  const _TaskDescription({
+    required this.description,
+  });
+
+  final String description;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
+    return Column(
+      children: [
+        Text(
+          l10n.description,
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
+        const SizedBox(
+          height: 16,
+        ),
+        Card(
+          margin: EdgeInsets.zero,
+          child: InkWell(
+            child: Padding(
+              padding: const EdgeInsets.all(24),
+              child: MarkdownBody(
+                selectable: true,
+                data: description,
+                extensionSet: md.ExtensionSet(
+                  md.ExtensionSet.commonMark.blockSyntaxes,
+                  [
+                    md.EmojiSyntax(),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _TaskDetailsAppBar extends StatelessWidget
+    implements PreferredSizeWidget {
+  const _TaskDetailsAppBar({
+    required this.padding,
+    required this.onClose,
+    required this.platformTaskUrl,
+    required this.platformName,
+    required this.taskTitle,
+  });
+
+  final double padding;
+  final Uri platformTaskUrl;
+  final String platformName;
+  final String taskTitle;
+  final VoidCallback onClose;
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      automaticallyImplyLeading: false,
+      toolbarHeight: kToolbarHeight + kMinInteractiveDimension + padding,
+      backgroundColor: Colors.transparent,
+      centerTitle: false,
+      leadingWidth: double.infinity,
+      actions: [
+        FilledButton.tonalIcon(
+          onPressed: () => launchUrl(platformTaskUrl),
+          icon: const Icon(Icons.link),
+          label: Text(
+            'View in $platformName',
+          ),
+        ),
+        IconButton(
+          onPressed: onClose,
+          icon: const Icon(Icons.close),
+        ),
+      ],
+      title: Text(
+        taskTitle,
+        style: Theme.of(context).textTheme.headlineMedium,
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
+      ),
+    );
+  }
+
+  @override
+  Size get preferredSize => Size.fromHeight(
+        kToolbarHeight + kMinInteractiveDimension + padding,
+      );
 }

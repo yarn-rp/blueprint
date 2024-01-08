@@ -1,4 +1,3 @@
-import 'package:blueprint/tasks/presentation/widgets/priority_widget.dart';
 import 'package:blueprint/tasks/presentation/widgets/status_chip.dart';
 import 'package:flutter/material.dart';
 import 'package:task_repository/task_repository.dart';
@@ -19,7 +18,6 @@ class TaskTile extends StatelessWidget {
       builder: (context) {
         final isPhone = MediaQuery.of(context).size.width < 600;
         final tile = ListTile(
-          leading: PriorityWidget(priority: task.priority),
           title: Text(
             task.title,
             maxLines: 3,
