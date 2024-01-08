@@ -21,6 +21,12 @@ final lightTheme = ThemeData(
     elevation: 0,
     scrolledUnderElevation: 0,
   ),
+  dividerColor: lightColorScheme.outlineVariant,
+  dividerTheme: DividerThemeData(
+    thickness: 1,
+    space: 0,
+    color: lightColorScheme.outlineVariant,
+  ),
   filledButtonTheme: FilledButtonThemeData(
     style: FilledButton.styleFrom(
       minimumSize: const Size(_buttonMinWidth, _buttonMinHeight),
@@ -64,9 +70,10 @@ final lightTheme = ThemeData(
     ),
   ),
   cardTheme: CardTheme(
-    color: lightColorScheme.surface,
+    color: lightColorScheme.outlineVariant.withOpacity(.2),
+    elevation: 0,
   ),
-  cardColor: lightColorScheme.surface,
+  cardColor: lightColorScheme.outlineVariant.withOpacity(.2),
 );
 
 /// {@template app_theme}
@@ -81,6 +88,14 @@ final darkTheme = ThemeData(
     foregroundColor: darkColorScheme.onBackground,
     elevation: 0,
     scrolledUnderElevation: 0,
+  ),
+  dividerColor: darkColorScheme.outlineVariant,
+  dividerTheme: DividerThemeData(
+    indent: 0,
+    endIndent: 0,
+    thickness: 1,
+    space: 0,
+    color: darkColorScheme.outlineVariant,
   ),
   filledButtonTheme: FilledButtonThemeData(
     style: FilledButton.styleFrom(
@@ -122,7 +137,8 @@ final darkTheme = ThemeData(
     ),
   ),
   cardTheme: CardTheme(
-    color: darkColorScheme.surface,
+    color: darkColorScheme.outline.withOpacity(0.2),
+    elevation: 0,
   ),
-  cardColor: darkColorScheme.surface,
+  cardColor: darkColorScheme.outline,
 );

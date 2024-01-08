@@ -2,10 +2,8 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:task_repository/task_repository.dart';
 
-part 'tasks_cubit.freezed.dart';
 part 'tasks_state.dart';
 
 class TasksCubit extends Cubit<TasksState> {
@@ -21,6 +19,16 @@ class TasksCubit extends Cubit<TasksState> {
 
   Future<void> selectTask(Task task) async {
     emit(state.copyWith(selectedTask: task));
+  }
+
+  Future<void> unselectTask() async {
+    emit(
+      TasksState(
+        tasks: state.tasks,
+        status: state.status,
+        selectedTask: null,
+      ),
+    );
   }
 
   /// Subscribe to the stream of Tasks.
@@ -47,6 +55,7 @@ class TasksCubit extends Cubit<TasksState> {
             state.copyWith(
               tasks: tasks,
               status: TasksStatus.loaded,
+              selectedTask: state.selectedTask ?? tasks.firstOrNull,
             ),
           );
         },

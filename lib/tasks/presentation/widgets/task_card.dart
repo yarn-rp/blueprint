@@ -1,5 +1,5 @@
 import 'package:app_ui/app_ui.dart';
-import 'package:blueprint/tasks/presentation/widgets/priority_chip.dart';
+import 'package:blueprint/tasks/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:task_repository/task_repository.dart';
 
@@ -18,13 +18,8 @@ class TaskCard extends StatelessWidget {
     return EventCard(
       onTap: onTap,
       labels: [
-        LabelChip(
-          text: task.project.platformName,
-          backgroundColor: HexColor.fromHex(task.project.colorHex),
-        ),
-        PriorityChip(
-          task: task,
-        ),
+        ProjectPlatformChip(task: task),
+        PriorityChip(task: task),
         ...task.labels.map(
           (e) => LabelChip(
             text: e.name,

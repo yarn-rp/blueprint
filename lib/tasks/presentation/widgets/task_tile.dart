@@ -1,4 +1,4 @@
-import 'package:blueprint/tasks/presentation/widgets/status_chip.dart';
+import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:task_repository/task_repository.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -45,7 +45,10 @@ class TaskTile extends StatelessWidget {
               children: [
                 // ProjectChip(project: task.project),
                 ...task.labels.map(
-                  (e) => LabelChip(label: e),
+                  (e) => LabelChip(
+                    text: e.name,
+                    backgroundColor: HexColor.fromHex(e.colorHex),
+                  ),
                 ),
               ],
             ),

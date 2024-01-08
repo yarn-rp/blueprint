@@ -1,6 +1,7 @@
+import 'package:app_ui/app_ui.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:blueprint/tasks/presentation/widgets/task_details.dart';
 import 'package:blueprint/tasks/presentation/widgets/task_card.dart';
+import 'package:blueprint/tasks/presentation/widgets/task_details.dart';
 import 'package:blueprint/tasks/state_management/cubit/tasks_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -57,38 +58,41 @@ class _WideTaskPageState extends State<_WideTaskPage> {
       (TasksCubit cubit) => cubit.state.selectedTask,
     );
 
-    return Row(
-      children: [
-        Expanded(
-          child: AnimatedContainer(
-            padding: const EdgeInsets.all(32),
-            curve: Curves.fastLinearToSlowEaseIn,
-            duration: const Duration(milliseconds: 1200),
-            child: ListView(
-              children: [
-                ...widget.tasks.map(
-                  (task) => TaskCard(
-                    task: task,
-                    onTap: () => context.read<TasksCubit>().selectTask(task),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        if (selectedTask != null)
+    return Padding(
+      padding: const EdgeInsets.all(AppSpacing.xlg),
+      child: Row(
+        children: [
           Expanded(
-            flex: 2,
-            child: AnimatedContainer(
+            child: AnimatedSize(
               curve: Curves.fastLinearToSlowEaseIn,
               duration: const Duration(milliseconds: 1200),
-              child: TaskDetails(
-                task: selectedTask,
-                onClose: () {},
+              child: ListView(
+                children: [
+                  ...widget.tasks.map(
+                    (task) => TaskCard(
+                      task: task,
+                      onTap: () => context.read<TasksCubit>().selectTask(task),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
-      ],
+          const SizedBox(width: AppSpacing.xlg),
+          if (selectedTask != null)
+            Expanded(
+              flex: 2,
+              child: AnimatedSize(
+                curve: Curves.fastLinearToSlowEaseIn,
+                duration: const Duration(milliseconds: 1200),
+                child: TaskDetails(
+                  task: selectedTask,
+                  onClose: () => context.read<TasksCubit>().unselectTask(),
+                ),
+              ),
+            ),
+        ],
+      ),
     );
   }
 }

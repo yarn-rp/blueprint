@@ -21,7 +21,7 @@ class EventCard extends StatelessWidget {
     final textTheme = theme.textTheme;
 
     return Card(
-      elevation: 1,
+      elevation: 0,
       child: InkWell(
         onTap: onTap,
         child: ClipRRect(

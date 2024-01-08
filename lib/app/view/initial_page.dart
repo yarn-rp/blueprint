@@ -18,7 +18,7 @@ final navigationPages = [
     route: const TodaysBlueprintRoute(),
   ),
   NavigationPageData(
-    text: 'Might Do',
+    text: 'Tasks',
     icon: Icons.task_sharp,
     route: const TasksRoute(),
   ),
