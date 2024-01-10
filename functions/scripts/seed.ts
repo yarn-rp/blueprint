@@ -1,19 +1,20 @@
 import * as admin from "firebase-admin";
 import * as firebaseConfig from "./../../firebase.json";
+
 const HOST = "localhost";
-let emulatorHost = `${HOST}:8080`; // default value
+const DEFAULT_PORT = "8080";
+let emulatorAddress = `${HOST}:${DEFAULT_PORT}`;
 
 try {
   if (firebaseConfig.emulators && firebaseConfig.emulators.firestore) {
     const { port } = firebaseConfig.emulators.firestore;
-    emulatorHost = `${HOST}:${port}`;
+    emulatorAddress = `${HOST}:${port}`;
   }
 } catch (error) {
   console.error("Error reading firebase.json:", error);
 }
 
-process.env.FIRESTORE_EMULATOR_HOST = emulatorHost;
-// TODO(yarn-rp): receive project id from command line
+process.env.FIRESTORE_EMULATOR_HOST = emulatorAddress;
 process.env.GCLOUD_PROJECT = "polletask-dev";
 
 admin.initializeApp();
@@ -57,7 +58,7 @@ const seedFirestore = async () => {
     },
   ];
 
-  console.info("Seeding Platforms Started on port", emulatorHost);
+  console.info("Seeding Platforms Started on port", emulatorAddress);
   // save platforms
   platforms.map(async (platform) => {
     await db.collection("platforms").doc(platform.id).set(platform);

@@ -1,12 +1,28 @@
 import 'package:flutter/material.dart';
 
-Widget _defaultSelectedItemBuilder(BuildContext context, dynamic item) {
+Widget _defaultSelectedItemBuilder(
+  BuildContext context,
+  dynamic item,
+  String? hintText,
+) {
   final theme = Theme.of(context);
-  return Text(
-    item.toString(),
-    style: theme.textTheme.bodyMedium?.copyWith(
-      color: theme.colorScheme.primary,
-    ),
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      if (hintText != null)
+        Text(
+          hintText,
+          style: theme.textTheme.labelSmall,
+        ),
+      Center(
+        child: Text(
+          item.toString(),
+          style: theme.textTheme.labelLarge?.copyWith(
+            color: theme.colorScheme.primary,
+          ),
+        ),
+      ),
+    ],
   );
 }
 
@@ -23,7 +39,11 @@ class BlueprintDropdown<T> extends StatelessWidget {
   final List<T> items;
   final T? value;
   final ValueChanged<T?>? onChanged;
-  final Widget Function(BuildContext context, T item) selectedItemBuilder;
+  final Widget Function(
+    BuildContext context,
+    T item,
+    String? hint,
+  )? selectedItemBuilder;
   final String? hintText;
 
   @override
@@ -32,6 +52,7 @@ class BlueprintDropdown<T> extends StatelessWidget {
 
     return DropdownButton<T>(
       value: value,
+      focusColor: Colors.transparent,
       hint: hintText != null
           ? Text(
               hintText!,
@@ -41,8 +62,11 @@ class BlueprintDropdown<T> extends StatelessWidget {
             )
           : null,
       underline: const SizedBox(),
-      selectedItemBuilder: (context) =>
-          items.map((e) => selectedItemBuilder(context, e)).toList(),
+      selectedItemBuilder: selectedItemBuilder != null
+          ? (context) => items
+              .map((e) => selectedItemBuilder!(context, e, hintText))
+              .toList()
+          : null,
       items: items
           .map(
             (item) => DropdownMenuItem<T>(

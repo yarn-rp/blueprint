@@ -1,5 +1,4 @@
 import 'package:blueprint/blueprint/state_management/todays_blueprint/todays_blueprint_cubit.dart';
-import 'package:blueprint/tasks/presentation/widgets/priority_widget.dart';
 import 'package:blueprint_repository/blueprint_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,7 +27,6 @@ class TaskEventTile extends StatelessWidget {
         borderRadius: const BorderRadius.all(Radius.circular(4)),
       ),
       child: ListTile(
-        leading: PriorityWidget(priority: appointment.task.priority),
         isThreeLine: true,
         title: Text(
           appointment.task.title,

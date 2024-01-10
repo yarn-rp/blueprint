@@ -9,8 +9,13 @@ import 'package:task_repository/task_repository.dart';
 @module
 abstract class TaskModule {
   @injectable
-  TasksCubit taskCubit(TaskRepository taskRepository) => TasksCubit(
+  TasksCubit taskCubit(
+    TaskRepository taskRepository,
+    IntegrationsRepository integrationsRepository,
+  ) =>
+      TasksCubit(
         taskRepository,
+        integrationsRepository,
       );
 
   @singleton

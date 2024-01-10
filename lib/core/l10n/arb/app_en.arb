@@ -1,6 +1,10 @@
 {
     "@@locale": "en",
     "accept":"Accept",
+    "assignees": "Assignees",
+    "@assignees": {
+        "description": "Title for assignees section"
+    },
     "cancel": "Cancel",
     "@cancel": {
         "description": "Cancel word"
@@ -21,7 +25,27 @@
     "@createTodaysBlueprintDescription": {
         "description": "Description for the Create Today's Blueprint page"
     },
+    "created": "Created",
+    "@created": {
+        "description": "Created at prefix"
+    },
+    "createdBy": "Created by",
+    "@createdBy": {
+        "description": "Refers to created by section"
+    },
+    "details": "Details",
+    "@details": {
+        "description": "Details word"
+    },
+    "description": "Description",
+    "@description": {
+        "description": "Description word"
+    },
     "doNotHaveAccount":"Don't have an account?",
+    "dueDate": "Due Date",
+    "@dueDate": {
+        "description": "Due date for an event or task"
+    },
     "email":"Email",
     "endTime": "End Time",
     "@endTime": {
@@ -32,9 +56,21 @@
     "@integrationsDropdownHint": {
         "description": "Title for the integrations dropdown"
     },
+    "tasksPageTitle": "My tasks",
+    "@tasksPageTitle": {
+        "description": "Title for the my tasks page"
+    },
     "newTaskTitle": "(Task Title)",
     "@newTaskTitle": {
         "description": "Title for creating a new task on the create blueprint"
+    },
+    "noTaskMatchesTitle": "We have not found any tasks",
+    "@noTaskMatchesTitle": {
+        "description": "Title for when no tasks matching search"
+    },
+    "noTaskMatchesSubtitle": "Please adjust your search filters to get results",
+    "@noTaskMatchesSubtitle": {
+        "description": "Subtitle for when no tasks matching search"
     },
     "selectTask": "Select a Task",
     "@selectTask": {
@@ -58,9 +94,17 @@
     "@sortByDropdownHint": {
         "description": "Sort By word dropdown title"
     },
+    "startDate": "Start Date",
+    "@startDate": {
+        "description": "Start date for an event or task"
+    },
     "startTime": "Start Time",
     "@startTime": {
         "description": "Start time for an event or task"
+    },
+    "updated": "Updated",
+    "@updated": {
+        "description": "Updated at prefix"
     },
     "darkMode":"Dark Mode",
     "lightMode":"Light Mode"

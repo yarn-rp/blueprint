@@ -21,6 +21,12 @@ final lightTheme = ThemeData(
     elevation: 0,
     scrolledUnderElevation: 0,
   ),
+  dividerColor: lightColorScheme.outlineVariant,
+  dividerTheme: DividerThemeData(
+    thickness: 1,
+    space: 0,
+    color: lightColorScheme.outlineVariant,
+  ),
   filledButtonTheme: FilledButtonThemeData(
     style: FilledButton.styleFrom(
       minimumSize: const Size(_buttonMinWidth, _buttonMinHeight),
@@ -57,16 +63,18 @@ final lightTheme = ThemeData(
       EdgeInsets.symmetric(horizontal: AppSpacing.lg),
     ),
     backgroundColor: MaterialStateProperty.all(
-      lightColorScheme.surface,
+      lightColorScheme.outlineVariant.withOpacity(.2),
     ),
+    elevation: MaterialStateProperty.all(0),
     textStyle: MaterialStateProperty.all(
       customTextTheme.bodyLarge,
     ),
   ),
   cardTheme: CardTheme(
-    color: lightColorScheme.surface,
+    color: lightColorScheme.outlineVariant.withOpacity(.2),
+    elevation: 0,
   ),
-  cardColor: lightColorScheme.surface,
+  cardColor: lightColorScheme.outlineVariant.withOpacity(.2),
 );
 
 /// {@template app_theme}
@@ -81,6 +89,14 @@ final darkTheme = ThemeData(
     foregroundColor: darkColorScheme.onBackground,
     elevation: 0,
     scrolledUnderElevation: 0,
+  ),
+  dividerColor: darkColorScheme.outlineVariant,
+  dividerTheme: DividerThemeData(
+    indent: 0,
+    endIndent: 0,
+    thickness: 1,
+    space: 0,
+    color: darkColorScheme.outlineVariant,
   ),
   filledButtonTheme: FilledButtonThemeData(
     style: FilledButton.styleFrom(
@@ -114,15 +130,20 @@ final darkTheme = ThemeData(
     elevation: 0,
   ),
   searchBarTheme: SearchBarThemeData(
-    backgroundColor: MaterialStateProperty.all(
-      darkColorScheme.surface,
+    padding: const MaterialStatePropertyAll(
+      EdgeInsets.symmetric(horizontal: AppSpacing.lg),
     ),
+    backgroundColor: MaterialStateProperty.all(
+      darkColorScheme.outline.withOpacity(0.2),
+    ),
+    elevation: MaterialStateProperty.all(0),
     textStyle: MaterialStateProperty.all(
       customTextTheme.bodyLarge,
     ),
   ),
   cardTheme: CardTheme(
-    color: darkColorScheme.surface,
+    color: darkColorScheme.outline.withOpacity(0.2),
+    elevation: 0,
   ),
-  cardColor: darkColorScheme.surface,
+  cardColor: darkColorScheme.outline.withOpacity(0.2),
 );
