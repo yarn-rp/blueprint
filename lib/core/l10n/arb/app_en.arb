@@ -56,9 +56,21 @@
     "@integrationsDropdownHint": {
         "description": "Title for the integrations dropdown"
     },
+    "tasksPageTitle": "My tasks",
+    "@tasksPageTitle": {
+        "description": "Title for the my tasks page"
+    },
     "newTaskTitle": "(Task Title)",
     "@newTaskTitle": {
         "description": "Title for creating a new task on the create blueprint"
+    },
+    "noTaskMatchesTitle": "We have not found any tasks",
+    "@noTaskMatchesTitle": {
+        "description": "Title for when no tasks matching search"
+    },
+    "noTaskMatchesSubtitle": "Please adjust your search filters to get results",
+    "@noTaskMatchesSubtitle": {
+        "description": "Subtitle for when no tasks matching search"
     },
     "selectTask": "Select a Task",
     "@selectTask": {

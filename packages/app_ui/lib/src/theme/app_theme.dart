@@ -63,8 +63,9 @@ final lightTheme = ThemeData(
       EdgeInsets.symmetric(horizontal: AppSpacing.lg),
     ),
     backgroundColor: MaterialStateProperty.all(
-      lightColorScheme.surface,
+      lightColorScheme.outlineVariant.withOpacity(.2),
     ),
+    elevation: MaterialStateProperty.all(0),
     textStyle: MaterialStateProperty.all(
       customTextTheme.bodyLarge,
     ),
@@ -129,9 +130,13 @@ final darkTheme = ThemeData(
     elevation: 0,
   ),
   searchBarTheme: SearchBarThemeData(
-    backgroundColor: MaterialStateProperty.all(
-      darkColorScheme.surface,
+    padding: const MaterialStatePropertyAll(
+      EdgeInsets.symmetric(horizontal: AppSpacing.lg),
     ),
+    backgroundColor: MaterialStateProperty.all(
+      darkColorScheme.outline.withOpacity(0.2),
+    ),
+    elevation: MaterialStateProperty.all(0),
     textStyle: MaterialStateProperty.all(
       customTextTheme.bodyLarge,
     ),
@@ -140,5 +145,5 @@ final darkTheme = ThemeData(
     color: darkColorScheme.outline.withOpacity(0.2),
     elevation: 0,
   ),
-  cardColor: darkColorScheme.outline,
+  cardColor: darkColorScheme.outline.withOpacity(0.2),
 );

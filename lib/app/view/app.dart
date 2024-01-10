@@ -23,7 +23,11 @@ class App extends StatelessWidget {
           value: sl<AuthenticationCubit>(),
         ),
         BlocProvider.value(value: sl<SettingsBloc>()),
-        BlocProvider.value(value: sl<TasksCubit>()),
+        BlocProvider.value(
+          value: sl<TasksCubit>()
+            ..fetchPlatforms()
+            ..fetchTasks(),
+        ),
         BlocProvider.value(value: sl<IntegrationsCubit>()),
         BlocProvider.value(value: sl<TodaysBlueprintCubit>()),
         BlocProvider.value(value: sl<UserCubit>()),

@@ -19,7 +19,12 @@ enum SortField {
 
 /// A class that represents a sort order.
 class SortBy {
-  const SortBy(this.field, this.direction);
+  const SortBy(
+    this.field,
+    this.direction,
+    this.name,
+  );
   final SortField field;
   final SortDirection direction;
+  final String name;
 }

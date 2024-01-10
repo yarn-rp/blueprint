@@ -1,7 +1,5 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:blueprint/core/l10n/l10n.dart';
-import 'package:blueprint/tasks/presentation/widgets/priority_chip.dart';
-import 'package:blueprint/tasks/presentation/widgets/user_tile.dart';
 import 'package:blueprint/tasks/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:jiffy/jiffy.dart';
@@ -103,7 +101,6 @@ class _TaskDescriptionSection extends StatelessWidget {
 class _TaskDetailsSection extends StatelessWidget {
   const _TaskDetailsSection({
     required this.task,
-    super.key,
   });
 
   final Task task;
@@ -111,7 +108,6 @@ class _TaskDetailsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final theme = Theme.of(context);
 
     return Section(
       title: l10n.details,
@@ -326,7 +322,12 @@ class _TaskLabels extends StatelessWidget {
       children: [
         ProjectPlatformChip(task: task),
         PriorityChip(task: task),
-        ...task.labels.map((e) => LabelChip(text: e.name)),
+        ...task.labels.map(
+          (e) => LabelChip(
+            text: e.name,
+            backgroundColor: HexColor.fromHex(e.colorHex),
+          ),
+        ),
       ],
     );
   }

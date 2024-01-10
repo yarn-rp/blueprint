@@ -74,7 +74,7 @@ class AppRouter extends _$AppRouter {
               ],
             ),
             AutoRoute(
-              path: 'might-do',
+              path: 'tasks',
               page: TasksRoute.page,
             ),
             AutoRoute(

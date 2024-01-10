@@ -1,7 +1,9 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collection/collection.dart';
 import 'package:integrations_repository/integrations_repository.dart';
-import 'package:stream_transform/stream_transform.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:task_repository/src/entities/entities.dart';
 
 const _usersCollectionName = 'users';
@@ -29,6 +31,7 @@ class TaskRepository {
     required FirebaseFirestore firestore,
   }) {
     _usersCollection = firestore.collection(_usersCollectionName);
+    _allUserTasks = BehaviorSubject<Iterable<Task>>();
   }
 
   /// Stream of the current user id.
@@ -37,16 +40,67 @@ class TaskRepository {
   /// Stream of all supported platforms.
   final Stream<Iterable<Platform>> platformsStream;
 
+  /// The collection of users.
   late final CollectionReference _usersCollection;
+
+  /// The tasks
+  late final BehaviorSubject<Iterable<Task>> _allUserTasks;
+
+  /// The subscription to the tasks
+  StreamSubscription<Iterable<Task>>? _tasksSubscription;
+
+  Stream<Iterable<Task>> _getAllTasksRelatedToMe() {
+    if (_tasksSubscription != null) {
+      return _allUserTasks.stream;
+    }
+
+    _tasksSubscription = currentUserIdStream.switchMap<Iterable<Task>>(
+      (userId) {
+        if (userId == null) {
+          return const Stream.empty();
+        }
+        final userData = _usersCollection.doc(userId);
+        // TODO(yarn-rp): change this for plans when plan oriented DB is
+        // implemented
+        final tasksSubCollection =
+            userData.collection('tasks').withConverter<Task>(
+                  fromFirestore: taskConverter.fromFirestore,
+                  toFirestore: taskConverter.toFirestore,
+                );
+
+        return platformsStream.switchMap(
+          (platforms) => tasksSubCollection.snapshots().map(
+                (tasks) => tasks.docs.map((task) {
+                  final taskEntity = task.data();
+                  final taskPlatform = platforms.firstWhere(
+                    (platform) =>
+                        platform.displayName == taskEntity.project.platformName,
+                  );
+                  return taskEntity.copyWith(
+                    project: taskEntity.project.copyWith(
+                      platform: taskPlatform,
+                    ),
+                  );
+                }),
+              ),
+        );
+      },
+    ).listen((tasks) {
+      print('adding tasks $tasks');
+      _allUserTasks.add(tasks);
+    });
+
+    return _allUserTasks.stream;
+  }
 
   /// Returns a stream of all tasks that are related to the current user in all
   /// the projects that are linked to the app.
-  Stream<Iterable<Task>> getAllTasksRelatedToMe({
+  Stream<Iterable<Task>> getTasks({
     String? query,
     String? platformId,
     SortBy? sortBy,
   }) =>
-      _getTasks().map((event) {
+      _getAllTasksRelatedToMe().map((event) {
         // This is a big tech debt, but for now we will filter the tasks here
         // because it's going to be easier to implement than to do it in the
         // backend.
@@ -118,39 +172,4 @@ class TaskRepository {
         }
         return taskList;
       });
-
-  Stream<Iterable<Task>> _getTasks() =>
-      currentUserIdStream.switchMap<Iterable<Task>>(
-        (userId) {
-          if (userId == null) {
-            return const Stream.empty();
-          }
-          final userData = _usersCollection.doc(userId);
-          // TODO(yarn-rp): change this for plans when plan oriented DB is
-          // implemented
-          final tasksSubCollection =
-              userData.collection('tasks').withConverter<Task>(
-                    fromFirestore: taskConverter.fromFirestore,
-                    toFirestore: taskConverter.toFirestore,
-                  );
-
-          return platformsStream.switchMap(
-            (platforms) => tasksSubCollection.snapshots().map(
-                  (tasks) => tasks.docs.map((task) {
-                    final taskEntity = task.data();
-                    final taskPlatform = platforms.firstWhere(
-                      (platform) =>
-                          platform.displayName ==
-                          taskEntity.project.platformName,
-                    );
-                    return taskEntity.copyWith(
-                      project: taskEntity.project.copyWith(
-                        platform: taskPlatform,
-                      ),
-                    );
-                  }),
-                ),
-          );
-        },
-      );
 }

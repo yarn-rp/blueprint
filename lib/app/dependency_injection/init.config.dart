@@ -84,10 +84,6 @@ extension GetItInjectableX on _i1.GetIt {
     gh.lazySingleton<_i3.FacebookAuthenticationProvider>(
         () => authenticationModule.facebookAuthenticationProvider());
     gh.singleton<_i4.FirebaseOptions>(
-      firebaseModule.localFirebaseOptions,
-      registerFor: {_local},
-    );
-    gh.singleton<_i4.FirebaseOptions>(
       firebaseModule.developmentFirebaseOptions,
       registerFor: {_dev},
     );
@@ -98,6 +94,10 @@ extension GetItInjectableX on _i1.GetIt {
     gh.singleton<_i4.FirebaseOptions>(
       firebaseModule.stagingFirebaseOptions,
       registerFor: {_stg},
+    );
+    gh.singleton<_i4.FirebaseOptions>(
+      firebaseModule.localFirebaseOptions,
+      registerFor: {_local},
     );
     gh.lazySingleton<_i5.FlutterSecureStorage>(
         () => coreModule.flutterSecureStorage());
@@ -147,8 +147,10 @@ extension GetItInjectableX on _i1.GetIt {
       gh<_i13.IntegrationsRepository>(),
       gh<_i3.AuthenticationRepositoryContract>(),
     ));
-    gh.factory<_i18.TasksCubit>(
-        () => taskModule.taskCubit(gh<_i17.TaskRepository>()));
+    gh.factory<_i18.TasksCubit>(() => taskModule.taskCubit(
+          gh<_i17.TaskRepository>(),
+          gh<_i13.IntegrationsRepository>(),
+        ));
     gh.lazySingleton<_i19.UserRepository>(() => userModule.userRepository(
           gh<_i9.FirebaseFirestore>(),
           gh<_i3.AuthenticationRepositoryContract>(),

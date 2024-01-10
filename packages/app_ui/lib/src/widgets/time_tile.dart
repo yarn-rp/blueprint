@@ -18,9 +18,9 @@ class TimeTile extends StatelessWidget {
     return Row(
       children: [
         Icon(
-          Icons.access_time,
-          size: AppSpacing.lg,
-          color: theme.colorScheme.primary,
+          Icons.event_rounded,
+          size: 24,
+          color: textTheme.bodyMedium?.color,
         ),
         const SizedBox(
           width: AppSpacing.sm,

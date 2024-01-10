@@ -8,12 +8,14 @@ class EventCard extends StatelessWidget {
     this.dateAndTime,
     this.onTap,
     super.key,
+    this.backgroundColor,
   });
 
   final EventListTile title;
   final String? dateAndTime;
   final List<LabelChip> labels;
   final VoidCallback? onTap;
+  final Color? backgroundColor;
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +24,7 @@ class EventCard extends StatelessWidget {
 
     return Card(
       elevation: 0,
+      color: backgroundColor,
       child: InkWell(
         onTap: onTap,
         child: ClipRRect(

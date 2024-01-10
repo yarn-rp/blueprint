@@ -16,8 +16,8 @@ class LabelChip extends StatelessWidget {
   Widget build(BuildContext context) {
     final foregroundColor = switch (backgroundColor?.computeLuminance()) {
       null => null,
-      < 0.5 => Colors.white,
       >= 0.5 => Colors.black,
+      < 0.5 => Colors.white,
       _ => null,
     };
 
@@ -31,7 +31,18 @@ class LabelChip extends StatelessWidget {
               color: foregroundColor,
             ),
       ),
-      avatar: avatar,
+      avatar: avatar == null
+          ? null
+          : Theme(
+              data: Theme.of(context).copyWith(
+                iconTheme: Theme.of(context).iconTheme.copyWith(
+                      color: foregroundColor,
+                    ),
+              ),
+              child: Center(
+                child: avatar,
+              ),
+            ),
     );
   }
 }
