@@ -47,6 +47,7 @@ class TaskRepository {
   late final BehaviorSubject<Iterable<Task>> _allUserTasks;
 
   /// The subscription to the tasks
+  // ignore: cancel_subscriptions
   StreamSubscription<Iterable<Task>>? _tasksSubscription;
 
   Stream<Iterable<Task>> _getAllTasksRelatedToMe() {
@@ -86,7 +87,6 @@ class TaskRepository {
         );
       },
     ).listen((tasks) {
-      print('adding tasks $tasks');
       _allUserTasks.add(tasks);
     });
 

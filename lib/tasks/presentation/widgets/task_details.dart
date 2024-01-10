@@ -200,7 +200,7 @@ class _TaskCreatedBy extends StatelessWidget {
         platformUrl: creator.platformURL,
         avatarUrl: creator.avatarUrl,
         displayName: creator.displayName,
-        // TODO: add email
+        // TODO(yarn-rp): add email to user entity
         email: null,
       ),
     );
