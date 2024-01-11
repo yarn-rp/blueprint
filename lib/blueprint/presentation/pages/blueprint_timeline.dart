@@ -1,5 +1,5 @@
 import 'package:app_ui/app_ui.dart';
-import 'package:blueprint/blueprint/state_management/todays_blueprint/todays_blueprint_cubit.dart';
+import 'package:blueprint/blueprint/state_management/blueprint_bloc/blueprint_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -57,20 +57,21 @@ class _Timeline extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TodaysBlueprintCubit, TodaysBlueprintState>(
+    return BlocBuilder<BlueprintBloc, BlueprintState>(
       builder: (context, state) {
         return TodayTimeline(
-          events: state.calendarEvents.map((e) {
+          events: state.items.map((e) {
             return (
+              id: e.id,
               subject: e.subject,
               startTime: e.startTime,
               endTime: e.endTime,
               color: HexColor.fromHex(e.color),
-              typeLabel: e.map(
+              type: e.map(
                 event: (event) => event.event.conferenceData != null
-                    ? EventTypeLabel.videoConference()
-                    : EventTypeLabel.calendar(),
-                task: (task) => EventTypeLabel.calendar(),
+                    ? EventType.meeting
+                    : EventType.calendar,
+                task: (task) => EventType.task,
               ),
             );
           }).toList(),

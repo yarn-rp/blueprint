@@ -126,6 +126,7 @@ class _TasksList extends StatelessWidget {
     final selectedTask = context.select(
       (TasksCubit cubit) => cubit.state.selectedTask,
     );
+
     if (tasks.isEmpty) {
       return Align(
         alignment: Alignment.topCenter,
@@ -149,6 +150,7 @@ class _TasksList extends StatelessWidget {
         ),
       );
     }
+
     return AnimatedSize(
       curve: Curves.fastLinearToSlowEaseIn,
       duration: const Duration(milliseconds: 1200),

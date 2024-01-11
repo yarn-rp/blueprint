@@ -23,6 +23,7 @@ class _TodaysTimelineComponentState extends State<TodaysTimelineComponent> {
   void didChangeDependencies() {
     events = [
       (
+        id: 'test-1',
         subject: context.knobs.text(
           label: 'Event 1',
           initial: 'Meeting with Design team',
@@ -30,22 +31,24 @@ class _TodaysTimelineComponentState extends State<TodaysTimelineComponent> {
         startTime: DateTime.now(),
         endTime: DateTime.now().add(const Duration(hours: 1)),
         color: null,
-        typeLabel: EventTypeLabel.videoConference(),
+        type: EventType.meeting,
       ),
       (
+        id: 'test-2',
         subject: context.knobs.text(label: 'Event 2', initial: 'Go for a run'),
         startTime: DateTime.now().add(const Duration(hours: 1)),
         endTime: DateTime.now().add(const Duration(hours: 2)),
         color: Colors.amberAccent,
-        typeLabel: EventTypeLabel.calendar(),
+        type: EventType.calendar,
       ),
       (
+        id: 'test-3',
         subject: context.knobs
             .text(label: 'Event 3', initial: 'Implement flutter storybook'),
         startTime: DateTime.now().add(const Duration(hours: 2)),
         endTime: DateTime.now().add(const Duration(hours: 4)),
         color: null,
-        typeLabel: EventTypeLabel.task(),
+        type: EventType.task,
       ),
     ];
     super.didChangeDependencies();
@@ -71,11 +74,12 @@ class _TodaysTimelineComponentState extends State<TodaysTimelineComponent> {
 
                   setState(() {
                     events[index] = (
+                      id: event.id,
                       subject: event.subject,
                       startTime: startDate,
                       endTime: endDate,
                       color: event.color,
-                      typeLabel: event.typeLabel,
+                      type: event.type,
                     );
                   });
                 },

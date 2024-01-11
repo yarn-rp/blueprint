@@ -63,6 +63,7 @@ dependencies:
   url_strategy: ^0.2.0
   user_repository:
     path: ./packages/user_repository
+  uuid: ^4.3.2
 
 dev_dependencies:
   auto_route_generator: ^7.3.1

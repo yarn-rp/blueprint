@@ -1,6 +1,6 @@
 import 'package:blueprint_repository/src/entities/entities.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:stream_transform/stream_transform.dart';
+import 'package:rxdart/rxdart.dart';
 
 const _usersCollectionName = 'users';
 
@@ -13,11 +13,14 @@ class BlueprintRepository {
     required Stream<String?> currentUserIdStream,
     required FirebaseFirestore firestore,
   }) {
-    _currentUserIdStream = currentUserIdStream;
+    _currentUserIdStream = BehaviorSubject<String?>();
+    currentUserIdStream.listen((event) {
+      _currentUserIdStream.add(event);
+    });
     _usersCollection = firestore.collection(_usersCollectionName);
   }
 
-  late final Stream<String?> _currentUserIdStream;
+  late final BehaviorSubject<String?> _currentUserIdStream;
 
   late final CollectionReference _usersCollection;
 
@@ -31,24 +34,23 @@ class BlueprintRepository {
       return userDoc.snapshots().map((snapshot) {
         final userData = snapshot.data() as Map<String, dynamic>?;
         final blueprint = userData?['blueprint'] as List<dynamic>? ?? [];
-        return blueprint.map((e) {
-          if (e is! Map<String, dynamic>) {
-            throw Exception('This is not a map');
-          }
-          return CalendarEvent.fromJson(e);
-        }).toList();
+        return blueprint
+            .map((e) => CalendarEvent.fromJson(e as Map<String, dynamic>))
+            .toList();
       });
     });
   }
 
   /// Saves the todays blueprint of the current user
-  Future<void> saveBlueprints(List<CalendarEvent> blueprint) async {
-    final userId = await _currentUserIdStream.first;
+  Future<void> saveBlueprint(List<CalendarEvent> blueprint) async {
+    final userId = _currentUserIdStream.value;
+    if (userId == null) {
+      return;
+    }
     final userDoc = _usersCollection.doc(userId);
-    final userData = (await userDoc.get()).data() as Map<String, dynamic>?;
+
     final blueprintsJson = blueprint.map((e) => e.toJson()).toList();
-    await userDoc.set({
-      ...?userData,
+    await userDoc.update({
       'blueprint': blueprintsJson,
     });
   }

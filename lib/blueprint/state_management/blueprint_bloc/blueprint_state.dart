@@ -1,49 +1,43 @@
 part of 'blueprint_bloc.dart';
 
-sealed class BlueprintState extends Equatable {
-  const BlueprintState();
-}
+enum BlueprintStatus { initial, loading, loaded, error }
 
-class BlueprintInitial extends BlueprintState {
-  const BlueprintInitial();
-
-  @override
-  List<Object?> get props => [];
-}
-
-class BlueprintScheduled extends BlueprintState {
-  const BlueprintScheduled({
-    required this.items,
-    required this.events,
+class BlueprintState extends Equatable {
+  const BlueprintState({
+    this.items = const [],
+    this.status = BlueprintStatus.initial,
   });
 
+  final BlueprintStatus status;
   final List<CalendarEvent> items;
-  final List<GeneralCalendarEvent> events;
+
+  BlueprintState copyWith({
+    List<CalendarEvent>? items,
+    BlueprintStatus? status,
+  }) {
+    return BlueprintState(
+      items: items ?? this.items,
+      status: status ?? this.status,
+    );
+  }
+
+  /// Returns event that is happening right now
+  CalendarEvent? get currentBlueprintEvent {
+    final now = DateTime.now();
+    final currentEvents = items.where((event) {
+      return event.startTime.isBefore(now) && event.endTime.isAfter(now);
+    }).toList();
+
+    return currentEvents.firstOrNull;
+  }
+
+  Iterable<CalendarEvent> get upcomingBlueprintEvents {
+    final now = DateTime.now();
+    return items.where((event) {
+      return event.startTime.isAfter(now);
+    }).toList();
+  }
 
   @override
-  List<Object?> get props => [items, events];
-}
-
-class BlueprintNotScheduled extends BlueprintState {
-  const BlueprintNotScheduled({
-    required this.events,
-  });
-
-  final List<GeneralCalendarEvent> events;
-
-  @override
-  List<Object?> get props => [
-        events,
-      ];
-}
-
-class BlueprintError extends BlueprintState {
-  const BlueprintError({
-    required this.error,
-  });
-
-  final String error;
-
-  @override
-  List<Object?> get props => [error];
+  List<Object?> get props => [items, status];
 }

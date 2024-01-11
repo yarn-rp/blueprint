@@ -24,14 +24,14 @@ import 'package:blueprint/authentication/state_management/sign_out_cubit/sign_ou
 import 'package:blueprint/authentication/state_management/sign_up_cubit/sign_up_cubit.dart'
     as _i16;
 import 'package:blueprint/blueprint/module/blueprint_module.dart' as _i29;
-import 'package:blueprint/blueprint/state_management/todays_blueprint/todays_blueprint_cubit.dart'
-    as _i23;
+import 'package:blueprint/blueprint/state_management/blueprint_bloc/blueprint_bloc.dart'
+    as _i21;
 import 'package:blueprint/calendar/module/calendar_module.dart' as _i33;
 import 'package:blueprint/core/module/core_module.dart' as _i27;
 import 'package:blueprint/core/module/firebase_module.dart' as _i26;
 import 'package:blueprint/integrations/module/integrations_module.dart' as _i30;
 import 'package:blueprint/integrations/state_management/integrations_repository/integrations_cubit.dart'
-    as _i22;
+    as _i23;
 import 'package:blueprint/settings/module/settings_module.dart' as _i28;
 import 'package:blueprint/settings/state_management/bloc/settings_bloc.dart'
     as _i7;
@@ -41,7 +41,7 @@ import 'package:blueprint/tasks/state_management/cubit/tasks_cubit.dart'
 import 'package:blueprint/users/module/user_module.dart' as _i32;
 import 'package:blueprint/users/state_management/cubit/user_cubit.dart' as _i24;
 import 'package:blueprint_repository/blueprint_repository.dart' as _i11;
-import 'package:calendar_repository/calendar_repository.dart' as _i21;
+import 'package:calendar_repository/calendar_repository.dart' as _i22;
 import 'package:cloud_firestore/cloud_firestore.dart' as _i9;
 import 'package:cloud_functions/cloud_functions.dart' as _i10;
 import 'package:firebase_auth/firebase_auth.dart' as _i8;
@@ -84,16 +84,16 @@ extension GetItInjectableX on _i1.GetIt {
     gh.lazySingleton<_i3.FacebookAuthenticationProvider>(
         () => authenticationModule.facebookAuthenticationProvider());
     gh.singleton<_i4.FirebaseOptions>(
-      firebaseModule.developmentFirebaseOptions,
-      registerFor: {_dev},
+      firebaseModule.stagingFirebaseOptions,
+      registerFor: {_stg},
     );
     gh.singleton<_i4.FirebaseOptions>(
       firebaseModule.productionFirebaseOptions,
       registerFor: {_prod},
     );
     gh.singleton<_i4.FirebaseOptions>(
-      firebaseModule.stagingFirebaseOptions,
-      registerFor: {_stg},
+      firebaseModule.developmentFirebaseOptions,
+      registerFor: {_dev},
     );
     gh.singleton<_i4.FirebaseOptions>(
       firebaseModule.localFirebaseOptions,
@@ -157,19 +157,16 @@ extension GetItInjectableX on _i1.GetIt {
         ));
     gh.lazySingleton<_i20.AuthenticationCubit>(() => authenticationModule
         .authenticationCubit(gh<_i3.AuthenticationRepositoryContract>()));
-    gh.singleton<_i21.CalendarRepository>(calendarModule.taskRepository(
+    gh.lazySingleton<_i21.BlueprintBloc>(
+        () => blueprintModule.blueprintBloc(gh<_i11.BlueprintRepository>()));
+    gh.singleton<_i22.CalendarRepository>(calendarModule.taskRepository(
       gh<_i9.FirebaseFirestore>(),
       gh<_i10.FirebaseFunctions>(),
       gh<_i13.IntegrationsRepository>(),
       gh<_i3.AuthenticationRepositoryContract>(),
     ));
-    gh.lazySingleton<_i22.IntegrationsCubit>(() => integrationsModule
+    gh.lazySingleton<_i23.IntegrationsCubit>(() => integrationsModule
         .integrationsCubit(gh<_i13.IntegrationsRepository>()));
-    gh.lazySingleton<_i23.TodaysBlueprintCubit>(
-        () => blueprintModule.blueprintCubit(
-              gh<_i7.SettingsBloc>(),
-              gh<_i21.CalendarRepository>(),
-            ));
     gh.lazySingleton<_i24.UserCubit>(
         () => userModule.userCubit(gh<_i19.UserRepository>()));
     return this;

@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:auto_route/auto_route.dart';
 import 'package:blueprint/blueprint/presentation/pages/blueprint_timeline.dart';
 import 'package:blueprint/blueprint/presentation/widgets/calendar_event_tile.dart';
-import 'package:blueprint/blueprint/state_management/todays_blueprint/todays_blueprint_cubit.dart';
+import 'package:blueprint/blueprint/state_management/blueprint_bloc/blueprint_bloc.dart';
 import 'package:blueprint_repository/blueprint_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,10 +21,10 @@ class TodaysBlueprintPage extends StatelessWidget {
         children: [
           Flexible(
             flex: 4,
-            child: BlocBuilder<TodaysBlueprintCubit, TodaysBlueprintState>(
+            child: BlocBuilder<BlueprintBloc, BlueprintState>(
               builder: (context, state) {
-                final currentEvent = state.currentEvent;
-                final nextEvents = state.nextEvents;
+                final currentEvent = state.currentBlueprintEvent;
+                final nextEvents = state.upcomingBlueprintEvents;
                 return ListView(
                   padding: const EdgeInsetsDirectional.all(16),
                   children: [
@@ -50,7 +50,7 @@ class TodaysBlueprintPage extends StatelessWidget {
                         ),
                       ),
                     ],
-                    if (nextEvents?.isNotEmpty ?? false) ...[
+                    if (nextEvents.isNotEmpty) ...[
                       const SizedBox(height: 32),
                       NextOnBlueprint(nextEvents: nextEvents),
                     ],

@@ -1,7 +1,5 @@
-import 'package:blueprint/blueprint/state_management/todays_blueprint/todays_blueprint_cubit.dart';
 import 'package:blueprint_repository/blueprint_repository.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 class TaskEventTile extends StatelessWidget {
@@ -41,9 +39,7 @@ class TaskEventTile extends StatelessWidget {
           children: [
             if (showDeleteButton)
               IconButton(
-                onPressed: () => context
-                    .read<TodaysBlueprintCubit>()
-                    .removeEvent(appointment),
+                onPressed: () {},
                 icon: const Icon(Icons.delete),
               ),
           ],

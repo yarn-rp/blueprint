@@ -30,6 +30,9 @@ abstract class AppSpacing {
   /// xxxlg pacing value (64pt)
   static const double xxxlg = 4 * spaceUnit;
 
+  /// xxxxlg spacing value (128pt)
+  static const double xxxxlg = 8 * spaceUnit;
+
   /// The height of the app bar (72pt)
   static const double appBarHeight = 72;
 

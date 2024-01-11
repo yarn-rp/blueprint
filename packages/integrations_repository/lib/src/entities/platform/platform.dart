@@ -55,8 +55,14 @@ sealed class Authentication {
 
   static Map<String, dynamic> toJson(Authentication authentication) {
     return switch (authentication) {
-      Basic() => authentication.toJson(),
-      OAuth2() => authentication.toJson(),
+      Basic() => {
+          'type': 'basic',
+          ...authentication.toJson(),
+        },
+      OAuth2() => {
+          ...authentication.toJson(),
+          'type': 'oauth2',
+        },
     };
   }
 }
