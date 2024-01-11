@@ -1,14 +1,15 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 
-class EventCard extends StatelessWidget {
-  const EventCard({
+class BlueprintEventCard extends StatelessWidget {
+  const BlueprintEventCard({
     required this.title,
     required this.labels,
     this.dateAndTime,
     this.onTap,
     super.key,
     this.backgroundColor,
+    this.actions = const [],
   });
 
   final EventListTile title;
@@ -16,6 +17,7 @@ class EventCard extends StatelessWidget {
   final List<LabelChip> labels;
   final VoidCallback? onTap;
   final Color? backgroundColor;
+  final List<Widget> actions;
 
   @override
   Widget build(BuildContext context) {
@@ -33,9 +35,9 @@ class EventCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               title,
-              if (dateAndTime != null)
+              if (dateAndTime != null) ...[
+                const SizedBox(height: AppSpacing.xlg),
                 SizedBox(
-                  height: 44,
                   child: Padding(
                     padding:
                         const EdgeInsets.symmetric(horizontal: AppSpacing.lg),
@@ -57,7 +59,8 @@ class EventCard extends StatelessWidget {
                     ),
                   ),
                 ),
-              const SizedBox(height: AppSpacing.xlg),
+              ],
+              const SizedBox(height: AppSpacing.md),
               ConstrainedBox(
                 constraints: const BoxConstraints(
                   maxHeight: AppSpacing.xxxxlg,
@@ -68,11 +71,17 @@ class EventCard extends StatelessWidget {
                     horizontal: AppSpacing.lg,
                     vertical: AppSpacing.md,
                   ),
-                  child: Wrap(
-                    runAlignment: WrapAlignment.center,
-                    spacing: AppSpacing.lg,
-                    runSpacing: AppSpacing.lg,
-                    children: labels,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Wrap(
+                        runAlignment: WrapAlignment.center,
+                        spacing: AppSpacing.lg,
+                        runSpacing: AppSpacing.lg,
+                        children: labels,
+                      ),
+                      ...actions,
+                    ],
                   ),
                 ),
               ),

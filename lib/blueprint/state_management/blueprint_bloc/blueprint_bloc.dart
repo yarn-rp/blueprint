@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:blueprint_repository/blueprint_repository.dart';
+import 'package:collection/collection.dart';
 import 'package:equatable/equatable.dart';
 import 'package:task_repository/task_repository.dart';
 import 'package:uuid/uuid.dart';
@@ -15,7 +16,7 @@ class BlueprintBloc extends Bloc<BlueprintEvent, BlueprintState> {
   BlueprintBloc({
     required BlueprintRepository blueprintRepository,
   })  : _blueprintRepository = blueprintRepository,
-        super(const BlueprintState()) {
+        super(BlueprintState()) {
     on<BlueprintRequested>(_onGetBlueprint);
     on<CalendarEventCreated>(_onCalendarEventCreated);
     on<EventDeleted>(_onEventDeleted);

@@ -1,8 +1,7 @@
-import 'package:app_ui/app_ui.dart';
-import 'package:blueprint/blueprint/presentation/widgets/general_calendar_event_tile.dart';
-import 'package:blueprint/blueprint/presentation/widgets/task_event_tile.dart';
 import 'package:blueprint/calendar/presentation/views/event_details.dart';
+import 'package:blueprint/calendar/presentation/widgets/widgets.dart';
 import 'package:blueprint/tasks/presentation/widgets/task_details.dart';
+import 'package:blueprint/tasks/presentation/widgets/widgets.dart';
 import 'package:blueprint_repository/blueprint_repository.dart';
 import 'package:flutter/material.dart';
 
@@ -17,8 +16,11 @@ class CalendarEventTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return event.map(
-      event: (event) => InkWell(
+      event: (event) => EventCard(
+        event: event.event,
         onTap: () async {
           await showDialog<void>(
             context: context,
@@ -43,17 +45,12 @@ class CalendarEventTile extends StatelessWidget {
             },
           );
         },
-        child: GeneralCalendarEventTile(
-          appointment: event,
-          isSmallVersion: false,
-          color: event.event.colorHex != null
-              ? HexColor.fromHex(
-                  event.event.colorHex,
-                )
-              : null,
-        ),
       ),
-      task: (event) => InkWell(
+      task: (event) => TaskCard(
+        task: event.task,
+        backgroundColor: theme.colorScheme.secondaryContainer,
+        startTime: event.startTime,
+        endTime: event.endTime,
         onTap: () async {
           await showDialog<void>(
             context: context,
@@ -78,10 +75,6 @@ class CalendarEventTile extends StatelessWidget {
             },
           );
         },
-        child: TaskEventTile(
-          appointment: event,
-          showDeleteButton: false,
-        ),
       ),
     );
   }

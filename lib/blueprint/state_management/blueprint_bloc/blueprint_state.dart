@@ -3,13 +3,15 @@ part of 'blueprint_bloc.dart';
 enum BlueprintStatus { initial, loading, loaded, error }
 
 class BlueprintState extends Equatable {
-  const BlueprintState({
-    this.items = const [],
+  BlueprintState({
+    List<CalendarEvent>? items,
     this.status = BlueprintStatus.initial,
-  });
+  }) {
+    this.items = (items ?? [])..sortBy((event) => event.startTime);
+  }
 
   final BlueprintStatus status;
-  final List<CalendarEvent> items;
+  late final List<CalendarEvent> items;
 
   BlueprintState copyWith({
     List<CalendarEvent>? items,
@@ -33,9 +35,12 @@ class BlueprintState extends Equatable {
 
   Iterable<CalendarEvent> get upcomingBlueprintEvents {
     final now = DateTime.now();
-    return items.where((event) {
-      return event.startTime.isAfter(now);
-    }).toList();
+    return items.where((event) => event.startTime.isAfter(now)).toList();
+  }
+
+  Iterable<CalendarEvent> get pastBlueprintEvents {
+    final now = DateTime.now();
+    return items.where((event) => event.endTime.isBefore(now)).toList();
   }
 
   @override
