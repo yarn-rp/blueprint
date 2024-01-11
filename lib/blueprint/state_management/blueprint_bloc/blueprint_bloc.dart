@@ -9,6 +9,8 @@ import 'package:uuid/uuid.dart';
 part 'blueprint_event.dart';
 part 'blueprint_state.dart';
 
+const uuid = Uuid();
+
 class BlueprintBloc extends Bloc<BlueprintEvent, BlueprintState> {
   BlueprintBloc({
     required BlueprintRepository blueprintRepository,
@@ -50,7 +52,7 @@ class BlueprintBloc extends Bloc<BlueprintEvent, BlueprintState> {
     Emitter<BlueprintState> emit,
   ) async {
     emit(state.copyWith(status: BlueprintStatus.loading));
-    final id = Uuid().v4();
+    final id = uuid.v4();
 
     final newEvent = CalendarEvent.task(
       task: event.task,

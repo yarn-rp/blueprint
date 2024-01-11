@@ -50,7 +50,6 @@ class _CreateEventView extends StatefulWidget {
     required this.endTime,
     required this.hidePortal,
     required this.onAddTask,
-    super.key,
   });
 
   final DateTime startTime;

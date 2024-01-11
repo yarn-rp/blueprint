@@ -89,7 +89,7 @@ class _TimelineState extends State<_Timeline> {
             (element) => element.id == _copiedEvent!.id,
           );
 
-      return event.map<void>(
+      return event.mapOrNull<void>(
         task: (event) => context.read<BlueprintBloc>().add(
               CalendarEventCreated(
                 task: event.task,
@@ -97,12 +97,6 @@ class _TimelineState extends State<_Timeline> {
                 endTime: event.endTime,
               ),
             ),
-        event: (event) => showGeneralDialog(
-          context: context,
-          pageBuilder: (context, _, __) {
-            return Text('Error, events cannot be copied yet');
-          },
-        ),
       );
     }
   }
@@ -116,18 +110,12 @@ class _TimelineState extends State<_Timeline> {
                 element.endTime == _selectedEvent!.endTime,
           );
 
-      event.map(
+      event.mapOrNull(
         task: (task) => context.read<BlueprintBloc>().add(
               EventDeleted(
                 event: event,
               ),
             ),
-        event: (event) => showGeneralDialog(
-          context: context,
-          pageBuilder: (context, _, __) {
-            return Text('Error, events cannot be deleted yet');
-          },
-        ),
       );
     }
   }

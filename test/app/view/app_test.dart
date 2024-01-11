@@ -61,9 +61,9 @@ void main() {
       whenListen(
         blueprintBloc,
         Stream.fromIterable([
-          BlueprintState(),
+          const BlueprintState(),
         ]),
-        initialState: BlueprintState(),
+        initialState: const BlueprintState(),
       );
 
       await tester.pumpWidget(

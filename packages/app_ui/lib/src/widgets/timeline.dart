@@ -511,7 +511,6 @@ class _EditableTimelineState extends State<EditableTimeline>
           },
 
           onDragUpdate: (AppointmentDragUpdateDetails details) {
-            print('Drag update');
             final appointment = details.appointment;
 
             if (appointment is! TodayEvent) {
@@ -519,7 +518,6 @@ class _EditableTimelineState extends State<EditableTimeline>
             }
           },
           onDragStart: (AppointmentDragStartDetails details) {
-            print('Drag start');
             final appointment = details.appointment;
 
             if (appointment is! TodayEvent) {
