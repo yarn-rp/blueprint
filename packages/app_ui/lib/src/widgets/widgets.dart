@@ -3,6 +3,7 @@ export 'avatar_icon.dart';
 export 'barrier.dart';
 export 'block_dialog.dart';
 export 'blueprint_dropdown.dart';
+export 'blueprint_icon.dart';
 export 'blueprint_logo.dart';
 export 'carousel.dart';
 export 'desktop_navigation_drawer.dart';

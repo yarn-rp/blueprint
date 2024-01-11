@@ -14,6 +14,12 @@ import 'package:flutter/services.dart';
 class $AssetsLogoGen {
   const $AssetsLogoGen();
 
+  /// File path: assets/logo/icon_dark.svg
+  SvgGenImage get iconDark => const SvgGenImage('assets/logo/icon_dark.svg');
+
+  /// File path: assets/logo/icon_light.svg
+  SvgGenImage get iconLight => const SvgGenImage('assets/logo/icon_light.svg');
+
   /// File path: assets/logo/logo_dark.svg
   SvgGenImage get logoDark => const SvgGenImage('assets/logo/logo_dark.svg');
 
@@ -21,7 +27,7 @@ class $AssetsLogoGen {
   SvgGenImage get logoLight => const SvgGenImage('assets/logo/logo_light.svg');
 
   /// List of all assets
-  List<SvgGenImage> get values => [logoDark, logoLight];
+  List<SvgGenImage> get values => [iconDark, iconLight, logoDark, logoLight];
 }
 
 class Assets {
