@@ -14,12 +14,6 @@ class Section extends StatelessWidget {
     super.key,
   }) : isTitleMini = true;
 
-  const Section._({
-    required this.title,
-    required this.child,
-    required this.isTitleMini,
-  });
-
   final String title;
   final Widget child;
   final bool isTitleMini;

@@ -1,7 +1,9 @@
 import 'package:app_ui/app_ui.dart';
+import 'package:blueprint/blueprint/state_management/blueprint_bloc/blueprint_bloc.dart';
 import 'package:blueprint/core/l10n/l10n.dart';
 import 'package:blueprint/tasks/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:task_repository/task_repository.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -317,10 +319,44 @@ class _TaskLabels extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final blueprint = context.select(
+      (BlueprintBloc bloc) => bloc.state.items,
+    );
+
+    final isTaskInTodaysBlueprint = blueprint.any(
+      (e) {
+        final taskMatches = e.maybeMap(
+          task: (value) => value.task.id == task.id,
+          orElse: () => false,
+        );
+
+        return taskMatches &&
+            e.startTime.isAfter(
+              DateTime.now().copyWith(
+                hour: 0,
+                minute: 0,
+                second: 0,
+                millisecond: 0,
+                microsecond: 0,
+              ),
+            ) &&
+            e.endTime.isBefore(
+              DateTime.now().copyWith(
+                hour: 23,
+                minute: 59,
+                second: 59,
+                millisecond: 999,
+                microsecond: 999,
+              ),
+            );
+      },
+    );
+
     return Wrap(
       spacing: 8,
       children: [
         ProjectPlatformChip(task: task),
+        if (isTaskInTodaysBlueprint) const TodaysBlueprintChip(),
         PriorityChip(task: task),
         ...task.labels.map(
           (e) => LabelChip(

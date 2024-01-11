@@ -2,7 +2,7 @@ import 'package:app_ui/app_ui.dart';
 import 'package:blueprint/app/dependency_injection/init.dart';
 import 'package:blueprint/app/routes/routes.dart';
 import 'package:blueprint/authentication/state_management/authentication_cubit/authentication_cubit.dart';
-import 'package:blueprint/blueprint/state_management/todays_blueprint/todays_blueprint_cubit.dart';
+import 'package:blueprint/blueprint/state_management/blueprint_bloc/blueprint_bloc.dart';
 import 'package:blueprint/core/l10n/l10n.dart';
 import 'package:blueprint/integrations/state_management/integrations_repository/integrations_cubit.dart';
 import 'package:blueprint/settings/state_management/bloc/settings_bloc.dart';
@@ -29,7 +29,9 @@ class App extends StatelessWidget {
             ..fetchTasks(),
         ),
         BlocProvider.value(value: sl<IntegrationsCubit>()),
-        BlocProvider.value(value: sl<TodaysBlueprintCubit>()),
+        BlocProvider.value(
+          value: sl<BlueprintBloc>()..add(const BlueprintRequested()),
+        ),
         BlocProvider.value(value: sl<UserCubit>()),
       ],
       child: const AppView(),

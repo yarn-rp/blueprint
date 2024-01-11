@@ -1,41 +1,18 @@
 import 'package:app_ui/app_ui.dart';
+import 'package:blueprint/app/dependency_injection/init.dart';
 import 'package:blueprint/core/l10n/l10n.dart';
-import 'package:blueprint_repository/blueprint_repository.dart';
+import 'package:blueprint/tasks/presentation/widgets/widgets.dart';
+import 'package:blueprint/tasks/state_management/cubit/tasks_cubit.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:task_repository/task_repository.dart';
 
-final fakeData = <Task>[
-  Task(
-    createdAt: DateTime.now(),
-    updatedAt: DateTime.now(),
-    id: 'example_id',
-    project: Project(
-      id: 'example_project_id',
-      name: 'Example Project',
-      platformId: '',
-      platformURL: Uri(),
-      platformName: 'Github',
-      description: '',
-      colorHex: '#FF0000',
-    ),
-    taskURL: Uri.parse('https://example.com/task'),
-    title: 'Example Task',
-    description: 'This is an example task description.',
-    startDate: DateTime.now(),
-    dueDate: DateTime.now().add(const Duration(days: 7)),
-    estimatedTime: const Duration(hours: 2),
-    loggedTime: const Duration(minutes: 30),
-    assigned: [],
-    creator: const User('', '', ''),
-    isCompleted: false,
-    labels: [
-      Label('Priority high', '#ef9930'),
-      Label('Beta 1', '#4f9856'),
-      Label('MVP', '#009857'),
-    ],
-    priority: 3,
-  ),
-];
+typedef TaskCreatedCallback = void Function(
+  Task task,
+  DateTime startTime,
+  DateTime endTime,
+);
 
 class CreateEventDialog extends StatelessWidget {
   const CreateEventDialog({
@@ -49,7 +26,51 @@ class CreateEventDialog extends StatelessWidget {
   final DateTime startTime;
   final DateTime endTime;
   final VoidCallback hidePortal;
-  final ValueChanged<CalendarEvent> onAddTask;
+  final TaskCreatedCallback onAddTask;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => sl<TasksCubit>()
+        ..fetchPlatforms()
+        ..fetchTasks(),
+      child: _CreateEventView(
+        startTime: startTime,
+        endTime: endTime,
+        hidePortal: hidePortal,
+        onAddTask: onAddTask,
+      ),
+    );
+  }
+}
+
+class _CreateEventView extends StatefulWidget {
+  const _CreateEventView({
+    required this.startTime,
+    required this.endTime,
+    required this.hidePortal,
+    required this.onAddTask,
+  });
+
+  final DateTime startTime;
+  final DateTime endTime;
+  final VoidCallback hidePortal;
+  final TaskCreatedCallback onAddTask;
+
+  @override
+  State<_CreateEventView> createState() => _CreateEventViewState();
+}
+
+class _CreateEventViewState extends State<_CreateEventView> {
+  late DateTime starTime;
+  late DateTime endTime;
+
+  @override
+  void initState() {
+    starTime = widget.startTime;
+    endTime = widget.endTime;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,11 +80,22 @@ class CreateEventDialog extends StatelessWidget {
       child: MaterialDialog(
         child: Scaffold(
           bottomNavigationBar: _ActionsBar(
-            onCancelPressed: hidePortal,
+            onCancelPressed: widget.hidePortal,
             // ignore: unnecessary_lambdas
             onAddPressed: () {
-              // TODO(yarn-rp): call onAddTask with the selected task
-              hidePortal();
+              final selectedTask =
+                  context.read<TasksCubit>().state.selectedTask;
+
+              if (selectedTask == null) {
+                return;
+              }
+
+              widget.onAddTask(
+                selectedTask,
+                starTime,
+                endTime,
+              );
+              widget.hidePortal();
             },
           ),
           appBar: AppBar(
@@ -72,7 +104,7 @@ class CreateEventDialog extends StatelessWidget {
             actions: [
               CloseButton(
                 color: theme.colorScheme.onSecondaryContainer,
-                onPressed: hidePortal,
+                onPressed: widget.hidePortal,
               ),
             ],
           ),
@@ -84,8 +116,18 @@ class CreateEventDialog extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xlg),
                 child: _TaskTimeSelection(
-                  startTime: startTime,
-                  endTime: endTime,
+                  startTime: widget.startTime,
+                  endTime: widget.endTime,
+                  onStartChanged: (value) {
+                    setState(() {
+                      starTime = value!;
+                    });
+                  },
+                  onEndChanged: (value) {
+                    setState(() {
+                      endTime = value!;
+                    });
+                  },
                 ),
               ),
               const SizedBox(
@@ -98,41 +140,70 @@ class CreateEventDialog extends StatelessWidget {
               const SizedBox(
                 height: AppSpacing.lg,
               ),
-              Expanded(
-                child: ListView(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppSpacing.xlg,
-                    vertical: AppSpacing.md,
-                  ),
-                  children: fakeData
-                      .map(
-                        (task) => EventCard(
-                          labels: [
-                            LabelChip(
-                              text: task.project.platformName,
-                              backgroundColor:
-                                  HexColor.fromHex(task.project.colorHex),
-                            ),
-                            ...task.labels.map(
-                              (e) => LabelChip(
-                                text: e.name,
-                                backgroundColor: HexColor.fromHex(e.colorHex),
-                              ),
-                            ),
-                          ],
-                          title: EventListTile.task(
-                            title: task.title,
-                            subtitle: task.description,
-                          ),
-                        ),
-                      )
-                      .toList(),
-                ),
+              const Expanded(
+                child: TasksList(),
               ),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class TasksList extends StatelessWidget {
+  const TasksList({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final tasks = context.select(
+      (TasksCubit cubit) => cubit.state.tasks,
+    );
+
+    final selectedTask = context.select(
+      (TasksCubit cubit) => cubit.state.selectedTask,
+    );
+
+    if (tasks.isEmpty) {
+      return Align(
+        alignment: Alignment.topCenter,
+        child: Column(
+          children: [
+            Icon(
+              Icons.cancel_outlined,
+              size: 120,
+              color: Theme.of(context).disabledColor,
+            ),
+            Text(
+              context.l10n.noTaskMatchesTitle,
+              style: Theme.of(context).textTheme.headlineSmall,
+            ),
+            const SizedBox(height: AppSpacing.sm),
+            Text(
+              context.l10n.noTaskMatchesSubtitle,
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
+          ],
+        ),
+      );
+    }
+
+    return ListView(
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.xlg,
+        vertical: AppSpacing.md,
+      ),
+      children: tasks
+          .map(
+            (task) => TaskCard(
+              onTap: () => context.read<TasksCubit>().selectTask(task),
+              task: task,
+              isHighlighted: selectedTask?.id == task.id,
+            ),
+          )
+          .toList(),
     );
   }
 }
@@ -262,13 +333,25 @@ class _SortByFilterDropdown extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
 
+    final sortOptions = context.select(
+      (TasksCubit cubit) => cubit.state.sortOptions,
+    );
+
+    final sortBySelected = context.select(
+      (TasksCubit cubit) => cubit.state.sortBy,
+    );
+
     return BlueprintDropdown<String>(
       hintText: l10n.sortByDropdownHint,
-      onChanged: (value) {},
-      items: const [
-        'Due Date',
-        'Priority',
-      ],
+      value: sortBySelected?.name,
+      onChanged: (value) {
+        final sortByValue = sortOptions.firstWhereOrNull(
+          (element) => element.name == value,
+        );
+
+        context.read<TasksCubit>().fetchTasks(sortBy: sortByValue);
+      },
+      items: sortOptions.map((e) => e.name).toList(),
     );
   }
 }
@@ -279,15 +362,27 @@ class _IntegrationsFilterDropdown extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+
+    final platforms = context.select(
+      (TasksCubit cubit) => cubit.state.platforms,
+    );
+
+    final selectedPlatform = context.select(
+      (TasksCubit cubit) => cubit.state.selectedPlatform,
+    );
+
     return BlueprintDropdown<String>(
       hintText: l10n.integrationsDropdownHint,
-      onChanged: (value) {},
-      items: const [
-        'All',
-        'Asana',
-        'Jira',
-        'Github',
-      ],
+      value: selectedPlatform?.displayName,
+      onChanged: (value) {
+        final platformValue =
+            platforms?.firstWhere((element) => element.displayName == value);
+
+        context.read<TasksCubit>().fetchTasks(
+              platform: platformValue,
+            );
+      },
+      items: platforms?.map((e) => e.displayName).toList() ?? [],
     );
   }
 }
@@ -300,6 +395,9 @@ class _SearchTaskBar extends StatelessWidget {
     final l10n = context.l10n;
 
     return SearchBar(
+      onChanged: (value) {
+        context.read<TasksCubit>().fetchTasks(query: value);
+      },
       trailing: const [
         Icon(Icons.search),
       ],
@@ -312,10 +410,14 @@ class _TaskTimeSelection extends StatelessWidget {
   const _TaskTimeSelection({
     required this.startTime,
     required this.endTime,
+    required this.onStartChanged,
+    required this.onEndChanged,
   });
 
   final DateTime startTime;
   final DateTime endTime;
+  final ValueChanged<DateTime?> onStartChanged;
+  final ValueChanged<DateTime?> onEndChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -325,14 +427,34 @@ class _TaskTimeSelection extends StatelessWidget {
           child: _StartTime(
             key: const ValueKey('start_time_selector'),
             value: TimeOfDay.fromDateTime(startTime),
-            onChanged: (TimeOfDay? value) {},
+            onChanged: (TimeOfDay? value) {
+              final newStartTime = DateTime(
+                startTime.year,
+                startTime.month,
+                startTime.day,
+                value!.hour,
+                value.minute,
+              );
+
+              onStartChanged(newStartTime);
+            },
           ),
         ),
         Expanded(
           child: _EndTime(
             key: const ValueKey('end_time_selector'),
             value: TimeOfDay.fromDateTime(endTime),
-            onChanged: (TimeOfDay? value) {},
+            onChanged: (TimeOfDay? value) {
+              final newEndTime = DateTime(
+                endTime.year,
+                endTime.month,
+                endTime.day,
+                value!.hour,
+                value.minute,
+              );
+
+              onEndChanged(newEndTime);
+            },
           ),
         ),
       ],

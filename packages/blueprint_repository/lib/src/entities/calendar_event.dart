@@ -15,12 +15,14 @@ class CalendarEvent with _$CalendarEvent {
   const CalendarEvent._();
   const factory CalendarEvent.event({
     required Event event,
+    required String id,
     required DateTime startTime,
     required DateTime endTime,
   }) = GeneralCalendarEvent;
 
   const factory CalendarEvent.task({
     required Task task,
+    required String id,
     required DateTime startTime,
     required DateTime endTime,
     // ignore: invalid_annotation_target

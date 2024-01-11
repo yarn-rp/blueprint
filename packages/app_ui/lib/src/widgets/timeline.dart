@@ -246,26 +246,28 @@ class _EditableTimelineState extends State<EditableTimeline>
   late double unitHeight;
 
   /// Refers to the visibility of the create event dialog.
-  late bool _isCreteEventDialogVisible;
+  late bool _isCreateEventDialogVisible;
+
+  TodayEvent? _selectedEvent;
 
   @override
   void initState() {
     dragUnit = 5;
     unitHeight = widget.intervalHeight / 60;
-    _isCreteEventDialogVisible = false;
+    _isCreateEventDialogVisible = false;
     _calendarController = CalendarController();
     super.initState();
   }
 
   void togglePortal() {
     setState(() {
-      _isCreteEventDialogVisible = !_isCreteEventDialogVisible;
+      _isCreateEventDialogVisible = !_isCreateEventDialogVisible;
     });
   }
 
   void hidePortal() {
     setState(() {
-      _isCreteEventDialogVisible = false;
+      _isCreateEventDialogVisible = false;
 
       temporaryEvent = null;
     });
@@ -443,8 +445,9 @@ class _EditableTimelineState extends State<EditableTimeline>
 
     return LayoutBuilder(
       builder: (context, constraints) => GestureDetector(
-        onVerticalDragStart: (details) =>
-            _onTemporaryEventDragStart(details.localPosition),
+        onVerticalDragStart: _selectedEvent != null
+            ? null
+            : (details) => _onTemporaryEventDragStart(details.localPosition),
         onVerticalDragUpdate: _onTemporaryEventDragUpdate,
         onVerticalDragEnd: (details) async {
           if (temporaryEvent == null) {
@@ -452,7 +455,7 @@ class _EditableTimelineState extends State<EditableTimeline>
           }
 
           setState(() {
-            _isCreteEventDialogVisible = true;
+            _isCreateEventDialogVisible = true;
           });
         },
         child: SfCalendar(
@@ -460,11 +463,12 @@ class _EditableTimelineState extends State<EditableTimeline>
           dataSource: TodayEventSource([
             if (temporaryEvent != null)
               (
+                id: 'temporary',
                 subject: widget.newEventTemporaryName,
                 startTime: temporaryEvent!.startTime,
                 endTime: temporaryEvent!.endTime,
                 color: theme.colorScheme.secondary,
-                typeLabel: EventTypeLabel.calendar(),
+                type: EventType.task,
               ),
             ...widget.events,
           ]),
@@ -494,8 +498,16 @@ class _EditableTimelineState extends State<EditableTimeline>
                 return;
               }
 
+              setState(() {
+                _selectedEvent = appointment;
+              });
               widget.onEventTap?.call(appointment);
+              return;
             }
+
+            setState(() {
+              _selectedEvent = null;
+            });
           },
 
           onDragUpdate: (AppointmentDragUpdateDetails details) {
@@ -511,15 +523,6 @@ class _EditableTimelineState extends State<EditableTimeline>
             if (appointment is! TodayEvent) {
               return;
             }
-
-            final startTime = appointment.startTime;
-            final endTime = appointment.endTime;
-
-            widget.onEventUpdate(
-              appointment,
-              startTime.round(minutes: dragUnit),
-              endTime.round(minutes: dragUnit),
-            );
           },
           // Rounds the new appointment time to the nearest 15 minutes interval.
           // For example, if the appointment is dragged to 10:05, the
@@ -580,16 +583,18 @@ class _EditableTimelineState extends State<EditableTimeline>
             if (appointment is! TodayEvent) {
               return const SizedBox();
             }
+
             final isTemporaryEvent =
                 appointment.startTime == temporaryEvent?.startTime &&
                     appointment.endTime == temporaryEvent?.endTime &&
-                    _isCreteEventDialogVisible;
+                    _isCreateEventDialogVisible;
 
             final appointmentTile = AppointmentTile(
               appointment: (
+                id: appointment.id,
                 color: appointment.color,
                 subject: appointment.subject,
-                typeLabel: appointment.typeLabel,
+                type: appointment.type,
                 startTime: appointment.startTime.round(minutes: dragUnit),
                 endTime: appointment.endTime.round(minutes: dragUnit),
               ),
@@ -601,12 +606,12 @@ class _EditableTimelineState extends State<EditableTimeline>
 
             return PortalTarget(
               fit: StackFit.expand,
-              visible: _isCreteEventDialogVisible,
+              visible: _isCreateEventDialogVisible,
               closeDuration: kThemeAnimationDuration,
               portalFollower: Stack(
                 children: [
                   Barrier(
-                    visible: _isCreteEventDialogVisible,
+                    visible: _isCreateEventDialogVisible,
                     onClose: hidePortal,
                   ),
                   Builder(
@@ -621,7 +626,7 @@ class _EditableTimelineState extends State<EditableTimeline>
                           curve: Curves.easeOut,
                           tween: Tween(
                             begin: 0,
-                            end: _isCreteEventDialogVisible ? 1 : 0,
+                            end: _isCreateEventDialogVisible ? 1 : 0,
                           ),
                           builder: (context, opacity, _) => Opacity(
                             opacity: opacity,
@@ -667,12 +672,19 @@ typedef TemporaryEventData = ({
   double endOffset,
 });
 
+enum EventType {
+  calendar,
+  meeting,
+  task,
+}
+
 typedef TodayEvent = ({
+  String id,
   String subject,
   DateTime startTime,
   DateTime endTime,
   Color? color,
-  EventTypeLabel typeLabel,
+  EventType type,
 });
 
 class TodayEventSource extends CalendarDataSource<TodayEvent> {
@@ -705,11 +717,12 @@ class TodayEventSource extends CalendarDataSource<TodayEvent> {
     Appointment appointment,
   ) {
     return (
+      id: customData.id,
       subject: appointment.subject,
       startTime: appointment.startTime,
       endTime: appointment.endTime,
       color: customData.color,
-      typeLabel: customData.typeLabel,
+      type: customData.type,
     );
   }
 }

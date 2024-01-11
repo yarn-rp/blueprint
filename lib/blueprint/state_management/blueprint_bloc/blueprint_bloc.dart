@@ -2,93 +2,101 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:blueprint_repository/blueprint_repository.dart';
-import 'package:calendar_repository/calendar_repository.dart';
 import 'package:equatable/equatable.dart';
+import 'package:task_repository/task_repository.dart';
+import 'package:uuid/uuid.dart';
 
 part 'blueprint_event.dart';
 part 'blueprint_state.dart';
 
+const uuid = Uuid();
+
 class BlueprintBloc extends Bloc<BlueprintEvent, BlueprintState> {
   BlueprintBloc({
-    required CalendarRepository calendarRepository,
     required BlueprintRepository blueprintRepository,
-  }) : super(const BlueprintInitial()) {
-    _calendarRepository = calendarRepository;
-    _blueprintRepository = blueprintRepository;
+  })  : _blueprintRepository = blueprintRepository,
+        super(const BlueprintState()) {
     on<BlueprintRequested>(_onGetBlueprint);
-    on<EventsRequested>(_onGetEvent);
-    on<BlueprintCreated>(_onCreateBlueprint);
+    on<CalendarEventCreated>(_onCalendarEventCreated);
+    on<EventDeleted>(_onEventDeleted);
+    on<EventUpdated>(_onEventUpdated);
   }
 
-  late final CalendarRepository _calendarRepository;
-  late final BlueprintRepository _blueprintRepository;
+  final BlueprintRepository _blueprintRepository;
 
   Future<void> _onGetBlueprint(
     BlueprintRequested event,
     Emitter<BlueprintState> emit,
   ) async {
+    emit(state.copyWith(status: BlueprintStatus.loading));
     final blueprintStream = _blueprintRepository.getBlueprint();
 
     return emit.forEach(
       blueprintStream,
-      onData: (blueprint) {
-        final previousEvents = switch (state) {
-          BlueprintScheduled(events: final events) => events,
-          BlueprintNotScheduled(events: final events) => events,
-          _ => <GeneralCalendarEvent>[],
-        };
+      onData: (blueprint) => state.copyWith(
+        items: blueprint,
+        status: BlueprintStatus.loaded,
+      ),
+      onError: (error, stackTrace) {
+        addError(error, stackTrace);
 
-        if (blueprint.isEmpty) {
-          return BlueprintNotScheduled(events: previousEvents);
-        }
-        return BlueprintScheduled(items: blueprint, events: previousEvents);
-      },
-    );
-  }
-
-  Future<void> _onGetEvent(
-    EventsRequested event,
-    Emitter<BlueprintState> emit,
-  ) async {
-    final eventsStream = _calendarRepository.getEvents();
-
-    return emit.forEach(
-      eventsStream,
-      onData: (events) {
-        final previousBlueprint = switch (state) {
-          BlueprintScheduled(items: final items) => items,
-          _ => <CalendarEvent>[],
-        };
-
-        return BlueprintScheduled(
-          items: previousBlueprint,
-          events: events.map(
-            (event) {
-              return GeneralCalendarEvent(
-                event: event,
-                // TODO(yarn-rp): take the startTime and endTime on backend to
-                // make this fields non nullables
-                startTime: event.startTime ?? DateTime.now(),
-                endTime: event.endTime ??
-                    DateTime.now().add(
-                      const Duration(hours: 1),
-                    ),
-              );
-            },
-          ).toList(),
+        return state.copyWith(
+          status: BlueprintStatus.error,
         );
       },
     );
   }
 
-  Future<void> _onCreateBlueprint(
-    BlueprintCreated event,
+  Future<void> _onCalendarEventCreated(
+    CalendarEventCreated event,
     Emitter<BlueprintState> emit,
   ) async {
-    try {
-      await _blueprintRepository.saveBlueprints(event.items);
-    } catch (exception) {
-      emit(BlueprintError(error: exception.toString()));
-    }
+    emit(state.copyWith(status: BlueprintStatus.loading));
+    final id = uuid.v4();
+
+    final newEvent = CalendarEvent.task(
+      task: event.task,
+      id: id,
+      startTime: event.startTime,
+      endTime: event.endTime,
+    );
+
+    final newBlueprint = [
+      ...state.items,
+      newEvent,
+    ];
+
+    await _blueprintRepository.saveBlueprint(newBlueprint);
+  }
+
+  Future<void> _onEventUpdated(
+    EventUpdated event,
+    Emitter<BlueprintState> emit,
+  ) async {
+    emit(state.copyWith(status: BlueprintStatus.loading));
+
+    final newBlueprint =
+        state.items.where((element) => element.id != event.event.id).toList();
+
+    await _blueprintRepository.saveBlueprint([
+      ...newBlueprint,
+      event.event.copyWith(
+        startTime: event.startTime,
+        endTime: event.endTime,
+      ),
+    ]);
+  }
+
+  Future<void> _onEventDeleted(
+    EventDeleted event,
+    Emitter<BlueprintState> emit,
+  ) async {
+    emit(state.copyWith(status: BlueprintStatus.loading));
+
+    final newBlueprint = state.items.where((element) {
+      return element.id != event.event.id;
+    }).toList();
+
+    await _blueprintRepository.saveBlueprint(newBlueprint);
   }
 }

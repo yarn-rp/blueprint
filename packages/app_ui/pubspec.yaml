@@ -42,4 +42,6 @@ flutter:
   assets:
     - assets/logo/logo_dark.svg
     - assets/logo/logo_light.svg
+    - assets/logo/icon_dark.svg
+    - assets/logo/icon_light.svg
   uses-material-design: true

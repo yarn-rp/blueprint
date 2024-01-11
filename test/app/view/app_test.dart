@@ -1,7 +1,7 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:blueprint/app/app.dart';
 import 'package:blueprint/authentication/state_management/authentication_cubit/authentication_cubit.dart';
-import 'package:blueprint/blueprint/state_management/todays_blueprint/todays_blueprint_cubit.dart';
+import 'package:blueprint/blueprint/state_management/blueprint_bloc/blueprint_bloc.dart';
 import 'package:blueprint/settings/entities/working_calendar.dart';
 import 'package:blueprint/settings/state_management/bloc/settings_bloc.dart';
 import 'package:blueprint/users/state_management/cubit/user_cubit.dart';
@@ -15,8 +15,8 @@ class MockAuthenticationCubit extends MockCubit<AuthenticationState>
 class MockSettingsBloc extends MockBloc<SettingsEvent, SettingsState>
     implements SettingsBloc {}
 
-class MockTodaysBlueprintCubit extends MockCubit<TodaysBlueprintState>
-    implements TodaysBlueprintCubit {}
+class MockBlueprintBloc extends MockCubit<BlueprintState>
+    implements BlueprintBloc {}
 
 class MockUserCubit extends MockCubit<UserState> implements UserCubit {}
 
@@ -25,7 +25,7 @@ void main() {
     testWidgets('renders app Page', (tester) async {
       final authenticationBloc = MockAuthenticationCubit();
       final settingsBloc = MockSettingsBloc();
-      final todaysBlueprintCubit = MockTodaysBlueprintCubit();
+      final blueprintBloc = MockBlueprintBloc();
       final userCubit = MockUserCubit();
 
       whenListen(
@@ -59,19 +59,11 @@ void main() {
       );
 
       whenListen(
-        todaysBlueprintCubit,
+        blueprintBloc,
         Stream.fromIterable([
-          TodaysBlueprintState.initial(
-            calendarEvents: [],
-            workTimes: [],
-            addedAt: DateTime.now(),
-          ),
+          const BlueprintState(),
         ]),
-        initialState: TodaysBlueprintState.initial(
-          calendarEvents: [],
-          workTimes: [],
-          addedAt: DateTime.now(),
-        ),
+        initialState: const BlueprintState(),
       );
 
       await tester.pumpWidget(
@@ -81,8 +73,8 @@ void main() {
             BlocProvider<SettingsBloc>.value(
               value: settingsBloc,
             ),
-            BlocProvider<TodaysBlueprintCubit>.value(
-              value: todaysBlueprintCubit,
+            BlocProvider<BlueprintBloc>.value(
+              value: blueprintBloc,
             ),
             BlocProvider<UserCubit>.value(
               value: userCubit,
