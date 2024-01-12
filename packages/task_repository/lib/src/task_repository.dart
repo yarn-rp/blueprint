@@ -74,8 +74,7 @@ class TaskRepository {
                 (tasks) => tasks.docs.map((task) {
                   final taskEntity = task.data();
                   final taskPlatform = platforms.firstWhere(
-                    (platform) =>
-                        platform.displayName == taskEntity.project.platformName,
+                    (platform) => platform.id == taskEntity.project.platformId,
                   );
                   return taskEntity.copyWith(
                     project: taskEntity.project.copyWith(

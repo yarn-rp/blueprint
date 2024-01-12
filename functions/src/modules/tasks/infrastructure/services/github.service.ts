@@ -170,6 +170,7 @@ export class GithubRemoteRepository extends AbstractRemoteRepository<GithubTask>
       createdAt: new Date(issue.created_at),
       updatedAt: new Date(issue.updated_at),
       id: issue.id,
+      taskId: issue.id,
       project,
       taskURL: new URL(issue.html_url),
       title: issue.title,

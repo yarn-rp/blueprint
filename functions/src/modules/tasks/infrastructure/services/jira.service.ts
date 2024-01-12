@@ -294,7 +294,7 @@ function fromJiraProjectToProject(project: JiraProject): Project {
 
   return {
     platformName: PlatformName.Jira,
-    id: projectId,
+    id: "jira",
     platformId: projectId,
     name: projectName,
     platformURL: new URL(platformURL),
@@ -317,6 +317,7 @@ function fromJiraApiIssueToTask(jiraIssue: JiraTask): Task {
     throw new Error("Issue fields are null");
   }
   const issueId = jiraIssue.id;
+  const issueKey = jiraIssue.key;
   const { fields } = jiraIssue;
 
   const createdAt = new Date(fields.created as string);
@@ -343,6 +344,7 @@ function fromJiraApiIssueToTask(jiraIssue: JiraTask): Task {
   const userAssigned = fromJiraApiUserToUser(assigned);
   const task: Task = {
     id: issueId,
+    taskId: issueKey,
     createdAt,
     updatedAt,
     project,

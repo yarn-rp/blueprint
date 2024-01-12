@@ -94,6 +94,11 @@ export interface Task {
   id: string;
 
   /**
+   * Platform-specific identifier for the ticket
+   */
+  taskId: string;
+
+  /**
    * Project to which the ticket belongs
    */
   project: Project;

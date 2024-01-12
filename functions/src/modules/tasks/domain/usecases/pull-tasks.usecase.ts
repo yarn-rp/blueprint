@@ -12,6 +12,7 @@ export class PullTasks {
   ) {}
 
   async execute(platform: PlatformName, uid: string, authenticatorId: string): Promise<void> {
+    console.log(`Pulling tasks for ${platform} ${uid} ${authenticatorId}`);
     const remoteRepo = this.remoteFactory.buildFor(platform);
 
     const lastTaskOrNone = await this.tasksRepo.fetchLastFromPlatform(platform, uid);

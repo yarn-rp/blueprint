@@ -32,6 +32,7 @@ export const mockTask: Task = {
   createdAt: new Date(1990, 5, 12),
   updatedAt: new Date(1990, 5, 12),
   id: "1234567890",
+  taskId: "1234567890",
   project: mockProject,
   taskURL: new URL("https://jira.com/1234567890/1234567890"),
   isCompleted: false,

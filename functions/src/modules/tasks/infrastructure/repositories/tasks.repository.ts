@@ -18,7 +18,7 @@ export class FirestoreTasksRepository implements TasksRepository {
         .doc(uid)
         .collection("tasks")
         .withConverter(taskConverter)
-        .doc();
+        .doc(`${task.project.platformName}-${task.project.platformId || "no_project"}-${task.taskId}`);
       batch.set(taskRef, task);
     });
 
