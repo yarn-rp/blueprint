@@ -24,6 +24,7 @@ const testConferenceData: ConferenceData = {
 };
 
 export const testEvent: Event = {
+  eventId: "test-event-id",
   startTime: new Date("2022-01-01T09:00:00Z"),
   endTime: new Date("2022-01-01T10:00:00Z"),
   subject: "Meeting",

@@ -27,7 +27,6 @@ export class FirestoreAccessRepository implements AccessRepository {
    * @returns A Promise that resolves to void.
    */
   async save(access: Access, uid: string): Promise<void> {
-    console.log({ access, uid });
     await this.firestore
       .collection("users")
       .doc(uid)
@@ -36,5 +35,15 @@ export class FirestoreAccessRepository implements AccessRepository {
       // not sure if multiple authenticators must trigger tasksClone
       .doc(`${access.platformName}-${access.user.gid}`)
       .set(access);
+  }
+
+  async getById(uid: string, authenticatorId: string): Promise<Access> {
+    const access = await this.firestore
+      .collection("users")
+      .doc(uid)
+      .collection("authenticators")
+      .doc(authenticatorId)
+      .get();
+    return access.data() as Access;
   }
 }

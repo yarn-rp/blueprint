@@ -73,8 +73,10 @@ class TaskRepository {
           (platforms) => tasksSubCollection.snapshots().map(
                 (tasks) => tasks.docs.map((task) {
                   final taskEntity = task.data();
+                  print("TASKS $taskEntity");
                   final taskPlatform = platforms.firstWhere(
-                    (platform) => platform.id == taskEntity.project.platformId,
+                    (platform) =>
+                        platform.id == taskEntity.project.platformName,
                   );
                   return taskEntity.copyWith(
                     project: taskEntity.project.copyWith(

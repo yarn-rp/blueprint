@@ -49,6 +49,7 @@ interface EventProps {
   organizer?: User;
   attendees?: UserWithStatus[];
   platformLink?: string;
+  eventId: string;
 }
 
 /**
