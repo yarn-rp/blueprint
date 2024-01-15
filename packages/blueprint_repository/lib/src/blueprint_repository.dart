@@ -1,8 +1,10 @@
 import 'package:blueprint_repository/src/entities/entities.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:task_repository/task_repository.dart';
 
 const _usersCollectionName = 'users';
+const _blueprintCollectionName = 'blueprint';
 
 /// {@template blueprint_repository}
 /// Repository to handle blueprints on the platform.
@@ -30,32 +32,63 @@ class BlueprintRepository {
       if (userId == null) {
         return const Stream.empty();
       }
-      final userDoc = _usersCollection.doc(userId);
-      return userDoc.snapshots().map((snapshot) {
-        final userData = snapshot.data() as Map<String, dynamic>?;
-        final blueprint = userData?['blueprint'] as List<dynamic>? ?? [];
-        final events = blueprint
-            .map((e) => CalendarEvent.fromJson(e as Map<String, dynamic>))
-            .toList();
 
-        return [
-          ...events,
-        ];
+      final userDoc = _usersCollection.doc(userId);
+      final blueprintSubCollection =
+          userDoc.collection(_blueprintCollectionName);
+      return blueprintSubCollection.snapshots().map((snapshot) {
+        return snapshot.docs.map((doc) {
+          final data = doc.data();
+          return CalendarEvent.fromJson(data);
+        }).toList();
       });
     });
   }
 
-  /// Saves the todays blueprint of the current user
-  Future<void> saveBlueprint(List<CalendarEvent> blueprint) async {
+  Future<void> addBlueprintEvent({
+    required Task task,
+    required DateTime startTime,
+    required DateTime endTime,
+  }) async {
+    final userId = _currentUserIdStream.value;
+    if (userId == null) {
+      return;
+    }
+
+    final userDoc = _usersCollection.doc(userId);
+    final blueprintSubCollection = userDoc.collection(_blueprintCollectionName);
+    final doc = blueprintSubCollection.doc();
+    final blueprintEvent = CalendarEvent.task(
+      task: task,
+      id: doc.id,
+      startTime: startTime,
+      endTime: endTime,
+    );
+
+    await doc.set(blueprintEvent.toJson());
+  }
+
+  Future<void> updateBlueprintEvent(CalendarEvent event) async {
     final userId = _currentUserIdStream.value;
     if (userId == null) {
       return;
     }
     final userDoc = _usersCollection.doc(userId);
+    final blueprintSubCollection = userDoc.collection(_blueprintCollectionName);
 
-    final blueprintsJson = blueprint.map((e) => e.toJson()).toList();
-    await userDoc.update({
-      'blueprint': blueprintsJson,
-    });
+    final eventDoc = blueprintSubCollection.doc(event.id);
+    await eventDoc.update(event.toJson());
+  }
+
+  Future<void> deleteBlueprintEvent(CalendarEvent event) async {
+    final userId = _currentUserIdStream.value;
+    if (userId == null) {
+      return;
+    }
+    final userDoc = _usersCollection.doc(userId);
+    final blueprintSubCollection = userDoc.collection(_blueprintCollectionName);
+
+    final eventDoc = blueprintSubCollection.doc(event.id);
+    await eventDoc.delete();
   }
 }

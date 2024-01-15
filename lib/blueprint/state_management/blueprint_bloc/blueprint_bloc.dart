@@ -5,12 +5,9 @@ import 'package:blueprint_repository/blueprint_repository.dart';
 import 'package:collection/collection.dart';
 import 'package:equatable/equatable.dart';
 import 'package:task_repository/task_repository.dart';
-import 'package:uuid/uuid.dart';
 
 part 'blueprint_event.dart';
 part 'blueprint_state.dart';
-
-const uuid = Uuid();
 
 class BlueprintBloc extends Bloc<BlueprintEvent, BlueprintState> {
   BlueprintBloc({
@@ -60,21 +57,17 @@ class BlueprintBloc extends Bloc<BlueprintEvent, BlueprintState> {
     Emitter<BlueprintState> emit,
   ) async {
     emit(state.copyWith(status: BlueprintStatus.loading));
-    final id = uuid.v4();
 
-    final newEvent = CalendarEvent.task(
-      task: event.task,
-      id: id,
-      startTime: event.startTime,
-      endTime: event.endTime,
-    );
-
-    final newBlueprint = [
-      ...state.items,
-      newEvent,
-    ];
-
-    await _blueprintRepository.saveBlueprint(newBlueprint);
+    try {
+      await _blueprintRepository.addBlueprintEvent(
+        task: event.task,
+        startTime: event.startTime,
+        endTime: event.endTime,
+      );
+    } catch (error, stackTrace) {
+      addError(error, stackTrace);
+      emit(state.copyWith(status: BlueprintStatus.error));
+    }
   }
 
   Future<void> _onEventUpdated(
@@ -83,16 +76,17 @@ class BlueprintBloc extends Bloc<BlueprintEvent, BlueprintState> {
   ) async {
     emit(state.copyWith(status: BlueprintStatus.loading));
 
-    final newBlueprint =
-        state.items.where((element) => element.id != event.event.id).toList();
-
-    await _blueprintRepository.saveBlueprint([
-      ...newBlueprint,
-      event.event.copyWith(
-        startTime: event.startTime,
-        endTime: event.endTime,
-      ),
-    ]);
+    try {
+      await _blueprintRepository.updateBlueprintEvent(
+        event.event.copyWith(
+          startTime: event.startTime,
+          endTime: event.endTime,
+        ),
+      );
+    } catch (error, stackTrace) {
+      addError(error, stackTrace);
+      emit(state.copyWith(status: BlueprintStatus.error));
+    }
   }
 
   Future<void> _onEventDeleted(
@@ -101,11 +95,12 @@ class BlueprintBloc extends Bloc<BlueprintEvent, BlueprintState> {
   ) async {
     emit(state.copyWith(status: BlueprintStatus.loading));
 
-    final newBlueprint = state.items.where((element) {
-      return element.id != event.event.id;
-    }).toList();
-
-    await _blueprintRepository.saveBlueprint(newBlueprint);
+    try {
+      await _blueprintRepository.deleteBlueprintEvent(event.event);
+    } catch (error, stackTrace) {
+      addError(error, stackTrace);
+      emit(state.copyWith(status: BlueprintStatus.error));
+    }
   }
 }
 
