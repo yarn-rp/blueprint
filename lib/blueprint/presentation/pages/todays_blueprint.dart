@@ -6,6 +6,7 @@ import 'package:blueprint/blueprint/presentation/pages/blueprint_timeline.dart';
 import 'package:blueprint/blueprint/presentation/widgets/calendar_event_tile.dart';
 import 'package:blueprint/blueprint/state_management/blueprint_bloc/blueprint_bloc.dart';
 import 'package:blueprint/calendar/presentation/widgets/available_time_card.dart';
+import 'package:blueprint/core/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -141,21 +142,25 @@ class _BlueprintEmpty extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final theme = Theme.of(context);
+    final textTheme = theme.textTheme;
+
     return Column(
       children: [
         Icon(
           Icons.calendar_today,
           size: 128,
-          color: Theme.of(context).disabledColor,
+          color: theme.disabledColor,
         ),
         const SizedBox(height: AppSpacing.xxlg),
         Text(
-          'Blueprint empty',
-          style: Theme.of(context).textTheme.titleLarge,
+          l10n.blueprintEmptyTitle,
+          style: textTheme.titleLarge,
         ),
         Text(
-          'You have nothing planned for the rest of the day',
-          style: Theme.of(context).textTheme.bodyLarge,
+          l10n.blueprintEmptySubtitle,
+          style: textTheme.bodyLarge,
         ),
         const SizedBox(height: AppSpacing.lg),
         const _CreateBlueprintButton(),
@@ -165,12 +170,13 @@ class _BlueprintEmpty extends StatelessWidget {
 }
 
 class _NowOnBlueprint extends StatelessWidget {
-  const _NowOnBlueprint({
-    super.key,
-  });
+  const _NowOnBlueprint();
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final textTheme = Theme.of(context).textTheme;
+
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: 16,
@@ -179,8 +185,8 @@ class _NowOnBlueprint extends StatelessWidget {
       child: Row(
         children: [
           Text(
-            'Now on Blueprint',
-            style: Theme.of(context).textTheme.titleLarge,
+            l10n.currentEventGlanceTitle,
+            style: textTheme.titleLarge,
           ),
           const Spacer(),
           const _EditBlueprintButton()
@@ -197,7 +203,26 @@ class _EditBlueprintButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return TextButton.icon(
+      onPressed: () => context.router.navigate(
+        const CreateBlueprintRoute(),
+      ),
+      icon: const Icon(Icons.edit_calendar_rounded),
+      label: Text(l10n.editBlueprintCTA),
+    );
+  }
+}
+
+class _CreateBlueprintButton extends StatelessWidget {
+  const _CreateBlueprintButton();
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
+    return FilledButton.icon(
       onPressed: () {
         context.router.navigate(
           const CreateBlueprintRoute(),
@@ -205,40 +230,20 @@ class _EditBlueprintButton extends StatelessWidget {
       },
       icon: const Icon(Icons.edit_calendar_rounded),
       label: Text(
-        'Edit Today\'s blueprint',
-      ),
-    );
-  }
-}
-
-class _CreateBlueprintButton extends StatelessWidget {
-  const _CreateBlueprintButton({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return FilledButton.icon(
-      onPressed: () {
-        context.router.navigate(
-          const CreateBlueprintRoute(),
-        );
-      },
-      icon: Icon(Icons.edit),
-      label: Text(
-        'Create Today\'s blueprint',
+        l10n.createTodaysBlueprintCTA,
       ),
     );
   }
 }
 
 class _NextOnBlueprint extends StatelessWidget {
-  const _NextOnBlueprint({
-    super.key,
-  });
+  const _NextOnBlueprint();
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final textTheme = Theme.of(context).textTheme;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -248,8 +253,8 @@ class _NextOnBlueprint extends StatelessWidget {
             vertical: 16,
           ),
           child: Text(
-            'Upcoming events',
-            style: Theme.of(context).textTheme.titleLarge,
+            l10n.upcomingEventsTitle,
+            style: textTheme.titleLarge,
           ),
         ),
       ],

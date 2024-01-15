@@ -5,6 +5,14 @@
     "@assignees": {
         "description": "Title for assignees section"
     },
+    "blueprintEmptyTitle": "Blueprint Empty",
+    "@blueprintEmptyTitle": {
+        "description": "Title for blueprint empty section"
+    },
+    "blueprintEmptySubtitle": "You have nothing planned for the rest of the day",
+    "@blueprintEmptySubtitle": {
+        "description": "Subtitle for blueprint empty section"
+    },
     "cancel": "Cancel",
     "@cancel": {
         "description": "Cancel word"
@@ -16,6 +24,10 @@
     "create": "Create",
     "@create": {
         "description": "Create word"
+    },
+    "createTodaysBlueprintCTA": "Create Today's blueprint",
+    "@createTodaysBlueprintCTA": {
+        "description": "CTA for edit today blueprint button"
     },
     "createTodaysBlueprintTitle": "Create Today's Blueprint",
     "@createTodaysBlueprintTitle": {
@@ -46,6 +58,10 @@
     "@dueDate": {
         "description": "Due date for an event or task"
     },
+    "editBlueprintCTA": "Edit Today's blueprint",
+    "@editBlueprintCTA": {
+        "description": "CTA for edit today blueprint button"
+    },
     "email":"Email",
     "endTime": "End Time",
     "@endTime": {
@@ -71,6 +87,10 @@
     "noTaskMatchesSubtitle": "Please adjust your search filters to get results",
     "@noTaskMatchesSubtitle": {
         "description": "Subtitle for when no tasks matching search"
+    },
+    "currentEventGlanceTitle": "Now on blueprint",
+    "@currentEventGlanceTitle": {
+        "description": "Title for the now on blueprint glance event"
     },
     "selectTask": "Select a Task",
     "@selectTask": {
@@ -105,6 +125,10 @@
     "updated": "Updated",
     "@updated": {
         "description": "Updated at prefix"
+    },
+    "upcomingEventsTitle": "Upcoming events",
+    "@upcomingEventsTitle": {
+        "description": "Title for the upcoming events section on the blueprint"
     },
     "darkMode":"Dark Mode",
     "lightMode":"Light Mode"
