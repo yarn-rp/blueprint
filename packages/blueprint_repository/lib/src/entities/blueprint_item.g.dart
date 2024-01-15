@@ -1,51 +1,47 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'calendar_event.dart';
+part of 'blueprint_item.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$GeneralCalendarEventImpl _$$GeneralCalendarEventImplFromJson(
+_$EventBlueprintItemImpl _$$EventBlueprintItemImplFromJson(
         Map<String, dynamic> json) =>
-    _$GeneralCalendarEventImpl(
-      event: Event.fromJson(json['event'] as Map<String, dynamic>),
+    _$EventBlueprintItemImpl(
+      value: Event.fromJson(json['value'] as Map<String, dynamic>),
       id: json['id'] as String,
       startTime: DateTime.parse(json['startTime'] as String),
       endTime: DateTime.parse(json['endTime'] as String),
       $type: json['runtimeType'] as String?,
     );
 
-Map<String, dynamic> _$$GeneralCalendarEventImplToJson(
-        _$GeneralCalendarEventImpl instance) =>
+Map<String, dynamic> _$$EventBlueprintItemImplToJson(
+        _$EventBlueprintItemImpl instance) =>
     <String, dynamic>{
-      'event': instance.event.toJson(),
+      'value': instance.value.toJson(),
       'id': instance.id,
       'startTime': instance.startTime.toIso8601String(),
       'endTime': instance.endTime.toIso8601String(),
       'runtimeType': instance.$type,
     };
 
-_$TaskCalendarEventImpl _$$TaskCalendarEventImplFromJson(
+_$TaskBlueprintItemImpl _$$TaskBlueprintItemImplFromJson(
         Map<String, dynamic> json) =>
-    _$TaskCalendarEventImpl(
-      task: Task.fromJson(json['task'] as Map<String, dynamic>),
+    _$TaskBlueprintItemImpl(
+      value: Task.fromJson(json['value'] as Map<String, dynamic>),
       id: json['id'] as String,
       startTime: DateTime.parse(json['startTime'] as String),
       endTime: DateTime.parse(json['endTime'] as String),
-      colorHex: json['colorHex'] as String?,
-      isAllDay: json['isAllDay'] as bool? ?? false,
       $type: json['runtimeType'] as String?,
     );
 
-Map<String, dynamic> _$$TaskCalendarEventImplToJson(
-        _$TaskCalendarEventImpl instance) =>
+Map<String, dynamic> _$$TaskBlueprintItemImplToJson(
+        _$TaskBlueprintItemImpl instance) =>
     <String, dynamic>{
-      'task': instance.task.toJson(),
+      'value': instance.value.toJson(),
       'id': instance.id,
       'startTime': instance.startTime.toIso8601String(),
       'endTime': instance.endTime.toIso8601String(),
-      'colorHex': instance.colorHex,
-      'isAllDay': instance.isAllDay,
       'runtimeType': instance.$type,
     };

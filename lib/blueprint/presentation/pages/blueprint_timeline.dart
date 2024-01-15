@@ -18,7 +18,7 @@ class BlueprintTimeline extends StatelessWidget {
           endTime: e.endTime,
           color: HexColor.fromHex(e.color),
           type: e.map(
-            event: (event) => event.event.conferenceData != null
+            event: (event) => event.value.conferenceData != null
                 ? EventType.meeting
                 : EventType.calendar,
             task: (task) => EventType.task,

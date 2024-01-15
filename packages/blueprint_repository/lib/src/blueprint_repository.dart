@@ -27,8 +27,8 @@ class BlueprintRepository {
   late final CollectionReference _usersCollection;
 
   /// Return a stream of the current user blueprints.
-  Stream<List<CalendarEvent>> getBlueprint() {
-    return _currentUserIdStream.switchMap<List<CalendarEvent>>((userId) {
+  Stream<List<BlueprintItem>> getBlueprint() {
+    return _currentUserIdStream.switchMap<List<BlueprintItem>>((userId) {
       if (userId == null) {
         return const Stream.empty();
       }
@@ -39,13 +39,13 @@ class BlueprintRepository {
       return blueprintSubCollection.snapshots().map((snapshot) {
         return snapshot.docs.map((doc) {
           final data = doc.data();
-          return CalendarEvent.fromJson(data);
+          return BlueprintItem.fromJson(data);
         }).toList();
       });
     });
   }
 
-  Future<void> addBlueprintEvent({
+  Future<void> addBlueprintItem({
     required Task task,
     required DateTime startTime,
     required DateTime endTime,
@@ -58,8 +58,9 @@ class BlueprintRepository {
     final userDoc = _usersCollection.doc(userId);
     final blueprintSubCollection = userDoc.collection(_blueprintCollectionName);
     final doc = blueprintSubCollection.doc();
-    final blueprintEvent = CalendarEvent.task(
-      task: task,
+
+    final blueprintEvent = BlueprintItem.task(
+      value: task,
       id: doc.id,
       startTime: startTime,
       endTime: endTime,
@@ -68,7 +69,7 @@ class BlueprintRepository {
     await doc.set(blueprintEvent.toJson());
   }
 
-  Future<void> updateBlueprintEvent(CalendarEvent event) async {
+  Future<void> updateBlueprintItem(BlueprintItem event) async {
     final userId = _currentUserIdStream.value;
     if (userId == null) {
       return;
@@ -80,7 +81,7 @@ class BlueprintRepository {
     await eventDoc.update(event.toJson());
   }
 
-  Future<void> deleteBlueprintEvent(CalendarEvent event) async {
+  Future<void> deleteBlueprintItem(BlueprintItem event) async {
     final userId = _currentUserIdStream.value;
     if (userId == null) {
       return;
