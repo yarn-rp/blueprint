@@ -1,6 +1,5 @@
 import 'package:blueprint/calendar/presentation/views/event_details.dart';
 import 'package:blueprint/calendar/presentation/widgets/widgets.dart';
-import 'package:blueprint/tasks/presentation/widgets/task_details.dart';
 import 'package:blueprint/tasks/presentation/widgets/widgets.dart';
 import 'package:blueprint_repository/blueprint_repository.dart';
 import 'package:flutter/material.dart';

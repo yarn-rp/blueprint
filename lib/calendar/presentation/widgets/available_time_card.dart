@@ -1,6 +1,5 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:jiffy/jiffy.dart';
 
 class AvailableTimeCard extends StatelessWidget {
@@ -21,7 +20,6 @@ class AvailableTimeCard extends StatelessWidget {
     final colorScheme = theme.colorScheme;
 
     return BlueprintEventCard(
-      onTap: null,
       backgroundColor: colorScheme.tertiaryContainer,
       actions: [
         FilledButton.icon(

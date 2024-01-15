@@ -189,7 +189,7 @@ class _NowOnBlueprint extends StatelessWidget {
             style: textTheme.titleLarge,
           ),
           const Spacer(),
-          const _EditBlueprintButton()
+          const _EditBlueprintButton(),
         ],
       ),
     );
@@ -197,9 +197,7 @@ class _NowOnBlueprint extends StatelessWidget {
 }
 
 class _EditBlueprintButton extends StatelessWidget {
-  const _EditBlueprintButton({
-    super.key,
-  });
+  const _EditBlueprintButton();
 
   @override
   Widget build(BuildContext context) {
