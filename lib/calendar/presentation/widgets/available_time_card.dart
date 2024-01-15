@@ -47,7 +47,7 @@ class AvailableTimeCard extends StatelessWidget {
           ),
         ),
       ],
-      dateAndTime: Jiffy(endTime).fromNow(),
+      dateAndTime: '${Jiffy(startTime).jm} - ${Jiffy(endTime).jm}',
       title: EventListTile.calendar(
         title: l10n.freeTimeEventTitle,
         subtitle: l10n.freeTimeEventSubtitle,

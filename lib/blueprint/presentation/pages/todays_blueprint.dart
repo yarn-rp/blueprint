@@ -117,8 +117,8 @@ class _CurrentEvent extends StatelessWidget {
               final lastEndTime = pastEvents.lastOrNull?.endTime;
 
               return AvailableTimeCard(
-                startTime: nextStartTime ?? DateTime.now(),
-                endTime: lastEndTime ??
+                startTime: lastEndTime ?? DateTime.now(),
+                endTime: nextStartTime ??
                     DateTime.now().copyWith(
                       hour: 23,
                       minute: 59,
