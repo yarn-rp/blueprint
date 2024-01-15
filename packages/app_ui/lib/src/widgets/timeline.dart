@@ -16,7 +16,6 @@ enum VerticalDirection {
 class TodayTimeline extends StatefulWidget {
   const TodayTimeline({
     required this.events,
-    required this.onEventUpdate,
     this.intervalHeight = 180,
     this.onEventTap,
     this.createEventDialogBuilder,
@@ -32,8 +31,6 @@ class TodayTimeline extends StatefulWidget {
     VoidCallback closeDialog,
   )? createEventDialogBuilder;
   final ValueChanged<TodayEvent>? onEventTap;
-  final void Function(TodayEvent event, DateTime newStart, DateTime newEnd)
-      onEventUpdate;
 
   final double intervalHeight;
 
