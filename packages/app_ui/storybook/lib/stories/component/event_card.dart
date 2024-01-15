@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:storybook/src/component.dart';
 import 'package:storybook_flutter/storybook_flutter.dart';
 
-class EventCardComponent extends StatelessWidget {
-  const EventCardComponent({super.key});
+class BlueprintEventCardComponent extends StatelessWidget {
+  const BlueprintEventCardComponent({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Component(
       title: 'Event Card',
-      child: EventCard(
+      child: BlueprintEventCard(
           title: EventListTile.videoConference(
             title: context.knobs.text(label: 'Title', initial: 'Event Title'),
             subtitle: context.knobs.text(

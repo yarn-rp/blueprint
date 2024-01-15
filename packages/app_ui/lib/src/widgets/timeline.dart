@@ -16,7 +16,6 @@ enum VerticalDirection {
 class TodayTimeline extends StatefulWidget {
   const TodayTimeline({
     required this.events,
-    required this.onEventUpdate,
     this.intervalHeight = 180,
     this.onEventTap,
     this.createEventDialogBuilder,
@@ -32,8 +31,6 @@ class TodayTimeline extends StatefulWidget {
     VoidCallback closeDialog,
   )? createEventDialogBuilder;
   final ValueChanged<TodayEvent>? onEventTap;
-  final void Function(TodayEvent event, DateTime newStart, DateTime newEnd)
-      onEventUpdate;
 
   final double intervalHeight;
 
@@ -73,8 +70,6 @@ class _TodaysBlueprintState extends State<TodayTimeline>
     return SfCalendar(
       controller: _calendarController,
       dataSource: TodayEventSource(widget.events),
-      allowDragAndDrop: true,
-      allowAppointmentResize: true,
       appointmentTextStyle: textTheme.bodyMedium!,
       todayTextStyle: textTheme.titleLarge?.copyWith(
         color: switch (theme.colorScheme.brightness) {
@@ -101,77 +96,6 @@ class _TodaysBlueprintState extends State<TodayTimeline>
           widget.onEventTap?.call(appointment);
         }
       },
-
-      onDragUpdate: (AppointmentDragUpdateDetails details) {
-        final appointment = details.appointment;
-
-        if (appointment is! TodayEvent) {
-          return;
-        }
-      },
-      onDragStart: (AppointmentDragStartDetails details) {
-        final appointment = details.appointment;
-
-        if (appointment is! TodayEvent) {
-          return;
-        }
-
-        final startTime = appointment.startTime;
-        final endTime = appointment.endTime;
-
-        widget.onEventUpdate(
-          appointment,
-          startTime.copyWith(
-            minute: (startTime.minute / dragUnit).round() * dragUnit,
-          ),
-          endTime.copyWith(
-            minute: (endTime.minute / dragUnit).round() * dragUnit,
-          ),
-        );
-      },
-      // Rounds the new appointment time to the nearest 15 minutes interval.
-      // For example, if the appointment is dragged to 10:05, the
-      // appointment time will be rounded to 10:00. If the appointment is
-      // dragged to 10:07, the appointment time will be rounded to 10:15.
-      // If the appointment is dragged to 10:27, the appointment time will
-      // be rounded to 10:30. If the appointment is dragged to 10:16, the
-      // appointment time will be rounded
-      // to 10:15.
-      onDragEnd: (AppointmentDragEndDetails details) {
-        final appointment = details.appointment;
-
-        if (appointment == null) {
-          return;
-        }
-
-        if (appointment is! TodayEvent) {
-          return;
-        }
-        final startTime = appointment.startTime;
-        final endTime = appointment.endTime;
-
-        widget.onEventUpdate(
-          appointment,
-          startTime.round(minutes: dragUnit),
-          endTime.round(minutes: dragUnit),
-        );
-      },
-      onAppointmentResizeEnd: (appointmentResizeEndDetails) {
-        final appointment = appointmentResizeEndDetails.appointment;
-        if (appointment is! TodayEvent) {
-          return;
-        }
-
-        final startTime = appointment.startTime;
-        final endTime = appointment.endTime;
-
-        widget.onEventUpdate(
-          appointment,
-          startTime.round(minutes: dragUnit),
-          endTime.round(minutes: dragUnit),
-        );
-      },
-
       appointmentBuilder: (
         BuildContext context,
         CalendarAppointmentDetails calendarAppointmentDetails,

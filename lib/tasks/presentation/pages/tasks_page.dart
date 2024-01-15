@@ -119,6 +119,9 @@ class _TasksList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final textTheme = theme.textTheme;
     final tasks = context.select(
       (TasksCubit cubit) => cubit.state.tasks,
     );
@@ -135,16 +138,16 @@ class _TasksList extends StatelessWidget {
             Icon(
               Icons.cancel_outlined,
               size: 120,
-              color: Theme.of(context).disabledColor,
+              color: theme.disabledColor,
             ),
             Text(
               context.l10n.noTaskMatchesTitle,
-              style: Theme.of(context).textTheme.headlineSmall,
+              style: textTheme.headlineSmall,
             ),
             const SizedBox(height: AppSpacing.sm),
             Text(
               context.l10n.noTaskMatchesSubtitle,
-              style: Theme.of(context).textTheme.bodyLarge,
+              style: textTheme.bodyLarge,
             ),
           ],
         ),
@@ -158,7 +161,8 @@ class _TasksList extends StatelessWidget {
         children: [
           ...tasks.map(
             (task) => TaskCard(
-              isHighlighted: selectedTask == task,
+              backgroundColor:
+                  selectedTask == task ? colorScheme.secondaryContainer : null,
               task: task,
               onTap: () => context.read<TasksCubit>().selectTask(task),
             ),

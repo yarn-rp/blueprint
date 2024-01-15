@@ -91,7 +91,7 @@ class Components {
         (
           name: 'Event Card',
           description: 'Event card used in the app',
-          widget: const EventCardComponent(),
+          widget: const BlueprintEventCardComponent(),
         ),
         (
           name: 'Today Timeline',

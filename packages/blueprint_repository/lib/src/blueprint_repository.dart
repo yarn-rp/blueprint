@@ -34,9 +34,13 @@ class BlueprintRepository {
       return userDoc.snapshots().map((snapshot) {
         final userData = snapshot.data() as Map<String, dynamic>?;
         final blueprint = userData?['blueprint'] as List<dynamic>? ?? [];
-        return blueprint
+        final events = blueprint
             .map((e) => CalendarEvent.fromJson(e as Map<String, dynamic>))
             .toList();
+
+        return [
+          ...events,
+        ];
       });
     });
   }
