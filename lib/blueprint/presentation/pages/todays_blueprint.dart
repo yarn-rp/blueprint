@@ -18,37 +18,38 @@ class TodaysBlueprintPage extends StatelessWidget {
   Widget build(BuildContext context) {
     // final isPhone = MediaQuery.of(context).size.width < 600;
     final isWide = MediaQuery.of(context).size.width >= 1150;
+
+    final currentEvent = context.select(
+      (BlueprintBloc bloc) => bloc.state.currentBlueprintEvent,
+    );
+    final nextEvents = context.select(
+      (BlueprintBloc bloc) => bloc.state.upcomingBlueprintEvents,
+    );
+
     return Scaffold(
       body: Row(
         children: [
           Flexible(
             flex: 4,
-            child: BlocBuilder<BlueprintBloc, BlueprintState>(
-              builder: (context, state) {
-                final currentEvent = state.currentBlueprintEvent;
-                final nextEvents = state.upcomingBlueprintEvents;
-
-                return ListView(
-                  padding: const EdgeInsetsDirectional.all(16),
-                  children: [
-                    if (currentEvent == null && nextEvents.isEmpty)
-                      const _BlueprintEmpty()
-                    else ...[
-                      const _CurrentEvent(),
-                      if (nextEvents.isNotEmpty) ...[
-                        const SizedBox(height: 32),
-                        const _NextOnBlueprint(),
-                        const _UpcomingEvents(),
-                      ],
-                    ],
-                    if (!isWide)
-                      const SizedBox(
-                        height: 2480,
-                        child: BlueprintTimeline(),
-                      ),
+            child: ListView(
+              padding: const EdgeInsetsDirectional.all(16),
+              children: [
+                if (currentEvent == null && nextEvents.isEmpty)
+                  const _BlueprintEmpty()
+                else ...[
+                  const _CurrentEvent(),
+                  if (nextEvents.isNotEmpty) ...[
+                    const SizedBox(height: 32),
+                    const _NextOnBlueprint(),
+                    const _UpcomingEvents(),
                   ],
-                );
-              },
+                ],
+                if (!isWide)
+                  const SizedBox(
+                    height: 2480,
+                    child: BlueprintTimeline(),
+                  ),
+              ],
             ),
           ),
           if (isWide)
@@ -181,6 +182,8 @@ class _NowOnBlueprint extends StatelessWidget {
       padding: const EdgeInsets.symmetric(
         horizontal: 16,
         vertical: 16,
+      ).copyWith(
+        top: 0,
       ),
       child: Row(
         children: [

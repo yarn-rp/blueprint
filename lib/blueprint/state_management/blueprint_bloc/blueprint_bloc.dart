@@ -33,11 +33,18 @@ class BlueprintBloc extends Bloc<BlueprintEvent, BlueprintState> {
     final blueprintStream = _blueprintRepository.getBlueprint();
 
     return emit.forEach(
-      blueprintStream,
-      onData: (blueprint) => state.copyWith(
-        items: blueprint,
-        status: BlueprintStatus.loaded,
+      blueprintStream.transform(
+        PeriodicEmitTransformer(
+          duration: const Duration(seconds: 5),
+        ),
       ),
+      onData: (value) {
+        return state.copyWith(
+          items: value,
+          updatedAt: DateTime.now(),
+          status: BlueprintStatus.loaded,
+        );
+      },
       onError: (error, stackTrace) {
         addError(error, stackTrace);
 
@@ -99,5 +106,66 @@ class BlueprintBloc extends Bloc<BlueprintEvent, BlueprintState> {
     }).toList();
 
     await _blueprintRepository.saveBlueprint(newBlueprint);
+  }
+}
+
+class PeriodicEmitTransformer<S> extends StreamTransformerBase<S, S> {
+  PeriodicEmitTransformer({required this.duration});
+  final Duration duration;
+
+  @override
+  Stream<S> bind(Stream<S> stream) {
+    StreamController<S>? controller;
+    Timer? timer;
+    S? lastValue;
+
+    void onData(S data) {
+      lastValue = data;
+      if (controller != null && !controller.isClosed) {
+        controller.add(lastValue as S);
+      }
+    }
+
+    void onTick(Timer t) {
+      if (lastValue != null && controller != null && !controller.isClosed) {
+        controller.add(lastValue as S);
+      }
+    }
+
+    void startTimer() {
+      timer?.cancel();
+      timer = Timer.periodic(duration, onTick);
+    }
+
+    void onListen() {
+      startTimer();
+      stream.listen(
+        onData,
+        onError: controller?.addError,
+        onDone: controller?.close,
+        cancelOnError: true,
+      );
+    }
+
+    void onPause() {
+      timer?.cancel();
+    }
+
+    void onResume() {
+      startTimer();
+    }
+
+    void onCancel() {
+      timer?.cancel();
+    }
+
+    controller = StreamController<S>(
+      onListen: onListen,
+      onPause: onPause,
+      onResume: onResume,
+      onCancel: onCancel,
+    );
+
+    return controller.stream;
   }
 }
