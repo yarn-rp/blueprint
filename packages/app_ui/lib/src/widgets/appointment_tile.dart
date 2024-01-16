@@ -18,7 +18,7 @@ class AppointmentTile extends StatelessWidget {
 
     final isAfter = appointment.endTime.isAfter(now);
     final originalColor =
-        appointment.color ?? Theme.of(context).colorScheme.secondaryContainer;
+        appointment.color ?? Theme.of(context).colorScheme.tertiaryContainer;
 
     final startTime = Jiffy(appointment.startTime).format('hh:mm');
     final endTime = Jiffy(appointment.endTime).format('hh:mm a');

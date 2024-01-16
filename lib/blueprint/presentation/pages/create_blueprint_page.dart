@@ -122,6 +122,8 @@ class _TimelineState extends State<_Timeline> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return BlocBuilder<BlueprintBloc, BlueprintState>(
       builder: (context, state) {
         final l10n = context.l10n;
@@ -192,7 +194,10 @@ class _TimelineState extends State<_Timeline> {
                   subject: e.subject,
                   startTime: e.startTime,
                   endTime: e.endTime,
-                  color: HexColor.fromHex(e.color),
+                  color: e.map(
+                    event: (event) => theme.colorScheme.tertiaryContainer,
+                    task: (task) => theme.colorScheme.secondaryContainer,
+                  ),
                   type: e.map(
                     event: (event) => event.value.conferenceData != null
                         ? EventType.meeting
