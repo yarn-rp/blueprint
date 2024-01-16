@@ -24,15 +24,6 @@ export class RefreshEventsController {
         .collection("authenticators")
         .get();
 
-      const authenticators = authenticatorsDoc.docs
-        .map((doc) => doc.data())
-        .filter((authenticator) => authenticator.type == AuthenticatorType.Event);
-
-      console.log(
-        "\tRefreshing for authenticators",
-        authenticators.map((a) => a.platformName),
-      );
-
       // get tasks for every authenticator
       const userPromises = authenticatorsDoc.docs
         .filter((authenticator) => authenticator.data().type == AuthenticatorType.Event)
