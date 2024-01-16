@@ -38,16 +38,8 @@ class BlueprintRepository {
           userDoc.collection(_blueprintCollectionName);
       return blueprintSubCollection.snapshots().map((snapshot) {
         return snapshot.docs.map((doc) {
-          try {
-            final data = doc.data();
-            final item = BlueprintItem.fromJson(data);
-            print('Got item: $item');
-
-            return item;
-          } catch (error, stackTrace) {
-            print('Got error while parsing blueprint item: $error $stackTrace');
-            rethrow;
-          }
+          final data = doc.data();
+          return BlueprintItem.fromJson(data);
         }).toList();
       });
     });
