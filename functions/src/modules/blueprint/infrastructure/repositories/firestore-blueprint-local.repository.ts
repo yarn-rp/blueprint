@@ -35,14 +35,14 @@ export class FirestoreBlueprintLocalRepository implements BlueprintLocalReposito
     console.log("Updating events that match with", items);
 
     items.forEach((item) => {
-      const matchingEvents = this.firestore
+      const matchingEventsOnBlueprint = this.firestore
         .collection("users")
         .doc(uid)
         .collection("blueprint")
         .where(evenIdFieldRef, "==", item.eventId)
         .get();
 
-      matchingEvents.then((snapshot) => {
+      matchingEventsOnBlueprint.then((snapshot) => {
         snapshot.docs.forEach((doc) => {
           batch.update(doc.ref, { value: item });
         });
@@ -58,14 +58,14 @@ export class FirestoreBlueprintLocalRepository implements BlueprintLocalReposito
     console.log("Deleting events that match with", items);
 
     items.forEach((item) => {
-      const matchingEvents = this.firestore
+      const matchingEventsOnBlueprint = this.firestore
         .collection("users")
         .doc(uid)
         .collection("blueprint")
         .where(evenIdFieldRef, "==", item.eventId)
         .get();
 
-      matchingEvents.then((snapshot) => {
+      matchingEventsOnBlueprint.then((snapshot) => {
         snapshot.docs.forEach((doc) => {
           batch.delete(doc.ref);
         });
@@ -79,17 +79,37 @@ export class FirestoreBlueprintLocalRepository implements BlueprintLocalReposito
     const batch = this.firestore.batch();
     const taskIdFieldRef = new FieldPath("value", "taskId");
     items.forEach((item) => {
-      const matchingEvents = this.firestore
+      const matchingTasksOnBlueprint = this.firestore
         .collection("users")
         .doc(uid)
         .collection("blueprint")
-        // .withConverter(blueprintItemConverter)
         .where(taskIdFieldRef, "==", item.taskId)
         .get();
 
-      matchingEvents.then((snapshot) => {
+      matchingTasksOnBlueprint.then((snapshot) => {
         snapshot.docs.forEach((doc) => {
           batch.update(doc.ref, { value: item });
+        });
+      });
+    });
+
+    await batch.commit();
+  }
+
+  async deleteTasks(items: Task[], uid: string): Promise<void> {
+    const batch = this.firestore.batch();
+    const taskIdFieldRef = new FieldPath("value", "taskId");
+    items.forEach((item) => {
+      const matchingTasksOnBlueprint = this.firestore
+        .collection("users")
+        .doc(uid)
+        .collection("blueprint")
+        .where(taskIdFieldRef, "==", item.taskId)
+        .get();
+
+      matchingTasksOnBlueprint.then((snapshot) => {
+        snapshot.docs.forEach((doc) => {
+          batch.delete(doc.ref);
         });
       });
     });
