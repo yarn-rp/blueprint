@@ -18,7 +18,7 @@ class EventCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
-    final originalColor = Theme.of(context).colorScheme.tertiaryContainer;
+    final originalColor = colorScheme.tertiaryContainer;
 
     final backgroundColor = originalColor;
 
@@ -33,7 +33,7 @@ class EventCard extends StatelessWidget {
         if (event.platform != null)
           LabelChip(text: event.platform!.displayName)
         else
-          LabelChip(text: 'Unknown platform'),
+          const LabelChip(text: 'Unknown platform'),
       ],
       dateAndTime: event.startTime != null && event.endTime != null
           ? '${Jiffy(event.startTime).jm} - ${Jiffy(event.endTime).jm}'
