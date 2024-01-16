@@ -31,35 +31,55 @@ BlueprintItem _$BlueprintItemFromJson(Map<String, dynamic> json) {
 mixin _$BlueprintItem {
   Object get value => throw _privateConstructorUsedError;
   String get id => throw _privateConstructorUsedError;
+  @TimestampConverter()
   DateTime get startTime => throw _privateConstructorUsedError;
+  @TimestampConverter()
   DateTime get endTime => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
-            Event value, String id, DateTime startTime, DateTime endTime)
+            Event value,
+            String id,
+            @TimestampConverter() DateTime startTime,
+            @TimestampConverter() DateTime endTime)
         event,
     required TResult Function(
-            Task value, String id, DateTime startTime, DateTime endTime)
+            Task value,
+            String id,
+            @TimestampConverter() DateTime startTime,
+            @TimestampConverter() DateTime endTime)
         task,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(
-            Event value, String id, DateTime startTime, DateTime endTime)?
+            Event value,
+            String id,
+            @TimestampConverter() DateTime startTime,
+            @TimestampConverter() DateTime endTime)?
         event,
     TResult? Function(
-            Task value, String id, DateTime startTime, DateTime endTime)?
+            Task value,
+            String id,
+            @TimestampConverter() DateTime startTime,
+            @TimestampConverter() DateTime endTime)?
         task,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
-            Event value, String id, DateTime startTime, DateTime endTime)?
+            Event value,
+            String id,
+            @TimestampConverter() DateTime startTime,
+            @TimestampConverter() DateTime endTime)?
         event,
     TResult Function(
-            Task value, String id, DateTime startTime, DateTime endTime)?
+            Task value,
+            String id,
+            @TimestampConverter() DateTime startTime,
+            @TimestampConverter() DateTime endTime)?
         task,
     required TResult orElse(),
   }) =>
@@ -95,7 +115,10 @@ abstract class $BlueprintItemCopyWith<$Res> {
           BlueprintItem value, $Res Function(BlueprintItem) then) =
       _$BlueprintItemCopyWithImpl<$Res, BlueprintItem>;
   @useResult
-  $Res call({String id, DateTime startTime, DateTime endTime});
+  $Res call(
+      {String id,
+      @TimestampConverter() DateTime startTime,
+      @TimestampConverter() DateTime endTime});
 }
 
 /// @nodoc
@@ -140,7 +163,11 @@ abstract class _$$EventBlueprintItemImplCopyWith<$Res>
       __$$EventBlueprintItemImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({Event value, String id, DateTime startTime, DateTime endTime});
+  $Res call(
+      {Event value,
+      String id,
+      @TimestampConverter() DateTime startTime,
+      @TimestampConverter() DateTime endTime});
 }
 
 /// @nodoc
@@ -186,8 +213,8 @@ class _$EventBlueprintItemImpl extends EventBlueprintItem {
   const _$EventBlueprintItemImpl(
       {required this.value,
       required this.id,
-      required this.startTime,
-      required this.endTime,
+      @TimestampConverter() required this.startTime,
+      @TimestampConverter() required this.endTime,
       final String? $type})
       : $type = $type ?? 'event',
         super._();
@@ -200,8 +227,10 @@ class _$EventBlueprintItemImpl extends EventBlueprintItem {
   @override
   final String id;
   @override
+  @TimestampConverter()
   final DateTime startTime;
   @override
+  @TimestampConverter()
   final DateTime endTime;
 
   @JsonKey(name: 'runtimeType')
@@ -239,10 +268,16 @@ class _$EventBlueprintItemImpl extends EventBlueprintItem {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
-            Event value, String id, DateTime startTime, DateTime endTime)
+            Event value,
+            String id,
+            @TimestampConverter() DateTime startTime,
+            @TimestampConverter() DateTime endTime)
         event,
     required TResult Function(
-            Task value, String id, DateTime startTime, DateTime endTime)
+            Task value,
+            String id,
+            @TimestampConverter() DateTime startTime,
+            @TimestampConverter() DateTime endTime)
         task,
   }) {
     return event(value, id, startTime, endTime);
@@ -252,10 +287,16 @@ class _$EventBlueprintItemImpl extends EventBlueprintItem {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(
-            Event value, String id, DateTime startTime, DateTime endTime)?
+            Event value,
+            String id,
+            @TimestampConverter() DateTime startTime,
+            @TimestampConverter() DateTime endTime)?
         event,
     TResult? Function(
-            Task value, String id, DateTime startTime, DateTime endTime)?
+            Task value,
+            String id,
+            @TimestampConverter() DateTime startTime,
+            @TimestampConverter() DateTime endTime)?
         task,
   }) {
     return event?.call(value, id, startTime, endTime);
@@ -265,10 +306,16 @@ class _$EventBlueprintItemImpl extends EventBlueprintItem {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
-            Event value, String id, DateTime startTime, DateTime endTime)?
+            Event value,
+            String id,
+            @TimestampConverter() DateTime startTime,
+            @TimestampConverter() DateTime endTime)?
         event,
     TResult Function(
-            Task value, String id, DateTime startTime, DateTime endTime)?
+            Task value,
+            String id,
+            @TimestampConverter() DateTime startTime,
+            @TimestampConverter() DateTime endTime)?
         task,
     required TResult orElse(),
   }) {
@@ -319,10 +366,11 @@ class _$EventBlueprintItemImpl extends EventBlueprintItem {
 
 abstract class EventBlueprintItem extends BlueprintItem {
   const factory EventBlueprintItem(
-      {required final Event value,
-      required final String id,
-      required final DateTime startTime,
-      required final DateTime endTime}) = _$EventBlueprintItemImpl;
+          {required final Event value,
+          required final String id,
+          @TimestampConverter() required final DateTime startTime,
+          @TimestampConverter() required final DateTime endTime}) =
+      _$EventBlueprintItemImpl;
   const EventBlueprintItem._() : super._();
 
   factory EventBlueprintItem.fromJson(Map<String, dynamic> json) =
@@ -333,8 +381,10 @@ abstract class EventBlueprintItem extends BlueprintItem {
   @override
   String get id;
   @override
+  @TimestampConverter()
   DateTime get startTime;
   @override
+  @TimestampConverter()
   DateTime get endTime;
   @override
   @JsonKey(ignore: true)
@@ -350,7 +400,11 @@ abstract class _$$TaskBlueprintItemImplCopyWith<$Res>
       __$$TaskBlueprintItemImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({Task value, String id, DateTime startTime, DateTime endTime});
+  $Res call(
+      {Task value,
+      String id,
+      @TimestampConverter() DateTime startTime,
+      @TimestampConverter() DateTime endTime});
 }
 
 /// @nodoc
@@ -396,8 +450,8 @@ class _$TaskBlueprintItemImpl extends TaskBlueprintItem {
   const _$TaskBlueprintItemImpl(
       {required this.value,
       required this.id,
-      required this.startTime,
-      required this.endTime,
+      @TimestampConverter() required this.startTime,
+      @TimestampConverter() required this.endTime,
       final String? $type})
       : $type = $type ?? 'task',
         super._();
@@ -410,8 +464,10 @@ class _$TaskBlueprintItemImpl extends TaskBlueprintItem {
   @override
   final String id;
   @override
+  @TimestampConverter()
   final DateTime startTime;
   @override
+  @TimestampConverter()
   final DateTime endTime;
 
   @JsonKey(name: 'runtimeType')
@@ -449,10 +505,16 @@ class _$TaskBlueprintItemImpl extends TaskBlueprintItem {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
-            Event value, String id, DateTime startTime, DateTime endTime)
+            Event value,
+            String id,
+            @TimestampConverter() DateTime startTime,
+            @TimestampConverter() DateTime endTime)
         event,
     required TResult Function(
-            Task value, String id, DateTime startTime, DateTime endTime)
+            Task value,
+            String id,
+            @TimestampConverter() DateTime startTime,
+            @TimestampConverter() DateTime endTime)
         task,
   }) {
     return task(value, id, startTime, endTime);
@@ -462,10 +524,16 @@ class _$TaskBlueprintItemImpl extends TaskBlueprintItem {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(
-            Event value, String id, DateTime startTime, DateTime endTime)?
+            Event value,
+            String id,
+            @TimestampConverter() DateTime startTime,
+            @TimestampConverter() DateTime endTime)?
         event,
     TResult? Function(
-            Task value, String id, DateTime startTime, DateTime endTime)?
+            Task value,
+            String id,
+            @TimestampConverter() DateTime startTime,
+            @TimestampConverter() DateTime endTime)?
         task,
   }) {
     return task?.call(value, id, startTime, endTime);
@@ -475,10 +543,16 @@ class _$TaskBlueprintItemImpl extends TaskBlueprintItem {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
-            Event value, String id, DateTime startTime, DateTime endTime)?
+            Event value,
+            String id,
+            @TimestampConverter() DateTime startTime,
+            @TimestampConverter() DateTime endTime)?
         event,
     TResult Function(
-            Task value, String id, DateTime startTime, DateTime endTime)?
+            Task value,
+            String id,
+            @TimestampConverter() DateTime startTime,
+            @TimestampConverter() DateTime endTime)?
         task,
     required TResult orElse(),
   }) {
@@ -529,10 +603,11 @@ class _$TaskBlueprintItemImpl extends TaskBlueprintItem {
 
 abstract class TaskBlueprintItem extends BlueprintItem {
   const factory TaskBlueprintItem(
-      {required final Task value,
-      required final String id,
-      required final DateTime startTime,
-      required final DateTime endTime}) = _$TaskBlueprintItemImpl;
+          {required final Task value,
+          required final String id,
+          @TimestampConverter() required final DateTime startTime,
+          @TimestampConverter() required final DateTime endTime}) =
+      _$TaskBlueprintItemImpl;
   const TaskBlueprintItem._() : super._();
 
   factory TaskBlueprintItem.fromJson(Map<String, dynamic> json) =
@@ -543,8 +618,10 @@ abstract class TaskBlueprintItem extends BlueprintItem {
   @override
   String get id;
   @override
+  @TimestampConverter()
   DateTime get startTime;
   @override
+  @TimestampConverter()
   DateTime get endTime;
   @override
   @JsonKey(ignore: true)

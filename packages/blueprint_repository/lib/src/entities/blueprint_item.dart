@@ -1,4 +1,6 @@
+import 'package:blueprint_repository/src/converter/timestamp_converter.dart';
 import 'package:calendar_repository/calendar_repository.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:task_repository/task_repository.dart';
 
@@ -17,15 +19,15 @@ class BlueprintItem with _$BlueprintItem {
   const factory BlueprintItem.event({
     required Event value,
     required String id,
-    required DateTime startTime,
-    required DateTime endTime,
+    @TimestampConverter() required DateTime startTime,
+    @TimestampConverter() required DateTime endTime,
   }) = EventBlueprintItem;
 
   const factory BlueprintItem.task({
     required Task value,
     required String id,
-    required DateTime startTime,
-    required DateTime endTime,
+    @TimestampConverter() required DateTime startTime,
+    @TimestampConverter() required DateTime endTime,
   }) = TaskBlueprintItem;
 
   bool get isAllDay => false;
