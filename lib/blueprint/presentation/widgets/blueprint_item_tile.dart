@@ -1,24 +1,25 @@
-import 'package:app_ui/app_ui.dart';
-import 'package:blueprint/blueprint/presentation/widgets/general_calendar_event_tile.dart';
-import 'package:blueprint/blueprint/presentation/widgets/task_event_tile.dart';
 import 'package:blueprint/calendar/presentation/views/event_details.dart';
-import 'package:blueprint/tasks/presentation/widgets/task_details.dart';
+import 'package:blueprint/calendar/presentation/widgets/widgets.dart';
+import 'package:blueprint/tasks/presentation/widgets/widgets.dart';
 import 'package:blueprint_repository/blueprint_repository.dart';
 import 'package:flutter/material.dart';
 
-class CalendarEventTile extends StatelessWidget {
-  const CalendarEventTile({
-    required this.event,
+class BlueprintItemTile extends StatelessWidget {
+  const BlueprintItemTile({
+    required this.item,
     super.key,
     this.showSmallVersions = false,
   });
-  final CalendarEvent event;
+  final BlueprintItem item;
   final bool showSmallVersions;
 
   @override
   Widget build(BuildContext context) {
-    return event.map(
-      event: (event) => InkWell(
+    final theme = Theme.of(context);
+
+    return item.map(
+      event: (item) => EventCard(
+        event: item.value,
         onTap: () async {
           await showDialog<void>(
             context: context,
@@ -32,8 +33,8 @@ class CalendarEventTile extends StatelessWidget {
                         maxWidth: 1200,
                         maxHeight: MediaQuery.of(context).size.height,
                       ),
-                      child: GeneralEventCalendarEventDetails(
-                        appointment: event,
+                      child: GeneralEventBlueprintEventDetails(
+                        appointment: item,
                         onClose: () => Navigator.of(context).pop(),
                       ),
                     );
@@ -43,17 +44,12 @@ class CalendarEventTile extends StatelessWidget {
             },
           );
         },
-        child: GeneralCalendarEventTile(
-          appointment: event,
-          isSmallVersion: false,
-          color: event.event.colorHex != null
-              ? HexColor.fromHex(
-                  event.event.colorHex,
-                )
-              : null,
-        ),
       ),
-      task: (event) => InkWell(
+      task: (item) => TaskCard(
+        task: item.value,
+        backgroundColor: theme.colorScheme.secondaryContainer,
+        startTime: item.startTime,
+        endTime: item.endTime,
         onTap: () async {
           await showDialog<void>(
             context: context,
@@ -68,7 +64,7 @@ class CalendarEventTile extends StatelessWidget {
                         maxHeight: MediaQuery.of(context).size.height,
                       ),
                       child: TaskDetails(
-                        task: event.task,
+                        task: item.value,
                         onClose: () => Navigator.of(context).pop(),
                       ),
                     );
@@ -78,10 +74,6 @@ class CalendarEventTile extends StatelessWidget {
             },
           );
         },
-        child: TaskEventTile(
-          appointment: event,
-          showDeleteButton: false,
-        ),
       ),
     );
   }

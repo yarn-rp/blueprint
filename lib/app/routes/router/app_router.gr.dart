@@ -13,6 +13,14 @@ abstract class _$AppRouter extends RootStackRouter {
   // ignore: unused_element
   _$AppRouter({super.navigatorKey});
 
+  /// The default animation
+  @override
+  RouteType get defaultRouteType => kIsWeb
+      ? const RouteType.custom(
+          transitionsBuilder: TransitionsBuilders.noTransition,
+        )
+      : const RouteType.adaptive();
+
   @override
   final Map<String, PageFactory> pagesMap = {
     BlueprintRouterRoute.name: (routeData) {

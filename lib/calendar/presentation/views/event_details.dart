@@ -8,15 +8,15 @@ import 'package:blueprint_repository/blueprint_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class GeneralEventCalendarEventDetails extends StatelessWidget {
-  const GeneralEventCalendarEventDetails({
+class GeneralEventBlueprintEventDetails extends StatelessWidget {
+  const GeneralEventBlueprintEventDetails({
     required this.appointment,
     required this.onClose,
     this.padding = 32,
     super.key,
   });
 
-  final GeneralCalendarEvent appointment;
+  final EventBlueprintItem appointment;
   final VoidCallback onClose;
   final double padding;
 
@@ -72,9 +72,9 @@ class GeneralEventCalendarEventDetails extends StatelessWidget {
                       width: 12,
                       height: 12,
                       decoration: BoxDecoration(
-                        color: appointment.event.colorHex != null
+                        color: appointment.value.colorHex != null
                             ? HexColor.fromHex(
-                                appointment.event.colorHex,
+                                appointment.value.colorHex,
                               )
                             : Theme.of(context).colorScheme.secondary,
                         borderRadius: BorderRadius.circular(4),
@@ -91,15 +91,15 @@ class GeneralEventCalendarEventDetails extends StatelessWidget {
                     ),
                   ],
                 ),
-                CalendarEventTime(appointment: appointment),
+                BlueprintEventTime(appointment: appointment),
                 const SizedBox(
                   height: 8,
                 ),
-                if (appointment.event.platformLink != null)
+                if (appointment.value.platformLink != null)
                   FilledButton.tonalIcon(
                     onPressed: () => launchUrl(
                       Uri.parse(
-                        appointment.event.platformLink!,
+                        appointment.value.platformLink!,
                       ),
                     ),
                     icon: const Icon(Icons.link),
@@ -110,7 +110,7 @@ class GeneralEventCalendarEventDetails extends StatelessWidget {
                           'View in ',
                         ),
                         Text(
-                          appointment.event.platform?.displayName ?? '',
+                          appointment.value.platform?.displayName ?? '',
                         ),
                       ],
                     ),
@@ -185,11 +185,11 @@ class GeneralEventCalendarEventDetails extends StatelessWidget {
                                   endIndent: 0,
                                   indent: 0,
                                 ),
-                                if (appointment.event.conferenceData !=
+                                if (appointment.value.conferenceData !=
                                     null) ...[
                                   ConferenceEntryPoints(
                                     conferenceData:
-                                        appointment.event.conferenceData!,
+                                        appointment.value.conferenceData!,
                                   ),
 
                                   // Divider
@@ -201,14 +201,14 @@ class GeneralEventCalendarEventDetails extends StatelessWidget {
                                     height: 32,
                                   ),
                                 ],
-                                CalendarEventTime(appointment: appointment),
+                                BlueprintEventTime(appointment: appointment),
                                 const SizedBox(
                                   height: 16,
                                 ),
                                 Wrap(
                                   children: [
                                     if (appointment
-                                            .event.attendees?.isNotEmpty ??
+                                            .value.attendees?.isNotEmpty ??
                                         false)
                                       Column(
                                         crossAxisAlignment:
@@ -218,7 +218,7 @@ class GeneralEventCalendarEventDetails extends StatelessWidget {
                                           const SizedBox(
                                             height: 16,
                                           ),
-                                          ...appointment.event.attendees!
+                                          ...appointment.value.attendees!
                                               .map((attendee) {
                                             final user = attendee.user;
                                             final status = attendee.status;
@@ -296,7 +296,7 @@ class EventDetailsDescription extends StatelessWidget {
     super.key,
   });
 
-  final GeneralCalendarEvent appointment;
+  final EventBlueprintItem appointment;
 
   String humanizeEntryPointHeader(String entryPointType) {
     switch (entryPointType) {
@@ -316,12 +316,12 @@ class EventDetailsDescription extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final descriptionContent = <String>[
-      appointment.event.description ?? '',
-      appointment.event.conferenceData?.notes ?? '',
+      appointment.value.description ?? '',
+      appointment.value.conferenceData?.notes ?? '',
     ];
 
-    if (appointment.event.conferenceData?.entryPoints != null) {
-      for (final entryPoint in appointment.event.conferenceData!.entryPoints) {
+    if (appointment.value.conferenceData?.entryPoints != null) {
+      for (final entryPoint in appointment.value.conferenceData!.entryPoints) {
         descriptionContent.add(
           "### ${humanizeEntryPointHeader(entryPoint.entryPointType ?? '')}\n${entryPoint.uri}",
         );

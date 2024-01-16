@@ -1,9 +1,25 @@
 {
     "@@locale": "en",
     "accept":"Accept",
+    "addNewTaskCTA": "Add new tasks",
+    "@addNewTaskCTA": {
+        "description": "CTA for adding a new task"
+    },
+    "available": "Available",
+    "@available": {
+        "description": "Available word"
+    },
     "assignees": "Assignees",
     "@assignees": {
         "description": "Title for assignees section"
+    },
+    "blueprintEmptyTitle": "Blueprint Empty",
+    "@blueprintEmptyTitle": {
+        "description": "Title for blueprint empty section"
+    },
+    "blueprintEmptySubtitle": "You have nothing planned for the rest of the day",
+    "@blueprintEmptySubtitle": {
+        "description": "Subtitle for blueprint empty section"
     },
     "cancel": "Cancel",
     "@cancel": {
@@ -16,6 +32,10 @@
     "create": "Create",
     "@create": {
         "description": "Create word"
+    },
+    "createTodaysBlueprintCTA": "Create Today's blueprint",
+    "@createTodaysBlueprintCTA": {
+        "description": "CTA for edit today blueprint button"
     },
     "createTodaysBlueprintTitle": "Create Today's Blueprint",
     "@createTodaysBlueprintTitle": {
@@ -46,10 +66,22 @@
     "@dueDate": {
         "description": "Due date for an event or task"
     },
+    "editBlueprintCTA": "Edit Today's blueprint",
+    "@editBlueprintCTA": {
+        "description": "CTA for edit today blueprint button"
+    },
     "email":"Email",
     "endTime": "End Time",
     "@endTime": {
         "description": "End time for an event or task"
+    },
+    "freeTimeEventTitle": "Free time",
+    "@freeTimeEventTitle": {
+        "description": "Free time event title"
+    },
+    "freeTimeEventSubtitle": "Seems like you have some time to spare. Feel free to enjoy your free time or schedule a new task for yourself",
+    "@freeTimeEventSubtitle": {
+        "description": "Free time event subtitle"
     },
     "forgotPassword":"Forgot Password", 
     "integrationsDropdownHint": "Integrations",
@@ -71,6 +103,10 @@
     "noTaskMatchesSubtitle": "Please adjust your search filters to get results",
     "@noTaskMatchesSubtitle": {
         "description": "Subtitle for when no tasks matching search"
+    },
+    "currentEventGlanceTitle": "Now on blueprint",
+    "@currentEventGlanceTitle": {
+        "description": "Title for the now on blueprint glance event"
     },
     "selectTask": "Select a Task",
     "@selectTask": {
@@ -105,6 +141,10 @@
     "updated": "Updated",
     "@updated": {
         "description": "Updated at prefix"
+    },
+    "upcomingEventsTitle": "Upcoming events",
+    "@upcomingEventsTitle": {
+        "description": "Title for the upcoming events section on the blueprint"
     },
     "darkMode":"Dark Mode",
     "lightMode":"Light Mode"

@@ -11,6 +11,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
   await bootstrap(
     () => const App(),
     environment: AppEnvironment.local,

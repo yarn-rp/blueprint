@@ -83,7 +83,7 @@ class EventListTile extends StatelessWidget {
 
   factory EventListTile.task({
     required String title,
-    required String subtitle,
+    required String? subtitle,
     VoidCallback? onTap,
     Widget? trailing,
     Color? textColor,
@@ -99,7 +99,7 @@ class EventListTile extends StatelessWidget {
 
   factory EventListTile.videoConference({
     required String title,
-    required String subtitle,
+    String? subtitle,
     VoidCallback? onTap,
     Widget? trailing,
     Color? textColor,
@@ -115,7 +115,7 @@ class EventListTile extends StatelessWidget {
 
   factory EventListTile.calendar({
     required String title,
-    required String subtitle,
+    String? subtitle,
     VoidCallback? onTap,
     Widget? trailing,
     Color? textColor,
@@ -131,7 +131,7 @@ class EventListTile extends StatelessWidget {
 
   final EventTypeLabel leading;
   final String title;
-  final String subtitle;
+  final String? subtitle;
   final Widget? trailing;
   final VoidCallback? onTap;
   final bool isMini;
@@ -155,18 +155,20 @@ class EventListTile extends StatelessWidget {
                     ),
               ),
             ),
-            const Spacer(),
-            Flexible(
-              flex: 4,
-              child: Text(
-                subtitle,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: textColor,
-                    ),
+            if (subtitle != null) ...[
+              const Spacer(),
+              Flexible(
+                flex: 4,
+                child: Text(
+                  subtitle!,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: textColor,
+                      ),
+                ),
               ),
-            ),
+            ]
           ],
         ),
       );
@@ -174,7 +176,7 @@ class EventListTile extends StatelessWidget {
     return SizedBox(
       height: AppSpacing.xxxlg + AppSpacing.xs,
       child: ListTile(
-        isThreeLine: true,
+        isThreeLine: subtitle != null,
         dense: false,
         leading: SizedBox(
           width: AppSpacing.xxlg,
@@ -188,14 +190,16 @@ class EventListTile extends StatelessWidget {
                 color: textColor,
               ),
         ),
-        subtitle: Text(
-          subtitle,
-          overflow: TextOverflow.ellipsis,
-          maxLines: 2,
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: textColor,
+        subtitle: subtitle == null
+            ? null
+            : Text(
+                subtitle!,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: textColor,
+                    ),
               ),
-        ),
         trailing: trailing,
         onTap: onTap,
       ),

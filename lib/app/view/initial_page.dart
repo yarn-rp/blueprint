@@ -116,15 +116,13 @@ class _InitialPageState extends State<InitialPage> {
                     ? child
                     : Row(
                         children: [
-                          SizedBox(
-                            child: DesktopNavigationBar(
-                              onDestinationSelected: tabsRouter.setActiveIndex,
-                              destinations: navigationPages
-                                  .map(
-                                    (e) => (label: e.text, icon: e.icon),
-                                  )
-                                  .toList(),
-                            ),
+                          DesktopNavigationBar(
+                            onDestinationSelected: tabsRouter.setActiveIndex,
+                            destinations: navigationPages
+                                .map(
+                                  (e) => (label: e.text, icon: e.icon),
+                                )
+                                .toList(),
                           ),
                           Expanded(child: child),
                         ],
