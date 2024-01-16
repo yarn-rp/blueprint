@@ -10,7 +10,7 @@ type UpdateBlueprintContext = {
 };
 
 @injectable()
-export class UpdateBlueprintController {
+export class UpdateBlueprintItemController {
   constructor(
     public updateBlueprintEventUseCase: UpdateBlueprintEventUseCase,
     public updateBlueprintTaskUseCase: UpdateBlueprintTaskUseCase,

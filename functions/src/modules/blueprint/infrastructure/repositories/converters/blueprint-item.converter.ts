@@ -22,7 +22,7 @@ export const blueprintItemConverter: FirebaseFirestore.FirestoreDataConverter<Bl
       startTime: Timestamp.fromDate(item.startTime),
       endTime: Timestamp.fromDate(item.endTime),
       value: item.value,
-      runTimeType: item.runTimeType,
+      runtimeType: item.runtimeType,
       id: item.id,
     };
   },
@@ -38,7 +38,7 @@ export const blueprintItemConverter: FirebaseFirestore.FirestoreDataConverter<Bl
     const data = snapshot.data();
     let value: Event | Task;
 
-    if (data.runTimeType === "task") {
+    if (data.runtimeType === "task") {
       value = data.value as Task;
     } else {
       value = data.value as Event;
@@ -48,7 +48,7 @@ export const blueprintItemConverter: FirebaseFirestore.FirestoreDataConverter<Bl
       startTime: data.startTime.toDate(),
       endTime: data.endTime.toDate(),
       value: value,
-      runTimeType: data.runTimeType,
+      runtimeType: data.runtimeType,
       id: data.id,
     };
   },

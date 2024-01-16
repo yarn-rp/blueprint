@@ -20,7 +20,7 @@ export class FirestoreBlueprintLocalRepository implements BlueprintLocalReposito
         startTime: item.startTime as Date,
         endTime: item.endTime as Date,
         value: item,
-        runTimeType: "event",
+        runtimeType: "event",
       };
 
       batch.set(docRef, blueprintItem);
@@ -34,20 +34,22 @@ export class FirestoreBlueprintLocalRepository implements BlueprintLocalReposito
     const evenIdFieldRef = new FieldPath("value", "eventId");
     console.log("Updating events that match with", items);
 
-    items.forEach((item) => {
-      const matchingEventsOnBlueprint = this.firestore
-        .collection("users")
-        .doc(uid)
-        .collection("blueprint")
-        .where(evenIdFieldRef, "==", item.eventId)
-        .get();
+    await Promise.all(
+      items.map((item) => {
+        const matchingEventsOnBlueprint = this.firestore
+          .collection("users")
+          .doc(uid)
+          .collection("blueprint")
+          .where(evenIdFieldRef, "==", item.eventId)
+          .get();
 
-      matchingEventsOnBlueprint.then((snapshot) => {
-        snapshot.docs.forEach((doc) => {
-          batch.update(doc.ref, { value: item });
+        return matchingEventsOnBlueprint.then((snapshot) => {
+          snapshot.docs.forEach((doc) => {
+            batch.update(doc.ref, { value: item });
+          });
         });
-      });
-    });
+      }),
+    );
 
     await batch.commit();
   }
@@ -57,20 +59,22 @@ export class FirestoreBlueprintLocalRepository implements BlueprintLocalReposito
     const evenIdFieldRef = new FieldPath("value", "eventId");
     console.log("Deleting events that match with", items);
 
-    items.forEach((item) => {
-      const matchingEventsOnBlueprint = this.firestore
-        .collection("users")
-        .doc(uid)
-        .collection("blueprint")
-        .where(evenIdFieldRef, "==", item.eventId)
-        .get();
+    await Promise.all(
+      items.map((item) => {
+        const matchingEventsOnBlueprint = this.firestore
+          .collection("users")
+          .doc(uid)
+          .collection("blueprint")
+          .where(evenIdFieldRef, "==", item.eventId)
+          .get();
 
-      matchingEventsOnBlueprint.then((snapshot) => {
-        snapshot.docs.forEach((doc) => {
-          batch.delete(doc.ref);
+        return matchingEventsOnBlueprint.then((snapshot) => {
+          snapshot.docs.forEach((doc) => {
+            batch.delete(doc.ref);
+          });
         });
-      });
-    });
+      }),
+    );
 
     await batch.commit();
   }

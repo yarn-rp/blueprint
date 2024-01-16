@@ -7,7 +7,7 @@ import { Event } from "../../../events/domain/entities";
  * @property startTime - The start time of the item
  * @property endTime - The end time of the item
  * @property value - The value of the item (either a {@link Task} or an {@link Event})
- * @property runTimeType - The type of the item, either "task" or "event"
+ * @property runtimeType - The type of the item, either "task" or "event"
  *  For more information about the properties, see the {@link Task} and {@link Event} interfaces.
  */
 export interface BlueprintItem {
@@ -15,5 +15,5 @@ export interface BlueprintItem {
   startTime: Date;
   endTime: Date;
   value: Event | Task;
-  runTimeType: "task" | "event";
+  runtimeType: "task" | "event";
 }
