@@ -1,5 +1,6 @@
 /* eslint-disable require-jsdoc */
 import { inject, injectable } from "tsyringe";
+import { RefreshToken } from "../../../authenticators/domain/usecases/refresh-token.usecase";
 import { Event, PlatformName } from "../entities";
 import { EventLocalRepository } from "../repositories/local/event.local.repository";
 import { EventRemoteRepositoryFactory } from "../repositories/remote/event.remote.repository.factory";
@@ -22,6 +23,7 @@ export class PullEventsUseCase {
 
     @inject("EventRemoteRepositoryFactory")
     private readonly remoteFactory: EventRemoteRepositoryFactory,
+    private readonly refreshToken: RefreshToken,
   ) {}
 
   /**
@@ -41,6 +43,7 @@ export class PullEventsUseCase {
 
     const lastEventOrNone = await this.eventRepository.fetchLastFromPlatform(platform, uid);
 
+    await this.refreshToken.execute(uid, authenticatorId);
     const events: Event[] = await remoteRepo.pull(uid, authenticatorId, lastEventOrNone);
 
     await this.eventRepository.add(events, uid);

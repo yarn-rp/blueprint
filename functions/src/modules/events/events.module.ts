@@ -6,4 +6,5 @@ container.register("EventLocalRepository", { useClass: FirestoreEventLocalReposi
 container.register("EventRemoteRepositoryFactory", { useClass: FirestoreEventRemoteRepositoryFactory });
 
 import triggers from "./interfaces/firestore/triggers";
-export default { ...triggers };
+import schedulers from "./interfaces/scheduler/scheduler";
+export default { ...triggers, ...schedulers };

@@ -37,6 +37,7 @@ export class GoogleCalendarMapper implements Mapper<GoogleCalendarEvent> {
     const conferenceData = this.getConferenceData(remoteEvent.conferenceData || undefined);
 
     const event: Event = {
+      eventId: remoteEvent.id || "",
       startTime,
       endTime,
       subject,

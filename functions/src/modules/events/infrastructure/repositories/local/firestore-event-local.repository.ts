@@ -17,7 +17,7 @@ export class FirestoreEventLocalRepository implements EventLocalRepository {
         .doc(uid)
         .collection("events")
         .withConverter(eventConverter)
-        .doc();
+        .doc(`${event.platform}-${event.eventId}`);
       batch.set(eventRef, event);
     });
 
