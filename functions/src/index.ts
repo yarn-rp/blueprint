@@ -23,3 +23,7 @@ export const tasks = tasksRoutes;
 // EventsModule
 import eventsRoutes from "./modules/events/events.module";
 export const events = eventsRoutes;
+
+// BlueprintModule
+import blueprintRoutes from "./modules/blueprint/blueprint.module";
+export const blueprint = blueprintRoutes;
