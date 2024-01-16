@@ -45,26 +45,30 @@ export class GoogleOAuthStrategy implements OAuth2Repository {
   }
 
   async refreshToken(oldAuth: Omit<Access, "user">): Promise<Omit<Access, "user">> {
-    const { data } = await axios.post(
-      "https://oauth2.googleapis.com/token",
-      {
-        grant_type: "refresh_token",
-        client_id: this.config.get<string>("google.clientId"),
-        client_secret: this.config.get<string>("google.clientSecret"),
-        refresh_token: oldAuth.refreshToken,
-      },
-      {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/x-www-form-urlencoded",
+    try {
+      const { data } = await axios.post(
+        "https://oauth2.googleapis.com/token",
+        {
+          grant_type: "refresh_token",
+          client_id: this.config.get<string>("google.clientId"),
+          client_secret: this.config.get<string>("google.clientSecret"),
+          refresh_token: oldAuth.refreshToken,
         },
-      },
-    );
+        {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        },
+      );
 
-    return {
-      ...oldAuth,
-      accessToken: data.access_token,
-    };
+      return {
+        ...oldAuth,
+        accessToken: data.access_token,
+      };
+    } catch (error) {
+      return oldAuth;
+    }
   }
 
   /**
