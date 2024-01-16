@@ -42,6 +42,29 @@ export class JiraOAuthStrategy implements OAuth2Repository {
     };
   }
 
+  async refreshToken(oldAuth: Omit<Access, "user">): Promise<Omit<Access, "user">> {
+    const { data } = await axios.post(
+      "https://auth.atlassian.com/oauth/token",
+      {
+        grant_type: "refresh_token",
+        client_id: this.config.get<string>("jira.clientId"),
+        client_secret: this.config.get<string>("jira.clientSecret"),
+        refresh_token: oldAuth.refreshToken,
+      },
+      {
+        headers: {
+          Accept: "application/json",
+        },
+      },
+    );
+
+    return {
+      ...oldAuth,
+      accessToken: data.access_token,
+      refreshToken: data.refresh_token,
+    };
+  }
+
   /**
    * Gets the user data associated with an access object.
    *

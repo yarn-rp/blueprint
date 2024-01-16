@@ -3,7 +3,7 @@ import 'package:app_ui/app_ui.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:blueprint/app/routes/routes.dart';
 import 'package:blueprint/blueprint/presentation/pages/blueprint_timeline.dart';
-import 'package:blueprint/blueprint/presentation/widgets/calendar_event_tile.dart';
+import 'package:blueprint/blueprint/presentation/widgets/blueprint_item_tile.dart';
 import 'package:blueprint/blueprint/state_management/blueprint_bloc/blueprint_bloc.dart';
 import 'package:blueprint/calendar/presentation/widgets/available_time_card.dart';
 import 'package:blueprint/core/l10n/l10n.dart';
@@ -20,10 +20,10 @@ class TodaysBlueprintPage extends StatelessWidget {
     final isWide = MediaQuery.of(context).size.width >= 1150;
 
     final currentEvent = context.select(
-      (BlueprintBloc bloc) => bloc.state.currentBlueprintEvent,
+      (BlueprintBloc bloc) => bloc.state.currentBlueprintItem,
     );
     final nextEvents = context.select(
-      (BlueprintBloc bloc) => bloc.state.upcomingBlueprintEvents,
+      (BlueprintBloc bloc) => bloc.state.upcomingBlueprintItems,
     );
 
     return Scaffold(
@@ -69,7 +69,7 @@ class _UpcomingEvents extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final nextEvents = context.select(
-      (BlueprintBloc bloc) => bloc.state.upcomingBlueprintEvents,
+      (BlueprintBloc bloc) => bloc.state.upcomingBlueprintItems,
     );
     return Column(
       children: [
@@ -78,8 +78,8 @@ class _UpcomingEvents extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(
                   vertical: 8,
                 ),
-                child: CalendarEventTile(
-                  event: event,
+                child: BlueprintItemTile(
+                  item: event,
                   showSmallVersions: true,
                 ),
               ),
@@ -95,21 +95,21 @@ class _CurrentEvent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final currentEvent = context.select(
-      (BlueprintBloc bloc) => bloc.state.currentBlueprintEvent,
+      (BlueprintBloc bloc) => bloc.state.currentBlueprintItem,
     );
 
     final nextEvents = context.select(
-      (BlueprintBloc bloc) => bloc.state.upcomingBlueprintEvents,
+      (BlueprintBloc bloc) => bloc.state.upcomingBlueprintItems,
     );
 
     final pastEvents = context.select(
-      (BlueprintBloc bloc) => bloc.state.pastBlueprintEvents,
+      (BlueprintBloc bloc) => bloc.state.pastBlueprintItems,
     );
     return Column(
       children: [
         if (currentEvent != null) ...[
           const _NowOnBlueprint(),
-          CalendarEventTile(event: currentEvent),
+          BlueprintItemTile(item: currentEvent),
         ] else ...[
           const _NowOnBlueprint(),
           Builder(

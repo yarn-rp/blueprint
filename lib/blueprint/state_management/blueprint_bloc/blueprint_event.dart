@@ -11,8 +11,8 @@ class BlueprintRequested extends BlueprintEvent {
   List<Object?> get props => [];
 }
 
-class CalendarEventCreated extends BlueprintEvent {
-  const CalendarEventCreated({
+class BlueprintTaskItemCreated extends BlueprintEvent {
+  const BlueprintTaskItemCreated({
     required this.task,
     required this.startTime,
     required this.endTime,
@@ -30,34 +30,34 @@ class CalendarEventCreated extends BlueprintEvent {
       ];
 }
 
-class EventUpdated extends BlueprintEvent {
-  const EventUpdated({
-    required this.event,
+class BlueprintItemUpdated extends BlueprintEvent {
+  const BlueprintItemUpdated({
+    required this.item,
     required this.startTime,
     required this.endTime,
   });
 
-  final CalendarEvent event;
+  final BlueprintItem item;
   final DateTime startTime;
   final DateTime endTime;
 
   @override
   List<Object?> get props => [
-        event,
+        item,
         startTime,
         endTime,
       ];
 }
 
-class EventDeleted extends BlueprintEvent {
-  const EventDeleted({
-    required this.event,
+class BlueprintItemDeleted extends BlueprintEvent {
+  const BlueprintItemDeleted({
+    required this.item,
   });
 
-  final CalendarEvent event;
+  final BlueprintItem item;
 
   @override
   List<Object?> get props => [
-        event,
+        item,
       ];
 }

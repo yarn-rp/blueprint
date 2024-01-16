@@ -8,6 +8,7 @@ class BlueprintTimeline extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final events = context.select((BlueprintBloc bloc) => bloc.state.items);
     return TodayTimeline(
       events: events.map((e) {
@@ -16,9 +17,12 @@ class BlueprintTimeline extends StatelessWidget {
           subject: e.subject,
           startTime: e.startTime,
           endTime: e.endTime,
-          color: HexColor.fromHex(e.color),
+          color: e.map(
+            event: (event) => theme.colorScheme.tertiaryContainer,
+            task: (task) => theme.colorScheme.secondaryContainer,
+          ),
           type: e.map(
-            event: (event) => event.event.conferenceData != null
+            event: (event) => event.value.conferenceData != null
                 ? EventType.meeting
                 : EventType.calendar,
             task: (task) => EventType.task,

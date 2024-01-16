@@ -326,7 +326,7 @@ class _TaskLabels extends StatelessWidget {
     final isTaskInTodaysBlueprint = blueprint.any(
       (e) {
         final taskMatches = e.maybeMap(
-          task: (value) => value.task.id == task.id,
+          task: (value) => value.value.id == task.id,
           orElse: () => false,
         );
 

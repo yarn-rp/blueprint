@@ -5,12 +5,9 @@ import 'package:blueprint_repository/blueprint_repository.dart';
 import 'package:collection/collection.dart';
 import 'package:equatable/equatable.dart';
 import 'package:task_repository/task_repository.dart';
-import 'package:uuid/uuid.dart';
 
 part 'blueprint_event.dart';
 part 'blueprint_state.dart';
-
-const uuid = Uuid();
 
 class BlueprintBloc extends Bloc<BlueprintEvent, BlueprintState> {
   BlueprintBloc({
@@ -18,9 +15,9 @@ class BlueprintBloc extends Bloc<BlueprintEvent, BlueprintState> {
   })  : _blueprintRepository = blueprintRepository,
         super(BlueprintState()) {
     on<BlueprintRequested>(_onGetBlueprint);
-    on<CalendarEventCreated>(_onCalendarEventCreated);
-    on<EventDeleted>(_onEventDeleted);
-    on<EventUpdated>(_onEventUpdated);
+    on<BlueprintTaskItemCreated>(_onBlueprintTaskItemCreated);
+    on<BlueprintItemDeleted>(_onBlueprintItemDeleted);
+    on<BlueprintItemUpdated>(_onBlueprintItemUpdated);
   }
 
   final BlueprintRepository _blueprintRepository;
@@ -38,13 +35,11 @@ class BlueprintBloc extends Bloc<BlueprintEvent, BlueprintState> {
           duration: const Duration(seconds: 5),
         ),
       ),
-      onData: (value) {
-        return state.copyWith(
-          items: value,
-          updatedAt: DateTime.now(),
-          status: BlueprintStatus.loaded,
-        );
-      },
+      onData: (value) => state.copyWith(
+        items: value,
+        updatedAt: DateTime.now(),
+        status: BlueprintStatus.loaded,
+      ),
       onError: (error, stackTrace) {
         addError(error, stackTrace);
 
@@ -55,57 +50,55 @@ class BlueprintBloc extends Bloc<BlueprintEvent, BlueprintState> {
     );
   }
 
-  Future<void> _onCalendarEventCreated(
-    CalendarEventCreated event,
-    Emitter<BlueprintState> emit,
-  ) async {
-    emit(state.copyWith(status: BlueprintStatus.loading));
-    final id = uuid.v4();
-
-    final newEvent = CalendarEvent.task(
-      task: event.task,
-      id: id,
-      startTime: event.startTime,
-      endTime: event.endTime,
-    );
-
-    final newBlueprint = [
-      ...state.items,
-      newEvent,
-    ];
-
-    await _blueprintRepository.saveBlueprint(newBlueprint);
-  }
-
-  Future<void> _onEventUpdated(
-    EventUpdated event,
+  Future<void> _onBlueprintTaskItemCreated(
+    BlueprintTaskItemCreated event,
     Emitter<BlueprintState> emit,
   ) async {
     emit(state.copyWith(status: BlueprintStatus.loading));
 
-    final newBlueprint =
-        state.items.where((element) => element.id != event.event.id).toList();
-
-    await _blueprintRepository.saveBlueprint([
-      ...newBlueprint,
-      event.event.copyWith(
+    try {
+      await _blueprintRepository.addBlueprintItem(
+        task: event.task,
         startTime: event.startTime,
         endTime: event.endTime,
-      ),
-    ]);
+      );
+    } catch (error, stackTrace) {
+      addError(error, stackTrace);
+      emit(state.copyWith(status: BlueprintStatus.error));
+    }
   }
 
-  Future<void> _onEventDeleted(
-    EventDeleted event,
+  Future<void> _onBlueprintItemUpdated(
+    BlueprintItemUpdated event,
     Emitter<BlueprintState> emit,
   ) async {
     emit(state.copyWith(status: BlueprintStatus.loading));
 
-    final newBlueprint = state.items.where((element) {
-      return element.id != event.event.id;
-    }).toList();
+    try {
+      await _blueprintRepository.updateBlueprintItem(
+        event.item.copyWith(
+          startTime: event.startTime,
+          endTime: event.endTime,
+        ),
+      );
+    } catch (error, stackTrace) {
+      addError(error, stackTrace);
+      emit(state.copyWith(status: BlueprintStatus.error));
+    }
+  }
 
-    await _blueprintRepository.saveBlueprint(newBlueprint);
+  Future<void> _onBlueprintItemDeleted(
+    BlueprintItemDeleted event,
+    Emitter<BlueprintState> emit,
+  ) async {
+    emit(state.copyWith(status: BlueprintStatus.loading));
+
+    try {
+      await _blueprintRepository.deleteBlueprintItem(event.item);
+    } catch (error, stackTrace) {
+      addError(error, stackTrace);
+      emit(state.copyWith(status: BlueprintStatus.error));
+    }
   }
 }
 

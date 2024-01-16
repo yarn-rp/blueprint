@@ -22,12 +22,12 @@ class AvailableTimeCard extends StatelessWidget {
     final colorScheme = theme.colorScheme;
 
     return BlueprintEventCard(
-      backgroundColor: colorScheme.tertiaryContainer,
+      backgroundColor: colorScheme.surfaceVariant,
       actions: [
         FilledButton.icon(
           style: Theme.of(context).filledButtonTheme.style?.copyWith(
                 backgroundColor: MaterialStateProperty.all(
-                  colorScheme.tertiary,
+                  colorScheme.onSurface,
                 ),
               ),
           onPressed: onScheduleTime,

@@ -2,10 +2,10 @@ import 'package:blueprint_repository/blueprint_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:jiffy/jiffy.dart';
 
-class CalendarEventTime extends StatelessWidget {
-  const CalendarEventTime({required this.appointment, super.key});
+class BlueprintEventTime extends StatelessWidget {
+  const BlueprintEventTime({required this.appointment, super.key});
 
-  final CalendarEvent appointment;
+  final BlueprintItem appointment;
 
   @override
   Widget build(BuildContext context) {

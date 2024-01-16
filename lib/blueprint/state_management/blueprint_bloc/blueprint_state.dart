@@ -4,7 +4,7 @@ enum BlueprintStatus { initial, loading, loaded, error }
 
 class BlueprintState extends Equatable {
   BlueprintState({
-    List<CalendarEvent>? items,
+    List<BlueprintItem>? items,
     DateTime? updatedAt,
     this.status = BlueprintStatus.initial,
   }) {
@@ -13,11 +13,11 @@ class BlueprintState extends Equatable {
   }
 
   final BlueprintStatus status;
-  late final List<CalendarEvent> items;
+  late final List<BlueprintItem> items;
   late final DateTime updatedAt;
 
   BlueprintState copyWith({
-    List<CalendarEvent>? items,
+    List<BlueprintItem>? items,
     BlueprintStatus? status,
     DateTime? updatedAt,
   }) {
@@ -29,7 +29,7 @@ class BlueprintState extends Equatable {
   }
 
   /// Returns event that is happening right now
-  CalendarEvent? get currentBlueprintEvent {
+  BlueprintItem? get currentBlueprintItem {
     final currentEvents = items.where((event) {
       return event.startTime.isBefore(updatedAt) &&
           event.endTime.isAfter(updatedAt);
@@ -38,10 +38,10 @@ class BlueprintState extends Equatable {
     return currentEvents.firstOrNull;
   }
 
-  Iterable<CalendarEvent> get upcomingBlueprintEvents =>
+  Iterable<BlueprintItem> get upcomingBlueprintItems =>
       items.where((event) => event.startTime.isAfter(updatedAt)).toList();
 
-  Iterable<CalendarEvent> get pastBlueprintEvents =>
+  Iterable<BlueprintItem> get pastBlueprintItems =>
       items.where((event) => event.endTime.isBefore(updatedAt)).toList();
 
   @override

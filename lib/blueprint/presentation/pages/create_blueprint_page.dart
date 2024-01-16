@@ -91,8 +91,8 @@ class _TimelineState extends State<_Timeline> {
 
       return event.mapOrNull<void>(
         task: (event) => context.read<BlueprintBloc>().add(
-              CalendarEventCreated(
-                task: event.task,
+              BlueprintTaskItemCreated(
+                task: event.value,
                 startTime: event.startTime,
                 endTime: event.endTime,
               ),
@@ -103,17 +103,17 @@ class _TimelineState extends State<_Timeline> {
 
   void _deleteSelectedEvent() {
     if (_selectedEvent != null) {
-      final event = context.read<BlueprintBloc>().state.items.firstWhere(
+      final item = context.read<BlueprintBloc>().state.items.firstWhere(
             (element) =>
                 element.subject == _selectedEvent!.subject &&
                 element.startTime == _selectedEvent!.startTime &&
                 element.endTime == _selectedEvent!.endTime,
           );
 
-      event.mapOrNull(
+      item.mapOrNull(
         task: (task) => context.read<BlueprintBloc>().add(
-              EventDeleted(
-                event: event,
+              BlueprintItemDeleted(
+                item: item,
               ),
             ),
       );
@@ -122,6 +122,8 @@ class _TimelineState extends State<_Timeline> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return BlocBuilder<BlueprintBloc, BlueprintState>(
       builder: (context, state) {
         final l10n = context.l10n;
@@ -158,7 +160,7 @@ class _TimelineState extends State<_Timeline> {
                 endTime: roundedEndTime,
                 onAddTask: (task, startTime, endTime) =>
                     context.read<BlueprintBloc>().add(
-                          CalendarEventCreated(
+                          BlueprintTaskItemCreated(
                             task: task,
                             startTime: startTime,
                             endTime: endTime,
@@ -173,13 +175,13 @@ class _TimelineState extends State<_Timeline> {
               });
             },
             onEventUpdate: (event, startDate, endDate) {
-              final calendarEvent = state.items.firstWhere(
+              final item = state.items.firstWhere(
                 (element) => element.id == event.id,
               );
 
               context.read<BlueprintBloc>().add(
-                    EventUpdated(
-                      event: calendarEvent,
+                    BlueprintItemUpdated(
+                      item: item,
                       startTime: startDate,
                       endTime: endDate,
                     ),
@@ -192,9 +194,12 @@ class _TimelineState extends State<_Timeline> {
                   subject: e.subject,
                   startTime: e.startTime,
                   endTime: e.endTime,
-                  color: HexColor.fromHex(e.color),
+                  color: e.map(
+                    event: (event) => theme.colorScheme.tertiaryContainer,
+                    task: (task) => theme.colorScheme.secondaryContainer,
+                  ),
                   type: e.map(
-                    event: (event) => event.event.conferenceData != null
+                    event: (event) => event.value.conferenceData != null
                         ? EventType.meeting
                         : EventType.calendar,
                     task: (task) => EventType.task,

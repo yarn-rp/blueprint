@@ -75,7 +75,7 @@ class TaskRepository {
                   final taskEntity = task.data();
                   final taskPlatform = platforms.firstWhere(
                     (platform) =>
-                        platform.displayName == taskEntity.project.platformName,
+                        platform.id == taskEntity.project.platformName,
                   );
                   return taskEntity.copyWith(
                     project: taskEntity.project.copyWith(

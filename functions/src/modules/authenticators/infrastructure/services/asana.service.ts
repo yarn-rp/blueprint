@@ -42,6 +42,10 @@ export class AsanaOAuthStrategy implements OAuth2Repository {
     };
   }
 
+  async refreshToken(oldAuth: Omit<Access, "user">): Promise<Omit<Access, "user">> {
+    return oldAuth;
+  }
+
   /**
    * Gets the user data associated with an access object.
    *

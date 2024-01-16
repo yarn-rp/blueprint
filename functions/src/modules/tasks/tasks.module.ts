@@ -9,4 +9,5 @@ container.register("RemoteRepositoryFactory", {
 
 import triggers from "./interfaces/firestore/triggers";
 import routes from "./interfaces/http/routes";
-export default { ...triggers, ...routes };
+import schedulers from "./interfaces/scheduler/scheduler";
+export default { ...triggers, ...routes, ...schedulers };

@@ -3,7 +3,7 @@ import axios from "axios";
 import { Task } from "../../domain/entities/task.entity";
 import { AbstractRemoteRepository } from "../repositories/factories/remote.repository.abstract";
 import { PlatformName } from "../../domain/entities/platform.enum";
-import { Label, Priority, Project, User } from "../../domain/entities/entities";
+import { Label, Priority, Project, User } from "../../domain/entities";
 /**
  * Represents a task in Github. Since in github, a task can mean different
  * things, we need to have a union type to represent all the possible tasks.
@@ -170,6 +170,7 @@ export class GithubRemoteRepository extends AbstractRemoteRepository<GithubTask>
       createdAt: new Date(issue.created_at),
       updatedAt: new Date(issue.updated_at),
       id: issue.id,
+      taskId: issue.id,
       project,
       taskURL: new URL(issue.html_url),
       title: issue.title,

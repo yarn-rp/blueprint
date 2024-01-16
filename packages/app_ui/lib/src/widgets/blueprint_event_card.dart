@@ -10,6 +10,7 @@ class BlueprintEventCard extends StatelessWidget {
     super.key,
     this.backgroundColor,
     this.actions = const [],
+    this.foregroundColor,
   });
 
   final EventListTile title;
@@ -17,6 +18,7 @@ class BlueprintEventCard extends StatelessWidget {
   final List<LabelChip> labels;
   final VoidCallback? onTap;
   final Color? backgroundColor;
+  final Color? foregroundColor;
   final List<Widget> actions;
 
   @override
@@ -46,13 +48,13 @@ class BlueprintEventCard extends StatelessWidget {
                         Icon(
                           Icons.calendar_today,
                           size: 20,
-                          color: theme.colorScheme.onSurfaceVariant,
+                          color: foregroundColor,
                         ),
                         const SizedBox(width: AppSpacing.xs),
                         Text(
                           dateAndTime!,
                           style: textTheme.bodyMedium?.copyWith(
-                            color: theme.colorScheme.onSurfaceVariant,
+                            color: foregroundColor,
                           ),
                         ),
                       ],

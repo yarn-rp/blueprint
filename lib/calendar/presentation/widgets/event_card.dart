@@ -18,12 +18,22 @@ class EventCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
+    final originalColor = colorScheme.tertiaryContainer;
+
+    final backgroundColor = originalColor;
+
+    final foregroundColor =
+        backgroundColor.computeLuminance() > 0.5 ? Colors.black : Colors.white;
 
     return BlueprintEventCard(
       onTap: onTap,
-      backgroundColor: colorScheme.tertiaryContainer,
+      backgroundColor: backgroundColor,
+      foregroundColor: foregroundColor,
       labels: [
-        LabelChip(text: event.platform!.displayName),
+        if (event.platform != null)
+          LabelChip(text: event.platform!.displayName)
+        else
+          const LabelChip(text: 'Unknown platform'),
       ],
       dateAndTime: event.startTime != null && event.endTime != null
           ? '${Jiffy(event.startTime).jm} - ${Jiffy(event.endTime).jm}'
@@ -31,9 +41,13 @@ class EventCard extends StatelessWidget {
       title: event.conferenceData != null
           ? EventListTile.videoConference(
               title: event.subject,
+              subtitle: 'Organizer: ${event.organizer?.email ?? ""}',
+              textColor: foregroundColor,
             )
           : EventListTile.calendar(
               title: event.subject,
+              subtitle: 'Organizer: ${event.organizer?.email ?? ""}',
+              textColor: foregroundColor,
             ),
     );
   }
