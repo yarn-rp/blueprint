@@ -45,7 +45,7 @@ export class FirestoreBlueprintLocalRepository implements BlueprintLocalReposito
 
         return matchingEventsOnBlueprint.then((snapshot) => {
           snapshot.docs.forEach((doc) => {
-            batch.update(doc.ref, { value: item });
+            batch.update(doc.ref, { value: item, startTime: item.startTime, endTime: item.endTime });
           });
         });
       }),
