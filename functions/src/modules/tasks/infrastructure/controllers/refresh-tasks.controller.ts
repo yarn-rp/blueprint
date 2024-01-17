@@ -37,8 +37,15 @@ export class RefreshTasksController {
         .filter((authenticator) => authenticator.data().type == AuthenticatorType.Task)
         .map((authenticator) => this.pull.execute(authenticator.data().platformName, user.id, authenticator.id));
       // execute all for the user
-      await Promise.all(userPromises);
+      const results = await Promise.allSettled(userPromises);
 
+      // log errors
+      results.forEach((result) => {
+        if (result.status == "rejected") {
+          const userData = user.data();
+          console.error(`Error fetching new events for user ${userData.id} for reason: result.reason`);
+        }
+      });
       console.log(`Refreshed tasks for user ${user.id}`);
     }
   }
