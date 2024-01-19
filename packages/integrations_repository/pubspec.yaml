@@ -16,6 +16,7 @@ dependencies:
   flutter:
     sdk: flutter
   json_annotation: ^4.8.1
+  rxdart: ^0.27.7
   stream_transform: ^2.1.0
 
 dev_dependencies:

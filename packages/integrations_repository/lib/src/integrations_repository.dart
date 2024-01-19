@@ -5,7 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:collection/collection.dart';
 import 'package:integrations_repository/src/entities/entities.dart';
-import 'package:stream_transform/stream_transform.dart';
+import 'package:rxdart/rxdart.dart';
 
 const _platformsCollectionName = 'platforms';
 const _authenticatorsCollectionName = 'authenticators';
@@ -31,8 +31,12 @@ class IntegrationsRepository {
   IntegrationsRepository({
     required FirebaseFirestore firestore,
     required FirebaseFunctions firebaseFunctions,
-    required this.currentUserIdStream,
+    required Stream<String?> currentUserIdStream,
   }) {
+    _currentUserIdStream = BehaviorSubject<String?>();
+    currentUserIdStream.listen((event) {
+      _currentUserIdStream.add(event);
+    });
     _firebaseFunctions = firebaseFunctions;
     _usersCollection = firestore.collection(_usersCollectionName);
     _platformsCollection =
@@ -48,7 +52,7 @@ class IntegrationsRepository {
   late final CollectionReference _usersCollection;
 
   /// Stream of the current user id.
-  final Stream<String?> currentUserIdStream;
+  late final BehaviorSubject<String?> _currentUserIdStream;
 
   late final FirebaseFunctions _firebaseFunctions;
 
@@ -56,37 +60,32 @@ class IntegrationsRepository {
 
   Stream<Iterable<Authenticator>> getAuthenticators() {
     final platformsStream = getAllPlatforms();
-    final platformsWithUserId = platformsStream.combineLatest(
-      currentUserIdStream,
-      (platforms, userId) => (platforms, userId),
-    );
 
-    return platformsWithUserId.asyncMap((data) async {
-      final (platforms, userId) = data;
-      if (userId == null) {
-        return [];
+    return platformsStream.switchMap((platforms) {
+      if (_currentUserIdStream.value == null) {
+        return Stream.value([]);
       }
 
-      final userAuthenticators = await _usersCollection
-          .doc(userId)
+      final userAuthenticators = _usersCollection
+          .doc(_currentUserIdStream.value)
           .collection(_authenticatorsCollectionName)
-          .get()
-          .then((value) => value.docs.map((e) => e.data()));
+          .snapshots();
 
-      return userAuthenticators.map((authenticator) {
-        // TODO(yarn-rp): platform object should be stored in the authenticator
-        // object.
-        final platformId = authenticator['platformName'];
+      return userAuthenticators.map((event) {
+        return event.docs.map((e) {
+          final data = {...e.data(), 'id': e.id};
+          final platformId = data['platformName'];
 
-        final platform = platforms.firstWhereOrNull(
-          (element) => element.id == platformId,
-        );
-        return Authenticator.fromJson(
-          {
-            ...authenticator,
-            if (platform != null) 'platform': platform.toJson(),
-          },
-        );
+          final platform = platforms.firstWhereOrNull(
+            (element) => element.id == platformId,
+          );
+          return Authenticator.fromJson(
+            {
+              ...data,
+              if (platform != null) 'platform': platform.toJson(),
+            },
+          );
+        });
       });
     });
   }
@@ -154,6 +153,17 @@ class IntegrationsRepository {
     }
   }
 
-  /// Deletes an [integration] from the repository.
-  Future<void> deleteIntegration(Integration integration) async {}
+  Future<void> deleteAuthenticator(Authenticator authenticator) async {
+    final userId = _currentUserIdStream.value;
+
+    if (userId == null) {
+      throw Exception('User not logged in');
+    }
+
+    await _usersCollection
+        .doc(userId)
+        .collection(_authenticatorsCollectionName)
+        .doc(authenticator.id)
+        .delete();
+  }
 }
