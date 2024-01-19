@@ -3,10 +3,12 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
+import 'package:collection/collection.dart';
 import 'package:integrations_repository/src/entities/entities.dart';
+import 'package:stream_transform/stream_transform.dart';
 
 const _platformsCollectionName = 'platforms';
-
+const _authenticatorsCollectionName = 'authenticators';
 const _usersCollectionName = 'users';
 
 /// A converter for the [Platform] entity.
@@ -52,10 +54,41 @@ class IntegrationsRepository {
 
   Stream<Iterable<Platform>>? _platformsSubscription;
 
-  /// Returns a stream of all integrations from all sources. This stream reacts
-  /// to changes in the integrations, like additions or removals.
-  Stream<Iterable<Integration>> getAllIntegrations() {
-    return Stream.value([]);
+  Stream<Iterable<Authenticator>> getAuthenticators() {
+    final platformsStream = getAllPlatforms();
+    final platformsWithUserId = platformsStream.combineLatest(
+      currentUserIdStream,
+      (platforms, userId) => (platforms, userId),
+    );
+
+    return platformsWithUserId.asyncMap((data) async {
+      final (platforms, userId) = data;
+      if (userId == null) {
+        return [];
+      }
+
+      final userAuthenticators = await _usersCollection
+          .doc(userId)
+          .collection(_authenticatorsCollectionName)
+          .get()
+          .then((value) => value.docs.map((e) => e.data()));
+
+      return userAuthenticators.map((authenticator) {
+        // TODO(yarn-rp): platform object should be stored in the authenticator
+        // object.
+        final platformId = authenticator['platformName'];
+
+        final platform = platforms.firstWhereOrNull(
+          (element) => element.id == platformId,
+        );
+        return Authenticator.fromJson(
+          {
+            ...authenticator,
+            if (platform != null) 'platform': platform.toJson(),
+          },
+        );
+      });
+    });
   }
 
   /// Returns a stream of all integrations from all repositories.
