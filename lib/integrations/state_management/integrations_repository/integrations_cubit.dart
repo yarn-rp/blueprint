@@ -43,6 +43,7 @@ class IntegrationsCubit extends Cubit<IntegrationsState> {
         platformId,
         params,
       );
+
       emit(
         IntegrationsState.integratedPlatform(
           platformId,
@@ -70,6 +71,7 @@ class IntegrationsCubit extends Cubit<IntegrationsState> {
         state.authenticators,
       ),
     );
+
     try {
       await integrationRepository.deleteAuthenticator(authenticator);
     } catch (e) {
