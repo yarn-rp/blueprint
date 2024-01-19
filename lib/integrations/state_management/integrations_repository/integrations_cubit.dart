@@ -11,17 +11,15 @@ class IntegrationsCubit extends Cubit<IntegrationsState> {
   ) : super(const IntegrationsState.initial([], [])) {
     integrationRepository.getAllPlatforms().listen(
           (platforms) => emit(
-            IntegrationsState.loaded(
-              platforms,
-              state.integrations,
+            state.copyWith(
+              availablePlatforms: platforms,
             ),
           ),
         );
-    integrationRepository.getAllIntegrations().listen(
-          (integrations) => emit(
-            IntegrationsState.loaded(
-              state.availablePlatforms,
-              integrations,
+    integrationRepository.getAuthenticators().listen(
+          (authenticators) => emit(
+            state.copyWith(
+              authenticators: authenticators,
             ),
           ),
         );
@@ -36,7 +34,7 @@ class IntegrationsCubit extends Cubit<IntegrationsState> {
     emit(
       IntegrationsState.loading(
         state.availablePlatforms,
-        state.integrations,
+        state.authenticators,
       ),
     );
 
@@ -49,7 +47,7 @@ class IntegrationsCubit extends Cubit<IntegrationsState> {
         IntegrationsState.integratedPlatform(
           platformId,
           state.availablePlatforms,
-          state.integrations,
+          state.authenticators,
         ),
       );
     } catch (error, stackTrace) {
@@ -58,27 +56,27 @@ class IntegrationsCubit extends Cubit<IntegrationsState> {
       emit(
         IntegrationsState.error(
           state.availablePlatforms,
-          state.integrations,
+          state.authenticators,
           error.toString(),
         ),
       );
     }
   }
 
-  Future<void> deleteIntegration(Integration integration) async {
+  Future<void> deleteAuthenticator(Authenticator authenticator) async {
     emit(
       IntegrationsState.loading(
         state.availablePlatforms,
-        state.integrations,
+        state.authenticators,
       ),
     );
     try {
-      await integrationRepository.deleteIntegration(integration);
+      await integrationRepository.deleteAuthenticator(authenticator);
     } catch (e) {
       emit(
         IntegrationsState.error(
           state.availablePlatforms,
-          state.integrations,
+          state.authenticators,
           e.toString(),
         ),
       );
