@@ -1,4 +1,7 @@
+import 'package:app_ui/app_ui.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:blueprint/core/l10n/l10n.dart';
+import 'package:blueprint/integrations/presentation/widgets/create_integration_modals/authenticator_tile.dart';
 import 'package:blueprint/integrations/presentation/widgets/create_integration_modals/platform_integration_tile.dart';
 import 'package:blueprint/integrations/state_management/integrations_repository/integrations_cubit.dart';
 import 'package:flutter/material.dart';
@@ -19,30 +22,62 @@ class _IntegrationsPageState extends State<IntegrationsPage>
   Widget build(BuildContext context) {
     super.build(context);
 
+    final isWide = MediaQuery.of(context).size.width > 1080;
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Integrations'),
-      ),
-      body: ListView(
-        padding: const EdgeInsets.all(16),
-        children: [
-          const SizedBox(height: 16),
-          Text(
-            'My integrations',
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
-          const SizedBox(height: 16),
-          const MyIntegrations(),
-          const Divider(),
-          const SizedBox(height: 16),
-          Text(
-            'Integrate with new platforms',
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
-          const SizedBox(height: 16),
-          const AvailablePlatforms(),
-        ],
-      ),
+      body: isWide
+          ? Padding(
+              padding: const EdgeInsets.all(16),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: ListView(
+                      children: [
+                        Text(
+                          'Integrate with new platforms',
+                          style: Theme.of(context).textTheme.titleLarge,
+                        ),
+                        const SizedBox(height: 16),
+                        const AvailablePlatforms(),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: ListView(
+                      children: [
+                        Text(
+                          'My integrations',
+                          style: Theme.of(context).textTheme.titleLarge,
+                        ),
+                        const SizedBox(height: 16),
+                        const MyIntegrations(),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            )
+          : ListView(
+              padding: const EdgeInsets.all(16),
+              children: [
+                const SizedBox(height: 16),
+                Text(
+                  'My integrations',
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                const SizedBox(height: 16),
+                const MyIntegrations(),
+                const SizedBox(height: 16),
+                const Divider(),
+                const SizedBox(height: 16),
+                Text(
+                  'Integrate with new platforms',
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                const SizedBox(height: 16),
+                const AvailablePlatforms(),
+              ],
+            ),
     );
   }
 
@@ -57,6 +92,8 @@ class AvailablePlatforms extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     final availablePlatforms = context.select(
       (IntegrationsCubit cubit) => cubit.state.availablePlatforms,
     );
@@ -71,8 +108,9 @@ class AvailablePlatforms extends StatelessWidget {
               return OAuth2PlatformTile(
                 platform: platform,
                 integrationName: platform.displayName,
-                description:
-                    'Connect your ${platform.displayName} account to Blueprint',
+                description: l10n.oAuthPlatformTileDescription(
+                  platform.displayName,
+                ),
                 onIntegrationCreated: (integration) {},
               );
 
@@ -94,16 +132,46 @@ class MyIntegrations extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final integrations = context.select(
-      (IntegrationsCubit cubit) => cubit.state.integrations,
+    final theme = Theme.of(context);
+    final textTheme = theme.textTheme;
+
+    final authenticators = context.select(
+      (IntegrationsCubit cubit) => cubit.state.authenticators,
     );
+
+    if (authenticators.isEmpty) {
+      return Align(
+        alignment: Alignment.topCenter,
+        child: Column(
+          children: [
+            Icon(
+              Icons.extension_off_outlined,
+              size: 120,
+              color: theme.disabledColor,
+            ),
+            Text(
+              context.l10n.noAuthenticatorsTitle,
+              style: textTheme.headlineSmall,
+            ),
+            const SizedBox(height: AppSpacing.sm),
+            Text(
+              context.l10n.noAuthenticatorsSubtitle,
+              style: textTheme.bodyLarge,
+            ),
+          ],
+        ),
+      );
+    }
 
     return Wrap(
       runSpacing: 16,
       spacing: 16,
       children: [
-        for (final integration in integrations)
-          Text(integration.platform.displayName),
+        ...authenticators.map(
+          (authenticator) => AuthenticatorTile(
+            authenticator: authenticator,
+          ),
+        ),
       ],
     );
   }

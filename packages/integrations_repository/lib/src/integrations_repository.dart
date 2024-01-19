@@ -3,10 +3,12 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
+import 'package:collection/collection.dart';
 import 'package:integrations_repository/src/entities/entities.dart';
+import 'package:rxdart/rxdart.dart';
 
 const _platformsCollectionName = 'platforms';
-
+const _authenticatorsCollectionName = 'authenticators';
 const _usersCollectionName = 'users';
 
 /// A converter for the [Platform] entity.
@@ -29,8 +31,12 @@ class IntegrationsRepository {
   IntegrationsRepository({
     required FirebaseFirestore firestore,
     required FirebaseFunctions firebaseFunctions,
-    required this.currentUserIdStream,
+    required Stream<String?> currentUserIdStream,
   }) {
+    _currentUserIdStream = BehaviorSubject<String?>();
+    currentUserIdStream.listen((event) {
+      _currentUserIdStream.add(event);
+    });
     _firebaseFunctions = firebaseFunctions;
     _usersCollection = firestore.collection(_usersCollectionName);
     _platformsCollection =
@@ -46,16 +52,42 @@ class IntegrationsRepository {
   late final CollectionReference _usersCollection;
 
   /// Stream of the current user id.
-  final Stream<String?> currentUserIdStream;
+  late final BehaviorSubject<String?> _currentUserIdStream;
 
   late final FirebaseFunctions _firebaseFunctions;
 
   Stream<Iterable<Platform>>? _platformsSubscription;
 
-  /// Returns a stream of all integrations from all sources. This stream reacts
-  /// to changes in the integrations, like additions or removals.
-  Stream<Iterable<Integration>> getAllIntegrations() {
-    return Stream.value([]);
+  Stream<Iterable<Authenticator>> getAuthenticators() {
+    final platformsStream = getAllPlatforms();
+
+    return platformsStream.switchMap((platforms) {
+      if (_currentUserIdStream.value == null) {
+        return Stream.value([]);
+      }
+
+      final userAuthenticators = _usersCollection
+          .doc(_currentUserIdStream.value)
+          .collection(_authenticatorsCollectionName)
+          .snapshots();
+
+      return userAuthenticators.map((event) {
+        return event.docs.map((e) {
+          final data = {...e.data(), 'id': e.id};
+          final platformId = data['platformName'];
+
+          final platform = platforms.firstWhereOrNull(
+            (element) => element.id == platformId,
+          );
+          return Authenticator.fromJson(
+            {
+              ...data,
+              if (platform != null) 'platform': platform.toJson(),
+            },
+          );
+        });
+      });
+    });
   }
 
   /// Returns a stream of all integrations from all repositories.
@@ -121,6 +153,17 @@ class IntegrationsRepository {
     }
   }
 
-  /// Deletes an [integration] from the repository.
-  Future<void> deleteIntegration(Integration integration) async {}
+  Future<void> deleteAuthenticator(Authenticator authenticator) async {
+    final userId = _currentUserIdStream.value;
+
+    if (userId == null) {
+      throw Exception('User not logged in');
+    }
+
+    await _usersCollection
+        .doc(userId)
+        .collection(_authenticatorsCollectionName)
+        .doc(authenticator.id)
+        .delete();
+  }
 }

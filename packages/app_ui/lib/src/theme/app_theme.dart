@@ -38,6 +38,14 @@ final lightTheme = ThemeData(
   buttonTheme: const ButtonThemeData(
     height: _buttonMinHeight,
   ),
+  outlinedButtonTheme: OutlinedButtonThemeData(
+    style: OutlinedButton.styleFrom(
+      minimumSize: const Size(_buttonMinWidth, _buttonMinHeight),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(_buttonBorderRadius),
+      ),
+    ),
+  ),
   textButtonTheme: TextButtonThemeData(
     style: TextButton.styleFrom(
       minimumSize: const Size(_buttonMinWidth, _buttonMinHeight),
@@ -108,6 +116,14 @@ final darkTheme = ThemeData(
   ),
   buttonTheme: const ButtonThemeData(
     height: _buttonMinHeight,
+  ),
+  outlinedButtonTheme: OutlinedButtonThemeData(
+    style: OutlinedButton.styleFrom(
+      minimumSize: const Size(_buttonMinWidth, _buttonMinHeight),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(_buttonBorderRadius),
+      ),
+    ),
   ),
   textButtonTheme: TextButtonThemeData(
     style: TextButton.styleFrom(

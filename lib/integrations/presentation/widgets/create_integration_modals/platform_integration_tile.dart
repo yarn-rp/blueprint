@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:blueprint/core/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_web_auth/flutter_web_auth.dart';
 import 'package:integrations_repository/integrations_repository.dart';
@@ -38,23 +39,21 @@ abstract class PlatformIntegrationTile<PlatformType extends Platform,
   Future<IntegrationType?> showCreateIntegrationModal(BuildContext context);
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return ListTile(
-      onTap: () async {
-        final integration = await showCreateIntegrationModal(context);
-        if (integration != null) {
-          await onIntegrationCreated(integration);
-        }
-      },
       title: Text(integrationName),
       subtitle: Text(description),
-      trailing: ElevatedButton(
+      trailing: FilledButton(
         onPressed: () async {
           final integration = await showCreateIntegrationModal(context);
           if (integration != null) {
             await onIntegrationCreated(integration);
           }
         },
-        child: const Text('Integrate'),
+        child: Text(
+          l10n.integrateCTA,
+        ),
       ),
       leading: Container(
         width: 56,

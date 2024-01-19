@@ -18,63 +18,64 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$IntegrationsState {
   Iterable<Platform> get availablePlatforms =>
       throw _privateConstructorUsedError;
-  Iterable<Integration> get integrations => throw _privateConstructorUsedError;
+  Iterable<Authenticator> get authenticators =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)
+            Iterable<Authenticator> authenticators)
         initial,
     required TResult Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)
+            Iterable<Authenticator> authenticators)
         loading,
     required TResult Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)
+            Iterable<Authenticator> authenticators)
         loaded,
     required TResult Function(
             String platformId,
             Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)
+            Iterable<Authenticator> authenticators)
         integratedPlatform,
     required TResult Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations, String message)
+            Iterable<Authenticator> authenticators, String message)
         error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)?
+            Iterable<Authenticator> authenticators)?
         initial,
     TResult? Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)?
+            Iterable<Authenticator> authenticators)?
         loading,
     TResult? Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)?
+            Iterable<Authenticator> authenticators)?
         loaded,
     TResult? Function(String platformId, Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)?
+            Iterable<Authenticator> authenticators)?
         integratedPlatform,
     TResult? Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations, String message)?
+            Iterable<Authenticator> authenticators, String message)?
         error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)?
+            Iterable<Authenticator> authenticators)?
         initial,
     TResult Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)?
+            Iterable<Authenticator> authenticators)?
         loading,
     TResult Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)?
+            Iterable<Authenticator> authenticators)?
         loaded,
     TResult Function(String platformId, Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)?
+            Iterable<Authenticator> authenticators)?
         integratedPlatform,
     TResult Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations, String message)?
+            Iterable<Authenticator> authenticators, String message)?
         error,
     required TResult orElse(),
   }) =>
@@ -121,7 +122,7 @@ abstract class $IntegrationsStateCopyWith<$Res> {
   @useResult
   $Res call(
       {Iterable<Platform> availablePlatforms,
-      Iterable<Integration> integrations});
+      Iterable<Authenticator> authenticators});
 }
 
 /// @nodoc
@@ -138,17 +139,17 @@ class _$IntegrationsStateCopyWithImpl<$Res, $Val extends IntegrationsState>
   @override
   $Res call({
     Object? availablePlatforms = null,
-    Object? integrations = null,
+    Object? authenticators = null,
   }) {
     return _then(_value.copyWith(
       availablePlatforms: null == availablePlatforms
           ? _value.availablePlatforms
           : availablePlatforms // ignore: cast_nullable_to_non_nullable
               as Iterable<Platform>,
-      integrations: null == integrations
-          ? _value.integrations
-          : integrations // ignore: cast_nullable_to_non_nullable
-              as Iterable<Integration>,
+      authenticators: null == authenticators
+          ? _value.authenticators
+          : authenticators // ignore: cast_nullable_to_non_nullable
+              as Iterable<Authenticator>,
     ) as $Val);
   }
 }
@@ -163,7 +164,7 @@ abstract class _$$IntegrationsInitialCopyWith<$Res>
   @useResult
   $Res call(
       {Iterable<Platform> availablePlatforms,
-      Iterable<Integration> integrations});
+      Iterable<Authenticator> authenticators});
 }
 
 /// @nodoc
@@ -178,17 +179,17 @@ class __$$IntegrationsInitialCopyWithImpl<$Res>
   @override
   $Res call({
     Object? availablePlatforms = null,
-    Object? integrations = null,
+    Object? authenticators = null,
   }) {
     return _then(_$IntegrationsInitial(
       null == availablePlatforms
           ? _value.availablePlatforms
           : availablePlatforms // ignore: cast_nullable_to_non_nullable
               as Iterable<Platform>,
-      null == integrations
-          ? _value.integrations
-          : integrations // ignore: cast_nullable_to_non_nullable
-              as Iterable<Integration>,
+      null == authenticators
+          ? _value.authenticators
+          : authenticators // ignore: cast_nullable_to_non_nullable
+              as Iterable<Authenticator>,
     ));
   }
 }
@@ -196,16 +197,16 @@ class __$$IntegrationsInitialCopyWithImpl<$Res>
 /// @nodoc
 
 class _$IntegrationsInitial implements IntegrationsInitial {
-  const _$IntegrationsInitial(this.availablePlatforms, this.integrations);
+  const _$IntegrationsInitial(this.availablePlatforms, this.authenticators);
 
   @override
   final Iterable<Platform> availablePlatforms;
   @override
-  final Iterable<Integration> integrations;
+  final Iterable<Authenticator> authenticators;
 
   @override
   String toString() {
-    return 'IntegrationsState.initial(availablePlatforms: $availablePlatforms, integrations: $integrations)';
+    return 'IntegrationsState.initial(availablePlatforms: $availablePlatforms, authenticators: $authenticators)';
   }
 
   @override
@@ -216,14 +217,14 @@ class _$IntegrationsInitial implements IntegrationsInitial {
             const DeepCollectionEquality()
                 .equals(other.availablePlatforms, availablePlatforms) &&
             const DeepCollectionEquality()
-                .equals(other.integrations, integrations));
+                .equals(other.authenticators, authenticators));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(availablePlatforms),
-      const DeepCollectionEquality().hash(integrations));
+      const DeepCollectionEquality().hash(authenticators));
 
   @JsonKey(ignore: true)
   @override
@@ -236,70 +237,70 @@ class _$IntegrationsInitial implements IntegrationsInitial {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)
+            Iterable<Authenticator> authenticators)
         initial,
     required TResult Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)
+            Iterable<Authenticator> authenticators)
         loading,
     required TResult Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)
+            Iterable<Authenticator> authenticators)
         loaded,
     required TResult Function(
             String platformId,
             Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)
+            Iterable<Authenticator> authenticators)
         integratedPlatform,
     required TResult Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations, String message)
+            Iterable<Authenticator> authenticators, String message)
         error,
   }) {
-    return initial(availablePlatforms, integrations);
+    return initial(availablePlatforms, authenticators);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)?
+            Iterable<Authenticator> authenticators)?
         initial,
     TResult? Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)?
+            Iterable<Authenticator> authenticators)?
         loading,
     TResult? Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)?
+            Iterable<Authenticator> authenticators)?
         loaded,
     TResult? Function(String platformId, Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)?
+            Iterable<Authenticator> authenticators)?
         integratedPlatform,
     TResult? Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations, String message)?
+            Iterable<Authenticator> authenticators, String message)?
         error,
   }) {
-    return initial?.call(availablePlatforms, integrations);
+    return initial?.call(availablePlatforms, authenticators);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)?
+            Iterable<Authenticator> authenticators)?
         initial,
     TResult Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)?
+            Iterable<Authenticator> authenticators)?
         loading,
     TResult Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)?
+            Iterable<Authenticator> authenticators)?
         loaded,
     TResult Function(String platformId, Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)?
+            Iterable<Authenticator> authenticators)?
         integratedPlatform,
     TResult Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations, String message)?
+            Iterable<Authenticator> authenticators, String message)?
         error,
     required TResult orElse(),
   }) {
     if (initial != null) {
-      return initial(availablePlatforms, integrations);
+      return initial(availablePlatforms, authenticators);
     }
     return orElse();
   }
@@ -347,12 +348,12 @@ class _$IntegrationsInitial implements IntegrationsInitial {
 
 abstract class IntegrationsInitial implements IntegrationsState {
   const factory IntegrationsInitial(final Iterable<Platform> availablePlatforms,
-      final Iterable<Integration> integrations) = _$IntegrationsInitial;
+      final Iterable<Authenticator> authenticators) = _$IntegrationsInitial;
 
   @override
   Iterable<Platform> get availablePlatforms;
   @override
-  Iterable<Integration> get integrations;
+  Iterable<Authenticator> get authenticators;
   @override
   @JsonKey(ignore: true)
   _$$IntegrationsInitialCopyWith<_$IntegrationsInitial> get copyWith =>
@@ -369,7 +370,7 @@ abstract class _$$IntegrationsLoadingCopyWith<$Res>
   @useResult
   $Res call(
       {Iterable<Platform> availablePlatforms,
-      Iterable<Integration> integrations});
+      Iterable<Authenticator> authenticators});
 }
 
 /// @nodoc
@@ -384,17 +385,17 @@ class __$$IntegrationsLoadingCopyWithImpl<$Res>
   @override
   $Res call({
     Object? availablePlatforms = null,
-    Object? integrations = null,
+    Object? authenticators = null,
   }) {
     return _then(_$IntegrationsLoading(
       null == availablePlatforms
           ? _value.availablePlatforms
           : availablePlatforms // ignore: cast_nullable_to_non_nullable
               as Iterable<Platform>,
-      null == integrations
-          ? _value.integrations
-          : integrations // ignore: cast_nullable_to_non_nullable
-              as Iterable<Integration>,
+      null == authenticators
+          ? _value.authenticators
+          : authenticators // ignore: cast_nullable_to_non_nullable
+              as Iterable<Authenticator>,
     ));
   }
 }
@@ -402,16 +403,16 @@ class __$$IntegrationsLoadingCopyWithImpl<$Res>
 /// @nodoc
 
 class _$IntegrationsLoading implements IntegrationsLoading {
-  const _$IntegrationsLoading(this.availablePlatforms, this.integrations);
+  const _$IntegrationsLoading(this.availablePlatforms, this.authenticators);
 
   @override
   final Iterable<Platform> availablePlatforms;
   @override
-  final Iterable<Integration> integrations;
+  final Iterable<Authenticator> authenticators;
 
   @override
   String toString() {
-    return 'IntegrationsState.loading(availablePlatforms: $availablePlatforms, integrations: $integrations)';
+    return 'IntegrationsState.loading(availablePlatforms: $availablePlatforms, authenticators: $authenticators)';
   }
 
   @override
@@ -422,14 +423,14 @@ class _$IntegrationsLoading implements IntegrationsLoading {
             const DeepCollectionEquality()
                 .equals(other.availablePlatforms, availablePlatforms) &&
             const DeepCollectionEquality()
-                .equals(other.integrations, integrations));
+                .equals(other.authenticators, authenticators));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(availablePlatforms),
-      const DeepCollectionEquality().hash(integrations));
+      const DeepCollectionEquality().hash(authenticators));
 
   @JsonKey(ignore: true)
   @override
@@ -442,70 +443,70 @@ class _$IntegrationsLoading implements IntegrationsLoading {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)
+            Iterable<Authenticator> authenticators)
         initial,
     required TResult Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)
+            Iterable<Authenticator> authenticators)
         loading,
     required TResult Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)
+            Iterable<Authenticator> authenticators)
         loaded,
     required TResult Function(
             String platformId,
             Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)
+            Iterable<Authenticator> authenticators)
         integratedPlatform,
     required TResult Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations, String message)
+            Iterable<Authenticator> authenticators, String message)
         error,
   }) {
-    return loading(availablePlatforms, integrations);
+    return loading(availablePlatforms, authenticators);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)?
+            Iterable<Authenticator> authenticators)?
         initial,
     TResult? Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)?
+            Iterable<Authenticator> authenticators)?
         loading,
     TResult? Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)?
+            Iterable<Authenticator> authenticators)?
         loaded,
     TResult? Function(String platformId, Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)?
+            Iterable<Authenticator> authenticators)?
         integratedPlatform,
     TResult? Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations, String message)?
+            Iterable<Authenticator> authenticators, String message)?
         error,
   }) {
-    return loading?.call(availablePlatforms, integrations);
+    return loading?.call(availablePlatforms, authenticators);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)?
+            Iterable<Authenticator> authenticators)?
         initial,
     TResult Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)?
+            Iterable<Authenticator> authenticators)?
         loading,
     TResult Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)?
+            Iterable<Authenticator> authenticators)?
         loaded,
     TResult Function(String platformId, Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)?
+            Iterable<Authenticator> authenticators)?
         integratedPlatform,
     TResult Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations, String message)?
+            Iterable<Authenticator> authenticators, String message)?
         error,
     required TResult orElse(),
   }) {
     if (loading != null) {
-      return loading(availablePlatforms, integrations);
+      return loading(availablePlatforms, authenticators);
     }
     return orElse();
   }
@@ -553,12 +554,12 @@ class _$IntegrationsLoading implements IntegrationsLoading {
 
 abstract class IntegrationsLoading implements IntegrationsState {
   const factory IntegrationsLoading(final Iterable<Platform> availablePlatforms,
-      final Iterable<Integration> integrations) = _$IntegrationsLoading;
+      final Iterable<Authenticator> authenticators) = _$IntegrationsLoading;
 
   @override
   Iterable<Platform> get availablePlatforms;
   @override
-  Iterable<Integration> get integrations;
+  Iterable<Authenticator> get authenticators;
   @override
   @JsonKey(ignore: true)
   _$$IntegrationsLoadingCopyWith<_$IntegrationsLoading> get copyWith =>
@@ -575,7 +576,7 @@ abstract class _$$IntegrationsLoadedCopyWith<$Res>
   @useResult
   $Res call(
       {Iterable<Platform> availablePlatforms,
-      Iterable<Integration> integrations});
+      Iterable<Authenticator> authenticators});
 }
 
 /// @nodoc
@@ -590,17 +591,17 @@ class __$$IntegrationsLoadedCopyWithImpl<$Res>
   @override
   $Res call({
     Object? availablePlatforms = null,
-    Object? integrations = null,
+    Object? authenticators = null,
   }) {
     return _then(_$IntegrationsLoaded(
       null == availablePlatforms
           ? _value.availablePlatforms
           : availablePlatforms // ignore: cast_nullable_to_non_nullable
               as Iterable<Platform>,
-      null == integrations
-          ? _value.integrations
-          : integrations // ignore: cast_nullable_to_non_nullable
-              as Iterable<Integration>,
+      null == authenticators
+          ? _value.authenticators
+          : authenticators // ignore: cast_nullable_to_non_nullable
+              as Iterable<Authenticator>,
     ));
   }
 }
@@ -608,16 +609,16 @@ class __$$IntegrationsLoadedCopyWithImpl<$Res>
 /// @nodoc
 
 class _$IntegrationsLoaded implements IntegrationsLoaded {
-  const _$IntegrationsLoaded(this.availablePlatforms, this.integrations);
+  const _$IntegrationsLoaded(this.availablePlatforms, this.authenticators);
 
   @override
   final Iterable<Platform> availablePlatforms;
   @override
-  final Iterable<Integration> integrations;
+  final Iterable<Authenticator> authenticators;
 
   @override
   String toString() {
-    return 'IntegrationsState.loaded(availablePlatforms: $availablePlatforms, integrations: $integrations)';
+    return 'IntegrationsState.loaded(availablePlatforms: $availablePlatforms, authenticators: $authenticators)';
   }
 
   @override
@@ -628,14 +629,14 @@ class _$IntegrationsLoaded implements IntegrationsLoaded {
             const DeepCollectionEquality()
                 .equals(other.availablePlatforms, availablePlatforms) &&
             const DeepCollectionEquality()
-                .equals(other.integrations, integrations));
+                .equals(other.authenticators, authenticators));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(availablePlatforms),
-      const DeepCollectionEquality().hash(integrations));
+      const DeepCollectionEquality().hash(authenticators));
 
   @JsonKey(ignore: true)
   @override
@@ -648,70 +649,70 @@ class _$IntegrationsLoaded implements IntegrationsLoaded {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)
+            Iterable<Authenticator> authenticators)
         initial,
     required TResult Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)
+            Iterable<Authenticator> authenticators)
         loading,
     required TResult Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)
+            Iterable<Authenticator> authenticators)
         loaded,
     required TResult Function(
             String platformId,
             Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)
+            Iterable<Authenticator> authenticators)
         integratedPlatform,
     required TResult Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations, String message)
+            Iterable<Authenticator> authenticators, String message)
         error,
   }) {
-    return loaded(availablePlatforms, integrations);
+    return loaded(availablePlatforms, authenticators);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)?
+            Iterable<Authenticator> authenticators)?
         initial,
     TResult? Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)?
+            Iterable<Authenticator> authenticators)?
         loading,
     TResult? Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)?
+            Iterable<Authenticator> authenticators)?
         loaded,
     TResult? Function(String platformId, Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)?
+            Iterable<Authenticator> authenticators)?
         integratedPlatform,
     TResult? Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations, String message)?
+            Iterable<Authenticator> authenticators, String message)?
         error,
   }) {
-    return loaded?.call(availablePlatforms, integrations);
+    return loaded?.call(availablePlatforms, authenticators);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)?
+            Iterable<Authenticator> authenticators)?
         initial,
     TResult Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)?
+            Iterable<Authenticator> authenticators)?
         loading,
     TResult Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)?
+            Iterable<Authenticator> authenticators)?
         loaded,
     TResult Function(String platformId, Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)?
+            Iterable<Authenticator> authenticators)?
         integratedPlatform,
     TResult Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations, String message)?
+            Iterable<Authenticator> authenticators, String message)?
         error,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(availablePlatforms, integrations);
+      return loaded(availablePlatforms, authenticators);
     }
     return orElse();
   }
@@ -759,12 +760,12 @@ class _$IntegrationsLoaded implements IntegrationsLoaded {
 
 abstract class IntegrationsLoaded implements IntegrationsState {
   const factory IntegrationsLoaded(final Iterable<Platform> availablePlatforms,
-      final Iterable<Integration> integrations) = _$IntegrationsLoaded;
+      final Iterable<Authenticator> authenticators) = _$IntegrationsLoaded;
 
   @override
   Iterable<Platform> get availablePlatforms;
   @override
-  Iterable<Integration> get integrations;
+  Iterable<Authenticator> get authenticators;
   @override
   @JsonKey(ignore: true)
   _$$IntegrationsLoadedCopyWith<_$IntegrationsLoaded> get copyWith =>
@@ -782,7 +783,7 @@ abstract class _$$IntegratedPlatformCopyWith<$Res>
   $Res call(
       {String platformId,
       Iterable<Platform> availablePlatforms,
-      Iterable<Integration> integrations});
+      Iterable<Authenticator> authenticators});
 }
 
 /// @nodoc
@@ -798,7 +799,7 @@ class __$$IntegratedPlatformCopyWithImpl<$Res>
   $Res call({
     Object? platformId = null,
     Object? availablePlatforms = null,
-    Object? integrations = null,
+    Object? authenticators = null,
   }) {
     return _then(_$IntegratedPlatform(
       null == platformId
@@ -809,10 +810,10 @@ class __$$IntegratedPlatformCopyWithImpl<$Res>
           ? _value.availablePlatforms
           : availablePlatforms // ignore: cast_nullable_to_non_nullable
               as Iterable<Platform>,
-      null == integrations
-          ? _value.integrations
-          : integrations // ignore: cast_nullable_to_non_nullable
-              as Iterable<Integration>,
+      null == authenticators
+          ? _value.authenticators
+          : authenticators // ignore: cast_nullable_to_non_nullable
+              as Iterable<Authenticator>,
     ));
   }
 }
@@ -821,18 +822,18 @@ class __$$IntegratedPlatformCopyWithImpl<$Res>
 
 class _$IntegratedPlatform implements IntegratedPlatform {
   const _$IntegratedPlatform(
-      this.platformId, this.availablePlatforms, this.integrations);
+      this.platformId, this.availablePlatforms, this.authenticators);
 
   @override
   final String platformId;
   @override
   final Iterable<Platform> availablePlatforms;
   @override
-  final Iterable<Integration> integrations;
+  final Iterable<Authenticator> authenticators;
 
   @override
   String toString() {
-    return 'IntegrationsState.integratedPlatform(platformId: $platformId, availablePlatforms: $availablePlatforms, integrations: $integrations)';
+    return 'IntegrationsState.integratedPlatform(platformId: $platformId, availablePlatforms: $availablePlatforms, authenticators: $authenticators)';
   }
 
   @override
@@ -845,7 +846,7 @@ class _$IntegratedPlatform implements IntegratedPlatform {
             const DeepCollectionEquality()
                 .equals(other.availablePlatforms, availablePlatforms) &&
             const DeepCollectionEquality()
-                .equals(other.integrations, integrations));
+                .equals(other.authenticators, authenticators));
   }
 
   @override
@@ -853,7 +854,7 @@ class _$IntegratedPlatform implements IntegratedPlatform {
       runtimeType,
       platformId,
       const DeepCollectionEquality().hash(availablePlatforms),
-      const DeepCollectionEquality().hash(integrations));
+      const DeepCollectionEquality().hash(authenticators));
 
   @JsonKey(ignore: true)
   @override
@@ -866,71 +867,71 @@ class _$IntegratedPlatform implements IntegratedPlatform {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)
+            Iterable<Authenticator> authenticators)
         initial,
     required TResult Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)
+            Iterable<Authenticator> authenticators)
         loading,
     required TResult Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)
+            Iterable<Authenticator> authenticators)
         loaded,
     required TResult Function(
             String platformId,
             Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)
+            Iterable<Authenticator> authenticators)
         integratedPlatform,
     required TResult Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations, String message)
+            Iterable<Authenticator> authenticators, String message)
         error,
   }) {
-    return integratedPlatform(platformId, availablePlatforms, integrations);
+    return integratedPlatform(platformId, availablePlatforms, authenticators);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)?
+            Iterable<Authenticator> authenticators)?
         initial,
     TResult? Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)?
+            Iterable<Authenticator> authenticators)?
         loading,
     TResult? Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)?
+            Iterable<Authenticator> authenticators)?
         loaded,
     TResult? Function(String platformId, Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)?
+            Iterable<Authenticator> authenticators)?
         integratedPlatform,
     TResult? Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations, String message)?
+            Iterable<Authenticator> authenticators, String message)?
         error,
   }) {
     return integratedPlatform?.call(
-        platformId, availablePlatforms, integrations);
+        platformId, availablePlatforms, authenticators);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)?
+            Iterable<Authenticator> authenticators)?
         initial,
     TResult Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)?
+            Iterable<Authenticator> authenticators)?
         loading,
     TResult Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)?
+            Iterable<Authenticator> authenticators)?
         loaded,
     TResult Function(String platformId, Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)?
+            Iterable<Authenticator> authenticators)?
         integratedPlatform,
     TResult Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations, String message)?
+            Iterable<Authenticator> authenticators, String message)?
         error,
     required TResult orElse(),
   }) {
     if (integratedPlatform != null) {
-      return integratedPlatform(platformId, availablePlatforms, integrations);
+      return integratedPlatform(platformId, availablePlatforms, authenticators);
     }
     return orElse();
   }
@@ -980,13 +981,13 @@ abstract class IntegratedPlatform implements IntegrationsState {
   const factory IntegratedPlatform(
       final String platformId,
       final Iterable<Platform> availablePlatforms,
-      final Iterable<Integration> integrations) = _$IntegratedPlatform;
+      final Iterable<Authenticator> authenticators) = _$IntegratedPlatform;
 
   String get platformId;
   @override
   Iterable<Platform> get availablePlatforms;
   @override
-  Iterable<Integration> get integrations;
+  Iterable<Authenticator> get authenticators;
   @override
   @JsonKey(ignore: true)
   _$$IntegratedPlatformCopyWith<_$IntegratedPlatform> get copyWith =>
@@ -1003,7 +1004,7 @@ abstract class _$$IntegrationsErrorCopyWith<$Res>
   @useResult
   $Res call(
       {Iterable<Platform> availablePlatforms,
-      Iterable<Integration> integrations,
+      Iterable<Authenticator> authenticators,
       String message});
 }
 
@@ -1019,7 +1020,7 @@ class __$$IntegrationsErrorCopyWithImpl<$Res>
   @override
   $Res call({
     Object? availablePlatforms = null,
-    Object? integrations = null,
+    Object? authenticators = null,
     Object? message = null,
   }) {
     return _then(_$IntegrationsError(
@@ -1027,10 +1028,10 @@ class __$$IntegrationsErrorCopyWithImpl<$Res>
           ? _value.availablePlatforms
           : availablePlatforms // ignore: cast_nullable_to_non_nullable
               as Iterable<Platform>,
-      null == integrations
-          ? _value.integrations
-          : integrations // ignore: cast_nullable_to_non_nullable
-              as Iterable<Integration>,
+      null == authenticators
+          ? _value.authenticators
+          : authenticators // ignore: cast_nullable_to_non_nullable
+              as Iterable<Authenticator>,
       null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -1043,18 +1044,18 @@ class __$$IntegrationsErrorCopyWithImpl<$Res>
 
 class _$IntegrationsError implements IntegrationsError {
   const _$IntegrationsError(
-      this.availablePlatforms, this.integrations, this.message);
+      this.availablePlatforms, this.authenticators, this.message);
 
   @override
   final Iterable<Platform> availablePlatforms;
   @override
-  final Iterable<Integration> integrations;
+  final Iterable<Authenticator> authenticators;
   @override
   final String message;
 
   @override
   String toString() {
-    return 'IntegrationsState.error(availablePlatforms: $availablePlatforms, integrations: $integrations, message: $message)';
+    return 'IntegrationsState.error(availablePlatforms: $availablePlatforms, authenticators: $authenticators, message: $message)';
   }
 
   @override
@@ -1065,7 +1066,7 @@ class _$IntegrationsError implements IntegrationsError {
             const DeepCollectionEquality()
                 .equals(other.availablePlatforms, availablePlatforms) &&
             const DeepCollectionEquality()
-                .equals(other.integrations, integrations) &&
+                .equals(other.authenticators, authenticators) &&
             (identical(other.message, message) || other.message == message));
   }
 
@@ -1073,7 +1074,7 @@ class _$IntegrationsError implements IntegrationsError {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(availablePlatforms),
-      const DeepCollectionEquality().hash(integrations),
+      const DeepCollectionEquality().hash(authenticators),
       message);
 
   @JsonKey(ignore: true)
@@ -1086,70 +1087,70 @@ class _$IntegrationsError implements IntegrationsError {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)
+            Iterable<Authenticator> authenticators)
         initial,
     required TResult Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)
+            Iterable<Authenticator> authenticators)
         loading,
     required TResult Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)
+            Iterable<Authenticator> authenticators)
         loaded,
     required TResult Function(
             String platformId,
             Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)
+            Iterable<Authenticator> authenticators)
         integratedPlatform,
     required TResult Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations, String message)
+            Iterable<Authenticator> authenticators, String message)
         error,
   }) {
-    return error(availablePlatforms, integrations, message);
+    return error(availablePlatforms, authenticators, message);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)?
+            Iterable<Authenticator> authenticators)?
         initial,
     TResult? Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)?
+            Iterable<Authenticator> authenticators)?
         loading,
     TResult? Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)?
+            Iterable<Authenticator> authenticators)?
         loaded,
     TResult? Function(String platformId, Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)?
+            Iterable<Authenticator> authenticators)?
         integratedPlatform,
     TResult? Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations, String message)?
+            Iterable<Authenticator> authenticators, String message)?
         error,
   }) {
-    return error?.call(availablePlatforms, integrations, message);
+    return error?.call(availablePlatforms, authenticators, message);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)?
+            Iterable<Authenticator> authenticators)?
         initial,
     TResult Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)?
+            Iterable<Authenticator> authenticators)?
         loading,
     TResult Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)?
+            Iterable<Authenticator> authenticators)?
         loaded,
     TResult Function(String platformId, Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations)?
+            Iterable<Authenticator> authenticators)?
         integratedPlatform,
     TResult Function(Iterable<Platform> availablePlatforms,
-            Iterable<Integration> integrations, String message)?
+            Iterable<Authenticator> authenticators, String message)?
         error,
     required TResult orElse(),
   }) {
     if (error != null) {
-      return error(availablePlatforms, integrations, message);
+      return error(availablePlatforms, authenticators, message);
     }
     return orElse();
   }
@@ -1198,13 +1199,13 @@ class _$IntegrationsError implements IntegrationsError {
 abstract class IntegrationsError implements IntegrationsState {
   const factory IntegrationsError(
       final Iterable<Platform> availablePlatforms,
-      final Iterable<Integration> integrations,
+      final Iterable<Authenticator> authenticators,
       final String message) = _$IntegrationsError;
 
   @override
   Iterable<Platform> get availablePlatforms;
   @override
-  Iterable<Integration> get integrations;
+  Iterable<Authenticator> get authenticators;
   String get message;
   @override
   @JsonKey(ignore: true)

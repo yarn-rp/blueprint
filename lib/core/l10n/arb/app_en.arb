@@ -25,6 +25,10 @@
     "@cancel": {
         "description": "Cancel word"
     },
+    "closeTabCTA": "Close",
+    "@closeTabCTA": {
+        "description": "CTA for closing a tab"
+    },
     "counterAppBarTitle": "Counter",
     "@counterAppBarTitle": {
         "description": "Text shown in the AppBar of the Counter Page"
@@ -52,6 +56,10 @@
     "createdBy": "Created by",
     "@createdBy": {
         "description": "Refers to created by section"
+    },
+    "currentEventGlanceTitle": "Now on blueprint",
+    "@currentEventGlanceTitle": {
+        "description": "Title for the now on blueprint glance event"
     },
     "details": "Details",
     "@details": {
@@ -84,6 +92,30 @@
         "description": "Free time event subtitle"
     },
     "forgotPassword":"Forgot Password", 
+    "integrateCTA": "Integrate",
+    "@integrateCTA": {
+        "description": "CTA for integrations buttons"
+    },
+    "integrationCompletedTitle": "Great! We have integrated with {platformName} successfully",
+    "@integrationCompletedTitle": {
+        "description": "Integration completed title",
+        "placeholders": {
+            "platformName": {
+                "example": "Google Calendar",
+                "type": "String"
+            }
+        }
+    },
+    "integrationCompletedDescription": "We are fetching your data from {platformName}. This could take a few seconds to show up in your screen. You can close this tab.",
+    "@integrationCompletedDescription": {
+        "description": "Integration completed subtitle",
+        "placeholders": {
+            "platformName": {
+                "example": "Google Calendar",
+                "type": "String"
+            }
+        }
+    },
     "integrationsDropdownHint": "Integrations",
     "@integrationsDropdownHint": {
         "description": "Title for the integrations dropdown"
@@ -96,6 +128,14 @@
     "@newTaskTitle": {
         "description": "Title for creating a new task on the create blueprint"
     },
+    "noAuthenticatorsTitle": "You have no integrations yet",
+    "@noAuthenticatorsTitle": {
+        "description": "Title for when user has empty integrations list"
+    },
+    "noAuthenticatorsSubtitle": "Please integrate with a new platform to start using blueprint",
+    "@noAuthenticatorsSubtitle": {
+        "description": "Subtitle for when user has empty integrations list"
+    },
     "noTaskMatchesTitle": "We have not found any tasks",
     "@noTaskMatchesTitle": {
         "description": "Title for when no tasks matching search"
@@ -104,9 +144,16 @@
     "@noTaskMatchesSubtitle": {
         "description": "Subtitle for when no tasks matching search"
     },
-    "currentEventGlanceTitle": "Now on blueprint",
-    "@currentEventGlanceTitle": {
-        "description": "Title for the now on blueprint glance event"
+    "oAuthPlatformTileDescription": "Connect your {platformName} account to Blueprint",
+    "@oAuthPlatformTileDescription": {
+        "description": "Description helper text for oAuthPlatformTiles",
+        "type": "text",
+        "placeholders": {
+            "platformName": {
+                "example": "Google Calendar",
+                "type": "String"
+            }
+        }
     },
     "selectTask": "Select a Task",
     "@selectTask": {
@@ -116,6 +163,18 @@
     "signUp" :"Sign Up",
     "password":"Password",
     "passwordDontMatch":"Passwords don't match",
+    "removeCTA": "Remove",
+    "@removeCTA": {
+        "description": "CTA for Remove action"
+    },
+    "removeAuthenticatorConfirmationTitle": "Are you sure?",
+    "@removeAuthenticatorConfirmationTitle": {
+        "description": "Title for removing authenticator dialog"
+    },
+     "removeAuthenticatorConfirmationContent": "Are you sure you want to remove your integration? This action will delete the integration from this account and you won't be able to see any content related to that account.",
+    "@removeAuthenticatorConfirmationContent": {
+        "description": "Content for removing authenticator dialog"
+    },
     "repeatPassword":"Repeat Password",
     "resetPasswordMessage":"Enter email address that you used to register. We'll send you an email with link to reset your password.",
     "sendEmail":"Send Email",
@@ -137,6 +196,17 @@
     "startTime": "Start Time",
     "@startTime": {
         "description": "Start time for an event or task"
+    },
+    "unexpectedError": "Something unexpected happened. {errorData}",
+    "@unexpectedError": {
+        "description": "Unexpected error",
+        "type": "text",
+        "placeholders": {
+            "errorData": {
+                "example": "404",
+                "type": "String"
+            }
+        }
     },
     "updated": "Updated",
     "@updated": {
