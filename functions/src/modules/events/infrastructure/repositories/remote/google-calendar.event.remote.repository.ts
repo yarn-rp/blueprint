@@ -33,7 +33,8 @@ export class GoogleCalendarEventRemoteRepository extends BaseEventRemoteReposito
     try {
       const response = await calendarAPIClient.events.list({
         calendarId: "primary",
-        timeMin: new Date().toISOString(),
+        // Yes, this is the nicest way I found without importing third party libs
+        timeMin: new Date(new Date().setHours(0, 0, 0, 0)).toISOString(),
         maxResults: 10,
         singleEvents: true,
         orderBy: "startTime",
