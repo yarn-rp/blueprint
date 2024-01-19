@@ -104,9 +104,9 @@ class IntegrateWithPlatformView extends StatelessWidget {
                   FilledButton(
                     onPressed: () {
                       // close tab
-                      if (kIsWeb)
+                      if (kIsWeb) {
                         js.context.callMethod('close');
-                      else {
+                      } else {
                         context.navigateTo(const InitialRoute());
                       }
                     },

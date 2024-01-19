@@ -50,6 +50,8 @@ class AuthenticatorTile extends StatelessWidget {
             ],
           );
           if (result ?? false) {
+            if (!context.mounted) return;
+
             unawaited(
               context
                   .read<IntegrationsCubit>()
