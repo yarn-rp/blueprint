@@ -26,13 +26,13 @@ Authenticator _$AuthenticatorFromJson(Map<String, dynamic> json) =>
     Authenticator(
       id: json['id'] as String,
       platform: Platform.fromJson(json['platform'] as Map<String, dynamic>),
-      userData: AuthenticatorUserData.fromJson(
-          json['userData'] as Map<String, dynamic>),
+      user:
+          AuthenticatorUserData.fromJson(json['user'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$AuthenticatorToJson(Authenticator instance) =>
     <String, dynamic>{
       'id': instance.id,
       'platform': instance.platform,
-      'userData': instance.userData,
+      'userData': instance.user,
     };

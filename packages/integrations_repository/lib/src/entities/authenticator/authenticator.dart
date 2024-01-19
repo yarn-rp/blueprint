@@ -26,7 +26,7 @@ class Authenticator {
   Authenticator({
     required this.id,
     required this.platform,
-    required this.userData,
+    required this.user,
   });
 
   factory Authenticator.fromJson(Map<String, dynamic> json) =>
@@ -36,5 +36,5 @@ class Authenticator {
 
   final String id;
   final Platform platform;
-  final AuthenticatorUserData userData;
+  final AuthenticatorUserData user;
 }
