@@ -25,6 +25,10 @@
     "@cancel": {
         "description": "Cancel word"
     },
+    "closeTabCTA": "Close",
+    "@closeTabCTA": {
+        "description": "CTA for closing a tab"
+    },
     "counterAppBarTitle": "Counter",
     "@counterAppBarTitle": {
         "description": "Text shown in the AppBar of the Counter Page"
@@ -91,6 +95,26 @@
     "integrateCTA": "Integrate",
     "@integrateCTA": {
         "description": "CTA for integrations buttons"
+    },
+    "integrationCompletedTitle": "Great! We have integrated with {platformName} successfully",
+    "@integrationCompletedTitle": {
+        "description": "Integration completed title",
+        "placeholders": {
+            "platformName": {
+                "example": "Google Calendar",
+                "type": "String"
+            }
+        }
+    },
+    "integrationCompletedDescription": "We are fetching your data from {platformName}. This could take a few seconds to show up in your screen. You can close this tab.",
+    "@integrationCompletedDescription": {
+        "description": "Integration completed subtitle",
+        "placeholders": {
+            "platformName": {
+                "example": "Google Calendar",
+                "type": "String"
+            }
+        }
     },
     "integrationsDropdownHint": "Integrations",
     "@integrationsDropdownHint": {
@@ -172,6 +196,17 @@
     "startTime": "Start Time",
     "@startTime": {
         "description": "Start time for an event or task"
+    },
+    "unexpectedError": "Something unexpected happened. {errorData}",
+    "@unexpectedError": {
+        "description": "Unexpected error",
+        "type": "text",
+        "placeholders": {
+            "errorData": {
+                "example": "404",
+                "type": "String"
+            }
+        }
     },
     "updated": "Updated",
     "@updated": {

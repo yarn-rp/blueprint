@@ -1,6 +1,10 @@
+import 'package:app_ui/app_ui.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:blueprint/app/dependency_injection/init.dart';
+import 'package:blueprint/app/routes/routes.dart';
+import 'package:blueprint/core/l10n/l10n.dart';
 import 'package:blueprint/integrations/state_management/integrations_repository/integrations_cubit.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:universal_html/js.dart' as js;
@@ -43,35 +47,74 @@ class IntegrateWithPlatformView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final theme = Theme.of(context);
+    final textTheme = theme.textTheme;
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Integrate with Platform'),
-      ),
       body: BlocBuilder<IntegrationsCubit, IntegrationsState>(
+        buildWhen: (previous, current) =>
+            previous.maybeMap(
+              integratedPlatform: (state) => state.platformId,
+              orElse: () => null,
+            ) !=
+            current.maybeMap(
+              integratedPlatform: (state) => state.platformId,
+              orElse: () => null,
+            ),
         builder: (context, state) {
-          return state.maybeMap(
+          return state.map(
+            initial: (_) => const Center(
+              child: CircularProgressIndicator(),
+            ),
             loading: (_) => const Center(
               child: CircularProgressIndicator(),
             ),
             error: (state) => Center(
-              child: Text('error state${state.message}'),
+              child: Text(l10n.unexpectedError(state.message)),
+            ),
+            loaded: (_) => const Center(
+              child: CircularProgressIndicator(),
             ),
             integratedPlatform: (state) => Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('Integration with ${state.platformId} went '
-                      'successful. You can now close this page.'),
-                  ElevatedButton(
+                  Icon(
+                    Icons.check_circle_outline_outlined,
+                    size: 120,
+                    color: theme.colorScheme.outline,
+                  ),
+                  Text(
+                    l10n.integrationCompletedTitle(state.platformId),
+                    style: textTheme.headlineSmall,
+                  ),
+                  const SizedBox(height: AppSpacing.sm),
+                  ConstrainedBox(
+                    constraints: BoxConstraints(
+                      maxWidth: MediaQuery.of(context).size.width * 0.5,
+                    ),
+                    child: Text(
+                      l10n.integrationCompletedDescription(state.platformId),
+                      style: textTheme.bodyLarge,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  const SizedBox(height: AppSpacing.md),
+                  FilledButton(
                     onPressed: () {
-                      js.context.callMethod('close');
+                      // close tab
+                      if (kIsWeb)
+                        js.context.callMethod('close');
+                      else {
+                        context.navigateTo(const InitialRoute());
+                      }
                     },
-                    child: const Text('Close'),
+                    child: Text(l10n.closeTabCTA),
                   ),
                 ],
               ),
             ),
-            orElse: () => const SizedBox.shrink(),
           );
         },
       ),
