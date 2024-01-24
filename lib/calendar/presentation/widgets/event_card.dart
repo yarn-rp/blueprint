@@ -62,10 +62,8 @@ class IntegrationLabelChip extends LabelChip {
           text: task.project.platformName,
           backgroundColor: null,
           avatar: task.project.platform?.iconUrl != null
-              ? ImageNetwork(
-                  image: task.project.platform!.iconUrl,
-                  width: 24,
-                  height: 24,
+              ? Image.network(
+                  task.project.platform!.iconUrl,
                 )
               : null,
         );

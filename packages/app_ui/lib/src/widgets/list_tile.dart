@@ -25,10 +25,8 @@ class IntegrationListTile extends StatelessWidget {
       dense: false,
       leading: SizedBox(
         width: AppSpacing.xxlg,
-        child: ImageNetwork(
-          image: integrationIconUrl,
-          height: 40,
-          width: 40,
+        child: Image.network(
+          integrationIconUrl,
         ),
       ),
       title: Text(title),
