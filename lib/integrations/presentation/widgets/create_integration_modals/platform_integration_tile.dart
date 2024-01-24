@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:blueprint/core/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_web_auth/flutter_web_auth.dart';
+import 'package:image_network/image_network.dart';
 import 'package:integrations_repository/integrations_repository.dart';
 
 /// {@template platform_integration_tile}
@@ -61,7 +62,11 @@ abstract class PlatformIntegrationTile<PlatformType extends Platform,
           borderRadius: BorderRadius.circular(8),
         ),
         padding: const EdgeInsets.all(2),
-        child: Image.network(platform.iconUrl),
+        child: ImageNetwork(
+          image: platform.iconUrl,
+          height: double.infinity,
+          width: double.infinity,
+        ),
       ),
     );
   }

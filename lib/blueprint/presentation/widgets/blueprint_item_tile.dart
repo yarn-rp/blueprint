@@ -63,7 +63,7 @@ class BlueprintItemTile extends StatelessWidget {
                         maxWidth: 1200,
                         maxHeight: MediaQuery.of(context).size.height,
                       ),
-                      child: TaskDetails(
+                      child: TaskDetails.dialog(
                         task: item.value,
                         onClose: () => Navigator.of(context).pop(),
                       ),

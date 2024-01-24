@@ -9,16 +9,47 @@ import 'package:task_repository/task_repository.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TaskDetails extends StatelessWidget {
-  const TaskDetails({
+  /// Creates a [TaskDetails] widget that is displayed as a page.
+  factory TaskDetails({
+    required Task task,
+    required VoidCallback onClose,
+  }) {
+    return TaskDetails._(
+      task: task,
+      onClose: onClose,
+      isDialog: false,
+    );
+  }
+
+  /// Creates a [TaskDetails] widget that is displayed as a dialog.
+  factory TaskDetails.dialog({
+    required Task task,
+    required VoidCallback onClose,
+  }) =>
+      TaskDetails._(
+        task: task,
+        onClose: onClose,
+        isDialog: true,
+      );
+
+  const TaskDetails._({
     required this.task,
     required this.onClose,
-    super.key,
+    required this.isDialog,
   });
 
   final Task task;
   final VoidCallback onClose;
+  final bool isDialog;
 
   Widget _buildDivider() {
+    if (isDialog) {
+      return const SizedBox(
+        height: AppSpacing.lg,
+        width: AppSpacing.lg,
+      );
+    }
+
     return const Column(
       children: [
         SizedBox(
@@ -35,19 +66,25 @@ class TaskDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    const padding = EdgeInsets.symmetric(
-      horizontal: AppSpacing.lg,
-    );
+    final padding = isDialog
+        ? const EdgeInsets.symmetric(
+            horizontal: AppSpacing.xlg,
+          )
+        : const EdgeInsets.symmetric(
+            horizontal: AppSpacing.lg,
+          );
 
     return Card(
       clipBehavior: Clip.hardEdge,
       elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8),
-        side: BorderSide(
-          color: theme.dividerTheme.color ?? theme.dividerColor,
-        ),
-      ),
+      shape: isDialog
+          ? null
+          : RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+              side: BorderSide(
+                color: theme.dividerTheme.color ?? theme.dividerColor,
+              ),
+            ),
       margin: EdgeInsets.zero,
       child: Scaffold(
         backgroundColor: Theme.of(context).canvasColor,
@@ -57,24 +94,58 @@ class TaskDetails extends StatelessWidget {
           platformName: task.project.platformName,
           taskTitle: task.title,
         ),
-        body: ListView(
-          children: [
-            _buildDivider(),
-            Padding(
-              padding: padding,
-              child: _TaskDescriptionSection(
-                task: task,
+        body: isDialog
+            ? Column(
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: padding,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: ListView(
+                              children: [
+                                _TaskDescriptionSection(
+                                  task: task,
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(
+                            width: AppSpacing.xlg,
+                          ),
+                          Expanded(
+                            child: _TaskDetailsSection(
+                              task: task,
+                              isDialog: isDialog,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              )
+            : ListView(
+                children: [
+                  _buildDivider(),
+                  Padding(
+                    padding: padding,
+                    child: _TaskDescriptionSection(
+                      task: task,
+                    ),
+                  ),
+                  _buildDivider(),
+                  Padding(
+                    padding: padding,
+                    child: _TaskDetailsSection(
+                      task: task,
+                      isDialog: isDialog,
+                    ),
+                  ),
+                ],
               ),
-            ),
-            _buildDivider(),
-            Padding(
-              padding: padding,
-              child: _TaskDetailsSection(
-                task: task,
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }
@@ -91,10 +162,17 @@ class _TaskDescriptionSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
 
+    final text = task.description.isNotEmpty
+        ? task.description
+        : l10n.noDescriptionProvided;
+
     return Section(
       title: l10n.description,
-      child: RichTextCard(
-        text: task.description,
+      child: SizedBox(
+        width: double.infinity,
+        child: RichTextCard(
+          text: text,
+        ),
       ),
     );
   }
@@ -103,9 +181,11 @@ class _TaskDescriptionSection extends StatelessWidget {
 class _TaskDetailsSection extends StatelessWidget {
   const _TaskDetailsSection({
     required this.task,
+    required this.isDialog,
   });
 
   final Task task;
+  final bool isDialog;
 
   @override
   Widget build(BuildContext context) {

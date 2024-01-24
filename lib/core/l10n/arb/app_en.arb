@@ -136,6 +136,10 @@
     "@noAuthenticatorsSubtitle": {
         "description": "Subtitle for when user has empty integrations list"
     },
+    "noDescriptionProvided": "No description",
+    "@noDescriptionProvided": {
+        "description": "No description provided text"
+    },
     "noTaskMatchesTitle": "We have not found any tasks",
     "@noTaskMatchesTitle": {
         "description": "Title for when no tasks matching search"
