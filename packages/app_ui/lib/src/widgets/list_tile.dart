@@ -1,5 +1,6 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
+import 'package:image_network/image_network.dart';
 
 class IntegrationListTile extends StatelessWidget {
   const IntegrationListTile({
@@ -24,7 +25,11 @@ class IntegrationListTile extends StatelessWidget {
       dense: false,
       leading: SizedBox(
         width: AppSpacing.xxlg,
-        child: Image.network(integrationIconUrl),
+        child: ImageNetwork(
+          image: integrationIconUrl,
+          height: 40,
+          width: 40,
+        ),
       ),
       title: Text(title),
       subtitle: Text(subtitle),

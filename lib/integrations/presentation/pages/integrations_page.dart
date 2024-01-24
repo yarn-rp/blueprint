@@ -6,6 +6,7 @@ import 'package:blueprint/integrations/presentation/widgets/create_integration_m
 import 'package:blueprint/integrations/state_management/integrations_repository/integrations_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_network/image_network.dart';
 import 'package:integrations_repository/integrations_repository.dart';
 
 @RoutePage()
@@ -191,7 +192,11 @@ class IntegrationCard extends StatelessWidget {
               Positioned.fill(
                 child: Padding(
                   padding: const EdgeInsets.all(32),
-                  child: Image.network(integration.platform.iconUrl),
+                  child: ImageNetwork(
+                    image: integration.platform.iconUrl,
+                    height: 64,
+                    width: 64,
+                  ),
                 ),
               ),
               // Linear Background with an opacity of 0.75

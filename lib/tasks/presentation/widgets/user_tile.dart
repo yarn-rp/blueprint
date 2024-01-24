@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:image_network/image_network.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class UserTile extends StatelessWidget {
@@ -21,7 +22,11 @@ class UserTile extends StatelessWidget {
       onTap: () => platformUrl != null ? launchUrlString(platformUrl!) : null,
       leading: avatarUrl != null
           ? CircleAvatar(
-              backgroundImage: NetworkImage(avatarUrl!),
+              child: ImageNetwork(
+                image: avatarUrl!,
+                height: 40,
+                width: 40,
+              ),
             )
           : null,
       title: displayName != null ? Text(displayName!) : Text(email ?? ''),

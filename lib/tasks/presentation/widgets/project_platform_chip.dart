@@ -1,5 +1,5 @@
 import 'package:app_ui/app_ui.dart';
-import 'package:flutter/material.dart';
+import 'package:image_network/image_network.dart';
 import 'package:task_repository/task_repository.dart';
 
 class ProjectPlatformChip extends LabelChip {
@@ -10,8 +10,8 @@ class ProjectPlatformChip extends LabelChip {
           text: task.project.platformName,
           backgroundColor: null,
           avatar: task.project.platform?.iconUrl != null
-              ? Image.network(
-                  task.project.platform!.iconUrl,
+              ? ImageNetwork(
+                  image: task.project.platform!.iconUrl,
                   width: 24,
                   height: 24,
                 )

@@ -5,6 +5,7 @@ import 'package:blueprint/core/l10n/l10n.dart';
 import 'package:blueprint/integrations/state_management/integrations_repository/integrations_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_network/image_network.dart';
 import 'package:integrations_repository/integrations_repository.dart';
 
 /// {@template authenticator_tile}
@@ -76,7 +77,11 @@ class AuthenticatorTile extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
         ),
         padding: const EdgeInsets.all(2),
-        child: Image.network(platform.iconUrl),
+        child: ImageNetwork(
+          image: platform.iconUrl,
+          width: double.infinity,
+          height: double.infinity,
+        ),
       ),
     );
   }
