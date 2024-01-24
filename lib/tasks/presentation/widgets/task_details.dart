@@ -283,7 +283,6 @@ class _TaskCreatedBy extends StatelessWidget {
         avatarUrl: creator.avatarUrl,
         displayName: creator.displayName,
         // TODO(yarn-rp): add email to user entity
-        email: null,
       ),
     );
   }
@@ -309,7 +308,6 @@ class _TaskAssignees extends StatelessWidget {
                 platformUrl: e.platformURL,
                 avatarUrl: e.avatarUrl,
                 displayName: e.displayName,
-                email: null,
               ),
             )
             .toList(),
@@ -465,6 +463,7 @@ class _TaskDetailsAppBar extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return AppBar(
       automaticallyImplyLeading: false,
       toolbarHeight: kToolbarHeight + kMinInteractiveDimension,
@@ -476,7 +475,7 @@ class _TaskDetailsAppBar extends StatelessWidget
           onPressed: () => launchUrl(platformTaskUrl),
           icon: const Icon(Icons.link),
           label: Text(
-            'View in $platformName',
+            l10n.viewInPlatformCTA(platformName),
           ),
         ),
         IconButton(

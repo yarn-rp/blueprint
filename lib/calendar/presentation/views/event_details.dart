@@ -1,302 +1,162 @@
-// ignore_for_file: lines_longer_than_80_chars
-
 import 'package:app_ui/app_ui.dart';
-import 'package:blueprint/calendar/presentation/widgets/appointment_time.dart';
-import 'package:blueprint/calendar/presentation/widgets/attendee_tile.dart';
-import 'package:blueprint/calendar/presentation/widgets/conference_entrypoints.dart';
-import 'package:blueprint_repository/blueprint_repository.dart';
+import 'package:blueprint/blueprint/state_management/blueprint_bloc/blueprint_bloc.dart';
+import 'package:blueprint/calendar/presentation/widgets/widgets.dart';
+import 'package:blueprint/core/l10n/l10n.dart';
+import 'package:blueprint/tasks/presentation/widgets/widgets.dart';
+import 'package:calendar_repository/calendar_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class GeneralEventBlueprintEventDetails extends StatelessWidget {
-  const GeneralEventBlueprintEventDetails({
-    required this.appointment,
+class EventDetails extends StatelessWidget {
+  /// Creates a [EventDetails] widget that is displayed as a page.
+  factory EventDetails({
+    required Event event,
+    required VoidCallback onClose,
+  }) {
+    return EventDetails._(
+      event: event,
+      onClose: onClose,
+      isDialog: false,
+    );
+  }
+
+  /// Creates a [EventDetails] widget that is displayed as a dialog.
+  factory EventDetails.dialog({
+    required Event event,
+    required VoidCallback onClose,
+  }) =>
+      EventDetails._(
+        event: event,
+        onClose: onClose,
+        isDialog: true,
+      );
+
+  const EventDetails._({
+    required this.event,
     required this.onClose,
-    this.padding = 32,
-    super.key,
+    required this.isDialog,
   });
 
-  final EventBlueprintItem appointment;
+  final Event event;
   final VoidCallback onClose;
-  final double padding;
+  final bool isDialog;
+
+  Widget _buildDivider() {
+    if (isDialog) {
+      return const SizedBox(
+        height: AppSpacing.lg,
+        width: AppSpacing.lg,
+      );
+    }
+
+    return const Column(
+      children: [
+        SizedBox(
+          height: AppSpacing.lg,
+        ),
+        Divider(),
+        SizedBox(
+          height: AppSpacing.lg,
+        ),
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final padding = isDialog
+        ? const EdgeInsets.symmetric(
+            horizontal: AppSpacing.xlg,
+          )
+        : const EdgeInsets.symmetric(
+            horizontal: AppSpacing.lg,
+          );
+
     return Card(
       clipBehavior: Clip.hardEdge,
+      elevation: 0,
+      shape: isDialog
+          ? null
+          : RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+              side: BorderSide(
+                color: theme.dividerTheme.color ?? theme.dividerColor,
+              ),
+            ),
       margin: EdgeInsets.zero,
       child: Scaffold(
         backgroundColor: Theme.of(context).canvasColor,
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          toolbarHeight: kToolbarHeight + kMinInteractiveDimension + padding,
-          backgroundColor: Colors.transparent,
-          centerTitle: false,
-          leadingWidth: double.infinity,
-          actions: [
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: padding),
-              child: Row(
-                children: [
-                  // Options
-                  PopupMenuButton(
-                    itemBuilder: (context) {
-                      return [
-                        const PopupMenuItem<void>(
-                          child: Text('Edit'),
-                        ),
-                        const PopupMenuItem<void>(
-                          child: Text('Delete'),
-                        ),
-                      ];
-                    },
-                  ),
-                  IconButton(
-                    onPressed: onClose,
-                    icon: const Icon(Icons.close),
-                  ),
-                ],
-              ),
-            ),
-          ],
-          leading: Padding(
-            padding: EdgeInsets.symmetric(horizontal: padding)
-                .copyWith(top: padding),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    // Rounded box like google calendar showing event color
-                    Container(
-                      width: 12,
-                      height: 12,
-                      decoration: BoxDecoration(
-                        color: appointment.value.colorHex != null
-                            ? HexColor.fromHex(
-                                appointment.value.colorHex,
-                              )
-                            : Theme.of(context).colorScheme.secondary,
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                    Text(
-                      appointment.subject,
-                      style: Theme.of(context).textTheme.titleLarge,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ],
-                ),
-                BlueprintEventTime(appointment: appointment),
-                const SizedBox(
-                  height: 8,
-                ),
-                if (appointment.value.platformLink != null)
-                  FilledButton.tonalIcon(
-                    onPressed: () => launchUrl(
-                      Uri.parse(
-                        appointment.value.platformLink!,
-                      ),
-                    ),
-                    icon: const Icon(Icons.link),
-                    label: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Text(
-                          'View in ',
-                        ),
-                        Text(
-                          appointment.value.platform?.displayName ?? '',
-                        ),
-                      ],
-                    ),
-                  ),
-              ],
-            ),
-          ),
+        appBar: _EventDetailsAppBar(
+          onClose: onClose,
+          platformEventUrl: Uri.parse(event.platformLink!),
+          platformName: event.platform?.displayName ?? 'Unknown',
+          eventTitle: event.subject,
         ),
-        body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: padding)
-              .copyWith(bottom: padding),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                flex: 6,
-                child: ListView(
-                  padding: const EdgeInsets.symmetric(vertical: 16)
-                      .copyWith(right: 64),
-                  children: [
-                    Text(
-                      'Description',
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    Card(
-                      margin: EdgeInsets.zero,
-                      child: InkWell(
-                        child: Padding(
-                          padding: const EdgeInsets.all(24),
-                          child:
-                              EventDetailsDescription(appointment: appointment),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 32,
-                    ),
-                  ],
-                ),
-              ),
-              Expanded(
-                flex: 4,
-                child: Column(
-                  children: [
-                    Expanded(
-                      flex: 3,
-                      child: Container(
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color:
-                                Theme.of(context).dividerColor.withOpacity(0.3),
-                          ),
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                        child: ListView(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+        body: isDialog
+            ? Column(
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: padding,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: ListView(
                               children: [
-                                Text(
-                                  'Details',
-                                  style:
-                                      Theme.of(context).textTheme.titleMedium,
-                                ),
-                                // Divider
-                                const Divider(
-                                  endIndent: 0,
-                                  indent: 0,
-                                ),
-                                if (appointment.value.conferenceData !=
-                                    null) ...[
-                                  ConferenceEntryPoints(
-                                    conferenceData:
-                                        appointment.value.conferenceData!,
-                                  ),
-
-                                  // Divider
-                                  const Divider(
-                                    endIndent: 0,
-                                    indent: 0,
-                                  ),
-                                  const SizedBox(
-                                    height: 32,
-                                  ),
-                                ],
-                                BlueprintEventTime(appointment: appointment),
-                                const SizedBox(
-                                  height: 16,
-                                ),
-                                Wrap(
-                                  children: [
-                                    if (appointment
-                                            .value.attendees?.isNotEmpty ??
-                                        false)
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          const Text('Attendees'),
-                                          const SizedBox(
-                                            height: 16,
-                                          ),
-                                          ...appointment.value.attendees!
-                                              .map((attendee) {
-                                            final user = attendee.user;
-                                            final status = attendee.status;
-                                            return Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                vertical: 4,
-                                              ),
-                                              child: AttendeeTile(
-                                                platformUrl: null,
-                                                attendantStatus: status,
-                                                displayName: null,
-                                                email: user.email,
-                                              ),
-                                            );
-                                          }),
-                                        ],
-                                      ),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 32,
+                                _EventDescriptionSection(
+                                  event: event,
                                 ),
                               ],
                             ),
-                          ],
-                        ),
+                          ),
+                          const SizedBox(
+                            width: AppSpacing.xlg,
+                          ),
+                          Expanded(
+                            child: _EventDetailsSection(
+                              event: event,
+                              isDialog: isDialog,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                    const SizedBox(
-                      height: 16,
+                  ),
+                ],
+              )
+            : ListView(
+                children: [
+                  _buildDivider(),
+                  Padding(
+                    padding: padding,
+                    child: _EventDescriptionSection(
+                      event: event,
                     ),
-                    // Updated at and created at of the task
-                    // Use jiffy to format the date
-                    // Expanded(
-                    //   child: Column(
-                    //     crossAxisAlignment: CrossAxisAlignment.start,
-                    //     children: [
-                    //       Align(
-                    //         alignment: Alignment.centerLeft,
-                    //         child: Text(
-                    //           'Created at ${Jiffy(task.createdAt).format('dd '
-                    //               'MMM yyyy hh:mm a')}',
-                    //           style: Theme.of(context).textTheme.bodySmall,
-                    //         ),
-                    //       ),
-                    //       const SizedBox(
-                    //         height: 8,
-                    //       ),
-                    //       Align(
-                    //         alignment: Alignment.centerLeft,
-                    //         child: Text(
-                    //           'Updated at ${Jiffy(task.updatedAt).format('dd '
-                    //               'MMM yyyy hh:mm a')}',
-                    //           style: Theme.of(context).textTheme.bodySmall,
-                    //         ),
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
-                  ],
-                ),
+                  ),
+                  _buildDivider(),
+                  Padding(
+                    padding: padding,
+                    child: _EventDetailsSection(
+                      event: event,
+                      isDialog: isDialog,
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
-        ),
       ),
     );
   }
 }
 
-class EventDetailsDescription extends StatelessWidget {
-  const EventDetailsDescription({
-    required this.appointment,
-    super.key,
+class _EventDescriptionSection extends StatelessWidget {
+  const _EventDescriptionSection({
+    required this.event,
   });
 
-  final EventBlueprintItem appointment;
+  final Event event;
 
   String humanizeEntryPointHeader(String entryPointType) {
     switch (entryPointType) {
@@ -315,25 +175,354 @@ class EventDetailsDescription extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     final descriptionContent = <String>[
-      appointment.value.description ?? '',
-      appointment.value.conferenceData?.notes ?? '',
+      event.description ?? '',
+      event.conferenceData?.notes ?? '',
     ];
 
-    if (appointment.value.conferenceData?.entryPoints != null) {
-      for (final entryPoint in appointment.value.conferenceData!.entryPoints) {
+    if (event.conferenceData?.entryPoints != null) {
+      for (final entryPoint in event.conferenceData!.entryPoints) {
         descriptionContent.add(
           "### ${humanizeEntryPointHeader(entryPoint.entryPointType ?? '')}\n${entryPoint.uri}",
         );
       }
     }
+    final description = descriptionContent.join('\n').trim();
+    final text =
+        description.isNotEmpty ? description : l10n.noDescriptionProvided;
 
-    if (descriptionContent.every((element) => element.isEmpty)) {
-      return const Text('No description provided');
+    return Section(
+      title: l10n.description,
+      child: SizedBox(
+        width: double.infinity,
+        child: RichTextCard(
+          text: text,
+        ),
+      ),
+    );
+  }
+}
+
+class _EventDetailsSection extends StatelessWidget {
+  const _EventDetailsSection({
+    required this.event,
+    required this.isDialog,
+  });
+
+  final Event event;
+  final bool isDialog;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
+    return Section(
+      title: l10n.details,
+      child: SizedBox(
+        width: double.infinity,
+        child: Card(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (event.conferenceData != null) ...[
+                  ConferenceEntryPoints(
+                    conferenceData: event.conferenceData!,
+                  ),
+                  const SizedBox(
+                    height: AppSpacing.xlg,
+                  ),
+                ],
+                _EventLabels(event: event),
+                const SizedBox(
+                  height: AppSpacing.xlg,
+                ),
+                _StartAndEndDates(event: event),
+                const SizedBox(
+                  height: AppSpacing.xlg,
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: _EventOrganizer(
+                        event: event,
+                      ),
+                    ),
+                    Expanded(
+                      child: _EventAttendees(
+                        event: event,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: AppSpacing.xlg,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _EventOrganizer extends StatelessWidget {
+  const _EventOrganizer({
+    required this.event,
+  });
+
+  final Event event;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final organizer = event.organizer;
+
+    if (organizer == null) {
+      return const SizedBox();
     }
 
-    return RichTextBody(
-      text: descriptionContent.join('\n'),
+    return Section.mini(
+      title: l10n.organizer,
+      child: UserTile(
+        height: 30,
+        platformUrl: organizer.platformUrl,
+        avatarUrl: organizer.avatarUrl,
+        displayName: organizer.email ?? organizer.displayName ?? ' Unknown',
+      ),
     );
+  }
+}
+
+class _EventAttendees extends StatelessWidget {
+  const _EventAttendees({
+    required this.event,
+  });
+
+  final Event event;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
+    if (event.attendees?.isEmpty ?? true) {
+      return const SizedBox();
+    }
+
+    return Section.mini(
+      title: l10n.attendees,
+      child: Wrap(
+        children: event.attendees!
+            .map(
+              (e) => UserTile.customLeading(
+                height: 30,
+                platformUrl: e.user.platformUrl,
+                leading: _AttendantStatusIcon(
+                  attendantStatus: e.status,
+                ),
+                displayName: e.user.email ?? e.user.displayName ?? ' Unknown',
+              ),
+            )
+            .toList(),
+      ),
+    );
+  }
+}
+
+class _StartAndEndDates extends StatelessWidget {
+  const _StartAndEndDates({
+    required this.event,
+  });
+
+  final Event event;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: _EventStartTime(
+            event: event,
+          ),
+        ),
+        Expanded(
+          child: _EventEndTime(
+            event: event,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _EventStartTime extends StatelessWidget {
+  const _EventStartTime({
+    required this.event,
+  });
+
+  final Event event;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
+    return Section.mini(
+      title: l10n.startTime,
+      child: SizedBox(
+        width: double.infinity,
+        child: TimeTile(
+          time: event.startTime,
+        ),
+      ),
+    );
+  }
+}
+
+class _EventEndTime extends StatelessWidget {
+  const _EventEndTime({
+    required this.event,
+  });
+
+  final Event event;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
+    return Section.mini(
+      title: l10n.endTime,
+      child: SizedBox(
+        width: double.infinity,
+        child: TimeTile(
+          time: event.endTime,
+        ),
+      ),
+    );
+  }
+}
+
+class _EventLabels extends StatelessWidget {
+  const _EventLabels({
+    required this.event,
+  });
+
+  final Event event;
+
+  @override
+  Widget build(BuildContext context) {
+    final isEventInTodaysBlueprint = context.select(
+      (BlueprintBloc cubit) => cubit.state.items.any(
+        (e) => e.map(
+          event: (e) => e.value == event,
+          task: (e) => false,
+        ),
+      ),
+    );
+
+    return Wrap(
+      spacing: 8,
+      children: [
+        // TODO: change to platform name
+        const LabelChip(text: 'Unknown platform'),
+        if (isEventInTodaysBlueprint) const TodaysBlueprintChip(),
+      ],
+    );
+  }
+}
+
+class _EventDetailsAppBar extends StatelessWidget
+    implements PreferredSizeWidget {
+  const _EventDetailsAppBar({
+    required this.onClose,
+    required this.platformEventUrl,
+    required this.platformName,
+    required this.eventTitle,
+  });
+
+  final Uri platformEventUrl;
+  final String platformName;
+  final String eventTitle;
+  final VoidCallback onClose;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final theme = Theme.of(context);
+
+    return AppBar(
+      automaticallyImplyLeading: false,
+      toolbarHeight: kToolbarHeight + kMinInteractiveDimension,
+      backgroundColor: Colors.transparent,
+      centerTitle: false,
+      leadingWidth: double.infinity,
+      actions: [
+        FilledButton.tonalIcon(
+          onPressed: () => launchUrl(platformEventUrl),
+          icon: const Icon(Icons.link),
+          label: Text(
+            l10n.viewInPlatformCTA(platformName),
+          ),
+        ),
+        IconButton(
+          onPressed: onClose,
+          icon: const Icon(Icons.close),
+        ),
+      ],
+      title: Text(
+        eventTitle,
+        style: theme.textTheme.headlineMedium,
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
+      ),
+    );
+  }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(
+        kToolbarHeight + kMinInteractiveDimension,
+      );
+}
+
+class _AttendantStatusIcon extends StatelessWidget {
+  const _AttendantStatusIcon({
+    required this.attendantStatus,
+  });
+
+  final AttendantStatus attendantStatus;
+
+  @override
+  Widget build(BuildContext context) {
+    return switch (attendantStatus) {
+      AttendantStatus.accepted => const Icon(
+          Icons.check_circle,
+          color: Colors.green,
+          size: 20,
+        ),
+      AttendantStatus.declined => const Icon(
+          Icons.cancel,
+          color: Colors.red,
+          size: 20,
+        ),
+      AttendantStatus.tentative => const Icon(
+          Icons.help,
+          color: Colors.orange,
+          size: 20,
+        ),
+      AttendantStatus.needsAction => const Icon(
+          Icons.help,
+          color: Colors.grey,
+          size: 20,
+        ),
+      AttendantStatus.none => const Icon(
+          Icons.help,
+          color: Colors.grey,
+          size: 20,
+        ),
+    };
   }
 }

@@ -13,6 +13,10 @@
     "@assignees": {
         "description": "Title for assignees section"
     },
+    "attendees": "Attendees",
+    "@attendees": {
+        "description": "Title for attendees section"
+    },
     "blueprintEmptyTitle": "Blueprint Empty",
     "@blueprintEmptyTitle": {
         "description": "Title for blueprint empty section"
@@ -120,6 +124,10 @@
     "@integrationsDropdownHint": {
         "description": "Title for the integrations dropdown"
     },
+    "joinNowCTA": "Join now",
+    "@joinNowCTA": {
+        "description": "CTA for join now button"
+    },
     "tasksPageTitle": "My tasks",
     "@tasksPageTitle": {
         "description": "Title for the my tasks page"
@@ -159,6 +167,10 @@
             }
         }
     },
+    "organizer": "Organizer",
+    "@organizer": {
+        "description": "Organizer label"
+    },
     "selectTask": "Select a Task",
     "@selectTask": {
         "description": "Select a Task title"
@@ -187,6 +199,10 @@
     "search": "Search",
     "@search": {
         "description": "Search word"
+    },
+    "shareVideoConferenceLinkMessage": "Join the meeting with this link",
+    "@shareVideoConferenceLinkMessage": {
+        "description": "Message for sharing a link"
     },
     "signOut":"Sign Out",
     "sortByDropdownHint": "Sort By",
@@ -219,6 +235,20 @@
     "upcomingEventsTitle": "Upcoming events",
     "@upcomingEventsTitle": {
         "description": "Title for the upcoming events section on the blueprint"
+    },
+    "videoConferenceLabel": "Video Conference",
+    "@videoConferenceLabel": {
+        "description": "Label for video conference field"
+    },
+    "viewInPlatformCTA": "View in {platformName}",
+    "@viewInPlatformCTA": {
+        "description": "CTA for view in platform button",
+        "placeholders": {
+            "platformName": {
+                "example": "Google Calendar",
+                "type": "String"
+            }
+        }
     },
     "darkMode":"Dark Mode",
     "lightMode":"Light Mode"
