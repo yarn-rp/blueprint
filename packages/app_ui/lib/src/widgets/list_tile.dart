@@ -24,7 +24,9 @@ class IntegrationListTile extends StatelessWidget {
       dense: false,
       leading: SizedBox(
         width: AppSpacing.xxlg,
-        child: Image.network(integrationIconUrl),
+        child: Image.network(
+          integrationIconUrl,
+        ),
       ),
       title: Text(title),
       subtitle: Text(subtitle),

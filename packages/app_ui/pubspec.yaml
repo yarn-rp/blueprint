@@ -17,6 +17,7 @@ dependencies:
   flutter_portal: ^1.1.4
   flutter_svg: ^2.0.9
   google_fonts: ^4.0.3
+  image_network: ^1.0.0
   jiffy: ^5.0.0
   markdown: ^7.1.1
   syncfusion_flutter_calendar: ^21.1.38

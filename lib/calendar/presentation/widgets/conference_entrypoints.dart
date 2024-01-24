@@ -1,3 +1,4 @@
+import 'package:blueprint/core/l10n/l10n.dart';
 import 'package:calendar_repository/calendar_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
@@ -29,54 +30,70 @@ class ConferenceEntryPoints extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final theme = Theme.of(context);
+    final textTheme = theme.textTheme;
+
     return Column(
       children: [
         ...conferenceData.entryPoints.take(entryPoints).map(
               (entryPoint) => ListTile(
                 contentPadding: EdgeInsets.zero,
-                title: const Text(
-                  'Meeting',
+                title: Text(
+                  l10n.videoConferenceLabel,
+                  style: textTheme.bodyMedium,
+                ),
+                subtitle: SelectableText(
+                  entryPoint.uri!,
+                  style: textTheme.bodySmall,
                 ),
                 leading: CircleAvatar(
+                  backgroundColor: theme.colorScheme.tertiary,
                   child: Icon(
                     switch (entryPoint.entryPointType) {
-                      'video' => Icons.video_call,
-                      'phone' => Icons.phone,
+                      'video' => Icons.video_call_outlined,
+                      'phone' => Icons.phone_outlined,
                       'sip' => Icons.phone,
-                      _ => Icons.video_call,
+                      _ => Icons.video_call_outlined,
                     },
+                    color: theme.colorScheme.onTertiary,
                   ),
                 ),
                 trailing: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    FilledButton(
+                    FilledButton.tonal(
+                      style:
+                          Theme.of(context).filledButtonTheme.style?.copyWith(
+                                backgroundColor: MaterialStateProperty.all(
+                                  theme.colorScheme.tertiaryContainer,
+                                ),
+                              ),
                       onPressed: () => launchUrl(
                         Uri.parse(
                           entryPoint.uri!,
                         ),
                       ),
-                      child: const Text(
-                        'Join',
+                      child: Text(
+                        l10n.joinNowCTA,
                       ),
                     ),
                     const SizedBox(
                       width: 8,
                     ),
-                    Builder(
-                      builder: (context) {
-                        return IconButton.filled(
-                          onPressed: () => _onShare(
-                            context,
-                            entryPoint.uri!,
-                            'Join the meeting with this link',
+                    IconButton.filledTonal(
+                      style: Theme.of(context).iconButtonTheme.style?.copyWith(
+                            backgroundColor: MaterialStateProperty.all(
+                              theme.colorScheme.tertiaryContainer,
+                            ),
                           ),
-                          icon: Icon(
-                            Icons.share,
-                            color: Theme.of(context).colorScheme.background,
-                          ),
-                        );
-                      },
+                      color: theme.colorScheme.tertiary,
+                      onPressed: () => _onShare(
+                        context,
+                        entryPoint.uri!,
+                        l10n.shareVideoConferenceLinkMessage,
+                      ),
+                      icon: const Icon(Icons.share_outlined),
                     ),
                   ],
                 ),
