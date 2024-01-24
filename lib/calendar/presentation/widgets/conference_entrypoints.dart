@@ -1,7 +1,6 @@
 import 'package:blueprint/core/l10n/l10n.dart';
 import 'package:calendar_repository/calendar_repository.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -95,7 +94,7 @@ class ConferenceEntryPoints extends StatelessWidget {
                         l10n.shareVideoConferenceLinkMessage,
                       ),
                       icon: const Icon(Icons.share_outlined),
-                    )
+                    ),
                   ],
                 ),
               ),

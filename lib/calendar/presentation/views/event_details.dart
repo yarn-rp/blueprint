@@ -185,7 +185,8 @@ class _EventDescriptionSection extends StatelessWidget {
     if (event.conferenceData?.entryPoints != null) {
       for (final entryPoint in event.conferenceData!.entryPoints) {
         descriptionContent.add(
-          "### ${humanizeEntryPointHeader(entryPoint.entryPointType ?? '')}\n${entryPoint.uri}",
+          "### ${humanizeEntryPointHeader(entryPoint.entryPointType ?? '')}"
+          '\n${entryPoint.uri}',
         );
       }
     }
@@ -427,7 +428,7 @@ class _EventLabels extends StatelessWidget {
     return Wrap(
       spacing: 8,
       children: [
-        // TODO: change to platform name
+        // TODO(yarn-rp): change to platform name
         const LabelChip(text: 'Unknown platform'),
         if (isEventInTodaysBlueprint) const TodaysBlueprintChip(),
       ],
