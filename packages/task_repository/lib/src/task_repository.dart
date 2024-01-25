@@ -14,8 +14,13 @@ final taskConverter = (
     DocumentSnapshot<Map<String, dynamic>> snapshot,
     SnapshotOptions? options,
   ) {
-    final data = snapshot.data()!;
-    return Task.fromJson(data);
+    try {
+      final data = snapshot.data()!;
+      return Task.fromJson(data);
+    } catch (e, s) {
+      print('Error while converting task from firestore: $e $s');
+      rethrow;
+    }
   },
   toFirestore: (Task task, SetOptions? options) => task.toJson(),
 );
@@ -72,15 +77,22 @@ class TaskRepository {
         return platformsStream.switchMap(
           (platforms) => tasksSubCollection.snapshots().map(
                 (tasks) => tasks.docs.map((task) {
-                  final taskEntity = task.data();
-                  final taskPlatform = platforms.firstWhere(
-                    (platform) => platform.id == taskEntity.project.platformId,
-                  );
-                  return taskEntity.copyWith(
-                    project: taskEntity.project.copyWith(
-                      platform: taskPlatform,
-                    ),
-                  );
+                  try {
+                    final taskEntity = task.data();
+
+                    final taskPlatform = platforms.firstWhere(
+                      (platform) => platform.id == taskEntity.access.platformId,
+                    );
+
+                    return taskEntity.copyWith(
+                      access: taskEntity.access.withPlatform(taskPlatform),
+                    );
+                  } catch (error, stackTrace) {
+                    print(
+                      'Error while converting task from firestore: $error $stackTrace',
+                    );
+                    rethrow;
+                  }
                 }),
               ),
         );
@@ -116,11 +128,12 @@ class TaskRepository {
               )
               .toList();
         }
+        print('Got tasks tasks: ${taskList}');
 
         if (platformId != null) {
           taskList = taskList
               .where(
-                (task) => task.project.platform?.id == platformId,
+                (task) => task.access.platformId == platformId,
               )
               .toList();
         }

@@ -2,6 +2,7 @@ import { Priority } from "./priority.entity";
 import { Project } from "./project.entity";
 import { User } from "./user.entity";
 import { Label } from "./label.entity";
+import { AccessPublicData } from "../../../authenticators/domain/entities/access.entity";
 
 /**
  * A representation of a ticket in a project. Like the {@link Project} entity,
@@ -78,6 +79,10 @@ import { Label } from "./label.entity";
 }
  */
 export interface Task {
+  /**
+   * Access data to fetch the ticket to blueprint. Contains information of the original platform.
+   */
+  access: AccessPublicData;
   /**
    * Kick off creation date
    */

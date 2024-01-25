@@ -1,3 +1,4 @@
+import { AuthenticatorType } from "../../../../authenticators/domain/entities/authenticator-type.enum";
 import { Label } from "../../entities/label.entity";
 import { PlatformId } from "../../entities/platform.enum";
 import { Project } from "../../entities/project.entity";
@@ -19,7 +20,7 @@ const mockProject: Project = {
   id: "1234567890",
   platformId: "1234567890",
   platformURL: new URL("https://jira.com/1234567890"),
-  platformName: PlatformId.Jira,
+
   name: "Blueprint",
   description: "Blueprint project",
   iconUrl: "https://jira.com/1234567890/icon.png",
@@ -29,6 +30,15 @@ const mockProject: Project = {
 };
 
 export const mockTask: Task = {
+  access: {
+    platformId: PlatformId.Jira,
+    type: AuthenticatorType.Task,
+    user: {
+      gid: "Mock Username",
+      name: "Mock Username",
+      email: "Mock",
+    },
+  },
   createdAt: new Date(1990, 5, 12),
   updatedAt: new Date(1990, 5, 12),
   id: "1234567890",

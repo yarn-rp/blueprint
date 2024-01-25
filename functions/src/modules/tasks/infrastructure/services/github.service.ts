@@ -2,8 +2,8 @@
 import axios from "axios";
 import { Task } from "../../domain/entities/task.entity";
 import { AbstractRemoteRepository } from "../repositories/factories/remote.repository.abstract";
-import { PlatformId } from "../../domain/entities/platform.enum";
 import { Label, Priority, Project, User } from "../../domain/entities";
+import { AccessPublicData } from "../../../authenticators/domain/entities";
 /**
  * Represents a task in Github. Since in github, a task can mean different
  * things, we need to have a union type to represent all the possible tasks.
@@ -131,12 +131,11 @@ export class GithubRemoteRepository extends AbstractRemoteRepository<GithubTask>
     return userGithubTasks.flat();
   }
 
-  mapper(issue: GithubIssue): Task {
+  mapper(issue: GithubIssue, access: AccessPublicData): Task {
     const project: Project = {
       id: issue.repository?.id,
       platformId: issue.repository?.id,
       platformURL: new URL(issue.repository.html_url),
-      platformName: PlatformId.Github,
       name: issue.repository.name,
       description: issue.repository.description,
       iconUrl: issue.repository.owner.avatar_url,
@@ -167,6 +166,7 @@ export class GithubRemoteRepository extends AbstractRemoteRepository<GithubTask>
     });
 
     const task: Task = {
+      access: access,
       createdAt: new Date(issue.created_at),
       updatedAt: new Date(issue.updated_at),
       id: issue.id,

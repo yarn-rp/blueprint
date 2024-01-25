@@ -1,5 +1,3 @@
-import { PlatformId } from "./platform.enum";
-
 /**
  * The representation of a project in Blueprint. This project is
  * linked to platform specified in the {@link PlatformName} enum. The
@@ -14,7 +12,6 @@ import { PlatformId } from "./platform.enum";
  * @property {string} platformId - Platform-specific identifier for the project.
  * @property {URL} platformURL - Platform-specific URL for the project
  * (ex: Jira URL).
- * @property {PlatformName} platformName - The integration way of the project.
  * @property {string} name - The name of the project.
  * @property {string} description - A brief description of the project.
  * @property {URL} URL - URL of the project icon, if available.

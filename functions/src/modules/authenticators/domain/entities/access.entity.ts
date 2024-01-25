@@ -9,4 +9,7 @@ export interface Access {
   type: AuthenticatorType;
 }
 
-export type AccessPublicData = Omit<Access, "accessToken" | "refreshToken">;
+/**
+ * Public access information to fetch data from platformId.
+ */
+export type AccessPublicData = Omit<Access, "accessToken" | "refreshToken" | "type">;

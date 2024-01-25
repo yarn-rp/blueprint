@@ -1,9 +1,7 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:calendar_repository/calendar_repository.dart';
 import 'package:flutter/material.dart';
-import 'package:image_network/image_network.dart';
 import 'package:jiffy/jiffy.dart';
-import 'package:task_repository/task_repository.dart';
 
 class EventCard extends StatelessWidget {
   const EventCard({
@@ -52,19 +50,4 @@ class EventCard extends StatelessWidget {
             ),
     );
   }
-}
-
-class IntegrationLabelChip extends LabelChip {
-  IntegrationLabelChip({
-    required Task task,
-    super.key,
-  }) : super(
-          text: task.project.platformName,
-          backgroundColor: null,
-          avatar: task.project.platform?.iconUrl != null
-              ? Image.network(
-                  task.project.platform!.iconUrl,
-                )
-              : null,
-        );
 }

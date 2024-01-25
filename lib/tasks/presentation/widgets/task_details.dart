@@ -91,7 +91,7 @@ class TaskDetails extends StatelessWidget {
         appBar: _TaskDetailsAppBar(
           onClose: onClose,
           platformTaskUrl: task.taskURL,
-          platformName: task.project.platformName,
+          platformName: task.access.platform!.displayName,
           taskTitle: task.title,
         ),
         body: isDialog

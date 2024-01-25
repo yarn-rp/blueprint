@@ -17,6 +17,7 @@ export const taskConverter = {
     const dueDateTimestamp = this.getTimestamp(task.dueDate);
 
     return {
+      access: task.access,
       createdAt: createAtTimestamp,
       updatedAt: updatedAtTimestamp,
       id: task.id,

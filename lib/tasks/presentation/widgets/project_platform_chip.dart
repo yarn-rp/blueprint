@@ -7,12 +7,9 @@ class ProjectPlatformChip extends LabelChip {
     required Task task,
     super.key,
   }) : super(
-          text: task.project.platformName,
+          text: task.access.userAccessData.email ??
+              task.access.platform!.displayName,
           backgroundColor: null,
-          avatar: task.project.platform?.iconUrl != null
-              ? Image.network(
-                  task.project.platform!.iconUrl,
-                )
-              : null,
+          avatar: Image.network(task.access.platform!.iconUrl),
         );
 }
