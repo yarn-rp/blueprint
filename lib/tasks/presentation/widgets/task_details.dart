@@ -250,6 +250,7 @@ class _CreatedAndUpdatedDates extends StatelessWidget {
     final updatedAtFromNow = Jiffy(task.updatedAt).fromNow();
 
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           '${l10n.created} $createdAtFromNow',
