@@ -1,4 +1,3 @@
-import 'package:calendar_repository/src/entities/access/access.dart';
 import 'package:calendar_repository/src/entities/entities.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:integrations_repository/integrations_repository.dart';

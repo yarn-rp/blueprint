@@ -33,7 +33,7 @@ class EventCard extends StatelessWidget {
           avatar: Image.network(event.access.platform!.iconUrl),
           text: event.access.userAccessData.email ??
               event.access.platform!.displayName,
-        )
+        ),
       ],
       dateAndTime: event.startTime != null && event.endTime != null
           ? '${Jiffy(event.startTime).jm} - ${Jiffy(event.endTime).jm}'
