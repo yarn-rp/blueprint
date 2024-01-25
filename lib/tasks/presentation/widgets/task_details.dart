@@ -432,6 +432,7 @@ class _TaskLabels extends StatelessWidget {
 
     return Wrap(
       spacing: 8,
+      runSpacing: 8,
       children: [
         ProjectPlatformChip(task: task),
         if (isTaskInTodaysBlueprint) const TodaysBlueprintChip(),

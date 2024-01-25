@@ -24,6 +24,14 @@ const testConferenceData: ConferenceData = {
 };
 
 export const testEvent: Event = {
+  access: {
+    platformId: PlatformId.GoogleCalendar,
+    user: {
+      email: "",
+      name: "",
+      gid: "",
+    },
+  },
   eventId: "test-event-id",
   startTime: new Date("2022-01-01T09:00:00Z"),
   endTime: new Date("2022-01-01T10:00:00Z"),
@@ -39,7 +47,6 @@ export const testEvent: Event = {
     },
   ],
   platformLink: "https://example.com/meeting",
-  platform: PlatformId.GoogleCalendar,
   attendantStatus: AttendantStatus.Accepted,
   conferenceData: testConferenceData,
 };

@@ -1,7 +1,6 @@
+import 'package:calendar_repository/src/entities/access/access.dart';
 import 'package:calendar_repository/src/entities/entities.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:collection/collection.dart';
-
 import 'package:integrations_repository/integrations_repository.dart';
 import 'package:stream_transform/stream_transform.dart';
 
@@ -49,22 +48,25 @@ class CalendarRepository {
       }
       final userData = _usersCollection.doc(userId);
       final eventsSubCollection = userData.collection('events');
+
       return platformsStream.switchMap(
         (platforms) => eventsSubCollection.snapshots().map((event) {
           return event.docs.map((e) {
             final data = e.data();
-            final platformId = data['platform'];
-            final eventPlatform = platforms.firstWhereOrNull(
+            final access = Access.fromJson(
+              data['access'] as Map<String, dynamic>,
+            );
+            final platformId = access.platformId;
+
+            final eventPlatform = platforms.firstWhere(
               (element) => platformId == element.id,
             );
-            final eventEntity = Event.fromJson(
-              {
-                ...data,
-                if (eventPlatform != null) 'platform': eventPlatform.toJson(),
-              },
-            );
 
-            return eventEntity;
+            final eventEntity = Event.fromJson(data);
+
+            return eventEntity.copyWith(
+              access: access.withPlatform(eventPlatform),
+            );
           });
         }),
       );

@@ -78,20 +78,20 @@ class _$SettingsEventCopyWithImpl<$Res, $Val extends SettingsEvent>
 }
 
 /// @nodoc
-abstract class _$$ChangeWorkingHoursCopyWith<$Res> {
-  factory _$$ChangeWorkingHoursCopyWith(_$ChangeWorkingHours value,
-          $Res Function(_$ChangeWorkingHours) then) =
-      __$$ChangeWorkingHoursCopyWithImpl<$Res>;
+abstract class _$$ChangeWorkingHoursImplCopyWith<$Res> {
+  factory _$$ChangeWorkingHoursImplCopyWith(_$ChangeWorkingHoursImpl value,
+          $Res Function(_$ChangeWorkingHoursImpl) then) =
+      __$$ChangeWorkingHoursImplCopyWithImpl<$Res>;
   @useResult
   $Res call({DaysOfWeek day, List<WorkTime> workingHours});
 }
 
 /// @nodoc
-class __$$ChangeWorkingHoursCopyWithImpl<$Res>
-    extends _$SettingsEventCopyWithImpl<$Res, _$ChangeWorkingHours>
-    implements _$$ChangeWorkingHoursCopyWith<$Res> {
-  __$$ChangeWorkingHoursCopyWithImpl(
-      _$ChangeWorkingHours _value, $Res Function(_$ChangeWorkingHours) _then)
+class __$$ChangeWorkingHoursImplCopyWithImpl<$Res>
+    extends _$SettingsEventCopyWithImpl<$Res, _$ChangeWorkingHoursImpl>
+    implements _$$ChangeWorkingHoursImplCopyWith<$Res> {
+  __$$ChangeWorkingHoursImplCopyWithImpl(_$ChangeWorkingHoursImpl _value,
+      $Res Function(_$ChangeWorkingHoursImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -100,7 +100,7 @@ class __$$ChangeWorkingHoursCopyWithImpl<$Res>
     Object? day = null,
     Object? workingHours = null,
   }) {
-    return _then(_$ChangeWorkingHours(
+    return _then(_$ChangeWorkingHoursImpl(
       null == day
           ? _value.day
           : day // ignore: cast_nullable_to_non_nullable
@@ -115,8 +115,8 @@ class __$$ChangeWorkingHoursCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ChangeWorkingHours implements ChangeWorkingHours {
-  const _$ChangeWorkingHours(this.day, final List<WorkTime> workingHours)
+class _$ChangeWorkingHoursImpl implements ChangeWorkingHours {
+  const _$ChangeWorkingHoursImpl(this.day, final List<WorkTime> workingHours)
       : _workingHours = workingHours;
 
   @override
@@ -135,10 +135,10 @@ class _$ChangeWorkingHours implements ChangeWorkingHours {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ChangeWorkingHours &&
+            other is _$ChangeWorkingHoursImpl &&
             (identical(other.day, day) || other.day == day) &&
             const DeepCollectionEquality()
                 .equals(other._workingHours, _workingHours));
@@ -151,8 +151,8 @@ class _$ChangeWorkingHours implements ChangeWorkingHours {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$ChangeWorkingHoursCopyWith<_$ChangeWorkingHours> get copyWith =>
-      __$$ChangeWorkingHoursCopyWithImpl<_$ChangeWorkingHours>(
+  _$$ChangeWorkingHoursImplCopyWith<_$ChangeWorkingHoursImpl> get copyWith =>
+      __$$ChangeWorkingHoursImplCopyWithImpl<_$ChangeWorkingHoursImpl>(
           this, _$identity);
 
   @override
@@ -224,30 +224,30 @@ class _$ChangeWorkingHours implements ChangeWorkingHours {
 abstract class ChangeWorkingHours implements SettingsEvent {
   const factory ChangeWorkingHours(
           final DaysOfWeek day, final List<WorkTime> workingHours) =
-      _$ChangeWorkingHours;
+      _$ChangeWorkingHoursImpl;
 
   DaysOfWeek get day;
   List<WorkTime> get workingHours;
   @JsonKey(ignore: true)
-  _$$ChangeWorkingHoursCopyWith<_$ChangeWorkingHours> get copyWith =>
+  _$$ChangeWorkingHoursImplCopyWith<_$ChangeWorkingHoursImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$ChangeBrightnessCopyWith<$Res> {
-  factory _$$ChangeBrightnessCopyWith(
-          _$ChangeBrightness value, $Res Function(_$ChangeBrightness) then) =
-      __$$ChangeBrightnessCopyWithImpl<$Res>;
+abstract class _$$ChangeBrightnessImplCopyWith<$Res> {
+  factory _$$ChangeBrightnessImplCopyWith(_$ChangeBrightnessImpl value,
+          $Res Function(_$ChangeBrightnessImpl) then) =
+      __$$ChangeBrightnessImplCopyWithImpl<$Res>;
   @useResult
   $Res call({AppBrightness brightness});
 }
 
 /// @nodoc
-class __$$ChangeBrightnessCopyWithImpl<$Res>
-    extends _$SettingsEventCopyWithImpl<$Res, _$ChangeBrightness>
-    implements _$$ChangeBrightnessCopyWith<$Res> {
-  __$$ChangeBrightnessCopyWithImpl(
-      _$ChangeBrightness _value, $Res Function(_$ChangeBrightness) _then)
+class __$$ChangeBrightnessImplCopyWithImpl<$Res>
+    extends _$SettingsEventCopyWithImpl<$Res, _$ChangeBrightnessImpl>
+    implements _$$ChangeBrightnessImplCopyWith<$Res> {
+  __$$ChangeBrightnessImplCopyWithImpl(_$ChangeBrightnessImpl _value,
+      $Res Function(_$ChangeBrightnessImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -255,7 +255,7 @@ class __$$ChangeBrightnessCopyWithImpl<$Res>
   $Res call({
     Object? brightness = null,
   }) {
-    return _then(_$ChangeBrightness(
+    return _then(_$ChangeBrightnessImpl(
       null == brightness
           ? _value.brightness
           : brightness // ignore: cast_nullable_to_non_nullable
@@ -266,8 +266,8 @@ class __$$ChangeBrightnessCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ChangeBrightness implements ChangeBrightness {
-  const _$ChangeBrightness(this.brightness);
+class _$ChangeBrightnessImpl implements ChangeBrightness {
+  const _$ChangeBrightnessImpl(this.brightness);
 
   @override
   final AppBrightness brightness;
@@ -278,10 +278,10 @@ class _$ChangeBrightness implements ChangeBrightness {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ChangeBrightness &&
+            other is _$ChangeBrightnessImpl &&
             (identical(other.brightness, brightness) ||
                 other.brightness == brightness));
   }
@@ -292,8 +292,9 @@ class _$ChangeBrightness implements ChangeBrightness {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$ChangeBrightnessCopyWith<_$ChangeBrightness> get copyWith =>
-      __$$ChangeBrightnessCopyWithImpl<_$ChangeBrightness>(this, _$identity);
+  _$$ChangeBrightnessImplCopyWith<_$ChangeBrightnessImpl> get copyWith =>
+      __$$ChangeBrightnessImplCopyWithImpl<_$ChangeBrightnessImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -363,10 +364,10 @@ class _$ChangeBrightness implements ChangeBrightness {
 
 abstract class ChangeBrightness implements SettingsEvent {
   const factory ChangeBrightness(final AppBrightness brightness) =
-      _$ChangeBrightness;
+      _$ChangeBrightnessImpl;
 
   AppBrightness get brightness;
   @JsonKey(ignore: true)
-  _$$ChangeBrightnessCopyWith<_$ChangeBrightness> get copyWith =>
+  _$$ChangeBrightnessImplCopyWith<_$ChangeBrightnessImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

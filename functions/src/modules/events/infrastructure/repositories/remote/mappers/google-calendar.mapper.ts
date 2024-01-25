@@ -1,7 +1,8 @@
 import { Mapper } from "../base.event.remote.repository";
-import { Event, User, AttendantStatus, PlatformId, ConferenceData } from "../../../../domain/entities";
+import { Event, User, AttendantStatus, ConferenceData } from "../../../../domain/entities";
 import { GoogleCalendarEvent } from "../google-calendar.event.remote.repository";
 import { calendar_v3 as CalendarV3 } from "googleapis";
+import { AccessPublicData } from "../../../../../authenticators/domain/entities/access.entity";
 
 /**
  * A mapper in charge of converting objects from Google Calendar Platform to
@@ -13,7 +14,7 @@ export class GoogleCalendarMapper implements Mapper<GoogleCalendarEvent> {
    * @param remoteEvent - the remote event to map
    * @returns the mapped event
    */
-  fromRemoteEvent(remoteEvent: GoogleCalendarEvent): Event {
+  fromRemoteEvent(remoteEvent: GoogleCalendarEvent, accessData: AccessPublicData): Event {
     const startTime = remoteEvent.start?.dateTime ? new Date(remoteEvent.start.dateTime) : undefined;
     const endTime = remoteEvent.end?.dateTime ? new Date(remoteEvent.end.dateTime) : undefined;
     const subject = remoteEvent.summary || "";
@@ -37,6 +38,7 @@ export class GoogleCalendarMapper implements Mapper<GoogleCalendarEvent> {
     const conferenceData = this.getConferenceData(remoteEvent.conferenceData || undefined);
 
     const event: Event = {
+      access: accessData,
       eventId: remoteEvent.id || "",
       startTime,
       endTime,
@@ -47,7 +49,6 @@ export class GoogleCalendarMapper implements Mapper<GoogleCalendarEvent> {
       organizer,
       attendees,
       platformLink,
-      platform: PlatformId.GoogleCalendar,
       attendantStatus: AttendantStatus.Accepted, // Replace with the real status
       conferenceData,
     };

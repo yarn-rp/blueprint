@@ -39,12 +39,13 @@ export class PullEventsUseCase {
    * added to the local repository.
    */
   async execute(platform: PlatformId, uid: string, authenticatorId: string): Promise<void> {
+    console.log("Pulling events for platform: ", platform);
     const remoteRepo = this.remoteFactory.buildFor(platform);
 
-    const lastEventOrNone = await this.eventRepository.fetchLastFromPlatform(platform, uid);
+    // const lastEventOrNone = await this.eventRepository.fetchLastFromPlatform(platform, uid);
 
     await this.refreshToken.execute(uid, authenticatorId);
-    const events: Event[] = await remoteRepo.pull(uid, authenticatorId, lastEventOrNone);
+    const events: Event[] = await remoteRepo.pull(uid, authenticatorId, undefined);
 
     await this.eventRepository.add(events, uid);
   }

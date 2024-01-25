@@ -87,24 +87,25 @@ class _$SignInStateCopyWithImpl<$Res, $Val extends SignInState>
 }
 
 /// @nodoc
-abstract class _$$_InitialCopyWith<$Res> {
-  factory _$$_InitialCopyWith(
-          _$_Initial value, $Res Function(_$_Initial) then) =
-      __$$_InitialCopyWithImpl<$Res>;
+abstract class _$$InitialImplCopyWith<$Res> {
+  factory _$$InitialImplCopyWith(
+          _$InitialImpl value, $Res Function(_$InitialImpl) then) =
+      __$$InitialImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_InitialCopyWithImpl<$Res>
-    extends _$SignInStateCopyWithImpl<$Res, _$_Initial>
-    implements _$$_InitialCopyWith<$Res> {
-  __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
+class __$$InitialImplCopyWithImpl<$Res>
+    extends _$SignInStateCopyWithImpl<$Res, _$InitialImpl>
+    implements _$$InitialImplCopyWith<$Res> {
+  __$$InitialImplCopyWithImpl(
+      _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_Initial implements _Initial {
-  const _$_Initial();
+class _$InitialImpl implements _Initial {
+  const _$InitialImpl();
 
   @override
   String toString() {
@@ -112,9 +113,9 @@ class _$_Initial implements _Initial {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Initial);
+        (other.runtimeType == runtimeType && other is _$InitialImpl);
   }
 
   @override
@@ -196,29 +197,29 @@ class _$_Initial implements _Initial {
 }
 
 abstract class _Initial implements SignInState {
-  const factory _Initial() = _$_Initial;
+  const factory _Initial() = _$InitialImpl;
 }
 
 /// @nodoc
-abstract class _$$SignInProcessingCopyWith<$Res> {
-  factory _$$SignInProcessingCopyWith(
-          _$SignInProcessing value, $Res Function(_$SignInProcessing) then) =
-      __$$SignInProcessingCopyWithImpl<$Res>;
+abstract class _$$SignInProcessingImplCopyWith<$Res> {
+  factory _$$SignInProcessingImplCopyWith(_$SignInProcessingImpl value,
+          $Res Function(_$SignInProcessingImpl) then) =
+      __$$SignInProcessingImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$SignInProcessingCopyWithImpl<$Res>
-    extends _$SignInStateCopyWithImpl<$Res, _$SignInProcessing>
-    implements _$$SignInProcessingCopyWith<$Res> {
-  __$$SignInProcessingCopyWithImpl(
-      _$SignInProcessing _value, $Res Function(_$SignInProcessing) _then)
+class __$$SignInProcessingImplCopyWithImpl<$Res>
+    extends _$SignInStateCopyWithImpl<$Res, _$SignInProcessingImpl>
+    implements _$$SignInProcessingImplCopyWith<$Res> {
+  __$$SignInProcessingImplCopyWithImpl(_$SignInProcessingImpl _value,
+      $Res Function(_$SignInProcessingImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$SignInProcessing implements SignInProcessing {
-  const _$SignInProcessing();
+class _$SignInProcessingImpl implements SignInProcessing {
+  const _$SignInProcessingImpl();
 
   @override
   String toString() {
@@ -226,9 +227,9 @@ class _$SignInProcessing implements SignInProcessing {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$SignInProcessing);
+        (other.runtimeType == runtimeType && other is _$SignInProcessingImpl);
   }
 
   @override
@@ -310,29 +311,29 @@ class _$SignInProcessing implements SignInProcessing {
 }
 
 abstract class SignInProcessing implements SignInState {
-  const factory SignInProcessing() = _$SignInProcessing;
+  const factory SignInProcessing() = _$SignInProcessingImpl;
 }
 
 /// @nodoc
-abstract class _$$SignInSuccessfulCopyWith<$Res> {
-  factory _$$SignInSuccessfulCopyWith(
-          _$SignInSuccessful value, $Res Function(_$SignInSuccessful) then) =
-      __$$SignInSuccessfulCopyWithImpl<$Res>;
+abstract class _$$SignInSuccessfulImplCopyWith<$Res> {
+  factory _$$SignInSuccessfulImplCopyWith(_$SignInSuccessfulImpl value,
+          $Res Function(_$SignInSuccessfulImpl) then) =
+      __$$SignInSuccessfulImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$SignInSuccessfulCopyWithImpl<$Res>
-    extends _$SignInStateCopyWithImpl<$Res, _$SignInSuccessful>
-    implements _$$SignInSuccessfulCopyWith<$Res> {
-  __$$SignInSuccessfulCopyWithImpl(
-      _$SignInSuccessful _value, $Res Function(_$SignInSuccessful) _then)
+class __$$SignInSuccessfulImplCopyWithImpl<$Res>
+    extends _$SignInStateCopyWithImpl<$Res, _$SignInSuccessfulImpl>
+    implements _$$SignInSuccessfulImplCopyWith<$Res> {
+  __$$SignInSuccessfulImplCopyWithImpl(_$SignInSuccessfulImpl _value,
+      $Res Function(_$SignInSuccessfulImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$SignInSuccessful implements SignInSuccessful {
-  const _$SignInSuccessful();
+class _$SignInSuccessfulImpl implements SignInSuccessful {
+  const _$SignInSuccessfulImpl();
 
   @override
   String toString() {
@@ -340,9 +341,9 @@ class _$SignInSuccessful implements SignInSuccessful {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$SignInSuccessful);
+        (other.runtimeType == runtimeType && other is _$SignInSuccessfulImpl);
   }
 
   @override
@@ -424,24 +425,24 @@ class _$SignInSuccessful implements SignInSuccessful {
 }
 
 abstract class SignInSuccessful implements SignInState {
-  const factory SignInSuccessful() = _$SignInSuccessful;
+  const factory SignInSuccessful() = _$SignInSuccessfulImpl;
 }
 
 /// @nodoc
-abstract class _$$SignInErrorCopyWith<$Res> {
-  factory _$$SignInErrorCopyWith(
-          _$SignInError value, $Res Function(_$SignInError) then) =
-      __$$SignInErrorCopyWithImpl<$Res>;
+abstract class _$$SignInErrorImplCopyWith<$Res> {
+  factory _$$SignInErrorImplCopyWith(
+          _$SignInErrorImpl value, $Res Function(_$SignInErrorImpl) then) =
+      __$$SignInErrorImplCopyWithImpl<$Res>;
   @useResult
   $Res call({Object failure});
 }
 
 /// @nodoc
-class __$$SignInErrorCopyWithImpl<$Res>
-    extends _$SignInStateCopyWithImpl<$Res, _$SignInError>
-    implements _$$SignInErrorCopyWith<$Res> {
-  __$$SignInErrorCopyWithImpl(
-      _$SignInError _value, $Res Function(_$SignInError) _then)
+class __$$SignInErrorImplCopyWithImpl<$Res>
+    extends _$SignInStateCopyWithImpl<$Res, _$SignInErrorImpl>
+    implements _$$SignInErrorImplCopyWith<$Res> {
+  __$$SignInErrorImplCopyWithImpl(
+      _$SignInErrorImpl _value, $Res Function(_$SignInErrorImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -449,7 +450,7 @@ class __$$SignInErrorCopyWithImpl<$Res>
   $Res call({
     Object? failure = null,
   }) {
-    return _then(_$SignInError(
+    return _then(_$SignInErrorImpl(
       null == failure ? _value.failure : failure,
     ));
   }
@@ -457,8 +458,8 @@ class __$$SignInErrorCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$SignInError implements SignInError {
-  const _$SignInError(this.failure);
+class _$SignInErrorImpl implements SignInError {
+  const _$SignInErrorImpl(this.failure);
 
   @override
   final Object failure;
@@ -469,10 +470,10 @@ class _$SignInError implements SignInError {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$SignInError &&
+            other is _$SignInErrorImpl &&
             const DeepCollectionEquality().equals(other.failure, failure));
   }
 
@@ -483,8 +484,8 @@ class _$SignInError implements SignInError {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$SignInErrorCopyWith<_$SignInError> get copyWith =>
-      __$$SignInErrorCopyWithImpl<_$SignInError>(this, _$identity);
+  _$$SignInErrorImplCopyWith<_$SignInErrorImpl> get copyWith =>
+      __$$SignInErrorImplCopyWithImpl<_$SignInErrorImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -562,10 +563,10 @@ class _$SignInError implements SignInError {
 }
 
 abstract class SignInError implements SignInState {
-  const factory SignInError(final Object failure) = _$SignInError;
+  const factory SignInError(final Object failure) = _$SignInErrorImpl;
 
   Object get failure;
   @JsonKey(ignore: true)
-  _$$SignInErrorCopyWith<_$SignInError> get copyWith =>
+  _$$SignInErrorImplCopyWith<_$SignInErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

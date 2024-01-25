@@ -155,11 +155,11 @@ class _$IntegrationsStateCopyWithImpl<$Res, $Val extends IntegrationsState>
 }
 
 /// @nodoc
-abstract class _$$IntegrationsInitialCopyWith<$Res>
+abstract class _$$IntegrationsInitialImplCopyWith<$Res>
     implements $IntegrationsStateCopyWith<$Res> {
-  factory _$$IntegrationsInitialCopyWith(_$IntegrationsInitial value,
-          $Res Function(_$IntegrationsInitial) then) =
-      __$$IntegrationsInitialCopyWithImpl<$Res>;
+  factory _$$IntegrationsInitialImplCopyWith(_$IntegrationsInitialImpl value,
+          $Res Function(_$IntegrationsInitialImpl) then) =
+      __$$IntegrationsInitialImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -168,11 +168,11 @@ abstract class _$$IntegrationsInitialCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$IntegrationsInitialCopyWithImpl<$Res>
-    extends _$IntegrationsStateCopyWithImpl<$Res, _$IntegrationsInitial>
-    implements _$$IntegrationsInitialCopyWith<$Res> {
-  __$$IntegrationsInitialCopyWithImpl(
-      _$IntegrationsInitial _value, $Res Function(_$IntegrationsInitial) _then)
+class __$$IntegrationsInitialImplCopyWithImpl<$Res>
+    extends _$IntegrationsStateCopyWithImpl<$Res, _$IntegrationsInitialImpl>
+    implements _$$IntegrationsInitialImplCopyWith<$Res> {
+  __$$IntegrationsInitialImplCopyWithImpl(_$IntegrationsInitialImpl _value,
+      $Res Function(_$IntegrationsInitialImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -181,7 +181,7 @@ class __$$IntegrationsInitialCopyWithImpl<$Res>
     Object? availablePlatforms = null,
     Object? authenticators = null,
   }) {
-    return _then(_$IntegrationsInitial(
+    return _then(_$IntegrationsInitialImpl(
       null == availablePlatforms
           ? _value.availablePlatforms
           : availablePlatforms // ignore: cast_nullable_to_non_nullable
@@ -196,8 +196,8 @@ class __$$IntegrationsInitialCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$IntegrationsInitial implements IntegrationsInitial {
-  const _$IntegrationsInitial(this.availablePlatforms, this.authenticators);
+class _$IntegrationsInitialImpl implements IntegrationsInitial {
+  const _$IntegrationsInitialImpl(this.availablePlatforms, this.authenticators);
 
   @override
   final Iterable<Platform> availablePlatforms;
@@ -210,10 +210,10 @@ class _$IntegrationsInitial implements IntegrationsInitial {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$IntegrationsInitial &&
+            other is _$IntegrationsInitialImpl &&
             const DeepCollectionEquality()
                 .equals(other.availablePlatforms, availablePlatforms) &&
             const DeepCollectionEquality()
@@ -229,8 +229,8 @@ class _$IntegrationsInitial implements IntegrationsInitial {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$IntegrationsInitialCopyWith<_$IntegrationsInitial> get copyWith =>
-      __$$IntegrationsInitialCopyWithImpl<_$IntegrationsInitial>(
+  _$$IntegrationsInitialImplCopyWith<_$IntegrationsInitialImpl> get copyWith =>
+      __$$IntegrationsInitialImplCopyWithImpl<_$IntegrationsInitialImpl>(
           this, _$identity);
 
   @override
@@ -348,7 +348,7 @@ class _$IntegrationsInitial implements IntegrationsInitial {
 
 abstract class IntegrationsInitial implements IntegrationsState {
   const factory IntegrationsInitial(final Iterable<Platform> availablePlatforms,
-      final Iterable<Authenticator> authenticators) = _$IntegrationsInitial;
+      final Iterable<Authenticator> authenticators) = _$IntegrationsInitialImpl;
 
   @override
   Iterable<Platform> get availablePlatforms;
@@ -356,16 +356,16 @@ abstract class IntegrationsInitial implements IntegrationsState {
   Iterable<Authenticator> get authenticators;
   @override
   @JsonKey(ignore: true)
-  _$$IntegrationsInitialCopyWith<_$IntegrationsInitial> get copyWith =>
+  _$$IntegrationsInitialImplCopyWith<_$IntegrationsInitialImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$IntegrationsLoadingCopyWith<$Res>
+abstract class _$$IntegrationsLoadingImplCopyWith<$Res>
     implements $IntegrationsStateCopyWith<$Res> {
-  factory _$$IntegrationsLoadingCopyWith(_$IntegrationsLoading value,
-          $Res Function(_$IntegrationsLoading) then) =
-      __$$IntegrationsLoadingCopyWithImpl<$Res>;
+  factory _$$IntegrationsLoadingImplCopyWith(_$IntegrationsLoadingImpl value,
+          $Res Function(_$IntegrationsLoadingImpl) then) =
+      __$$IntegrationsLoadingImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -374,11 +374,11 @@ abstract class _$$IntegrationsLoadingCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$IntegrationsLoadingCopyWithImpl<$Res>
-    extends _$IntegrationsStateCopyWithImpl<$Res, _$IntegrationsLoading>
-    implements _$$IntegrationsLoadingCopyWith<$Res> {
-  __$$IntegrationsLoadingCopyWithImpl(
-      _$IntegrationsLoading _value, $Res Function(_$IntegrationsLoading) _then)
+class __$$IntegrationsLoadingImplCopyWithImpl<$Res>
+    extends _$IntegrationsStateCopyWithImpl<$Res, _$IntegrationsLoadingImpl>
+    implements _$$IntegrationsLoadingImplCopyWith<$Res> {
+  __$$IntegrationsLoadingImplCopyWithImpl(_$IntegrationsLoadingImpl _value,
+      $Res Function(_$IntegrationsLoadingImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -387,7 +387,7 @@ class __$$IntegrationsLoadingCopyWithImpl<$Res>
     Object? availablePlatforms = null,
     Object? authenticators = null,
   }) {
-    return _then(_$IntegrationsLoading(
+    return _then(_$IntegrationsLoadingImpl(
       null == availablePlatforms
           ? _value.availablePlatforms
           : availablePlatforms // ignore: cast_nullable_to_non_nullable
@@ -402,8 +402,8 @@ class __$$IntegrationsLoadingCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$IntegrationsLoading implements IntegrationsLoading {
-  const _$IntegrationsLoading(this.availablePlatforms, this.authenticators);
+class _$IntegrationsLoadingImpl implements IntegrationsLoading {
+  const _$IntegrationsLoadingImpl(this.availablePlatforms, this.authenticators);
 
   @override
   final Iterable<Platform> availablePlatforms;
@@ -416,10 +416,10 @@ class _$IntegrationsLoading implements IntegrationsLoading {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$IntegrationsLoading &&
+            other is _$IntegrationsLoadingImpl &&
             const DeepCollectionEquality()
                 .equals(other.availablePlatforms, availablePlatforms) &&
             const DeepCollectionEquality()
@@ -435,8 +435,8 @@ class _$IntegrationsLoading implements IntegrationsLoading {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$IntegrationsLoadingCopyWith<_$IntegrationsLoading> get copyWith =>
-      __$$IntegrationsLoadingCopyWithImpl<_$IntegrationsLoading>(
+  _$$IntegrationsLoadingImplCopyWith<_$IntegrationsLoadingImpl> get copyWith =>
+      __$$IntegrationsLoadingImplCopyWithImpl<_$IntegrationsLoadingImpl>(
           this, _$identity);
 
   @override
@@ -554,7 +554,7 @@ class _$IntegrationsLoading implements IntegrationsLoading {
 
 abstract class IntegrationsLoading implements IntegrationsState {
   const factory IntegrationsLoading(final Iterable<Platform> availablePlatforms,
-      final Iterable<Authenticator> authenticators) = _$IntegrationsLoading;
+      final Iterable<Authenticator> authenticators) = _$IntegrationsLoadingImpl;
 
   @override
   Iterable<Platform> get availablePlatforms;
@@ -562,16 +562,16 @@ abstract class IntegrationsLoading implements IntegrationsState {
   Iterable<Authenticator> get authenticators;
   @override
   @JsonKey(ignore: true)
-  _$$IntegrationsLoadingCopyWith<_$IntegrationsLoading> get copyWith =>
+  _$$IntegrationsLoadingImplCopyWith<_$IntegrationsLoadingImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$IntegrationsLoadedCopyWith<$Res>
+abstract class _$$IntegrationsLoadedImplCopyWith<$Res>
     implements $IntegrationsStateCopyWith<$Res> {
-  factory _$$IntegrationsLoadedCopyWith(_$IntegrationsLoaded value,
-          $Res Function(_$IntegrationsLoaded) then) =
-      __$$IntegrationsLoadedCopyWithImpl<$Res>;
+  factory _$$IntegrationsLoadedImplCopyWith(_$IntegrationsLoadedImpl value,
+          $Res Function(_$IntegrationsLoadedImpl) then) =
+      __$$IntegrationsLoadedImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -580,11 +580,11 @@ abstract class _$$IntegrationsLoadedCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$IntegrationsLoadedCopyWithImpl<$Res>
-    extends _$IntegrationsStateCopyWithImpl<$Res, _$IntegrationsLoaded>
-    implements _$$IntegrationsLoadedCopyWith<$Res> {
-  __$$IntegrationsLoadedCopyWithImpl(
-      _$IntegrationsLoaded _value, $Res Function(_$IntegrationsLoaded) _then)
+class __$$IntegrationsLoadedImplCopyWithImpl<$Res>
+    extends _$IntegrationsStateCopyWithImpl<$Res, _$IntegrationsLoadedImpl>
+    implements _$$IntegrationsLoadedImplCopyWith<$Res> {
+  __$$IntegrationsLoadedImplCopyWithImpl(_$IntegrationsLoadedImpl _value,
+      $Res Function(_$IntegrationsLoadedImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -593,7 +593,7 @@ class __$$IntegrationsLoadedCopyWithImpl<$Res>
     Object? availablePlatforms = null,
     Object? authenticators = null,
   }) {
-    return _then(_$IntegrationsLoaded(
+    return _then(_$IntegrationsLoadedImpl(
       null == availablePlatforms
           ? _value.availablePlatforms
           : availablePlatforms // ignore: cast_nullable_to_non_nullable
@@ -608,8 +608,8 @@ class __$$IntegrationsLoadedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$IntegrationsLoaded implements IntegrationsLoaded {
-  const _$IntegrationsLoaded(this.availablePlatforms, this.authenticators);
+class _$IntegrationsLoadedImpl implements IntegrationsLoaded {
+  const _$IntegrationsLoadedImpl(this.availablePlatforms, this.authenticators);
 
   @override
   final Iterable<Platform> availablePlatforms;
@@ -622,10 +622,10 @@ class _$IntegrationsLoaded implements IntegrationsLoaded {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$IntegrationsLoaded &&
+            other is _$IntegrationsLoadedImpl &&
             const DeepCollectionEquality()
                 .equals(other.availablePlatforms, availablePlatforms) &&
             const DeepCollectionEquality()
@@ -641,8 +641,8 @@ class _$IntegrationsLoaded implements IntegrationsLoaded {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$IntegrationsLoadedCopyWith<_$IntegrationsLoaded> get copyWith =>
-      __$$IntegrationsLoadedCopyWithImpl<_$IntegrationsLoaded>(
+  _$$IntegrationsLoadedImplCopyWith<_$IntegrationsLoadedImpl> get copyWith =>
+      __$$IntegrationsLoadedImplCopyWithImpl<_$IntegrationsLoadedImpl>(
           this, _$identity);
 
   @override
@@ -760,7 +760,7 @@ class _$IntegrationsLoaded implements IntegrationsLoaded {
 
 abstract class IntegrationsLoaded implements IntegrationsState {
   const factory IntegrationsLoaded(final Iterable<Platform> availablePlatforms,
-      final Iterable<Authenticator> authenticators) = _$IntegrationsLoaded;
+      final Iterable<Authenticator> authenticators) = _$IntegrationsLoadedImpl;
 
   @override
   Iterable<Platform> get availablePlatforms;
@@ -768,16 +768,16 @@ abstract class IntegrationsLoaded implements IntegrationsState {
   Iterable<Authenticator> get authenticators;
   @override
   @JsonKey(ignore: true)
-  _$$IntegrationsLoadedCopyWith<_$IntegrationsLoaded> get copyWith =>
+  _$$IntegrationsLoadedImplCopyWith<_$IntegrationsLoadedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$IntegratedPlatformCopyWith<$Res>
+abstract class _$$IntegratedPlatformImplCopyWith<$Res>
     implements $IntegrationsStateCopyWith<$Res> {
-  factory _$$IntegratedPlatformCopyWith(_$IntegratedPlatform value,
-          $Res Function(_$IntegratedPlatform) then) =
-      __$$IntegratedPlatformCopyWithImpl<$Res>;
+  factory _$$IntegratedPlatformImplCopyWith(_$IntegratedPlatformImpl value,
+          $Res Function(_$IntegratedPlatformImpl) then) =
+      __$$IntegratedPlatformImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -787,11 +787,11 @@ abstract class _$$IntegratedPlatformCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$IntegratedPlatformCopyWithImpl<$Res>
-    extends _$IntegrationsStateCopyWithImpl<$Res, _$IntegratedPlatform>
-    implements _$$IntegratedPlatformCopyWith<$Res> {
-  __$$IntegratedPlatformCopyWithImpl(
-      _$IntegratedPlatform _value, $Res Function(_$IntegratedPlatform) _then)
+class __$$IntegratedPlatformImplCopyWithImpl<$Res>
+    extends _$IntegrationsStateCopyWithImpl<$Res, _$IntegratedPlatformImpl>
+    implements _$$IntegratedPlatformImplCopyWith<$Res> {
+  __$$IntegratedPlatformImplCopyWithImpl(_$IntegratedPlatformImpl _value,
+      $Res Function(_$IntegratedPlatformImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -801,7 +801,7 @@ class __$$IntegratedPlatformCopyWithImpl<$Res>
     Object? availablePlatforms = null,
     Object? authenticators = null,
   }) {
-    return _then(_$IntegratedPlatform(
+    return _then(_$IntegratedPlatformImpl(
       null == platformId
           ? _value.platformId
           : platformId // ignore: cast_nullable_to_non_nullable
@@ -820,8 +820,8 @@ class __$$IntegratedPlatformCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$IntegratedPlatform implements IntegratedPlatform {
-  const _$IntegratedPlatform(
+class _$IntegratedPlatformImpl implements IntegratedPlatform {
+  const _$IntegratedPlatformImpl(
       this.platformId, this.availablePlatforms, this.authenticators);
 
   @override
@@ -837,10 +837,10 @@ class _$IntegratedPlatform implements IntegratedPlatform {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$IntegratedPlatform &&
+            other is _$IntegratedPlatformImpl &&
             (identical(other.platformId, platformId) ||
                 other.platformId == platformId) &&
             const DeepCollectionEquality()
@@ -859,8 +859,8 @@ class _$IntegratedPlatform implements IntegratedPlatform {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$IntegratedPlatformCopyWith<_$IntegratedPlatform> get copyWith =>
-      __$$IntegratedPlatformCopyWithImpl<_$IntegratedPlatform>(
+  _$$IntegratedPlatformImplCopyWith<_$IntegratedPlatformImpl> get copyWith =>
+      __$$IntegratedPlatformImplCopyWithImpl<_$IntegratedPlatformImpl>(
           this, _$identity);
 
   @override
@@ -981,7 +981,7 @@ abstract class IntegratedPlatform implements IntegrationsState {
   const factory IntegratedPlatform(
       final String platformId,
       final Iterable<Platform> availablePlatforms,
-      final Iterable<Authenticator> authenticators) = _$IntegratedPlatform;
+      final Iterable<Authenticator> authenticators) = _$IntegratedPlatformImpl;
 
   String get platformId;
   @override
@@ -990,16 +990,16 @@ abstract class IntegratedPlatform implements IntegrationsState {
   Iterable<Authenticator> get authenticators;
   @override
   @JsonKey(ignore: true)
-  _$$IntegratedPlatformCopyWith<_$IntegratedPlatform> get copyWith =>
+  _$$IntegratedPlatformImplCopyWith<_$IntegratedPlatformImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$IntegrationsErrorCopyWith<$Res>
+abstract class _$$IntegrationsErrorImplCopyWith<$Res>
     implements $IntegrationsStateCopyWith<$Res> {
-  factory _$$IntegrationsErrorCopyWith(
-          _$IntegrationsError value, $Res Function(_$IntegrationsError) then) =
-      __$$IntegrationsErrorCopyWithImpl<$Res>;
+  factory _$$IntegrationsErrorImplCopyWith(_$IntegrationsErrorImpl value,
+          $Res Function(_$IntegrationsErrorImpl) then) =
+      __$$IntegrationsErrorImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -1009,11 +1009,11 @@ abstract class _$$IntegrationsErrorCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$IntegrationsErrorCopyWithImpl<$Res>
-    extends _$IntegrationsStateCopyWithImpl<$Res, _$IntegrationsError>
-    implements _$$IntegrationsErrorCopyWith<$Res> {
-  __$$IntegrationsErrorCopyWithImpl(
-      _$IntegrationsError _value, $Res Function(_$IntegrationsError) _then)
+class __$$IntegrationsErrorImplCopyWithImpl<$Res>
+    extends _$IntegrationsStateCopyWithImpl<$Res, _$IntegrationsErrorImpl>
+    implements _$$IntegrationsErrorImplCopyWith<$Res> {
+  __$$IntegrationsErrorImplCopyWithImpl(_$IntegrationsErrorImpl _value,
+      $Res Function(_$IntegrationsErrorImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -1023,7 +1023,7 @@ class __$$IntegrationsErrorCopyWithImpl<$Res>
     Object? authenticators = null,
     Object? message = null,
   }) {
-    return _then(_$IntegrationsError(
+    return _then(_$IntegrationsErrorImpl(
       null == availablePlatforms
           ? _value.availablePlatforms
           : availablePlatforms // ignore: cast_nullable_to_non_nullable
@@ -1042,8 +1042,8 @@ class __$$IntegrationsErrorCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$IntegrationsError implements IntegrationsError {
-  const _$IntegrationsError(
+class _$IntegrationsErrorImpl implements IntegrationsError {
+  const _$IntegrationsErrorImpl(
       this.availablePlatforms, this.authenticators, this.message);
 
   @override
@@ -1059,10 +1059,10 @@ class _$IntegrationsError implements IntegrationsError {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$IntegrationsError &&
+            other is _$IntegrationsErrorImpl &&
             const DeepCollectionEquality()
                 .equals(other.availablePlatforms, availablePlatforms) &&
             const DeepCollectionEquality()
@@ -1080,8 +1080,9 @@ class _$IntegrationsError implements IntegrationsError {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$IntegrationsErrorCopyWith<_$IntegrationsError> get copyWith =>
-      __$$IntegrationsErrorCopyWithImpl<_$IntegrationsError>(this, _$identity);
+  _$$IntegrationsErrorImplCopyWith<_$IntegrationsErrorImpl> get copyWith =>
+      __$$IntegrationsErrorImplCopyWithImpl<_$IntegrationsErrorImpl>(
+          this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -1200,7 +1201,7 @@ abstract class IntegrationsError implements IntegrationsState {
   const factory IntegrationsError(
       final Iterable<Platform> availablePlatforms,
       final Iterable<Authenticator> authenticators,
-      final String message) = _$IntegrationsError;
+      final String message) = _$IntegrationsErrorImpl;
 
   @override
   Iterable<Platform> get availablePlatforms;
@@ -1209,6 +1210,6 @@ abstract class IntegrationsError implements IntegrationsState {
   String get message;
   @override
   @JsonKey(ignore: true)
-  _$$IntegrationsErrorCopyWith<_$IntegrationsError> get copyWith =>
+  _$$IntegrationsErrorImplCopyWith<_$IntegrationsErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

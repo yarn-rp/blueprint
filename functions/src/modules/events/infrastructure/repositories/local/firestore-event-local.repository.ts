@@ -17,7 +17,7 @@ export class FirestoreEventLocalRepository implements EventLocalRepository {
         .doc(uid)
         .collection("events")
         .withConverter(eventConverter)
-        .doc(`${event.platform}-${event.eventId}`);
+        .doc(`${event.access.platformId}-${event.eventId}`);
       batch.set(eventRef, event);
     });
 
@@ -25,12 +25,12 @@ export class FirestoreEventLocalRepository implements EventLocalRepository {
   }
 
   async fetchLastFromPlatform(platform: PlatformId, uid: string): Promise<Event | undefined> {
+    return undefined;
     const eventQuerySnapshot = await this.firestore
       .collection("users")
       .doc(uid)
       .collection("events")
       .withConverter(eventConverter)
-      .where("platform", "==", platform)
       .orderBy("createdAt", "desc")
       .limit(1)
       .get();

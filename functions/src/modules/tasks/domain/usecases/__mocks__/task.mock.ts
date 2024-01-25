@@ -1,4 +1,3 @@
-import { AuthenticatorType } from "../../../../authenticators/domain/entities/authenticator-type.enum";
 import { Label } from "../../entities/label.entity";
 import { PlatformId } from "../../entities/platform.enum";
 import { Project } from "../../entities/project.entity";
@@ -32,7 +31,6 @@ const mockProject: Project = {
 export const mockTask: Task = {
   access: {
     platformId: PlatformId.Jira,
-    type: AuthenticatorType.Task,
     user: {
       gid: "Mock Username",
       name: "Mock Username",

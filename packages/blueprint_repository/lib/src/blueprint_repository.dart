@@ -1,5 +1,6 @@
 import 'package:blueprint_repository/src/entities/entities.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:integrations_repository/integrations_repository.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:task_repository/task_repository.dart';
 
@@ -14,6 +15,7 @@ class BlueprintRepository {
   BlueprintRepository({
     required Stream<String?> currentUserIdStream,
     required FirebaseFirestore firestore,
+    required this.platformsStream,
   }) {
     _currentUserIdStream = BehaviorSubject<String?>();
     currentUserIdStream.listen((event) {
@@ -26,6 +28,9 @@ class BlueprintRepository {
 
   late final CollectionReference _usersCollection;
 
+  /// Stream of all platforms.
+  final Stream<Iterable<Platform>> platformsStream;
+
   /// Return a stream of the current user blueprints.
   Stream<List<BlueprintItem>> getBlueprint() {
     return _currentUserIdStream.switchMap<List<BlueprintItem>>((userId) {
@@ -36,11 +41,35 @@ class BlueprintRepository {
       final userDoc = _usersCollection.doc(userId);
       final blueprintSubCollection =
           userDoc.collection(_blueprintCollectionName);
-      return blueprintSubCollection.snapshots().map((snapshot) {
-        return snapshot.docs.map((doc) {
-          final data = doc.data();
-          return BlueprintItem.fromJson(data);
-        }).toList();
+      return platformsStream.switchMap((platforms) {
+        return blueprintSubCollection.snapshots().map((snapshot) {
+          return snapshot.docs.map((doc) {
+            final data = doc.data();
+            final blueprintItem = BlueprintItem.fromJson(data);
+
+            final platform = platforms.firstWhere(
+              (element) =>
+                  element.id ==
+                  blueprintItem.map(
+                    event: (event) => event.value.access.platformId,
+                    task: (task) => task.value.access.platformId,
+                  ),
+            );
+
+            return blueprintItem.map(
+              event: (event) => event.copyWith(
+                value: event.value.copyWith(
+                  access: event.value.access.withPlatform(platform),
+                ),
+              ),
+              task: (task) => task.copyWith(
+                value: task.value.copyWith(
+                  access: task.value.access.withPlatform(platform),
+                ),
+              ),
+            );
+          }).toList();
+        });
       });
     });
   }
