@@ -9,7 +9,16 @@ class BlueprintState extends Equatable {
     this.status = BlueprintStatus.initial,
   }) {
     this.updatedAt = updatedAt ?? DateTime.now();
-    this.items = (items ?? [])..sortBy((event) => event.startTime);
+    this.items = (items ?? [])
+        .where(
+          (event) => event.startTime.isBefore(
+            DateTime.now().add(
+              const Duration(hours: 12),
+            ),
+          ),
+        )
+        .toList()
+      ..sortBy((event) => event.startTime);
   }
 
   final BlueprintStatus status;
@@ -29,13 +38,13 @@ class BlueprintState extends Equatable {
   }
 
   /// Returns event that is happening right now
-  BlueprintItem? get currentBlueprintItem {
+  Iterable<BlueprintItem> get currentBlueprintItems {
     final currentEvents = items.where((event) {
       return event.startTime.isBefore(updatedAt) &&
           event.endTime.isAfter(updatedAt);
     }).toList();
 
-    return currentEvents.firstOrNull;
+    return currentEvents;
   }
 
   Iterable<BlueprintItem> get upcomingBlueprintItems =>

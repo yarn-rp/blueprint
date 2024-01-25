@@ -19,8 +19,8 @@ class TodaysBlueprintPage extends StatelessWidget {
     // final isPhone = MediaQuery.of(context).size.width < 600;
     final isWide = MediaQuery.of(context).size.width >= 1150;
 
-    final currentEvent = context.select(
-      (BlueprintBloc bloc) => bloc.state.currentBlueprintItem,
+    final currentEvents = context.select(
+      (BlueprintBloc bloc) => bloc.state.currentBlueprintItems,
     );
     final nextEvents = context.select(
       (BlueprintBloc bloc) => bloc.state.upcomingBlueprintItems,
@@ -34,7 +34,7 @@ class TodaysBlueprintPage extends StatelessWidget {
             child: ListView(
               padding: const EdgeInsetsDirectional.all(16),
               children: [
-                if (currentEvent == null && nextEvents.isEmpty)
+                if (currentEvents.isEmpty && nextEvents.isEmpty)
                   const _BlueprintEmpty()
                 else ...[
                   const _CurrentEvent(),
@@ -94,8 +94,8 @@ class _CurrentEvent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final currentEvent = context.select(
-      (BlueprintBloc bloc) => bloc.state.currentBlueprintItem,
+    final currentEvents = context.select(
+      (BlueprintBloc bloc) => bloc.state.currentBlueprintItems,
     );
 
     final nextEvents = context.select(
@@ -107,9 +107,11 @@ class _CurrentEvent extends StatelessWidget {
     );
     return Column(
       children: [
-        if (currentEvent != null) ...[
+        if (currentEvents.isNotEmpty) ...[
           const _NowOnBlueprint(),
-          BlueprintItemTile(item: currentEvent),
+          ...currentEvents.map(
+            (item) => BlueprintItemTile(item: item),
+          ),
         ] else ...[
           const _NowOnBlueprint(),
           Builder(
