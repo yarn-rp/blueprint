@@ -73,15 +73,12 @@ class BlueprintEventCard extends StatelessWidget {
                     horizontal: AppSpacing.lg,
                     vertical: AppSpacing.md,
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  child: Wrap(
+                    runAlignment: WrapAlignment.center,
+                    spacing: AppSpacing.lg,
+                    runSpacing: AppSpacing.lg,
                     children: [
-                      Wrap(
-                        runAlignment: WrapAlignment.center,
-                        spacing: AppSpacing.lg,
-                        runSpacing: AppSpacing.lg,
-                        children: labels,
-                      ),
+                      ...labels,
                       ...actions,
                     ],
                   ),

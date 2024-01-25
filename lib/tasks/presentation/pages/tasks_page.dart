@@ -74,11 +74,14 @@ class _WideTaskPageState extends State<_WideTaskPage> {
           Expanded(
             child: Row(
               children: [
-                const Expanded(child: _TasksList()),
+                const Expanded(
+                  flex: 2,
+                  child: _TasksList(),
+                ),
                 const SizedBox(width: AppSpacing.xlg),
                 if (selectedTask != null)
                   const Expanded(
-                    flex: 2,
+                    flex: 3,
                     child: _SelectedTaskDetails(),
                   ),
               ],
@@ -200,7 +203,7 @@ class _NarrowTaskPage extends StatelessWidget {
                             maxWidth: 1200,
                             maxHeight: MediaQuery.of(context).size.height,
                           ),
-                          child: TaskDetails(
+                          child: TaskDetails.dialog(
                             task: task,
                             onClose: () => Navigator.of(context).pop(),
                           ),
