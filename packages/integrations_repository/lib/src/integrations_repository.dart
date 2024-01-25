@@ -74,7 +74,7 @@ class IntegrationsRepository {
       return userAuthenticators.map((event) {
         return event.docs.map((e) {
           final data = {...e.data(), 'id': e.id};
-          final platformId = data['platformName'];
+          final platformId = data['platformId'];
 
           final platform = platforms.firstWhereOrNull(
             (element) => element.id == platformId,
