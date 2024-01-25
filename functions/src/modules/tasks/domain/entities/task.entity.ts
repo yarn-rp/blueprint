@@ -38,7 +38,7 @@ import { Label } from "./label.entity";
     id: "1234567890",
     platformId: "1234567890",
     platformURL: "https://jira.com/1234567890",
-    platformName: PlatformName.Jira,
+    platformName: PlatformId.Jira,
     name: "Blueprint",
     description: "Blueprint project",
     iconUrl: "https://jira.com/1234567890/icon.png",

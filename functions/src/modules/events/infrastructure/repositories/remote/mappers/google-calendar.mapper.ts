@@ -1,5 +1,5 @@
 import { Mapper } from "../base.event.remote.repository";
-import { Event, User, AttendantStatus, PlatformName, ConferenceData } from "../../../../domain/entities";
+import { Event, User, AttendantStatus, PlatformId, ConferenceData } from "../../../../domain/entities";
 import { GoogleCalendarEvent } from "../google-calendar.event.remote.repository";
 import { calendar_v3 as CalendarV3 } from "googleapis";
 
@@ -47,7 +47,7 @@ export class GoogleCalendarMapper implements Mapper<GoogleCalendarEvent> {
       organizer,
       attendees,
       platformLink,
-      platform: PlatformName.GoogleCalendar,
+      platform: PlatformId.GoogleCalendar,
       attendantStatus: AttendantStatus.Accepted, // Replace with the real status
       conferenceData,
     };

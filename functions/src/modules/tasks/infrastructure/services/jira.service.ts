@@ -2,7 +2,7 @@
 import axios from "axios";
 import { Task } from "../../domain/entities/task.entity";
 import { AbstractRemoteRepository } from "../repositories/factories/remote.repository.abstract";
-import { PlatformName } from "../../domain/entities/platform.enum";
+import { PlatformId } from "../../domain/entities/platform.enum";
 import { Project } from "../../domain/entities/project.entity";
 import { Priority } from "../../domain/entities/priority.entity";
 import { Label } from "../../domain/entities/label.entity";
@@ -293,7 +293,7 @@ function fromJiraProjectToProject(project: JiraProject): Project {
   const color = colorFromProjectName(projectId);
 
   return {
-    platformName: PlatformName.Jira,
+    platformName: PlatformId.Jira,
     id: "jira",
     platformId: projectId,
     name: projectName,

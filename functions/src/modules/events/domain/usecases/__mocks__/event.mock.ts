@@ -1,4 +1,4 @@
-import { AttendantStatus, ConferenceData, PlatformName, User, Event } from "../../entities";
+import { AttendantStatus, ConferenceData, PlatformId, User, Event } from "../../entities";
 
 const testUser: User = {
   platformUrl: "https://example.com",
@@ -39,7 +39,7 @@ export const testEvent: Event = {
     },
   ],
   platformLink: "https://example.com/meeting",
-  platform: PlatformName.GoogleCalendar,
+  platform: PlatformId.GoogleCalendar,
   attendantStatus: AttendantStatus.Accepted,
   conferenceData: testConferenceData,
 };

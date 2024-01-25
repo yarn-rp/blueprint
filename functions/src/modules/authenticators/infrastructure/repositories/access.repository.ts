@@ -33,7 +33,7 @@ export class FirestoreAccessRepository implements AccessRepository {
       .collection("authenticators")
       // prevent multiple authenticators creation,
       // not sure if multiple authenticators must trigger tasksClone
-      .doc(`${access.platformName}-${access.user.gid}`)
+      .doc(`${access.platformId}-${access.user.gid}`)
       .set(access);
   }
 

@@ -29,13 +29,13 @@ export class RefreshTasksController {
 
       console.log(
         "\tRefreshing for authenticators",
-        authenticators.map((a) => a.platformName),
+        authenticators.map((a) => a.platformId),
       );
 
       // get tasks for every authenticator
       const userPromises = authenticatorsDoc.docs
         .filter((authenticator) => authenticator.data().type == AuthenticatorType.Task)
-        .map((authenticator) => this.pull.execute(authenticator.data().platformName, user.id, authenticator.id));
+        .map((authenticator) => this.pull.execute(authenticator.data().platformId, user.id, authenticator.id));
       // execute all for the user
       const results = await Promise.allSettled(userPromises);
 

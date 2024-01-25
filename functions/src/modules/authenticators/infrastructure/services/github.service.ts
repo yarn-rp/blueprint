@@ -35,7 +35,7 @@ export class GithubOAuthStrategy implements OAuth2Repository {
     );
     return {
       accessToken: data.access_token,
-      platformName: "github",
+      platformId: "github",
       type: AuthenticatorType.Task,
     };
   }

@@ -1,6 +1,6 @@
 import { AttendantStatus } from "./attendant-status.enum";
 import { ConferenceData } from "./conference-data.entity";
-import { PlatformName } from "./platform.enum";
+import { PlatformId } from "./platform.enum";
 import { User, UserWithStatus } from "./user.entity";
 
 /**
@@ -106,7 +106,7 @@ interface EventProps {
  * ```
  */
 export interface Event extends EventProps {
-  platform: PlatformName;
+  platform: PlatformId;
   attendantStatus: AttendantStatus;
   conferenceData?: ConferenceData;
 }

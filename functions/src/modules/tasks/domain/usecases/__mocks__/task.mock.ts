@@ -1,5 +1,5 @@
 import { Label } from "../../entities/label.entity";
-import { PlatformName } from "../../entities/platform.enum";
+import { PlatformId } from "../../entities/platform.enum";
 import { Project } from "../../entities/project.entity";
 import { Task } from "../../entities/task.entity";
 import { User } from "../../entities/user.entity";
@@ -19,7 +19,7 @@ const mockProject: Project = {
   id: "1234567890",
   platformId: "1234567890",
   platformURL: new URL("https://jira.com/1234567890"),
-  platformName: PlatformName.Jira,
+  platformName: PlatformId.Jira,
   name: "Blueprint",
   description: "Blueprint project",
   iconUrl: "https://jira.com/1234567890/icon.png",

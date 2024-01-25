@@ -1,5 +1,5 @@
 import { Firestore } from "firebase-admin/firestore";
-import { Event, PlatformName } from "../../../domain/entities";
+import { Event, PlatformId } from "../../../domain/entities";
 import { EventRemoteRepository } from "../../../domain/repositories/remote/event.remote.repository";
 
 /**
@@ -49,7 +49,7 @@ export abstract class BaseEventRemoteRepository<RemoteEvent> implements EventRem
    * Platform name to indicate which platform the remote repository
    * is interacting with.
    */
-  abstract platformName: PlatformName;
+  abstract platformName: PlatformId;
 
   /**
    * Retrieves events from a remote source and maps them to domain entities.

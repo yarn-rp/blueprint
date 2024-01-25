@@ -2,7 +2,7 @@
 import axios from "axios";
 import { Task } from "../../domain/entities/task.entity";
 import { AbstractRemoteRepository } from "../repositories/factories/remote.repository.abstract";
-import { PlatformName } from "../../domain/entities/platform.enum";
+import { PlatformId } from "../../domain/entities/platform.enum";
 import { Label, Priority, Project, User } from "../../domain/entities";
 /**
  * Represents a task in Github. Since in github, a task can mean different
@@ -136,7 +136,7 @@ export class GithubRemoteRepository extends AbstractRemoteRepository<GithubTask>
       id: issue.repository?.id,
       platformId: issue.repository?.id,
       platformURL: new URL(issue.repository.html_url),
-      platformName: PlatformName.Github,
+      platformName: PlatformId.Github,
       name: issue.repository.name,
       description: issue.repository.description,
       iconUrl: issue.repository.owner.avatar_url,

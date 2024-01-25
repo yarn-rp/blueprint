@@ -1,6 +1,6 @@
 import { inject, injectable } from "tsyringe";
 import { RefreshToken } from "../../../authenticators/domain/usecases/refresh-token.usecase";
-import { PlatformName } from "../entities/platform.enum";
+import { PlatformId } from "../entities/platform.enum";
 import { RemoteRepositoryFactory } from "../repositories/factories/remote.repository.factory";
 import { TasksRepository } from "../repositories/tasks.repository";
 
@@ -13,7 +13,7 @@ export class PullTasks {
     private readonly refreshToken: RefreshToken,
   ) {}
 
-  async execute(platform: PlatformName, uid: string, authenticatorId: string): Promise<void> {
+  async execute(platform: PlatformId, uid: string, authenticatorId: string): Promise<void> {
     console.log(`Pulling tasks for ${platform} ${uid} ${authenticatorId}`);
     const remoteRepo = this.remoteFactory.buildFor(platform);
 

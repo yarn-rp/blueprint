@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import { container } from "tsyringe";
-import { PlatformName } from "../entities/platform.enum";
+import { PlatformId } from "../entities/platform.enum";
 import { Task } from "../entities/task.entity";
 import { RemoteRepositoryFactory } from "../repositories/factories/remote.repository.factory";
 import { PullTasks } from "./pull-tasks.usecase";
@@ -8,7 +8,7 @@ import { mockTask } from "./__mocks__/task.mock";
 
 describe("PullTasks", () => {
   const mockUid = "test-uid";
-  const mockPlatform = PlatformName.Jira;
+  const mockPlatform = PlatformId.Jira;
 
   const tasksRepoMock = {
     add: jest.fn(),

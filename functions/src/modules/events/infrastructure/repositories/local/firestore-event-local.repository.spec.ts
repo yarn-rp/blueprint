@@ -1,12 +1,12 @@
 import "reflect-metadata";
 import { container } from "tsyringe";
-import { Event, PlatformName } from "../../../domain/entities";
+import { Event, PlatformId } from "../../../domain/entities";
 
 import { testEvent } from "../../../domain/usecases/__mocks__/event.mock";
 import { FirestoreEventLocalRepository } from "./firestore-event-local.repository";
 
 const uid = "test-uid";
-const platformName = PlatformName.GoogleCalendar;
+const platformName = PlatformId.GoogleCalendar;
 
 describe("FirestoreEventLocalRepository", () => {
   let repo: FirestoreEventLocalRepository;

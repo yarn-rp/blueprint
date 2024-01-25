@@ -1,4 +1,4 @@
-import { Event, PlatformName } from "../../entities";
+import { Event, PlatformId } from "../../entities";
 
 /**
  * A repository in charge for handling events with external platforms
@@ -14,7 +14,7 @@ export interface EventRemoteRepository {
   /**
    * The platform that this repository is for.
    */
-  platformName: PlatformName;
+  platformName: PlatformId;
 
   /**
    * Pulls events from the remote platform for the given user ID

@@ -27,7 +27,7 @@ export class RefreshEventsController {
       // get tasks for every authenticator
       const userPromises = authenticatorsDoc.docs
         .filter((authenticator) => authenticator.data().type == AuthenticatorType.Event)
-        .map((authenticator) => this.pull.execute(authenticator.data().platformName, user.id, authenticator.id));
+        .map((authenticator) => this.pull.execute(authenticator.data().platformId, user.id, authenticator.id));
       // execute all for the user
       await Promise.all(userPromises);
 

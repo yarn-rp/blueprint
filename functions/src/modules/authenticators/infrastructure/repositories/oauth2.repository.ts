@@ -67,7 +67,7 @@ export class OAuth2RepositoryContext implements OAuth2Repository {
 
   // TODO: add documentation
   async refreshToken(oldAuth: Omit<Access, "user">): Promise<Omit<Access, "user">> {
-    this.setStrategy(oldAuth.platformName);
+    this.setStrategy(oldAuth.platformId);
     return this.strategy.refreshToken(oldAuth);
   }
 }

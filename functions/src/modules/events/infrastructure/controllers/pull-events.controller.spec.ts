@@ -22,7 +22,7 @@ describe("AddTaskViaApiKey", () => {
     it("should execute usecase and return json", async () => {
       const changeMock = {
         data: jest.fn().mockReturnValue({
-          platformName: "google-calendar",
+          platformId: "google-calendar",
         }),
       };
       const contextMock = {

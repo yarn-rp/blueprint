@@ -1,4 +1,4 @@
-import { PlatformName } from "../../entities/platform.enum";
+import { PlatformId } from "../../entities/platform.enum";
 import { Event } from "../../entities";
 
 /**
@@ -26,5 +26,5 @@ export interface EventLocalRepository {
    * @returns A Promise that resolves with the last event from the platform,
    * or undefined if there are no events.
    */
-  fetchLastFromPlatform(platform: PlatformName, uid: string): Promise<Event | undefined>;
+  fetchLastFromPlatform(platform: PlatformId, uid: string): Promise<Event | undefined>;
 }

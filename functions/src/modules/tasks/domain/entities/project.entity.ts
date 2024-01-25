@@ -1,4 +1,4 @@
-import { PlatformName } from "./platform.enum";
+import { PlatformId } from "./platform.enum";
 
 /**
  * The representation of a project in Blueprint. This project is
@@ -50,11 +50,6 @@ export interface Project {
    * Platform-specific URL for the project (ex: Jira URL).
    */
   readonly platformURL: URL;
-
-  /**
-   * The integration way of the project.
-   */
-  readonly platformName: PlatformName;
 
   /**
    * The name of the project.

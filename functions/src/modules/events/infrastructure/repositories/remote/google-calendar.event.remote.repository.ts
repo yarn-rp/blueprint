@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import { google, calendar_v3 } from "googleapis";
-import { PlatformName } from "../../../domain/entities";
+import { PlatformId } from "../../../domain/entities";
 import { BaseEventRemoteRepository } from "./base.event.remote.repository";
 import "reflect-metadata";
 import { container } from "tsyringe";
@@ -20,7 +20,7 @@ export class GoogleCalendarEventRemoteRepository extends BaseEventRemoteReposito
    * Override of the Platform name to indicate the platform
    * name of the remote repository.
    */
-  platformName: PlatformName = PlatformName.GoogleCalendar;
+  platformName: PlatformId = PlatformId.GoogleCalendar;
 
   /**
    * Retrieves the events from the Google Calendar API using

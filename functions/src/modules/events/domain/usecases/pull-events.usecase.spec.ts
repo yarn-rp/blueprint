@@ -1,13 +1,13 @@
 import "reflect-metadata";
 import { container } from "tsyringe";
-import { Event, PlatformName } from "../entities";
+import { Event, PlatformId } from "../entities";
 import { EventRemoteRepositoryFactory } from "../repositories/remote/event.remote.repository.factory";
 import { PullEventsUseCase } from "./pull-events.usecase";
 import { testEvent } from "./__mocks__/event.mock";
 
 describe("PullEvents", () => {
   const mockUid = "test-uid";
-  const mockPlatform = PlatformName.GoogleCalendar;
+  const mockPlatform = PlatformId.GoogleCalendar;
 
   const eventsRepoMock = {
     add: jest.fn(),

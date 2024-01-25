@@ -39,7 +39,7 @@ export class GoogleOAuthStrategy implements OAuth2Repository {
     return {
       accessToken: data.access_token,
       refreshToken: data.refresh_token,
-      platformName: "google-calendar",
+      platformId: "google-calendar",
       type: AuthenticatorType.Event,
     };
   }

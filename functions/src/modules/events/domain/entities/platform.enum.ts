@@ -1,3 +1,3 @@
-export enum PlatformName {
+export enum PlatformId {
   GoogleCalendar = "google-calendar",
 }

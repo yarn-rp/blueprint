@@ -1,7 +1,7 @@
 /* eslint-disable require-jsdoc */
 import { Firestore } from "firebase-admin/firestore";
 import { inject, injectable } from "tsyringe";
-import { Event, PlatformName } from "../../../domain/entities";
+import { Event, PlatformId } from "../../../domain/entities";
 import { EventLocalRepository } from "../../../domain/repositories/local/event.local.repository";
 import { eventConverter } from "./converters/event.converter";
 
@@ -24,7 +24,7 @@ export class FirestoreEventLocalRepository implements EventLocalRepository {
     await batch.commit();
   }
 
-  async fetchLastFromPlatform(platform: PlatformName, uid: string): Promise<Event | undefined> {
+  async fetchLastFromPlatform(platform: PlatformId, uid: string): Promise<Event | undefined> {
     const eventQuerySnapshot = await this.firestore
       .collection("users")
       .doc(uid)
