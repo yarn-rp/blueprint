@@ -14,13 +14,8 @@ final taskConverter = (
     DocumentSnapshot<Map<String, dynamic>> snapshot,
     SnapshotOptions? options,
   ) {
-    try {
-      final data = snapshot.data()!;
-      return Task.fromJson(data);
-    } catch (e, s) {
-      print('Error while converting task from firestore: $e $s');
-      rethrow;
-    }
+    final data = snapshot.data()!;
+    return Task.fromJson(data);
   },
   toFirestore: (Task task, SetOptions? options) => task.toJson(),
 );
@@ -77,22 +72,15 @@ class TaskRepository {
         return platformsStream.switchMap(
           (platforms) => tasksSubCollection.snapshots().map(
                 (tasks) => tasks.docs.map((task) {
-                  try {
-                    final taskEntity = task.data();
+                  final taskEntity = task.data();
 
-                    final taskPlatform = platforms.firstWhere(
-                      (platform) => platform.id == taskEntity.access.platformId,
-                    );
+                  final taskPlatform = platforms.firstWhere(
+                    (platform) => platform.id == taskEntity.access.platformId,
+                  );
 
-                    return taskEntity.copyWith(
-                      access: taskEntity.access.withPlatform(taskPlatform),
-                    );
-                  } catch (error, stackTrace) {
-                    print(
-                      'Error while converting task from firestore: $error $stackTrace',
-                    );
-                    rethrow;
-                  }
+                  return taskEntity.copyWith(
+                    access: taskEntity.access.withPlatform(taskPlatform),
+                  );
                 }),
               ),
         );
@@ -128,7 +116,6 @@ class TaskRepository {
               )
               .toList();
         }
-        print('Got tasks tasks: ${taskList}');
 
         if (platformId != null) {
           taskList = taskList
