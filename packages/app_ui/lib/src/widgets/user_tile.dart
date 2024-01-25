@@ -67,7 +67,7 @@ class UserTile extends StatelessWidget {
         contentPadding: EdgeInsets.zero,
         onTap: platformUrl != null ? () => launchUrlString(platformUrl!) : null,
         leading: leading,
-        title: Text(displayName),
+        title: Text(displayName, style: Theme.of(context).textTheme.labelLarge),
       ),
     );
   }
