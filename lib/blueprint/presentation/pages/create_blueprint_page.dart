@@ -179,13 +179,28 @@ class _TimelineState extends State<_Timeline> {
                 (element) => element.id == event.id,
               );
 
-              context.read<BlueprintBloc>().add(
-                    BlueprintItemUpdated(
-                      item: item,
-                      startTime: startDate,
-                      endTime: endDate,
-                    ),
+              return item.map<void>(
+                event: (event) {
+                  //show error dialog
+                  showErrorDialog(
+                    context: context,
+                    title: 'We are really sorry',
+                    content:
+                        'We are working on this feature, but unfortunately you '
+                        'cannot edit events yet.',
+                    dismissText: 'Ok',
                   );
+                },
+                task: (task) {
+                  context.read<BlueprintBloc>().add(
+                        BlueprintItemUpdated(
+                          item: item,
+                          startTime: startDate,
+                          endTime: endDate,
+                        ),
+                      );
+                },
+              );
             },
             events: [
               ...state.items.map(

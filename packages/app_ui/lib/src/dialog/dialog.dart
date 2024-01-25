@@ -39,3 +39,25 @@ Future<T?> showActionDialog<T>({
     ),
   );
 }
+
+Future<void> showErrorDialog({
+  required BuildContext context,
+  required String title,
+  required String content,
+  required String dismissText,
+}) {
+  return showAdaptiveDialog(
+    barrierDismissible: true,
+    context: context,
+    builder: (context) => AlertDialog(
+      title: Text(title),
+      content: Text(content),
+      actions: [
+        FilledButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: Text(dismissText),
+        ),
+      ],
+    ),
+  );
+}
