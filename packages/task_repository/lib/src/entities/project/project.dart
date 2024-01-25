@@ -1,5 +1,4 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:integrations_repository/integrations_repository.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'project.g.dart';
@@ -14,11 +13,9 @@ class Project {
     required this.id,
     required this.platformId,
     required this.platformURL,
-    required this.platformName,
     required this.name,
     required this.description,
     required this.colorHex,
-    this.platform,
     this.owner,
     this.iconUrl,
     this.slug,
@@ -39,12 +36,6 @@ class Project {
 
   /// Platform-specific URL for the project (ex: Jira URL).
   final Uri platformURL;
-
-  /// The integration way of the project.
-  final Platform? platform;
-
-  /// The name of the platform (ex: Jira).
-  final String platformName;
 
   /// The name of the project.
   final String name;
@@ -68,8 +59,6 @@ class Project {
     String? id,
     String? platformId,
     Uri? platformURL,
-    Platform? platform,
-    String? platformName,
     String? name,
     String? description,
     String? iconUrl,
@@ -81,8 +70,6 @@ class Project {
       id: id ?? this.id,
       platformId: platformId ?? this.platformId,
       platformURL: platformURL ?? this.platformURL,
-      platform: platform ?? this.platform,
-      platformName: platformName ?? this.platformName,
       name: name ?? this.name,
       description: description ?? this.description,
       iconUrl: iconUrl ?? this.iconUrl,

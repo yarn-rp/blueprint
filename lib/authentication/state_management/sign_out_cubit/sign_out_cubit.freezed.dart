@@ -87,24 +87,25 @@ class _$SignOutStateCopyWithImpl<$Res, $Val extends SignOutState>
 }
 
 /// @nodoc
-abstract class _$$_InitialCopyWith<$Res> {
-  factory _$$_InitialCopyWith(
-          _$_Initial value, $Res Function(_$_Initial) then) =
-      __$$_InitialCopyWithImpl<$Res>;
+abstract class _$$InitialImplCopyWith<$Res> {
+  factory _$$InitialImplCopyWith(
+          _$InitialImpl value, $Res Function(_$InitialImpl) then) =
+      __$$InitialImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_InitialCopyWithImpl<$Res>
-    extends _$SignOutStateCopyWithImpl<$Res, _$_Initial>
-    implements _$$_InitialCopyWith<$Res> {
-  __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
+class __$$InitialImplCopyWithImpl<$Res>
+    extends _$SignOutStateCopyWithImpl<$Res, _$InitialImpl>
+    implements _$$InitialImplCopyWith<$Res> {
+  __$$InitialImplCopyWithImpl(
+      _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_Initial implements _Initial {
-  const _$_Initial();
+class _$InitialImpl implements _Initial {
+  const _$InitialImpl();
 
   @override
   String toString() {
@@ -112,9 +113,9 @@ class _$_Initial implements _Initial {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Initial);
+        (other.runtimeType == runtimeType && other is _$InitialImpl);
   }
 
   @override
@@ -196,29 +197,29 @@ class _$_Initial implements _Initial {
 }
 
 abstract class _Initial implements SignOutState {
-  const factory _Initial() = _$_Initial;
+  const factory _Initial() = _$InitialImpl;
 }
 
 /// @nodoc
-abstract class _$$SignOutProcessingCopyWith<$Res> {
-  factory _$$SignOutProcessingCopyWith(
-          _$SignOutProcessing value, $Res Function(_$SignOutProcessing) then) =
-      __$$SignOutProcessingCopyWithImpl<$Res>;
+abstract class _$$SignOutProcessingImplCopyWith<$Res> {
+  factory _$$SignOutProcessingImplCopyWith(_$SignOutProcessingImpl value,
+          $Res Function(_$SignOutProcessingImpl) then) =
+      __$$SignOutProcessingImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$SignOutProcessingCopyWithImpl<$Res>
-    extends _$SignOutStateCopyWithImpl<$Res, _$SignOutProcessing>
-    implements _$$SignOutProcessingCopyWith<$Res> {
-  __$$SignOutProcessingCopyWithImpl(
-      _$SignOutProcessing _value, $Res Function(_$SignOutProcessing) _then)
+class __$$SignOutProcessingImplCopyWithImpl<$Res>
+    extends _$SignOutStateCopyWithImpl<$Res, _$SignOutProcessingImpl>
+    implements _$$SignOutProcessingImplCopyWith<$Res> {
+  __$$SignOutProcessingImplCopyWithImpl(_$SignOutProcessingImpl _value,
+      $Res Function(_$SignOutProcessingImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$SignOutProcessing implements SignOutProcessing {
-  const _$SignOutProcessing();
+class _$SignOutProcessingImpl implements SignOutProcessing {
+  const _$SignOutProcessingImpl();
 
   @override
   String toString() {
@@ -226,9 +227,9 @@ class _$SignOutProcessing implements SignOutProcessing {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$SignOutProcessing);
+        (other.runtimeType == runtimeType && other is _$SignOutProcessingImpl);
   }
 
   @override
@@ -310,29 +311,29 @@ class _$SignOutProcessing implements SignOutProcessing {
 }
 
 abstract class SignOutProcessing implements SignOutState {
-  const factory SignOutProcessing() = _$SignOutProcessing;
+  const factory SignOutProcessing() = _$SignOutProcessingImpl;
 }
 
 /// @nodoc
-abstract class _$$SignOutSuccessfulCopyWith<$Res> {
-  factory _$$SignOutSuccessfulCopyWith(
-          _$SignOutSuccessful value, $Res Function(_$SignOutSuccessful) then) =
-      __$$SignOutSuccessfulCopyWithImpl<$Res>;
+abstract class _$$SignOutSuccessfulImplCopyWith<$Res> {
+  factory _$$SignOutSuccessfulImplCopyWith(_$SignOutSuccessfulImpl value,
+          $Res Function(_$SignOutSuccessfulImpl) then) =
+      __$$SignOutSuccessfulImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$SignOutSuccessfulCopyWithImpl<$Res>
-    extends _$SignOutStateCopyWithImpl<$Res, _$SignOutSuccessful>
-    implements _$$SignOutSuccessfulCopyWith<$Res> {
-  __$$SignOutSuccessfulCopyWithImpl(
-      _$SignOutSuccessful _value, $Res Function(_$SignOutSuccessful) _then)
+class __$$SignOutSuccessfulImplCopyWithImpl<$Res>
+    extends _$SignOutStateCopyWithImpl<$Res, _$SignOutSuccessfulImpl>
+    implements _$$SignOutSuccessfulImplCopyWith<$Res> {
+  __$$SignOutSuccessfulImplCopyWithImpl(_$SignOutSuccessfulImpl _value,
+      $Res Function(_$SignOutSuccessfulImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$SignOutSuccessful implements SignOutSuccessful {
-  const _$SignOutSuccessful();
+class _$SignOutSuccessfulImpl implements SignOutSuccessful {
+  const _$SignOutSuccessfulImpl();
 
   @override
   String toString() {
@@ -340,9 +341,9 @@ class _$SignOutSuccessful implements SignOutSuccessful {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$SignOutSuccessful);
+        (other.runtimeType == runtimeType && other is _$SignOutSuccessfulImpl);
   }
 
   @override
@@ -424,24 +425,24 @@ class _$SignOutSuccessful implements SignOutSuccessful {
 }
 
 abstract class SignOutSuccessful implements SignOutState {
-  const factory SignOutSuccessful() = _$SignOutSuccessful;
+  const factory SignOutSuccessful() = _$SignOutSuccessfulImpl;
 }
 
 /// @nodoc
-abstract class _$$SignOutErrorCopyWith<$Res> {
-  factory _$$SignOutErrorCopyWith(
-          _$SignOutError value, $Res Function(_$SignOutError) then) =
-      __$$SignOutErrorCopyWithImpl<$Res>;
+abstract class _$$SignOutErrorImplCopyWith<$Res> {
+  factory _$$SignOutErrorImplCopyWith(
+          _$SignOutErrorImpl value, $Res Function(_$SignOutErrorImpl) then) =
+      __$$SignOutErrorImplCopyWithImpl<$Res>;
   @useResult
   $Res call({Object failure});
 }
 
 /// @nodoc
-class __$$SignOutErrorCopyWithImpl<$Res>
-    extends _$SignOutStateCopyWithImpl<$Res, _$SignOutError>
-    implements _$$SignOutErrorCopyWith<$Res> {
-  __$$SignOutErrorCopyWithImpl(
-      _$SignOutError _value, $Res Function(_$SignOutError) _then)
+class __$$SignOutErrorImplCopyWithImpl<$Res>
+    extends _$SignOutStateCopyWithImpl<$Res, _$SignOutErrorImpl>
+    implements _$$SignOutErrorImplCopyWith<$Res> {
+  __$$SignOutErrorImplCopyWithImpl(
+      _$SignOutErrorImpl _value, $Res Function(_$SignOutErrorImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -449,7 +450,7 @@ class __$$SignOutErrorCopyWithImpl<$Res>
   $Res call({
     Object? failure = null,
   }) {
-    return _then(_$SignOutError(
+    return _then(_$SignOutErrorImpl(
       null == failure ? _value.failure : failure,
     ));
   }
@@ -457,8 +458,8 @@ class __$$SignOutErrorCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$SignOutError implements SignOutError {
-  const _$SignOutError(this.failure);
+class _$SignOutErrorImpl implements SignOutError {
+  const _$SignOutErrorImpl(this.failure);
 
   @override
   final Object failure;
@@ -469,10 +470,10 @@ class _$SignOutError implements SignOutError {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$SignOutError &&
+            other is _$SignOutErrorImpl &&
             const DeepCollectionEquality().equals(other.failure, failure));
   }
 
@@ -483,8 +484,8 @@ class _$SignOutError implements SignOutError {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$SignOutErrorCopyWith<_$SignOutError> get copyWith =>
-      __$$SignOutErrorCopyWithImpl<_$SignOutError>(this, _$identity);
+  _$$SignOutErrorImplCopyWith<_$SignOutErrorImpl> get copyWith =>
+      __$$SignOutErrorImplCopyWithImpl<_$SignOutErrorImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -562,10 +563,10 @@ class _$SignOutError implements SignOutError {
 }
 
 abstract class SignOutError implements SignOutState {
-  const factory SignOutError(final Object failure) = _$SignOutError;
+  const factory SignOutError(final Object failure) = _$SignOutErrorImpl;
 
   Object get failure;
   @JsonKey(ignore: true)
-  _$$SignOutErrorCopyWith<_$SignOutError> get copyWith =>
+  _$$SignOutErrorImplCopyWith<_$SignOutErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

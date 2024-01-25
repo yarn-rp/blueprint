@@ -35,7 +35,7 @@ describe("OAuth2RepositoryContext", () => {
       };
       const access: Omit<Access, "user"> = {
         accessToken: "test-token",
-        platformName: "jira",
+        platformId: "jira",
         type: AuthenticatorType.Task,
       };
 
@@ -56,7 +56,7 @@ describe("OAuth2RepositoryContext", () => {
       };
       const access: Omit<Access, "user"> = {
         accessToken: "test-token",
-        platformName: "asana",
+        platformId: "asana",
         type: AuthenticatorType.Task,
       };
 
@@ -77,7 +77,7 @@ describe("OAuth2RepositoryContext", () => {
       };
       const access: Omit<Access, "user"> = {
         accessToken: "test-token",
-        platformName: "github",
+        platformId: "github",
         type: AuthenticatorType.Task,
       };
 

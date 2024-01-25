@@ -37,7 +37,7 @@ export class AsanaOAuthStrategy implements OAuth2Repository {
     return {
       accessToken: data.access_token,
       refreshToken: data.refresh_token,
-      platformName: "asana",
+      platformId: "asana",
       type: AuthenticatorType.Task,
     };
   }

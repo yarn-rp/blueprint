@@ -89,24 +89,25 @@ class _$ForgotPasswordStateCopyWithImpl<$Res, $Val extends ForgotPasswordState>
 }
 
 /// @nodoc
-abstract class _$$_InitialCopyWith<$Res> {
-  factory _$$_InitialCopyWith(
-          _$_Initial value, $Res Function(_$_Initial) then) =
-      __$$_InitialCopyWithImpl<$Res>;
+abstract class _$$InitialImplCopyWith<$Res> {
+  factory _$$InitialImplCopyWith(
+          _$InitialImpl value, $Res Function(_$InitialImpl) then) =
+      __$$InitialImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_InitialCopyWithImpl<$Res>
-    extends _$ForgotPasswordStateCopyWithImpl<$Res, _$_Initial>
-    implements _$$_InitialCopyWith<$Res> {
-  __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
+class __$$InitialImplCopyWithImpl<$Res>
+    extends _$ForgotPasswordStateCopyWithImpl<$Res, _$InitialImpl>
+    implements _$$InitialImplCopyWith<$Res> {
+  __$$InitialImplCopyWithImpl(
+      _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_Initial implements _Initial {
-  const _$_Initial();
+class _$InitialImpl implements _Initial {
+  const _$InitialImpl();
 
   @override
   String toString() {
@@ -114,9 +115,9 @@ class _$_Initial implements _Initial {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Initial);
+        (other.runtimeType == runtimeType && other is _$InitialImpl);
   }
 
   @override
@@ -200,24 +201,27 @@ class _$_Initial implements _Initial {
 }
 
 abstract class _Initial implements ForgotPasswordState {
-  const factory _Initial() = _$_Initial;
+  const factory _Initial() = _$InitialImpl;
 }
 
 /// @nodoc
-abstract class _$$ResettingPasswordStateCopyWith<$Res> {
-  factory _$$ResettingPasswordStateCopyWith(_$ResettingPasswordState value,
-          $Res Function(_$ResettingPasswordState) then) =
-      __$$ResettingPasswordStateCopyWithImpl<$Res>;
+abstract class _$$ResettingPasswordStateImplCopyWith<$Res> {
+  factory _$$ResettingPasswordStateImplCopyWith(
+          _$ResettingPasswordStateImpl value,
+          $Res Function(_$ResettingPasswordStateImpl) then) =
+      __$$ResettingPasswordStateImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String email});
 }
 
 /// @nodoc
-class __$$ResettingPasswordStateCopyWithImpl<$Res>
-    extends _$ForgotPasswordStateCopyWithImpl<$Res, _$ResettingPasswordState>
-    implements _$$ResettingPasswordStateCopyWith<$Res> {
-  __$$ResettingPasswordStateCopyWithImpl(_$ResettingPasswordState _value,
-      $Res Function(_$ResettingPasswordState) _then)
+class __$$ResettingPasswordStateImplCopyWithImpl<$Res>
+    extends _$ForgotPasswordStateCopyWithImpl<$Res,
+        _$ResettingPasswordStateImpl>
+    implements _$$ResettingPasswordStateImplCopyWith<$Res> {
+  __$$ResettingPasswordStateImplCopyWithImpl(
+      _$ResettingPasswordStateImpl _value,
+      $Res Function(_$ResettingPasswordStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -225,7 +229,7 @@ class __$$ResettingPasswordStateCopyWithImpl<$Res>
   $Res call({
     Object? email = null,
   }) {
-    return _then(_$ResettingPasswordState(
+    return _then(_$ResettingPasswordStateImpl(
       email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
@@ -236,8 +240,8 @@ class __$$ResettingPasswordStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ResettingPasswordState implements ResettingPasswordState {
-  const _$ResettingPasswordState({required this.email});
+class _$ResettingPasswordStateImpl implements ResettingPasswordState {
+  const _$ResettingPasswordStateImpl({required this.email});
 
   @override
   final String email;
@@ -248,10 +252,10 @@ class _$ResettingPasswordState implements ResettingPasswordState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ResettingPasswordState &&
+            other is _$ResettingPasswordStateImpl &&
             (identical(other.email, email) || other.email == email));
   }
 
@@ -261,9 +265,9 @@ class _$ResettingPasswordState implements ResettingPasswordState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$ResettingPasswordStateCopyWith<_$ResettingPasswordState> get copyWith =>
-      __$$ResettingPasswordStateCopyWithImpl<_$ResettingPasswordState>(
-          this, _$identity);
+  _$$ResettingPasswordStateImplCopyWith<_$ResettingPasswordStateImpl>
+      get copyWith => __$$ResettingPasswordStateImplCopyWithImpl<
+          _$ResettingPasswordStateImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -344,29 +348,29 @@ class _$ResettingPasswordState implements ResettingPasswordState {
 
 abstract class ResettingPasswordState implements ForgotPasswordState {
   const factory ResettingPasswordState({required final String email}) =
-      _$ResettingPasswordState;
+      _$ResettingPasswordStateImpl;
 
   String get email;
   @JsonKey(ignore: true)
-  _$$ResettingPasswordStateCopyWith<_$ResettingPasswordState> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$ResettingPasswordStateImplCopyWith<_$ResettingPasswordStateImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$PasswordResetStateCopyWith<$Res> {
-  factory _$$PasswordResetStateCopyWith(_$PasswordResetState value,
-          $Res Function(_$PasswordResetState) then) =
-      __$$PasswordResetStateCopyWithImpl<$Res>;
+abstract class _$$PasswordResetStateImplCopyWith<$Res> {
+  factory _$$PasswordResetStateImplCopyWith(_$PasswordResetStateImpl value,
+          $Res Function(_$PasswordResetStateImpl) then) =
+      __$$PasswordResetStateImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String email});
 }
 
 /// @nodoc
-class __$$PasswordResetStateCopyWithImpl<$Res>
-    extends _$ForgotPasswordStateCopyWithImpl<$Res, _$PasswordResetState>
-    implements _$$PasswordResetStateCopyWith<$Res> {
-  __$$PasswordResetStateCopyWithImpl(
-      _$PasswordResetState _value, $Res Function(_$PasswordResetState) _then)
+class __$$PasswordResetStateImplCopyWithImpl<$Res>
+    extends _$ForgotPasswordStateCopyWithImpl<$Res, _$PasswordResetStateImpl>
+    implements _$$PasswordResetStateImplCopyWith<$Res> {
+  __$$PasswordResetStateImplCopyWithImpl(_$PasswordResetStateImpl _value,
+      $Res Function(_$PasswordResetStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -374,7 +378,7 @@ class __$$PasswordResetStateCopyWithImpl<$Res>
   $Res call({
     Object? email = null,
   }) {
-    return _then(_$PasswordResetState(
+    return _then(_$PasswordResetStateImpl(
       email: null == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
@@ -385,8 +389,8 @@ class __$$PasswordResetStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$PasswordResetState implements PasswordResetState {
-  const _$PasswordResetState({required this.email});
+class _$PasswordResetStateImpl implements PasswordResetState {
+  const _$PasswordResetStateImpl({required this.email});
 
   @override
   final String email;
@@ -397,10 +401,10 @@ class _$PasswordResetState implements PasswordResetState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$PasswordResetState &&
+            other is _$PasswordResetStateImpl &&
             (identical(other.email, email) || other.email == email));
   }
 
@@ -410,8 +414,8 @@ class _$PasswordResetState implements PasswordResetState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$PasswordResetStateCopyWith<_$PasswordResetState> get copyWith =>
-      __$$PasswordResetStateCopyWithImpl<_$PasswordResetState>(
+  _$$PasswordResetStateImplCopyWith<_$PasswordResetStateImpl> get copyWith =>
+      __$$PasswordResetStateImplCopyWithImpl<_$PasswordResetStateImpl>(
           this, _$identity);
 
   @override
@@ -493,32 +497,32 @@ class _$PasswordResetState implements PasswordResetState {
 
 abstract class PasswordResetState implements ForgotPasswordState {
   const factory PasswordResetState({required final String email}) =
-      _$PasswordResetState;
+      _$PasswordResetStateImpl;
 
   String get email;
   @JsonKey(ignore: true)
-  _$$PasswordResetStateCopyWith<_$PasswordResetState> get copyWith =>
+  _$$PasswordResetStateImplCopyWith<_$PasswordResetStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$ErrorResettingPasswordStateCopyWith<$Res> {
-  factory _$$ErrorResettingPasswordStateCopyWith(
-          _$ErrorResettingPasswordState value,
-          $Res Function(_$ErrorResettingPasswordState) then) =
-      __$$ErrorResettingPasswordStateCopyWithImpl<$Res>;
+abstract class _$$ErrorResettingPasswordStateImplCopyWith<$Res> {
+  factory _$$ErrorResettingPasswordStateImplCopyWith(
+          _$ErrorResettingPasswordStateImpl value,
+          $Res Function(_$ErrorResettingPasswordStateImpl) then) =
+      __$$ErrorResettingPasswordStateImplCopyWithImpl<$Res>;
   @useResult
   $Res call({Object failure});
 }
 
 /// @nodoc
-class __$$ErrorResettingPasswordStateCopyWithImpl<$Res>
+class __$$ErrorResettingPasswordStateImplCopyWithImpl<$Res>
     extends _$ForgotPasswordStateCopyWithImpl<$Res,
-        _$ErrorResettingPasswordState>
-    implements _$$ErrorResettingPasswordStateCopyWith<$Res> {
-  __$$ErrorResettingPasswordStateCopyWithImpl(
-      _$ErrorResettingPasswordState _value,
-      $Res Function(_$ErrorResettingPasswordState) _then)
+        _$ErrorResettingPasswordStateImpl>
+    implements _$$ErrorResettingPasswordStateImplCopyWith<$Res> {
+  __$$ErrorResettingPasswordStateImplCopyWithImpl(
+      _$ErrorResettingPasswordStateImpl _value,
+      $Res Function(_$ErrorResettingPasswordStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -526,7 +530,7 @@ class __$$ErrorResettingPasswordStateCopyWithImpl<$Res>
   $Res call({
     Object? failure = null,
   }) {
-    return _then(_$ErrorResettingPasswordState(
+    return _then(_$ErrorResettingPasswordStateImpl(
       null == failure ? _value.failure : failure,
     ));
   }
@@ -534,8 +538,8 @@ class __$$ErrorResettingPasswordStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ErrorResettingPasswordState implements ErrorResettingPasswordState {
-  const _$ErrorResettingPasswordState(this.failure);
+class _$ErrorResettingPasswordStateImpl implements ErrorResettingPasswordState {
+  const _$ErrorResettingPasswordStateImpl(this.failure);
 
   @override
   final Object failure;
@@ -546,10 +550,10 @@ class _$ErrorResettingPasswordState implements ErrorResettingPasswordState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ErrorResettingPasswordState &&
+            other is _$ErrorResettingPasswordStateImpl &&
             const DeepCollectionEquality().equals(other.failure, failure));
   }
 
@@ -560,9 +564,9 @@ class _$ErrorResettingPasswordState implements ErrorResettingPasswordState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$ErrorResettingPasswordStateCopyWith<_$ErrorResettingPasswordState>
-      get copyWith => __$$ErrorResettingPasswordStateCopyWithImpl<
-          _$ErrorResettingPasswordState>(this, _$identity);
+  _$$ErrorResettingPasswordStateImplCopyWith<_$ErrorResettingPasswordStateImpl>
+      get copyWith => __$$ErrorResettingPasswordStateImplCopyWithImpl<
+          _$ErrorResettingPasswordStateImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -643,10 +647,10 @@ class _$ErrorResettingPasswordState implements ErrorResettingPasswordState {
 
 abstract class ErrorResettingPasswordState implements ForgotPasswordState {
   const factory ErrorResettingPasswordState(final Object failure) =
-      _$ErrorResettingPasswordState;
+      _$ErrorResettingPasswordStateImpl;
 
   Object get failure;
   @JsonKey(ignore: true)
-  _$$ErrorResettingPasswordStateCopyWith<_$ErrorResettingPasswordState>
+  _$$ErrorResettingPasswordStateImplCopyWith<_$ErrorResettingPasswordStateImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

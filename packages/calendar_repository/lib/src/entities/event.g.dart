@@ -7,6 +7,7 @@ part of 'event.dart';
 // **************************************************************************
 
 Event _$EventFromJson(Map<String, dynamic> json) => Event(
+      access: Access.fromJson(json['access'] as Map<String, dynamic>),
       startTime: Event._timestampFromJson(json['startTime'] as Timestamp?),
       endTime: Event._timestampFromJson(json['endTime'] as Timestamp?),
       subject: json['subject'] as String,
@@ -29,6 +30,7 @@ Event _$EventFromJson(Map<String, dynamic> json) => Event(
     );
 
 Map<String, dynamic> _$EventToJson(Event instance) => <String, dynamic>{
+      'access': instance.access.toJson(),
       'startTime': Event._timestampToJson(instance.startTime),
       'endTime': Event._timestampToJson(instance.endTime),
       'subject': instance.subject,

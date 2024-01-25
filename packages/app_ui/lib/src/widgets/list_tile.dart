@@ -170,7 +170,7 @@ class EventListTile extends StatelessWidget {
                       ),
                 ),
               ),
-            ]
+            ],
           ],
         ),
       );

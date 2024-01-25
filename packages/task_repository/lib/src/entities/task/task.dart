@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:task_repository/src/entities/access/access.dart';
 import 'package:task_repository/src/entities/entities.dart';
 import 'package:task_repository/src/utils/timestamp_converter.dart';
 
@@ -14,6 +15,7 @@ part 'task.g.dart';
 class Task {
   /// {@macro task}
   Task({
+    required this.access,
     required this.createdAt,
     required this.updatedAt,
     required this.id,
@@ -38,6 +40,8 @@ class Task {
   /// Converts a [Task] into a [Map<String, dynamic>].
   /// This method is needed for serialization and deserialization.
   Map<String, dynamic> toJson() => _$TaskToJson(this);
+
+  final Access access;
 
   /// Kick off creation date
   @TimestampConverter()
@@ -94,6 +98,7 @@ class Task {
   final int priority;
 
   Task copyWith({
+    Access? access,
     DateTime? createdAt,
     DateTime? updatedAt,
     String? id,
@@ -112,6 +117,7 @@ class Task {
     int? priority,
   }) {
     return Task(
+      access: access ?? this.access,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
       id: id ?? this.id,

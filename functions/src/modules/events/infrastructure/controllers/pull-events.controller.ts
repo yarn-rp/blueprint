@@ -40,8 +40,8 @@ export class PullEventsController {
     context: functions.EventContext<PullEventsContext>,
   ): Promise<void> {
     const { uid, authenticatorId } = context.params;
-    const { platformName } = snapshot.data();
+    const { platformId } = snapshot.data();
 
-    await this.pullEventsUseCase.execute(platformName, uid, authenticatorId);
+    await this.pullEventsUseCase.execute(platformId, uid, authenticatorId);
   }
 }

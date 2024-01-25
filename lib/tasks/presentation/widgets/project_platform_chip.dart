@@ -1,6 +1,5 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/widgets.dart';
-import 'package:image_network/image_network.dart';
 import 'package:task_repository/task_repository.dart';
 
 class ProjectPlatformChip extends LabelChip {
@@ -8,12 +7,9 @@ class ProjectPlatformChip extends LabelChip {
     required Task task,
     super.key,
   }) : super(
-          text: task.project.platformName,
+          text: task.access.userAccessData.email ??
+              task.access.platform!.displayName,
           backgroundColor: null,
-          avatar: task.project.platform?.iconUrl != null
-              ? Image.network(
-                  task.project.platform!.iconUrl,
-                )
-              : null,
+          avatar: Image.network(task.access.platform!.iconUrl),
         );
 }

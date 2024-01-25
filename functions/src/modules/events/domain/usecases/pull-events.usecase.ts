@@ -1,7 +1,7 @@
 /* eslint-disable require-jsdoc */
 import { inject, injectable } from "tsyringe";
 import { RefreshToken } from "../../../authenticators/domain/usecases/refresh-token.usecase";
-import { Event, PlatformName } from "../entities";
+import { Event, PlatformId } from "../entities";
 import { EventLocalRepository } from "../repositories/local/event.local.repository";
 import { EventRemoteRepositoryFactory } from "../repositories/remote/event.remote.repository.factory";
 
@@ -38,13 +38,14 @@ export class PullEventsUseCase {
    * @returns A Promise that resolves when the events have been
    * added to the local repository.
    */
-  async execute(platform: PlatformName, uid: string, authenticatorId: string): Promise<void> {
+  async execute(platform: PlatformId, uid: string, authenticatorId: string): Promise<void> {
+    console.log("Pulling events for platform: ", platform);
     const remoteRepo = this.remoteFactory.buildFor(platform);
 
-    const lastEventOrNone = await this.eventRepository.fetchLastFromPlatform(platform, uid);
+    // const lastEventOrNone = await this.eventRepository.fetchLastFromPlatform(platform, uid);
 
     await this.refreshToken.execute(uid, authenticatorId);
-    const events: Event[] = await remoteRepo.pull(uid, authenticatorId, lastEventOrNone);
+    const events: Event[] = await remoteRepo.pull(uid, authenticatorId, undefined);
 
     await this.eventRepository.add(events, uid);
   }

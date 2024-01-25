@@ -24,7 +24,7 @@ describe("FirestoreAccessRepository", () => {
   it("should save access correctly", async () => {
     const access: Access = {
       accessToken: "abc",
-      platformName: "jira",
+      platformId: "jira",
       type: AuthenticatorType.Task,
       user: { gid: "gid" },
     };

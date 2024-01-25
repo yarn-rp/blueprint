@@ -1,3 +1,4 @@
+export 'access/access.dart';
 export 'attendees_status.dart';
 export 'entry_point.dart';
 export 'event.dart';

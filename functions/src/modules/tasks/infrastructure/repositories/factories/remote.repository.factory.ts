@@ -1,7 +1,7 @@
 /* eslint-disable require-jsdoc */
 import { Firestore } from "firebase-admin/firestore";
 import { inject, injectable } from "tsyringe";
-import { PlatformName } from "../../../domain/entities/platform.enum";
+import { PlatformId } from "../../../domain/entities/platform.enum";
 import { RemoteRepository } from "../../../domain/repositories/factories/impl/remote.repository";
 import { RemoteRepositoryFactory } from "../../../domain/repositories/factories/remote.repository.factory";
 import { AsanaRemoteRepository } from "../../services/asana.service";
@@ -12,13 +12,13 @@ import { JiraRemoteRepository } from "../../services/jira.service";
 export class FirestoreRemoteRepositoryFactory implements RemoteRepositoryFactory {
   constructor(@inject("firestore") private readonly firestore: Firestore) {}
 
-  buildFor(platform: PlatformName): RemoteRepository {
+  buildFor(platform: PlatformId): RemoteRepository {
     switch (platform) {
-      case PlatformName.Jira:
+      case PlatformId.Jira:
         return new JiraRemoteRepository(this.firestore);
-      case PlatformName.Asana:
+      case PlatformId.Asana:
         return new AsanaRemoteRepository(this.firestore);
-      case PlatformName.Github:
+      case PlatformId.Github:
         return new GithubRemoteRepository(this.firestore);
     }
   }

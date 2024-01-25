@@ -18,6 +18,7 @@ export const eventConverter: FirebaseFirestore.FirestoreDataConverter<Event> = {
 
     return {
       ...event,
+      access: event.access,
       startTime: event.startTime ? Timestamp.fromDate(event.startTime) : null,
       endTime: event.endTime ? Timestamp.fromDate(event.endTime) : null,
       organizer: event.organizer || null,

@@ -2,8 +2,6 @@ import 'package:calendar_repository/src/entities/entities.dart';
 import 'package:calendar_repository/src/entities/user_with_status.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
-import 'package:integrations_repository/integrations_repository.dart'
-    show Platform;
 import 'package:json_annotation/json_annotation.dart';
 
 part 'event.g.dart';
@@ -15,12 +13,12 @@ part 'event.g.dart';
 class Event extends Equatable {
   /// {@macro event}
   const Event({
+    required this.access,
     required this.startTime,
     required this.endTime,
     required this.subject,
     required this.isAllDay,
     required this.attendantStatus,
-    this.platform,
     this.description,
     this.colorHex,
     this.organizer,
@@ -37,6 +35,8 @@ class Event extends Equatable {
 
   /// Converts a [Event] into a [Map<String, dynamic>].
   Map<String, dynamic> toJson() => _$EventToJson(this);
+
+  final Access access;
 
   /// The start time of the event.
   @JsonKey(
@@ -73,10 +73,6 @@ class Event extends Equatable {
   /// The link to the event in the platform.
   final String? platformLink;
 
-  /// The platform of the event.
-  @JsonKey(includeFromJson: false)
-  final Platform? platform;
-
   /// The meeting data of the event. If null, means that the event is not a
   /// meeting.
   final ConferenceData? conferenceData;
@@ -84,8 +80,39 @@ class Event extends Equatable {
   /// My status in the conference
   final AttendantStatus attendantStatus;
 
+  Event copyWith({
+    Access? access,
+    DateTime? startTime,
+    DateTime? endTime,
+    String? subject,
+    String? description,
+    bool? isAllDay,
+    String? colorHex,
+    User? organizer,
+    List<UserWithStatus>? attendees,
+    String? platformLink,
+    ConferenceData? conferenceData,
+    AttendantStatus? attendantStatus,
+  }) {
+    return Event(
+      access: access ?? this.access,
+      startTime: startTime ?? this.startTime,
+      endTime: endTime ?? this.endTime,
+      subject: subject ?? this.subject,
+      description: description ?? this.description,
+      isAllDay: isAllDay ?? this.isAllDay,
+      colorHex: colorHex ?? this.colorHex,
+      organizer: organizer ?? this.organizer,
+      attendees: attendees ?? this.attendees,
+      platformLink: platformLink ?? this.platformLink,
+      conferenceData: conferenceData ?? this.conferenceData,
+      attendantStatus: attendantStatus ?? this.attendantStatus,
+    );
+  }
+
   @override
   List<Object?> get props => [
+        access,
         startTime,
         endTime,
         subject,

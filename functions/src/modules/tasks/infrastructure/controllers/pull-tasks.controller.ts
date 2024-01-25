@@ -14,8 +14,8 @@ export class PullTasksController {
 
   async execute(change: functions.firestore.QueryDocumentSnapshot, context: functions.EventContext<PullTasksContext>) {
     const { uid, authenticatorId } = context.params;
-    const { platformName } = change.data();
+    const { platformId } = change.data();
 
-    await this.pull.execute(platformName, uid, authenticatorId);
+    await this.pull.execute(platformId, uid, authenticatorId);
   }
 }

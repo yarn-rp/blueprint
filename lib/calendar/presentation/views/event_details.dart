@@ -91,7 +91,7 @@ class EventDetails extends StatelessWidget {
         appBar: _EventDetailsAppBar(
           onClose: onClose,
           platformEventUrl: Uri.parse(event.platformLink!),
-          platformName: event.platform?.displayName ?? 'Unknown',
+          platformName: event.access.platform!.displayName,
           eventTitle: event.subject,
         ),
         body: isDialog
@@ -429,7 +429,7 @@ class _EventLabels extends StatelessWidget {
       spacing: 8,
       children: [
         // TODO(yarn-rp): change to platform name
-        const LabelChip(text: 'Unknown platform'),
+        PlatformChip(event: event),
         if (isEventInTodaysBlueprint) const TodaysBlueprintChip(),
       ],
     );

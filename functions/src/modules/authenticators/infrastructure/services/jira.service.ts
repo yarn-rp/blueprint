@@ -37,7 +37,7 @@ export class JiraOAuthStrategy implements OAuth2Repository {
     return {
       accessToken: data.access_token,
       refreshToken: data.refresh_token,
-      platformName: "jira",
+      platformId: "jira",
       type: AuthenticatorType.Task,
     };
   }

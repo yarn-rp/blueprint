@@ -1,9 +1,7 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:calendar_repository/calendar_repository.dart';
 import 'package:flutter/material.dart';
-import 'package:image_network/image_network.dart';
 import 'package:jiffy/jiffy.dart';
-import 'package:task_repository/task_repository.dart';
 
 class EventCard extends StatelessWidget {
   const EventCard({
@@ -31,10 +29,11 @@ class EventCard extends StatelessWidget {
       backgroundColor: backgroundColor,
       foregroundColor: foregroundColor,
       labels: [
-        if (event.platform != null)
-          LabelChip(text: event.platform!.displayName)
-        else
-          const LabelChip(text: 'Unknown platform'),
+        LabelChip(
+          avatar: Image.network(event.access.platform!.iconUrl),
+          text: event.access.userAccessData.email ??
+              event.access.platform!.displayName,
+        ),
       ],
       dateAndTime: event.startTime != null && event.endTime != null
           ? '${Jiffy(event.startTime).jm} - ${Jiffy(event.endTime).jm}'
@@ -52,19 +51,4 @@ class EventCard extends StatelessWidget {
             ),
     );
   }
-}
-
-class IntegrationLabelChip extends LabelChip {
-  IntegrationLabelChip({
-    required Task task,
-    super.key,
-  }) : super(
-          text: task.project.platformName,
-          backgroundColor: null,
-          avatar: task.project.platform?.iconUrl != null
-              ? Image.network(
-                  task.project.platform!.iconUrl,
-                )
-              : null,
-        );
 }

@@ -1,12 +1,12 @@
 import "reflect-metadata";
 import { container } from "tsyringe";
-import { PlatformName } from "../../domain/entities/platform.enum";
+import { PlatformId } from "../../domain/entities/platform.enum";
 import { Task } from "../../domain/entities/task.entity";
 import { mockTask } from "../../domain/usecases/__mocks__/task.mock";
 import { FirestoreTasksRepository } from "./tasks.repository";
 
 const uid = "test-uid";
-const platformName = PlatformName.Jira;
+const platformName = PlatformId.Jira;
 
 describe("FirestoreTasksRepository", () => {
   let repo: FirestoreTasksRepository;

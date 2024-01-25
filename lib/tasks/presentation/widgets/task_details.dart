@@ -91,7 +91,7 @@ class TaskDetails extends StatelessWidget {
         appBar: _TaskDetailsAppBar(
           onClose: onClose,
           platformTaskUrl: task.taskURL,
-          platformName: task.project.platformName,
+          platformName: task.access.platform!.displayName,
           taskTitle: task.title,
         ),
         body: isDialog
@@ -250,6 +250,7 @@ class _CreatedAndUpdatedDates extends StatelessWidget {
     final updatedAtFromNow = Jiffy(task.updatedAt).fromNow();
 
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           '${l10n.created} $createdAtFromNow',
@@ -432,6 +433,7 @@ class _TaskLabels extends StatelessWidget {
 
     return Wrap(
       spacing: 8,
+      runSpacing: 8,
       children: [
         ProjectPlatformChip(task: task),
         if (isTaskInTodaysBlueprint) const TodaysBlueprintChip(),

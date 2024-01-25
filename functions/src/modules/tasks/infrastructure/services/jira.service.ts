@@ -2,11 +2,11 @@
 import axios from "axios";
 import { Task } from "../../domain/entities/task.entity";
 import { AbstractRemoteRepository } from "../repositories/factories/remote.repository.abstract";
-import { PlatformName } from "../../domain/entities/platform.enum";
 import { Project } from "../../domain/entities/project.entity";
 import { Priority } from "../../domain/entities/priority.entity";
 import { Label } from "../../domain/entities/label.entity";
 import { User } from "../../domain/entities/user.entity";
+import { AccessPublicData } from "../../../authenticators/domain/entities/access.entity";
 
 type JiraTask = {
   id: string;
@@ -87,9 +87,14 @@ export class JiraRemoteRepository extends AbstractRemoteRepository<JiraTask> {
     return tasksPerCloud.flat();
   }
 
-  mapper(remote: JiraTask): Task {
+  mapper(remote: JiraTask, access: AccessPublicData): Task {
     // Maybe moving all the mappers to a separate file would be a good idea
-    return fromJiraApiIssueToTask(remote);
+    const task = fromJiraApiIssueToTask(remote);
+
+    return {
+      access: access,
+      ...task,
+    };
   }
 }
 
@@ -293,7 +298,6 @@ function fromJiraProjectToProject(project: JiraProject): Project {
   const color = colorFromProjectName(projectId);
 
   return {
-    platformName: PlatformName.Jira,
     id: "jira",
     platformId: projectId,
     name: projectName,
@@ -312,7 +316,7 @@ function fromJiraProjectToProject(project: JiraProject): Project {
  * @throws if the issue doesn't have any fields.
  * @throws if the project doesn't have an id, name or platformURL
  */
-function fromJiraApiIssueToTask(jiraIssue: JiraTask): Task {
+function fromJiraApiIssueToTask(jiraIssue: JiraTask): Omit<Task, "access"> {
   if (!jiraIssue.fields) {
     throw new Error("Issue fields are null");
   }
@@ -342,7 +346,7 @@ function fromJiraApiIssueToTask(jiraIssue: JiraTask): Task {
     throw new Error("User creator is null");
   }
   const userAssigned = fromJiraApiUserToUser(assigned);
-  const task: Task = {
+  const task = {
     id: issueId,
     taskId: issueKey,
     createdAt,

@@ -16,7 +16,7 @@ describe("ConnectOAuth", () => {
   };
   const accessWithoutUser: Omit<Access, "user"> = {
     accessToken: "test-token",
-    platformName: "jira",
+    platformId: "jira",
     type: AuthenticatorType.Task,
   };
   const user: UserData = {

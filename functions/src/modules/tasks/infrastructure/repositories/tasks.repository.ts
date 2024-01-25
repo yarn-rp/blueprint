@@ -1,7 +1,7 @@
 /* eslint-disable require-jsdoc */
 import { Firestore } from "firebase-admin/firestore";
 import { inject, injectable } from "tsyringe";
-import { PlatformName } from "../../domain/entities/platform.enum";
+import { PlatformId } from "../../domain/entities/platform.enum";
 import { Task } from "../../domain/entities/task.entity";
 import { TasksRepository } from "../../domain/repositories/tasks.repository";
 import { taskConverter } from "./converters/task-converter";
@@ -13,19 +13,21 @@ export class FirestoreTasksRepository implements TasksRepository {
   async add(tasks: Task[], uid: string): Promise<void> {
     const batch = this.firestore.batch();
     tasks.forEach((task) => {
+      const docId = `${task.access.platformId}-${task.project.platformId || "no_project"}-${task.taskId}`;
+
       const taskRef = this.firestore
         .collection("users")
         .doc(uid)
         .collection("tasks")
         .withConverter(taskConverter)
-        .doc(`${task.project.platformName}-${task.project.platformId || "no_project"}-${task.taskId}`);
+        .doc(docId);
       batch.set(taskRef, task);
     });
 
     await batch.commit();
   }
 
-  async fetchLastFromPlatform(platform: PlatformName, uid: string): Promise<Task | undefined> {
+  async fetchLastFromPlatform(platform: PlatformId, uid: string): Promise<Task | undefined> {
     const taskQuerySnapshot = await this.firestore
       .collection("users")
       .doc(uid)

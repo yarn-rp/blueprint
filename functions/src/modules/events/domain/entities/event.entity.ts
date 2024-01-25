@@ -1,6 +1,6 @@
+import { AccessPublicData } from "../../../authenticators/domain/entities/access.entity";
 import { AttendantStatus } from "./attendant-status.enum";
 import { ConferenceData } from "./conference-data.entity";
-import { PlatformName } from "./platform.enum";
 import { User, UserWithStatus } from "./user.entity";
 
 /**
@@ -106,7 +106,10 @@ interface EventProps {
  * ```
  */
 export interface Event extends EventProps {
-  platform: PlatformName;
+  /**
+   * Access data to fetch the ticket to blueprint. Contains information of the original platform.
+   */
+  access: AccessPublicData;
   attendantStatus: AttendantStatus;
   conferenceData?: ConferenceData;
 }

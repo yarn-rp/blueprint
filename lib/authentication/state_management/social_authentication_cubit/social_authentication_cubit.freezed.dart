@@ -92,23 +92,24 @@ class _$SocialAuthenticationStateCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$IDLECopyWith<$Res> {
-  factory _$$IDLECopyWith(_$IDLE value, $Res Function(_$IDLE) then) =
-      __$$IDLECopyWithImpl<$Res>;
+abstract class _$$IDLEImplCopyWith<$Res> {
+  factory _$$IDLEImplCopyWith(
+          _$IDLEImpl value, $Res Function(_$IDLEImpl) then) =
+      __$$IDLEImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$IDLECopyWithImpl<$Res>
-    extends _$SocialAuthenticationStateCopyWithImpl<$Res, _$IDLE>
-    implements _$$IDLECopyWith<$Res> {
-  __$$IDLECopyWithImpl(_$IDLE _value, $Res Function(_$IDLE) _then)
+class __$$IDLEImplCopyWithImpl<$Res>
+    extends _$SocialAuthenticationStateCopyWithImpl<$Res, _$IDLEImpl>
+    implements _$$IDLEImplCopyWith<$Res> {
+  __$$IDLEImplCopyWithImpl(_$IDLEImpl _value, $Res Function(_$IDLEImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$IDLE implements IDLE {
-  const _$IDLE();
+class _$IDLEImpl implements IDLE {
+  const _$IDLEImpl();
 
   @override
   String toString() {
@@ -116,9 +117,9 @@ class _$IDLE implements IDLE {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$IDLE);
+        (other.runtimeType == runtimeType && other is _$IDLEImpl);
   }
 
   @override
@@ -204,27 +205,27 @@ class _$IDLE implements IDLE {
 }
 
 abstract class IDLE implements SocialAuthenticationState {
-  const factory IDLE() = _$IDLE;
+  const factory IDLE() = _$IDLEImpl;
 }
 
 /// @nodoc
-abstract class _$$SocialAuthenticationProcessingCopyWith<$Res> {
-  factory _$$SocialAuthenticationProcessingCopyWith(
-          _$SocialAuthenticationProcessing value,
-          $Res Function(_$SocialAuthenticationProcessing) then) =
-      __$$SocialAuthenticationProcessingCopyWithImpl<$Res>;
+abstract class _$$SocialAuthenticationProcessingImplCopyWith<$Res> {
+  factory _$$SocialAuthenticationProcessingImplCopyWith(
+          _$SocialAuthenticationProcessingImpl value,
+          $Res Function(_$SocialAuthenticationProcessingImpl) then) =
+      __$$SocialAuthenticationProcessingImplCopyWithImpl<$Res>;
   @useResult
   $Res call({SocialAuthenticationProvider provider});
 }
 
 /// @nodoc
-class __$$SocialAuthenticationProcessingCopyWithImpl<$Res>
+class __$$SocialAuthenticationProcessingImplCopyWithImpl<$Res>
     extends _$SocialAuthenticationStateCopyWithImpl<$Res,
-        _$SocialAuthenticationProcessing>
-    implements _$$SocialAuthenticationProcessingCopyWith<$Res> {
-  __$$SocialAuthenticationProcessingCopyWithImpl(
-      _$SocialAuthenticationProcessing _value,
-      $Res Function(_$SocialAuthenticationProcessing) _then)
+        _$SocialAuthenticationProcessingImpl>
+    implements _$$SocialAuthenticationProcessingImplCopyWith<$Res> {
+  __$$SocialAuthenticationProcessingImplCopyWithImpl(
+      _$SocialAuthenticationProcessingImpl _value,
+      $Res Function(_$SocialAuthenticationProcessingImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -232,7 +233,7 @@ class __$$SocialAuthenticationProcessingCopyWithImpl<$Res>
   $Res call({
     Object? provider = null,
   }) {
-    return _then(_$SocialAuthenticationProcessing(
+    return _then(_$SocialAuthenticationProcessingImpl(
       null == provider
           ? _value.provider
           : provider // ignore: cast_nullable_to_non_nullable
@@ -243,9 +244,9 @@ class __$$SocialAuthenticationProcessingCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$SocialAuthenticationProcessing
+class _$SocialAuthenticationProcessingImpl
     implements SocialAuthenticationProcessing {
-  const _$SocialAuthenticationProcessing(this.provider);
+  const _$SocialAuthenticationProcessingImpl(this.provider);
 
   @override
   final SocialAuthenticationProvider provider;
@@ -256,10 +257,10 @@ class _$SocialAuthenticationProcessing
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$SocialAuthenticationProcessing &&
+            other is _$SocialAuthenticationProcessingImpl &&
             (identical(other.provider, provider) ||
                 other.provider == provider));
   }
@@ -270,9 +271,10 @@ class _$SocialAuthenticationProcessing
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$SocialAuthenticationProcessingCopyWith<_$SocialAuthenticationProcessing>
-      get copyWith => __$$SocialAuthenticationProcessingCopyWithImpl<
-          _$SocialAuthenticationProcessing>(this, _$identity);
+  _$$SocialAuthenticationProcessingImplCopyWith<
+          _$SocialAuthenticationProcessingImpl>
+      get copyWith => __$$SocialAuthenticationProcessingImplCopyWithImpl<
+          _$SocialAuthenticationProcessingImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -357,32 +359,33 @@ abstract class SocialAuthenticationProcessing
     implements SocialAuthenticationState {
   const factory SocialAuthenticationProcessing(
           final SocialAuthenticationProvider provider) =
-      _$SocialAuthenticationProcessing;
+      _$SocialAuthenticationProcessingImpl;
 
   SocialAuthenticationProvider get provider;
   @JsonKey(ignore: true)
-  _$$SocialAuthenticationProcessingCopyWith<_$SocialAuthenticationProcessing>
+  _$$SocialAuthenticationProcessingImplCopyWith<
+          _$SocialAuthenticationProcessingImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$SocialAuthenticationSuccessCopyWith<$Res> {
-  factory _$$SocialAuthenticationSuccessCopyWith(
-          _$SocialAuthenticationSuccess value,
-          $Res Function(_$SocialAuthenticationSuccess) then) =
-      __$$SocialAuthenticationSuccessCopyWithImpl<$Res>;
+abstract class _$$SocialAuthenticationSuccessImplCopyWith<$Res> {
+  factory _$$SocialAuthenticationSuccessImplCopyWith(
+          _$SocialAuthenticationSuccessImpl value,
+          $Res Function(_$SocialAuthenticationSuccessImpl) then) =
+      __$$SocialAuthenticationSuccessImplCopyWithImpl<$Res>;
   @useResult
   $Res call({SocialAuthenticationProvider provider});
 }
 
 /// @nodoc
-class __$$SocialAuthenticationSuccessCopyWithImpl<$Res>
+class __$$SocialAuthenticationSuccessImplCopyWithImpl<$Res>
     extends _$SocialAuthenticationStateCopyWithImpl<$Res,
-        _$SocialAuthenticationSuccess>
-    implements _$$SocialAuthenticationSuccessCopyWith<$Res> {
-  __$$SocialAuthenticationSuccessCopyWithImpl(
-      _$SocialAuthenticationSuccess _value,
-      $Res Function(_$SocialAuthenticationSuccess) _then)
+        _$SocialAuthenticationSuccessImpl>
+    implements _$$SocialAuthenticationSuccessImplCopyWith<$Res> {
+  __$$SocialAuthenticationSuccessImplCopyWithImpl(
+      _$SocialAuthenticationSuccessImpl _value,
+      $Res Function(_$SocialAuthenticationSuccessImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -390,7 +393,7 @@ class __$$SocialAuthenticationSuccessCopyWithImpl<$Res>
   $Res call({
     Object? provider = null,
   }) {
-    return _then(_$SocialAuthenticationSuccess(
+    return _then(_$SocialAuthenticationSuccessImpl(
       null == provider
           ? _value.provider
           : provider // ignore: cast_nullable_to_non_nullable
@@ -401,8 +404,8 @@ class __$$SocialAuthenticationSuccessCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$SocialAuthenticationSuccess implements SocialAuthenticationSuccess {
-  const _$SocialAuthenticationSuccess(this.provider);
+class _$SocialAuthenticationSuccessImpl implements SocialAuthenticationSuccess {
+  const _$SocialAuthenticationSuccessImpl(this.provider);
 
   @override
   final SocialAuthenticationProvider provider;
@@ -413,10 +416,10 @@ class _$SocialAuthenticationSuccess implements SocialAuthenticationSuccess {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$SocialAuthenticationSuccess &&
+            other is _$SocialAuthenticationSuccessImpl &&
             (identical(other.provider, provider) ||
                 other.provider == provider));
   }
@@ -427,9 +430,9 @@ class _$SocialAuthenticationSuccess implements SocialAuthenticationSuccess {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$SocialAuthenticationSuccessCopyWith<_$SocialAuthenticationSuccess>
-      get copyWith => __$$SocialAuthenticationSuccessCopyWithImpl<
-          _$SocialAuthenticationSuccess>(this, _$identity);
+  _$$SocialAuthenticationSuccessImplCopyWith<_$SocialAuthenticationSuccessImpl>
+      get copyWith => __$$SocialAuthenticationSuccessImplCopyWithImpl<
+          _$SocialAuthenticationSuccessImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -514,31 +517,32 @@ abstract class SocialAuthenticationSuccess
     implements SocialAuthenticationState {
   const factory SocialAuthenticationSuccess(
           final SocialAuthenticationProvider provider) =
-      _$SocialAuthenticationSuccess;
+      _$SocialAuthenticationSuccessImpl;
 
   SocialAuthenticationProvider get provider;
   @JsonKey(ignore: true)
-  _$$SocialAuthenticationSuccessCopyWith<_$SocialAuthenticationSuccess>
+  _$$SocialAuthenticationSuccessImplCopyWith<_$SocialAuthenticationSuccessImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$SocialAuthenticationErrorCopyWith<$Res> {
-  factory _$$SocialAuthenticationErrorCopyWith(
-          _$SocialAuthenticationError value,
-          $Res Function(_$SocialAuthenticationError) then) =
-      __$$SocialAuthenticationErrorCopyWithImpl<$Res>;
+abstract class _$$SocialAuthenticationErrorImplCopyWith<$Res> {
+  factory _$$SocialAuthenticationErrorImplCopyWith(
+          _$SocialAuthenticationErrorImpl value,
+          $Res Function(_$SocialAuthenticationErrorImpl) then) =
+      __$$SocialAuthenticationErrorImplCopyWithImpl<$Res>;
   @useResult
   $Res call({Object failure, SocialAuthenticationProvider provider});
 }
 
 /// @nodoc
-class __$$SocialAuthenticationErrorCopyWithImpl<$Res>
+class __$$SocialAuthenticationErrorImplCopyWithImpl<$Res>
     extends _$SocialAuthenticationStateCopyWithImpl<$Res,
-        _$SocialAuthenticationError>
-    implements _$$SocialAuthenticationErrorCopyWith<$Res> {
-  __$$SocialAuthenticationErrorCopyWithImpl(_$SocialAuthenticationError _value,
-      $Res Function(_$SocialAuthenticationError) _then)
+        _$SocialAuthenticationErrorImpl>
+    implements _$$SocialAuthenticationErrorImplCopyWith<$Res> {
+  __$$SocialAuthenticationErrorImplCopyWithImpl(
+      _$SocialAuthenticationErrorImpl _value,
+      $Res Function(_$SocialAuthenticationErrorImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -547,7 +551,7 @@ class __$$SocialAuthenticationErrorCopyWithImpl<$Res>
     Object? failure = null,
     Object? provider = null,
   }) {
-    return _then(_$SocialAuthenticationError(
+    return _then(_$SocialAuthenticationErrorImpl(
       null == failure ? _value.failure : failure,
       null == provider
           ? _value.provider
@@ -559,8 +563,8 @@ class __$$SocialAuthenticationErrorCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$SocialAuthenticationError implements SocialAuthenticationError {
-  const _$SocialAuthenticationError(this.failure, this.provider);
+class _$SocialAuthenticationErrorImpl implements SocialAuthenticationError {
+  const _$SocialAuthenticationErrorImpl(this.failure, this.provider);
 
   @override
   final Object failure;
@@ -573,10 +577,10 @@ class _$SocialAuthenticationError implements SocialAuthenticationError {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$SocialAuthenticationError &&
+            other is _$SocialAuthenticationErrorImpl &&
             const DeepCollectionEquality().equals(other.failure, failure) &&
             (identical(other.provider, provider) ||
                 other.provider == provider));
@@ -589,9 +593,9 @@ class _$SocialAuthenticationError implements SocialAuthenticationError {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$SocialAuthenticationErrorCopyWith<_$SocialAuthenticationError>
-      get copyWith => __$$SocialAuthenticationErrorCopyWithImpl<
-          _$SocialAuthenticationError>(this, _$identity);
+  _$$SocialAuthenticationErrorImplCopyWith<_$SocialAuthenticationErrorImpl>
+      get copyWith => __$$SocialAuthenticationErrorImplCopyWithImpl<
+          _$SocialAuthenticationErrorImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -675,11 +679,11 @@ class _$SocialAuthenticationError implements SocialAuthenticationError {
 abstract class SocialAuthenticationError implements SocialAuthenticationState {
   const factory SocialAuthenticationError(
           final Object failure, final SocialAuthenticationProvider provider) =
-      _$SocialAuthenticationError;
+      _$SocialAuthenticationErrorImpl;
 
   Object get failure;
   SocialAuthenticationProvider get provider;
   @JsonKey(ignore: true)
-  _$$SocialAuthenticationErrorCopyWith<_$SocialAuthenticationError>
+  _$$SocialAuthenticationErrorImplCopyWith<_$SocialAuthenticationErrorImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

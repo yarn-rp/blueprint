@@ -73,14 +73,13 @@ class TaskRepository {
           (platforms) => tasksSubCollection.snapshots().map(
                 (tasks) => tasks.docs.map((task) {
                   final taskEntity = task.data();
+
                   final taskPlatform = platforms.firstWhere(
-                    (platform) =>
-                        platform.id == taskEntity.project.platformName,
+                    (platform) => platform.id == taskEntity.access.platformId,
                   );
+
                   return taskEntity.copyWith(
-                    project: taskEntity.project.copyWith(
-                      platform: taskPlatform,
-                    ),
+                    access: taskEntity.access.withPlatform(taskPlatform),
                   );
                 }),
               ),
@@ -121,7 +120,7 @@ class TaskRepository {
         if (platformId != null) {
           taskList = taskList
               .where(
-                (task) => task.project.platform?.id == platformId,
+                (task) => task.access.platformId == platformId,
               )
               .toList();
         }

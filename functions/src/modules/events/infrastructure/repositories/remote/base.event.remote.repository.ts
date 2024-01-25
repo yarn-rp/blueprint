@@ -1,6 +1,7 @@
 import { Firestore } from "firebase-admin/firestore";
-import { Event, PlatformName } from "../../../domain/entities";
+import { Event, PlatformId } from "../../../domain/entities";
 import { EventRemoteRepository } from "../../../domain/repositories/remote/event.remote.repository";
+import { Access, AccessPublicData } from "../../../../authenticators/domain/entities";
 
 /**
  * An abstract base class for EventRemoteRepository implementations.
@@ -24,7 +25,7 @@ export abstract class BaseEventRemoteRepository<RemoteEvent> implements EventRem
    * @param authenticatorId - The ID of the authenticator.
    * @returns The access token as a Promise.
    */
-  private async getAccess(uid: string, authenticatorId: string): Promise<string> {
+  private async getAccess(uid: string, authenticatorId: string): Promise<Access> {
     const accessFirestoreDoc = await this.firestore
       .collection("users")
       .doc(uid)
@@ -32,8 +33,8 @@ export abstract class BaseEventRemoteRepository<RemoteEvent> implements EventRem
       .doc(authenticatorId)
       .get();
 
-    const accessToken: string = accessFirestoreDoc.get("accessToken");
-    return accessToken;
+    const data = await accessFirestoreDoc.data();
+    return data as Access;
   }
 
   /**
@@ -49,7 +50,7 @@ export abstract class BaseEventRemoteRepository<RemoteEvent> implements EventRem
    * Platform name to indicate which platform the remote repository
    * is interacting with.
    */
-  abstract platformName: PlatformName;
+  abstract platformName: PlatformId;
 
   /**
    * Retrieves events from a remote source and maps them to domain entities.
@@ -60,13 +61,19 @@ export abstract class BaseEventRemoteRepository<RemoteEvent> implements EventRem
    * @returns A Promise containing an array of Event entities.
    */
   async pull(uid: string, authenticatorId: string): Promise<Event[]> {
-    const accessToken = await this.getAccess(uid, authenticatorId);
-    const nativeTasks = await this.getEvents(accessToken);
+    const access = await this.getAccess(uid, authenticatorId);
+    const nativeTasks = await this.getEvents(access.accessToken);
+    console.log("nativeTasks", nativeTasks);
     // using bind since iterative methods like map and forEach
     // don't preserve the this context
     // @see {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array#iterative_methods}
     // for more information
-    return nativeTasks.map(this.mapper.fromRemoteEvent.bind(this.mapper));
+    return nativeTasks.map((element) => {
+      return this.mapper.fromRemoteEvent(element, {
+        platformId: access.platformId,
+        user: access.user,
+      });
+    });
   }
 }
 
@@ -78,5 +85,5 @@ export interface Mapper<RemoteEvent> {
    * Maps a RemoteEvent object to an Event entity.
    * @param remoteEvent - The RemoteEvent object to map.
    */
-  fromRemoteEvent(remoteEvent: RemoteEvent): Event;
+  fromRemoteEvent(remoteEvent: RemoteEvent, accessData: AccessPublicData): Event;
 }
