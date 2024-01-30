@@ -41,12 +41,23 @@ export class PullEventsUseCase {
   async execute(platform: PlatformId, uid: string, authenticatorId: string): Promise<void> {
     console.log("Pulling events for platform: ", platform);
     const remoteRepo = this.remoteFactory.buildFor(platform);
-
-    // const lastEventOrNone = await this.eventRepository.fetchLastFromPlatform(platform, uid);
-
     await this.refreshToken.execute(uid, authenticatorId);
+
+    const oldEvents = await this.eventRepository.fetchFromAuthenticator(uid, authenticatorId);
     const events: Event[] = await remoteRepo.pull(uid, authenticatorId, undefined);
 
-    await this.eventRepository.add(events, uid);
+    // get new and updated events to add to the local repository
+    const newEvents = events.filter((event) => !oldEvents.some((oldEvent) => oldEvent.eventId === event.eventId));
+    console.log({ newEvents });
+    const updatedEvents = events.filter((event) => oldEvents.some((oldEvent) => oldEvent.eventId === event.eventId));
+    console.log({ updatedEvents });
+    const eventsToKeep = [...newEvents, ...updatedEvents];
+
+    // get events to remove from the local repository
+    const eventsToRemove = oldEvents.filter((oldEvent) => !events.some((event) => event.eventId === oldEvent.eventId));
+    console.log({ eventsToRemove });
+
+    await this.eventRepository.set(eventsToKeep, uid);
+    await this.eventRepository.remove(eventsToRemove, uid);
   }
 }

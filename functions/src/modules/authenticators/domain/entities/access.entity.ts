@@ -12,4 +12,4 @@ export interface Access {
 /**
  * Public access information to fetch data from platformId.
  */
-export type AccessPublicData = Omit<Access, "accessToken" | "refreshToken" | "type">;
+export type AccessPublicData = Omit<Access, "accessToken" | "refreshToken" | "type"> & { authenticatorId: string };

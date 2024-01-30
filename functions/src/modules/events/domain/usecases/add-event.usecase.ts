@@ -24,6 +24,6 @@ export class AddEventUseCase {
    * has been added to the repository.
    */
   async execute(event: Event, uid: string): Promise<void> {
-    await this.eventLocalRepository.add([event], uid);
+    await this.eventLocalRepository.set([event], uid);
   }
 }

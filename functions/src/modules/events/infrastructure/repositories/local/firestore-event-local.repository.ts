@@ -9,7 +9,7 @@ import { eventConverter } from "./converters/event.converter";
 export class FirestoreEventLocalRepository implements EventLocalRepository {
   constructor(@inject("firestore") private readonly firestore: Firestore) {}
 
-  async add(events: Event[], uid: string): Promise<void> {
+  async set(events: Event[], uid: string): Promise<void> {
     const batch = this.firestore.batch();
     events.forEach((event) => {
       const eventRef = this.firestore
@@ -22,6 +22,33 @@ export class FirestoreEventLocalRepository implements EventLocalRepository {
     });
 
     await batch.commit();
+  }
+
+  async remove(events: Event[], uid: string): Promise<void> {
+    const batch = this.firestore.batch();
+    events.forEach((event) => {
+      const eventRef = this.firestore
+        .collection("users")
+        .doc(uid)
+        .collection("events")
+        .withConverter(eventConverter)
+        .doc(`${event.access.platformId}-${event.eventId}`);
+      batch.delete(eventRef);
+    });
+    await batch.commit();
+  }
+
+  async fetchFromAuthenticator(uid: string, authenticatorId: string): Promise<Event[]> {
+    const eventQuerySnapshot = await this.firestore
+      .collection("users")
+      .doc(uid)
+      .collection("events")
+      .withConverter(eventConverter)
+      .where("access.authenticatorId", "==", authenticatorId)
+      .get();
+
+    const events = eventQuerySnapshot.docs.map((doc) => doc.data() as Event);
+    return events;
   }
 
   async fetchLastFromPlatform(platform: PlatformId, uid: string): Promise<Event | undefined> {

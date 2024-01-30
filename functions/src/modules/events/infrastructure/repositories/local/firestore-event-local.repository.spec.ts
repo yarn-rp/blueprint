@@ -36,7 +36,7 @@ describe("FirestoreEventLocalRepository", () => {
     it("adds events to firestore in batch", async () => {
       const events = Array<Event>(4).fill(testEvent);
       const uid = "test-uid";
-      await repo.add(events, uid);
+      await repo.set(events, uid);
 
       expect(firestoreMock.collection).toHaveBeenCalledWith("events");
       expect(firestoreMock.set).toHaveBeenCalledTimes(4);
