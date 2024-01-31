@@ -45,6 +45,11 @@ export class GoogleOAuthStrategy implements OAuth2Repository {
   }
 
   async refreshToken(oldAuth: Omit<Access, "user">): Promise<Omit<Access, "user">> {
+    // TODO: do this for all platforms
+    if (await this.checkTokenValidity(oldAuth.accessToken)) {
+      console.log("STILL VALID");
+      return oldAuth;
+    }
     try {
       const { data } = await axios.post(
         "https://oauth2.googleapis.com/token",
@@ -89,5 +94,18 @@ export class GoogleOAuthStrategy implements OAuth2Repository {
       email: data.email,
       name: data.name,
     };
+  }
+
+  private async checkTokenValidity(token: string): Promise<boolean> {
+    try {
+      await axios.get("https://www.googleapis.com/oauth2/v1/userinfo?alt=json", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return true;
+    } catch (error) {
+      return false;
+    }
   }
 }
