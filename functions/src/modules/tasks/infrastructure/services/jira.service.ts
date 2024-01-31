@@ -27,6 +27,9 @@ type JiraTask = {
     project: JiraProject;
     creator: JiraApiUser;
   };
+  renderedFields: {
+    description: string;
+  };
 };
 interface JiraProject {
   id: string;
@@ -63,7 +66,7 @@ export class JiraRemoteRepository extends AbstractRemoteRepository<JiraTask> {
   }
 
   private buildSearchUrl(cloudId: string) {
-    return `https://api.atlassian.com/ex/jira/${cloudId}/rest/api/3/search?jql=assignee=currentuser() AND status!=Done`;
+    return `https://api.atlassian.com/ex/jira/${cloudId}/rest/api/3/search?jql=assignee=currentuser() AND StatusCategory!=Done&expand=renderedFields`;
   }
 
   private async getCloudIds(accessToken: string): Promise<{ id: string; url: string }[]> {
@@ -98,34 +101,6 @@ export class JiraRemoteRepository extends AbstractRemoteRepository<JiraTask> {
   }
 }
 
-/**
- * Convert a Jira API issue object to a Task object. In Jira, the description
- * of a field can be separated in multiple parts, so this way we join all the
- * pieces in a single string, separated by new lines or paragraphs if necessary.
- * @param descriptionField - the description field from the Jira
- * API response
- * @returns the description of the task
- */
-function fromJiraApiDescriptionToString(descriptionField?: JiraDescription): string {
-  let description: string;
-
-  if (!descriptionField) {
-    description = "";
-  } else {
-    const descriptionContent = descriptionField.content;
-    description = descriptionContent
-      .map((e) => {
-        const { content } = e;
-        if (!content) {
-          return "";
-        }
-        return content.map((e) => e.text ?? "").join("\n");
-      })
-      .join("\r");
-  }
-
-  return description;
-}
 /**
  * Convert a Jira API status object to a Status object.
  * @param priority - the api priority object
@@ -184,8 +159,8 @@ function getColorHexByName(name: string): string {
   return "#FFC107";
 }
 
-function fromJiraApiUserToUser(user: JiraApiUser): User {
-  const platformURL = new URL(user.self ?? "");
+function fromJiraApiUserToUser(user: JiraApiUser, cloudUrl: string): User {
+  const platformURL = new URL(`${cloudUrl}/jira/people/${user.accountId}`);
   const displayName = user.displayName ?? "";
   const avatarUrl = user.avatarUrls?.["48x48"] ?? "";
 
@@ -330,7 +305,7 @@ function fromJiraApiIssueToTask(jiraIssue: JiraTask): Omit<Task, "access"> {
   const project = fromJiraProjectToProject(fields.project);
 
   const title = fields.summary || "";
-  const description = fromJiraApiDescriptionToString(fields.description);
+  const description = jiraIssue.renderedFields?.description || "";
   const startDate = new Date(fields.startDate as string);
   const dueDate = new Date(fields.dueDate as string);
   const estimatedTime = fields.timeestimate as number | undefined;
@@ -341,11 +316,11 @@ function fromJiraApiIssueToTask(jiraIssue: JiraTask): Omit<Task, "access"> {
   const status = fromJiraApiStatusToStatus(fields.status);
   const priority = fromJiraApiPriorityToPriority(fields.priority);
 
-  const userCreator = fromJiraApiUserToUser(creator);
+  const userCreator = fromJiraApiUserToUser(creator, jiraIssue.self);
   if (userCreator === null) {
     throw new Error("User creator is null");
   }
-  const userAssigned = fromJiraApiUserToUser(assigned);
+  const userAssigned = fromJiraApiUserToUser(assigned, jiraIssue.self);
   const task = {
     id: issueId,
     taskId: issueKey,
