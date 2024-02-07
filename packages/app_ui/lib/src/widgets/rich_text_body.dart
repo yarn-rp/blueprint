@@ -72,6 +72,10 @@ bool isBasicMarkdown(String text) {
   // List of HTML tags that are not supported by flutter_markdown
   // This is a simplified list and may not cover all unsupported tags
   final unsupportedTags = <String>[
+    '<html',
+    '</html>',
+    '<p>',
+    '</p>',
     '<script',
     '</script>',
     '<style',
