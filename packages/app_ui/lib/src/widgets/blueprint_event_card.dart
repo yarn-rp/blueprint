@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:app_ui/app_ui.dart';
 import 'package:flutter/material.dart';
 
@@ -73,13 +75,27 @@ class BlueprintEventCard extends StatelessWidget {
                     horizontal: AppSpacing.lg,
                     vertical: AppSpacing.md,
                   ),
-                  child: Wrap(
-                    runAlignment: WrapAlignment.center,
-                    spacing: AppSpacing.lg,
-                    runSpacing: AppSpacing.lg,
+                  child: Flex(
+                    direction: Axis.horizontal,
                     children: [
-                      ...labels,
-                      ...actions,
+                      Expanded(
+                        child: Wrap(
+                          spacing: AppSpacing.lg,
+                          runSpacing: AppSpacing.lg,
+                          children: labels.sublist(
+                            0,
+                            min(labels.length, 3),
+                          ),
+                        ),
+                      ),
+                      if (actions.isNotEmpty) ...[
+                        Expanded(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: actions,
+                          ),
+                        ),
+                      ]
                     ],
                   ),
                 ),
