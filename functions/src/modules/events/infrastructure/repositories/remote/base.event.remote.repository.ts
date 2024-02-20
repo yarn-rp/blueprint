@@ -72,6 +72,7 @@ export abstract class BaseEventRemoteRepository<RemoteEvent> implements EventRem
       return this.mapper.fromRemoteEvent(element, {
         platformId: access.platformId,
         user: access.user,
+        authenticatorId,
       });
     });
   }

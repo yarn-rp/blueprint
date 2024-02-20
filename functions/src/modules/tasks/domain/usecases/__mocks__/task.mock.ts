@@ -30,6 +30,7 @@ const mockProject: Project = {
 
 export const mockTask: Task = {
   access: {
+    authenticatorId: "1234567890",
     platformId: PlatformId.Jira,
     user: {
       gid: "Mock Username",

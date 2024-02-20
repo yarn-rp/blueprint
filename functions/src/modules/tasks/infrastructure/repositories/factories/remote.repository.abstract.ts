@@ -31,6 +31,7 @@ export abstract class AbstractRemoteRepository<RemoteTask> implements RemoteRepo
       this.mapper(remoteTask, {
         platformId: access.platformId,
         user: access.user,
+        authenticatorId,
       });
 
     return nativeTasks.map(mapperFunction);

@@ -25,6 +25,7 @@ const testConferenceData: ConferenceData = {
 
 export const testEvent: Event = {
   access: {
+    authenticatorId: "test-authenticator-id",
     platformId: PlatformId.GoogleCalendar,
     user: {
       email: "",

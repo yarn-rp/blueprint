@@ -8,7 +8,9 @@ import { testEvent, testUserId } from "./__mocks__/event.mock";
 
 describe("AddEventUseCase", () => {
   const eventsRepoMock: EventLocalRepository = {
-    add: jest.fn(),
+    set: jest.fn(),
+    fetchFromAuthenticator: jest.fn(),
+    remove: jest.fn(),
     fetchLastFromPlatform: jest.fn(),
   };
 
@@ -29,16 +31,16 @@ describe("AddEventUseCase", () => {
 
   it("should call repository to add the event", async () => {
     await addEventUseCase.execute(testEvent, testUserId);
-    expect(eventsRepoMock.add).toHaveBeenCalled;
+    expect(eventsRepoMock.set).toHaveBeenCalled;
   });
 
   it("should call the add method with the event list and " + "the user id", async () => {
     await addEventUseCase.execute(testEvent, testUserId);
-    expect(eventsRepoMock.add).toHaveBeenCalledWith([testEvent], testUserId);
+    expect(eventsRepoMock.set).toHaveBeenCalledWith([testEvent], testUserId);
   });
 
   it("should throw exception when repository throws exception ", async () => {
-    eventsRepoMock.add = jest.fn().mockRejectedValue(new Error("test error"));
+    eventsRepoMock.set = jest.fn().mockRejectedValue(new Error("test error"));
     await expect(addEventUseCase.execute(testEvent, testUserId)).rejects.toThrow("test error");
   });
 });
