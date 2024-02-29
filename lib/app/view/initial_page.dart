@@ -8,6 +8,7 @@ import 'package:blueprint/authentication/state_management/sign_out_cubit/sign_ou
 import 'package:blueprint/users/presentation/widgets/profile_menu.dart';
 import 'package:collapsible_sidebar/collapsible_sidebar.dart';
 import 'package:collection/collection.dart';
+import 'package:feedback/feedback.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -107,9 +108,22 @@ class _InitialPageState extends State<InitialPage> {
                       )
                     : null,
                 appBar: TopAppBar(
-                  trailing: BlocProvider(
-                    create: (context) => sl<SignOutCubit>(),
-                    child: const UserProfileView(),
+                  trailing: Row(
+                    children: [
+                      BlocProvider(
+                        create: (context) => sl<SignOutCubit>(),
+                        child: const UserProfileView(),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          BetterFeedback.of(context)
+                              .show((UserFeedback feedback) {
+                            // Do something with the feedback
+                          });
+                        },
+                        child: Text('Add Feedback'),
+                      ),
+                    ],
                   ),
                 ),
                 body: isPhone

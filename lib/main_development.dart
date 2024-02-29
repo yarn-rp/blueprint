@@ -2,6 +2,7 @@ import 'package:blueprint/app/app.dart';
 import 'package:blueprint/bootstrap.dart';
 import 'package:blueprint/core/env/app_environment.dart';
 import 'package:blueprint/core/firebase_options/firebase_options_dev.dart';
+import 'package:feedback/feedback.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +13,9 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await bootstrap(
-    () => const App(),
+    () => const BetterFeedback(
+      child: App(),
+    ),
     environment: AppEnvironment.development,
   );
 }
