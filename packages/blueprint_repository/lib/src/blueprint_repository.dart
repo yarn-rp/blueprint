@@ -54,20 +54,15 @@ class BlueprintRepository {
     final blueprintSerialized =
         currentBlueprint.map((e) => e.toJson()).toList();
 
-    final generateAIReponse = await _generativeModel.generateContent([
+    final generateAIResponse = await _generativeModel.generateContent([
       Content.user([
-        Part.text(
-          'Help me create a schedule for today. Please keep the events'
-          ' time. We are going to fill the remaining time slots with tasks. '
-          'Also respect the tasks already in the schedule. Include some text '
-          'explaining why you chose the tasks and events.',
-        ),
+        Part.text(userPrompt),
       ]),
     ]);
 
-    print('The response I got is: ${generateAIReponse.text()}');
+    print('The response I got is: ${generateAIResponse.text()}');
 
-    return generateAIReponse.text();
+    return generateAIResponse.text();
   }
 
   /// Return a stream of the current user blueprints.
