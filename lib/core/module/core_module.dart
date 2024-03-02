@@ -2,11 +2,15 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:injectable/injectable.dart';
+import 'package:uuid/uuid.dart';
 
 @module
 abstract class CoreModule {
   @lazySingleton
   FlutterSecureStorage flutterSecureStorage() => const FlutterSecureStorage();
+
+  @lazySingleton
+  Uuid uuid() => const Uuid();
 
   @lazySingleton
   GoogleSignIn googleSignIn() {

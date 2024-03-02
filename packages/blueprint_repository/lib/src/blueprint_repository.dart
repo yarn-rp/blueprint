@@ -45,7 +45,7 @@ class BlueprintRepository {
   ///
   /// This will take the current blueprint and modify it to fit the user's
   /// schedule or prompt.
-  Future<List<BlueprintItem>> generateAIBlueprint(
+  Future<String> generateAIBlueprint(
     String userPrompt,
     List<Task> userTasks,
   ) async {
@@ -65,9 +65,9 @@ class BlueprintRepository {
       ]),
     ]);
 
-    print('The response I got is: ${generateAIReponse}');
+    print('The response I got is: ${generateAIReponse.text()}');
 
-    return currentBlueprint;
+    return generateAIReponse.text();
   }
 
   /// Return a stream of the current user blueprints.

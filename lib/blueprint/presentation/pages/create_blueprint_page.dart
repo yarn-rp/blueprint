@@ -1,6 +1,8 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:blueprint/ai_assistant/presentation/pages/ai_assistant.dart';
+import 'package:blueprint/ai_assistant_chat/presentation/pages/ai_assistant.dart';
+import 'package:blueprint/ai_assistant_chat/state_management/bloc/ai_assistant_chat_bloc.dart';
+import 'package:blueprint/app/dependency_injection/init.dart';
 import 'package:blueprint/app/routes/router/app_router.dart';
 import 'package:blueprint/blueprint/presentation/widgets/create_event_dialog.dart';
 import 'package:blueprint/blueprint/state_management/blueprint_bloc/blueprint_bloc.dart';
@@ -9,7 +11,6 @@ import 'package:blueprint/core/utils/datetime/datetime_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_chat_ui/flutter_chat_ui.dart' as chat;
 import 'package:flutter_portal/flutter_portal.dart';
 
 const _minEventDurationInMinutes = 5;
@@ -20,7 +21,15 @@ class CreateBlueprintPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const _CreateBlueprintView();
+    return BlocProvider.value(
+      value: sl<AiAssistantChatBloc>(
+        param1: <String>[
+          'Hello! I\m your AI assistant.',
+          'I can help you create a blueprint for today.',
+        ].reversed.toList(),
+      ),
+      child: const _CreateBlueprintView(),
+    );
   }
 }
 

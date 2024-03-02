@@ -1,4 +1,5 @@
 import 'package:app_ui/app_ui.dart';
+import 'package:blueprint/ai_assistant_chat/state_management/bloc/ai_assistant_chat_bloc.dart';
 import 'package:blueprint/app/dependency_injection/init.dart';
 import 'package:blueprint/app/routes/routes.dart';
 import 'package:blueprint/authentication/state_management/authentication_cubit/authentication_cubit.dart';
@@ -10,6 +11,7 @@ import 'package:blueprint/tasks/state_management/cubit/tasks_cubit.dart';
 import 'package:blueprint/users/state_management/cubit/user_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter_portal/flutter_portal.dart';
 
 class App extends StatelessWidget {
