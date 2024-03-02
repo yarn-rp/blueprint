@@ -70,7 +70,8 @@ class AiAssistantChatBloc
       ),
     );
 
-    final result = await _blueprintRepository.generateAIBlueprint(
+    final (blueprintPreview, textResult) =
+        await _blueprintRepository.generateAIBlueprint(
       message.text,
       [],
     );
@@ -83,7 +84,7 @@ class AiAssistantChatBloc
             0,
             types.TextMessage(
               id: _uuid.v4(),
-              text: result,
+              text: textResult,
               author: _bot,
             ),
           ),

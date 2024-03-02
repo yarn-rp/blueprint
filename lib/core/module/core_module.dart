@@ -1,8 +1,12 @@
+import 'package:ai_client/ai_client.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:generative_ai_dart/generative_ai_dart.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:injectable/injectable.dart';
 import 'package:uuid/uuid.dart';
+
+const _geminiProModel = 'gemini-pro';
 
 @module
 abstract class CoreModule {
@@ -11,6 +15,16 @@ abstract class CoreModule {
 
   @lazySingleton
   Uuid uuid() => const Uuid();
+
+  @lazySingleton
+  AiClient aiClient() => AiClient(
+        generativeModel: GenerativeModel(
+          apiKey: 'AIzaSyCF5ytyGfjz_fsZz6EMrH39Q3yLJMUpHSk',
+          params: ModelParams(
+            model: _geminiProModel,
+          ),
+        ),
+      );
 
   @lazySingleton
   GoogleSignIn googleSignIn() {

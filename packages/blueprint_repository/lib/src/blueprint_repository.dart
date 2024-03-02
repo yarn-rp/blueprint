@@ -1,6 +1,6 @@
+import 'package:ai_client/ai_client.dart';
 import 'package:blueprint_repository/src/entities/entities.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:generative_ai_dart/generative_ai_dart.dart';
 import 'package:integrations_repository/integrations_repository.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:task_repository/task_repository.dart';
@@ -16,10 +16,10 @@ class BlueprintRepository {
   BlueprintRepository({
     required Stream<String?> currentUserIdStream,
     required FirebaseFirestore firestore,
-    required GenerativeModel generativeModel,
+    required AiClient aiClient,
     required this.platformsStream,
   }) {
-    _generativeModel = generativeModel;
+    _aiClient = aiClient;
     _currentUserIdStream = BehaviorSubject<String?>();
     currentUserIdStream.listen((event) {
       _currentUserIdStream.add(event);
@@ -31,7 +31,7 @@ class BlueprintRepository {
 
   late final CollectionReference _usersCollection;
 
-  late final GenerativeModel _generativeModel;
+  late final AiClient _aiClient;
 
   /// Stream of all platforms.
   final Stream<Iterable<Platform>> platformsStream;
@@ -45,7 +45,7 @@ class BlueprintRepository {
   ///
   /// This will take the current blueprint and modify it to fit the user's
   /// schedule or prompt.
-  Future<String> generateAIBlueprint(
+  Future<(List<BlueprintItem>, String)> generateAIBlueprint(
     String userPrompt,
     List<Task> userTasks,
   ) async {
@@ -54,15 +54,15 @@ class BlueprintRepository {
     final blueprintSerialized =
         currentBlueprint.map((e) => e.toJson()).toList();
 
-    final generateAIResponse = await _generativeModel.generateContent([
-      Content.user([
-        Part.text(userPrompt),
-      ]),
-    ]);
+    final generateAIResponse = await _aiClient.generateContentString(
+      content: userPrompt,
+      metadata: {
+        'blueprint': blueprintSerialized,
+        'tasks': userTasks.map((e) => e.toJson()).toList(),
+      },
+    );
 
-    print('The response I got is: ${generateAIResponse.text()}');
-
-    return generateAIResponse.text();
+    return (currentBlueprint, generateAIResponse);
   }
 
   /// Return a stream of the current user blueprints.

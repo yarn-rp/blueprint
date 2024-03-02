@@ -8,6 +8,8 @@ environment:
   flutter: 3.13.6
 
 dependencies:
+  ai_client:
+    path: ./packages/ai_client
   app_ui:
     path: ./packages/app_ui
   authentication_repository:
