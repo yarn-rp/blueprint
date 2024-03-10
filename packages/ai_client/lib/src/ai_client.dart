@@ -20,9 +20,12 @@ class AiClient {
   }) async {
     final metadataSerialized = jsonEncode(metadata);
 
-    final generateAIResponse = await _generativeModel.generateContent([
-      Content.user([Part.text(content), Part.text(metadataSerialized)]),
+    final userContent = Content.user([
+      Part.text('$content\n$metadataSerialized'),
     ]);
+
+    final generateAIResponse =
+        await _generativeModel.generateContent([userContent]);
 
     return generateAIResponse.text();
   }

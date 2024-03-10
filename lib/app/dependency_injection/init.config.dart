@@ -95,16 +95,16 @@ extension GetItInjectableX on _i1.GetIt {
       registerFor: {_local},
     );
     gh.singleton<_i5.FirebaseOptions>(
+      firebaseModule.stagingFirebaseOptions,
+      registerFor: {_stg},
+    );
+    gh.singleton<_i5.FirebaseOptions>(
       firebaseModule.developmentFirebaseOptions,
       registerFor: {_dev},
     );
     gh.singleton<_i5.FirebaseOptions>(
       firebaseModule.productionFirebaseOptions,
       registerFor: {_prod},
-    );
-    gh.singleton<_i5.FirebaseOptions>(
-      firebaseModule.stagingFirebaseOptions,
-      registerFor: {_stg},
     );
     gh.lazySingleton<_i6.FlutterSecureStorage>(
         () => coreModule.flutterSecureStorage());
@@ -183,6 +183,7 @@ extension GetItInjectableX on _i1.GetIt {
     ) =>
         aIAssistantChatModule.aiAssistantChatBloc(
           gh<_i22.BlueprintRepository>(),
+          gh<_i18.TaskRepository>(),
           gh<_i9.Uuid>(),
           initialBotMessages,
         ));

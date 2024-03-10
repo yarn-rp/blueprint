@@ -11,10 +11,8 @@ _$EventBlueprintItemImpl _$$EventBlueprintItemImplFromJson(
     _$EventBlueprintItemImpl(
       value: Event.fromJson(json['value'] as Map<String, dynamic>),
       id: json['id'] as String,
-      startTime:
-          const TimestampConverter().fromJson(json['startTime'] as Timestamp),
-      endTime:
-          const TimestampConverter().fromJson(json['endTime'] as Timestamp),
+      startTime: const TimestampConverter().fromJson(json['startTime']),
+      endTime: const TimestampConverter().fromJson(json['endTime']),
       $type: json['runtimeType'] as String?,
     );
 
@@ -33,10 +31,8 @@ _$TaskBlueprintItemImpl _$$TaskBlueprintItemImplFromJson(
     _$TaskBlueprintItemImpl(
       value: Task.fromJson(json['value'] as Map<String, dynamic>),
       id: json['id'] as String,
-      startTime:
-          const TimestampConverter().fromJson(json['startTime'] as Timestamp),
-      endTime:
-          const TimestampConverter().fromJson(json['endTime'] as Timestamp),
+      startTime: const TimestampConverter().fromJson(json['startTime']),
+      endTime: const TimestampConverter().fromJson(json['endTime']),
       $type: json['runtimeType'] as String?,
     );
 

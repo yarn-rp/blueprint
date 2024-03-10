@@ -219,6 +219,9 @@ class _MessageTextField extends StatelessWidget {
         textCapitalization: TextCapitalization.sentences,
         focusNode: textEditingFocusNode,
         controller: textEditingController,
+        maxLines: 5,
+        minLines: 1,
+        textInputAction: TextInputAction.send,
         decoration: InputDecoration(
           hintText: 'Type a message',
           border: const OutlineInputBorder(),

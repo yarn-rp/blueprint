@@ -73,11 +73,11 @@ class _CreateBlueprintView extends StatelessWidget {
           child: Row(
             children: [
               Expanded(
-                flex: 4,
+                flex: 6,
                 child: _Timeline(),
               ),
               Expanded(
-                flex: 2,
+                flex: 4,
                 child: AIAssistantChat(),
               ),
             ],
