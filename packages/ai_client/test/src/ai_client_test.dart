@@ -9,9 +9,18 @@ class MockGenerativeModel extends Mock implements GenerativeModel {}
 
 void main() {
   group('AiClient', () {
-    test('can be instantiated', () {
-      final aiClient = AiClient(generativeModel: MockGenerativeModel());
-      expect(aiClient, isNotNull);
+    group('GeminiClient', () {
+      late GenerativeModel generativeModel;
+      late AiClient aiClient;
+
+      setUp(() {
+        generativeModel = MockGenerativeModel();
+        aiClient = GeminiAiClient(generativeModel: generativeModel);
+      });
+
+      test('isA AiClient', () {
+        expect(aiClient, isA<AiClient>());
+      });
     });
   });
 }

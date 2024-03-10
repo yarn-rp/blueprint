@@ -17,7 +17,7 @@ abstract class CoreModule {
   Uuid uuid() => const Uuid();
 
   @lazySingleton
-  AiClient aiClient() => AiClient(
+  AiClient aiClient() => GeminiAiClient(
         generativeModel: GenerativeModel(
           apiKey: 'AIzaSyCF5ytyGfjz_fsZz6EMrH39Q3yLJMUpHSk',
           params: ModelParams(
