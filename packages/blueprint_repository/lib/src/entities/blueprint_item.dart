@@ -1,6 +1,5 @@
 import 'package:blueprint_repository/src/converter/timestamp_converter.dart';
 import 'package:calendar_repository/calendar_repository.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:task_repository/task_repository.dart';
 

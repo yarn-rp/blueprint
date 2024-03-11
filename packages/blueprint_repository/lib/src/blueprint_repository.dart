@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:ai_client/ai_client.dart';
 import 'package:blueprint_repository/src/entities/entities.dart';
@@ -240,34 +241,29 @@ class BlueprintRepository {
           return snapshot.docs.map((doc) {
             final data = doc.data();
 
-            try {
-              final blueprintItem = BlueprintItem.fromJson(data);
+            final blueprintItem = BlueprintItem.fromJson(data);
 
-              final platform = platforms.firstWhere(
-                (element) =>
-                    element.id ==
-                    blueprintItem.map(
-                      event: (event) => event.value.access.platformId,
-                      task: (task) => task.value.access.platformId,
-                    ),
-              );
+            final platform = platforms.firstWhere(
+              (element) =>
+                  element.id ==
+                  blueprintItem.map(
+                    event: (event) => event.value.access.platformId,
+                    task: (task) => task.value.access.platformId,
+                  ),
+            );
 
-              return blueprintItem.map(
-                event: (event) => event.copyWith(
-                  value: event.value.copyWith(
-                    access: event.value.access.withPlatform(platform),
-                  ),
+            return blueprintItem.map(
+              event: (event) => event.copyWith(
+                value: event.value.copyWith(
+                  access: event.value.access.withPlatform(platform),
                 ),
-                task: (task) => task.copyWith(
-                  value: task.value.copyWith(
-                    access: task.value.access.withPlatform(platform),
-                  ),
+              ),
+              task: (task) => task.copyWith(
+                value: task.value.copyWith(
+                  access: task.value.access.withPlatform(platform),
                 ),
-              );
-            } catch (e, s) {
-              print('Blueprint Error: $e StackTrace: $s');
-              rethrow;
-            }
+              ),
+            );
           }).toList();
         });
       });

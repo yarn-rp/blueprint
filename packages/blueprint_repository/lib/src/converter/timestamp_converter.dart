@@ -6,24 +6,19 @@ class TimestampConverter implements JsonConverter<DateTime, dynamic> {
 
   @override
   DateTime fromJson(dynamic timestamp) {
-    try {
-      if (timestamp is Timestamp) {
-        return timestamp.toDate();
-      }
-
-      if (timestamp is DateTime) {
-        return timestamp;
-      }
-
-      if (timestamp is String) {
-        return DateTime.parse(timestamp);
-      }
-
-      throw Exception('TimestampConverter: fromJson: unknown type');
-    } catch (e) {
-      print('TimestampConverter: fromJson: $e');
-      rethrow;
+    if (timestamp is Timestamp) {
+      return timestamp.toDate();
     }
+
+    if (timestamp is DateTime) {
+      return timestamp;
+    }
+
+    if (timestamp is String) {
+      return DateTime.parse(timestamp);
+    }
+
+    throw Exception('TimestampConverter: fromJson: unknown type');
   }
 
   @override
@@ -32,16 +27,3 @@ class TimestampConverter implements JsonConverter<DateTime, dynamic> {
     return Timestamp.fromDate(date);
   }
 }
-
-// class TimestampOrNullConverter implements JsonConverter<DateTime?, Timestamp?> {
-//   const TimestampOrNullConverter();
-
-//   @override
-//   DateTime? fromJson(Timestamp? timestamp) {
-//     return timestamp?.toDate();
-//   }
-
-//   @override
-//   Timestamp? toJson(DateTime? date) =>
-//       date == null ? null : Timestamp.fromDate(date);
-// }
