@@ -17,14 +17,19 @@ abstract class CoreModule {
   Uuid uuid() => const Uuid();
 
   @lazySingleton
-  AiClient aiClient() => GeminiAiClient(
-        generativeModel: GenerativeModel(
-          apiKey: 'AIzaSyCF5ytyGfjz_fsZz6EMrH39Q3yLJMUpHSk',
-          params: ModelParams(
-            model: _geminiProModel,
-          ),
-        ),
+  AiClient aiClient() => ChatGPTAiClient(
+        apiKey: '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',
       );
+
+  // @lazySingleton
+  // AiClient aiClient() => GeminiAiClient(
+  //       generativeModel: GenerativeModel(
+  //         apiKey: 'AIzaSyCF5ytyGfjz_fsZz6EMrH39Q3yLJMUpHSk',
+  //         params: ModelParams(
+  //           model: _geminiProModel,
+  //         ),
+  //       ),
+  //     );
 
   @lazySingleton
   GoogleSignIn googleSignIn() {

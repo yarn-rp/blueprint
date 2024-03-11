@@ -21,6 +21,7 @@ dependencies:
   cached_network_image: ^3.2.3
   calendar_repository:
     path: ./packages/calendar_repository
+  chat_gpt_sdk: ^2.2.5
   cloud_firestore: ^4.12.1
   cloud_functions: ^4.5.2
   collapsible_sidebar: ^2.0.3+3

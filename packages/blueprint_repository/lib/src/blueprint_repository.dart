@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:ai_client/ai_client.dart';
 import 'package:blueprint_repository/src/entities/entities.dart';
+import 'package:blueprint_repository/src/extension/date_extension.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:integrations_repository/integrations_repository.dart';
 import 'package:rxdart/rxdart.dart';
@@ -162,13 +163,7 @@ class BlueprintRepository {
           currentBlueprint
               .where(
                 (element) => element.startTime.isAfter(
-                  DateTime.now().copyWith(
-                    hour: 0,
-                    minute: 0,
-                    second: 0,
-                    millisecond: 0,
-                    microsecond: 0,
-                  ),
+                  DateTime.now().startOfDay,
                 ),
               )
               .toList(),
@@ -187,40 +182,42 @@ class BlueprintRepository {
         jsonEnd + 1,
       );
 
-      print('AI Response: $generateAIResponseJson');
-
-      final parsedResponse =
+      final decodedResponse =
           await jsonDecode(generateAIResponseJson) as Map<String, dynamic>;
 
-      final items = (parsedResponse['items'] as List).map(
-        (e) {
-          final id = e['taskId'] as String;
-          final startTime = DateTime.parse(e['startTime'] as String);
-          final endTime = DateTime.parse(e['endTime'] as String);
+      final items = (decodedResponse['items'] as List).map(
+        (e) => _parseAIResponseItems(e as Map<String, dynamic>, userTasks),
+      );
 
-          final task = userTasks.firstWhere(
-            (element) => element.id == id,
-          );
+      final reason = decodedResponse['reason'] as String;
 
-          return BlueprintItem.task(
-            value: task,
-            id: id,
-            startTime: startTime,
-            endTime: endTime,
-          );
-        },
-      ).toList();
-
-      final reason = parsedResponse['reason'] as String;
-
-      return (items, reason);
+      return (items.toList(), reason);
     } catch (error, stackTrace) {
-      print('Error generating AI blueprint: $error $stackTrace');
       return Error.throwWithStackTrace(
         error,
         stackTrace,
       );
     }
+  }
+
+  BlueprintItem _parseAIResponseItems(
+    Map<String, dynamic> item,
+    List<Task> userTasks,
+  ) {
+    final id = item['taskId'] as String;
+    final startTime = DateTime.parse(item['startTime'] as String);
+    final endTime = DateTime.parse(item['endTime'] as String);
+
+    final task = userTasks.firstWhere(
+      (element) => element.id == id,
+    );
+
+    return BlueprintItem.task(
+      value: task,
+      id: id,
+      startTime: startTime,
+      endTime: endTime,
+    );
   }
 
   /// Return a stream of the current user blueprints.
@@ -242,7 +239,7 @@ class BlueprintRepository {
         return blueprintSubCollection.snapshots().map((snapshot) {
           return snapshot.docs.map((doc) {
             final data = doc.data();
-            print('Blueprint Data: $data');
+
             try {
               final blueprintItem = BlueprintItem.fromJson(data);
 
