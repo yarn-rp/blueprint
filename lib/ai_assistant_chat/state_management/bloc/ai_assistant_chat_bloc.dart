@@ -85,12 +85,6 @@ class AiAssistantChatBloc
       );
 
       for (final item in blueprintPreview) {
-        final taskData = {
-          'task': (item.value as Task).title,
-          'startTime': item.startTime,
-          'endTime': item.endTime,
-        };
-        print('Adding blueprint item: ${taskData}');
         await _blueprintRepository.addBlueprintItem(
           task: item.value as Task,
           startTime: item.startTime,
@@ -113,8 +107,8 @@ class AiAssistantChatBloc
         ),
       );
     } catch (error, stackTrace) {
-      print('Error: $error, StackTrace: $stackTrace');
       addError(error, stackTrace);
+      emit(state.copyWith(botIsTyping: false));
     }
   }
 }

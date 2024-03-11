@@ -6,8 +6,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:injectable/injectable.dart';
 import 'package:integrations_repository/integrations_repository.dart';
 
-const _geminiProModel = 'gemini-pro';
-
 @module
 abstract class BlueprintModule {
   @lazySingleton

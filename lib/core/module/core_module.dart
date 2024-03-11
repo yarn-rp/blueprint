@@ -1,12 +1,11 @@
 import 'package:ai_client/ai_client.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:generative_ai_dart/generative_ai_dart.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:injectable/injectable.dart';
 import 'package:uuid/uuid.dart';
 
-const _geminiProModel = 'gemini-pro';
+// const _geminiProModel = 'gemini-pro';
 
 @module
 abstract class CoreModule {

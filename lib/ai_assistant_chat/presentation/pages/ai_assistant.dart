@@ -174,7 +174,6 @@ class _AIAssistantChatState extends State<AIAssistantChat> {
 
   Widget generateBlueprintActionButton(BuildContext context) {
     final theme = Theme.of(context);
-    final textTheme = theme.textTheme;
 
     return Padding(
       padding: const EdgeInsets.all(8),

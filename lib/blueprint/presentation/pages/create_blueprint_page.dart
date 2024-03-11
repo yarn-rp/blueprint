@@ -24,7 +24,7 @@ class CreateBlueprintPage extends StatelessWidget {
     return BlocProvider.value(
       value: sl<AiAssistantChatBloc>(
         param1: <String>[
-          'Hello! I\m your AI assistant.',
+          "Hello! I'm your AI assistant.",
           'I can help you create a blueprint for today.',
         ].reversed.toList(),
       ),
