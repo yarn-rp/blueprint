@@ -91,20 +91,20 @@ extension GetItInjectableX on _i1.GetIt {
     gh.lazySingleton<_i4.FacebookAuthenticationProvider>(
         () => authenticationModule.facebookAuthenticationProvider());
     gh.singleton<_i5.FirebaseOptions>(
-      firebaseModule.localFirebaseOptions,
+      () => firebaseModule.localFirebaseOptions,
       registerFor: {_local},
     );
     gh.singleton<_i5.FirebaseOptions>(
-      firebaseModule.stagingFirebaseOptions,
+      () => firebaseModule.stagingFirebaseOptions,
       registerFor: {_stg},
     );
     gh.singleton<_i5.FirebaseOptions>(
-      firebaseModule.developmentFirebaseOptions,
-      registerFor: {_dev},
+      () => firebaseModule.productionFirebaseOptions,
+      registerFor: {_prod},
     );
     gh.singleton<_i5.FirebaseOptions>(
-      firebaseModule.productionFirebaseOptions,
-      registerFor: {_prod},
+      () => firebaseModule.developmentFirebaseOptions,
+      registerFor: {_dev},
     );
     gh.lazySingleton<_i6.FlutterSecureStorage>(
         () => coreModule.flutterSecureStorage());
@@ -144,12 +144,12 @@ extension GetItInjectableX on _i1.GetIt {
         .signOutCubit(gh<_i4.AuthenticationRepositoryContract>()));
     gh.factory<_i17.SignUpCubit>(() => authenticationModule
         .signUpCubit(gh<_i4.AuthenticationRepositoryContract>()));
-    gh.singleton<_i18.TaskRepository>(taskModule.taskRepository(
-      gh<_i11.FirebaseFirestore>(),
-      gh<_i12.FirebaseFunctions>(),
-      gh<_i14.IntegrationsRepository>(),
-      gh<_i4.AuthenticationRepositoryContract>(),
-    ));
+    gh.singleton<_i18.TaskRepository>(() => taskModule.taskRepository(
+          gh<_i11.FirebaseFirestore>(),
+          gh<_i12.FirebaseFunctions>(),
+          gh<_i14.IntegrationsRepository>(),
+          gh<_i4.AuthenticationRepositoryContract>(),
+        ));
     gh.factory<_i19.TasksCubit>(() => taskModule.taskCubit(
           gh<_i18.TaskRepository>(),
           gh<_i14.IntegrationsRepository>(),
@@ -167,12 +167,12 @@ extension GetItInjectableX on _i1.GetIt {
               gh<_i4.AuthenticationRepositoryContract>(),
               gh<_i3.AiClient>(),
             ));
-    gh.singleton<_i23.CalendarRepository>(calendarModule.taskRepository(
-      gh<_i11.FirebaseFirestore>(),
-      gh<_i12.FirebaseFunctions>(),
-      gh<_i14.IntegrationsRepository>(),
-      gh<_i4.AuthenticationRepositoryContract>(),
-    ));
+    gh.singleton<_i23.CalendarRepository>(() => calendarModule.taskRepository(
+          gh<_i11.FirebaseFirestore>(),
+          gh<_i12.FirebaseFunctions>(),
+          gh<_i14.IntegrationsRepository>(),
+          gh<_i4.AuthenticationRepositoryContract>(),
+        ));
     gh.lazySingleton<_i24.IntegrationsCubit>(() => integrationsModule
         .integrationsCubit(gh<_i14.IntegrationsRepository>()));
     gh.lazySingleton<_i25.UserCubit>(
