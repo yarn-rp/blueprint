@@ -95,7 +95,7 @@ class BlueprintEventCard extends StatelessWidget {
                             children: actions,
                           ),
                         ),
-                      ]
+                      ],
                     ],
                   ),
                 ),

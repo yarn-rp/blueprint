@@ -146,11 +146,7 @@ class BlueprintRepository {
         (e) => _parseAIResponseItems(e as Map<String, dynamic>, userTasks),
       );
 
-      print('items: $items');
-
       final reason = decodedResponse['reason'] as String;
-
-      print('reason: $reason');
 
       return (items.toList(), reason);
     } catch (error, stackTrace) {
@@ -263,7 +259,6 @@ class BlueprintRepository {
 
   /// Sets the preview items.
   void setPreview(List<BlueprintItem> items) {
-    print('setting preview items: $items');
     _previewChanges.value = items
         .map(
           (e) => e.copyWith(isPreview: true),

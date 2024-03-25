@@ -525,7 +525,6 @@ class _EditableTimelineState extends State<EditableTimeline>
                 isPreview: appointment.isPreview,
               ),
               color: appointment.color,
-              actions: const [],
             );
 
             if (!isTemporaryEvent) {
@@ -547,7 +546,7 @@ class _EditableTimelineState extends State<EditableTimeline>
                       return Positioned(
                         left: constraints.maxWidth / 5,
                         top: min(constraints.maxHeight / 5, 0),
-                        width: constraints.maxWidth / 5 * 3.5,
+                        width: constraints.maxWidth,
                         height: max(constraints.maxHeight / 5, 200) * 3,
                         child: TweenAnimationBuilder<double>(
                           duration: kThemeAnimationDuration,
@@ -560,7 +559,7 @@ class _EditableTimelineState extends State<EditableTimeline>
                             opacity: opacity,
                             child: SizedBox(
                               height: constraints.maxHeight / 5 * 3,
-                              width: constraints.maxWidth / 5 * 3,
+                              width: constraints.maxWidth,
                               child: widget.createEventDialogBuilder?.call(
                                     context,
                                     appointment,

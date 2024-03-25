@@ -5,7 +5,6 @@ import 'package:chat_gpt_sdk/chat_gpt_sdk.dart';
 import 'package:rxdart/rxdart.dart';
 
 const _userRole = 'user';
-const _assistantRole = 'assistant';
 
 /// {@template chat_gpt_ai_client}
 /// A client to interact with the ChatGPT AI model.
@@ -39,7 +38,6 @@ class ChatGPTAiClient implements AiClient {
       // Change the value of the behavior subject to the new thread id.
       _threadId.value = thread.id;
     } catch (e) {
-      print('Error creating thread: $e');
       rethrow;
     }
   }

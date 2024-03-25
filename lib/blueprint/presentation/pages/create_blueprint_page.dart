@@ -38,18 +38,64 @@ class CreateBlueprintPage extends StatelessWidget {
 class _CreateBlueprintView extends StatelessWidget {
   const _CreateBlueprintView();
 
+  void _navigateToTodaysBlueprint(BuildContext context) {
+    AutoRouter.of(context).navigate(
+      const TodaysBlueprintRoute(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final l10n = context.l10n;
 
+    final hasPreviewItems = context.select(
+      (BlueprintBloc bloc) => bloc.state.previewItems.isNotEmpty,
+    );
+
     return Scaffold(
       backgroundColor: theme.colorScheme.background,
       appBar: AppBar(
         leading: BackButton(
-          onPressed: () => AutoRouter.of(context).navigate(
-            const TodaysBlueprintRoute(),
-          ),
+          onPressed: () async {
+            if (!hasPreviewItems) {
+              _navigateToTodaysBlueprint(context);
+              return;
+            }
+
+            final result = await showActionDialog<bool>(
+              context: context,
+              title: l10n.blueprintPendingChangesDialogTitle,
+              content: l10n.blueprintPendingChangesDialogSubtitle,
+              actions: [
+                (
+                  label: l10n.incomingChangesReject,
+                  callback: (context) => Navigator.of(context).pop(false),
+                  color: theme.colorScheme.error,
+                ),
+                (
+                  label: l10n.incomingChangesAccept,
+                  color: theme.colorScheme.primary,
+                  callback: (context) => Navigator.of(context).pop(true),
+                ),
+              ],
+            );
+            if (!context.mounted || result == null) {
+              return;
+            }
+
+            if (result) {
+              context.read<BlueprintBloc>().add(
+                    const PreviewItemsAccepted(),
+                  );
+            } else {
+              context.read<BlueprintBloc>().add(
+                    const PreviewsItemsRejected(),
+                  );
+            }
+
+            _navigateToTodaysBlueprint(context);
+          },
         ),
         centerTitle: false,
         backgroundColor: theme.colorScheme.background,
@@ -135,15 +181,17 @@ class _ActionBar extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                FilledButton.tonal(
+                FilledButton(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                      theme.colorScheme.error,
+                    ),
+                  ),
                   onPressed: () => context.read<BlueprintBloc>().add(
                         const PreviewsItemsRejected(),
                       ),
                   child: Text(
                     l10n.incomingChangesReject,
-                    style: TextStyle(
-                      color: theme.colorScheme.error,
-                    ),
                   ),
                 ),
                 FilledButton(

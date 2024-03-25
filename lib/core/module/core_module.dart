@@ -17,7 +17,7 @@ abstract class CoreModule {
 
   @lazySingleton
   AiClient aiClient() => ChatGPTAiClient(
-        apiKey: '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',
+        apiKey: '<your-api-key-h>',
       );
 
   // @lazySingleton

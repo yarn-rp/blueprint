@@ -25,6 +25,14 @@
     "@blueprintEmptySubtitle": {
         "description": "Subtitle for blueprint empty section"
     },
+    "blueprintPendingChangesDialogTitle": "Not so fast there!",
+    "@blueprintPendingChangesDialogTitle": {
+        "description": "Title for pending changes dialog"
+    },
+    "blueprintPendingChangesDialogSubtitle": "You have unsaved changes. If you go back now, you will lose them. Do you want to accept them and continue?",
+    "@blueprintPendingChangesDialogSubtitle": {
+        "description": "Subtitle for pending changes dialog"
+    },
     "cancel": "Cancel",
     "@cancel": {
         "description": "Cancel word"

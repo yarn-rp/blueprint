@@ -121,7 +121,6 @@ class BlueprintBloc extends Bloc<BlueprintEvent, BlueprintState> {
     emit(state.copyWith(status: BlueprintStatus.loading));
 
     if (event.item.isPreview) {
-      print('updating preview item');
       _blueprintRepository.updatePreviewItem(
         event.item.copyWith(
           startTime: event.startTime,
@@ -132,7 +131,6 @@ class BlueprintBloc extends Bloc<BlueprintEvent, BlueprintState> {
     }
 
     try {
-      print('updating blueprint item');
       await _blueprintRepository.updateBlueprintItem(
         event.item.copyWith(
           startTime: event.startTime,

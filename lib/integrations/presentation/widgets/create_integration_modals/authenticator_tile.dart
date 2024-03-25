@@ -39,12 +39,12 @@ class AuthenticatorTile extends StatelessWidget {
             actions: [
               (
                 label: l10n.cancel,
-                callback: () => Navigator.of(context).pop(),
+                callback: (context) => Navigator.of(context).pop(),
                 color: null,
               ),
               (
                 label: l10n.removeCTA,
-                callback: () => Navigator.of(context).pop(true),
+                callback: (context) => Navigator.of(context).pop(true),
                 color: Theme.of(context).colorScheme.error,
               ),
             ],
