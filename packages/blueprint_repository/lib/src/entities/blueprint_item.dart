@@ -20,6 +20,7 @@ class BlueprintItem with _$BlueprintItem {
     required String id,
     @TimestampConverter() required DateTime startTime,
     @TimestampConverter() required DateTime endTime,
+    @Default(false) bool isPreview,
   }) = EventBlueprintItem;
 
   const factory BlueprintItem.task({
@@ -27,6 +28,7 @@ class BlueprintItem with _$BlueprintItem {
     required String id,
     @TimestampConverter() required DateTime startTime,
     @TimestampConverter() required DateTime endTime,
+    @Default(false) bool isPreview,
   }) = TaskBlueprintItem;
 
   bool get isAllDay => false;

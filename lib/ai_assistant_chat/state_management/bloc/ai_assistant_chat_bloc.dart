@@ -84,13 +84,8 @@ class AiAssistantChatBloc
         _tasks.toList(),
       );
 
-      for (final item in blueprintPreview) {
-        await _blueprintRepository.addBlueprintItem(
-          task: item.value as Task,
-          startTime: item.startTime,
-          endTime: item.endTime,
-        );
-      }
+      /// Set the preview items on the blueprint repository
+      _blueprintRepository.setPreview(blueprintPreview);
 
       emit(
         state.copyWith(

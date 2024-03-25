@@ -32,6 +32,7 @@ class _TodaysTimelineComponentState extends State<TodaysTimelineComponent> {
         endTime: DateTime.now().add(const Duration(hours: 1)),
         color: null,
         type: EventType.meeting,
+        isPreview: false,
       ),
       (
         id: 'test-2',
@@ -40,6 +41,7 @@ class _TodaysTimelineComponentState extends State<TodaysTimelineComponent> {
         endTime: DateTime.now().add(const Duration(hours: 2)),
         color: Colors.amberAccent,
         type: EventType.calendar,
+        isPreview: false,
       ),
       (
         id: 'test-3',
@@ -49,6 +51,7 @@ class _TodaysTimelineComponentState extends State<TodaysTimelineComponent> {
         endTime: DateTime.now().add(const Duration(hours: 4)),
         color: null,
         type: EventType.task,
+        isPreview: false,
       ),
     ];
     super.didChangeDependencies();
@@ -81,6 +84,7 @@ class _TodaysTimelineComponentState extends State<TodaysTimelineComponent> {
                       endTime: endDate,
                       color: event.color,
                       type: event.type,
+                      isPreview: false,
                     );
                   });
                 },

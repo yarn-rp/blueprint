@@ -393,6 +393,7 @@ class _EditableTimelineState extends State<EditableTimeline>
                 endTime: temporaryEvent!.endTime,
                 color: theme.colorScheme.secondary,
                 type: EventType.task,
+                isPreview: true,
               ),
             ...widget.events,
           ]),
@@ -521,7 +522,10 @@ class _EditableTimelineState extends State<EditableTimeline>
                 type: appointment.type,
                 startTime: appointment.startTime.round(minutes: dragUnit),
                 endTime: appointment.endTime.round(minutes: dragUnit),
+                isPreview: appointment.isPreview,
               ),
+              color: appointment.color,
+              actions: const [],
             );
 
             if (!isTemporaryEvent) {
@@ -609,6 +613,7 @@ typedef TodayEvent = ({
   DateTime endTime,
   Color? color,
   EventType type,
+  bool isPreview,
 });
 
 class TodayEventSource extends CalendarDataSource<TodayEvent> {
@@ -647,6 +652,7 @@ class TodayEventSource extends CalendarDataSource<TodayEvent> {
       endTime: appointment.endTime,
       color: customData.color,
       type: customData.type,
+      isPreview: customData.isPreview,
     );
   }
 }

@@ -35,19 +35,22 @@ mixin _$BlueprintItem {
   DateTime get startTime => throw _privateConstructorUsedError;
   @TimestampConverter()
   DateTime get endTime => throw _privateConstructorUsedError;
+  bool get isPreview => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
             Event value,
             String id,
             @TimestampConverter() DateTime startTime,
-            @TimestampConverter() DateTime endTime)
+            @TimestampConverter() DateTime endTime,
+            bool isPreview)
         event,
     required TResult Function(
             Task value,
             String id,
             @TimestampConverter() DateTime startTime,
-            @TimestampConverter() DateTime endTime)
+            @TimestampConverter() DateTime endTime,
+            bool isPreview)
         task,
   }) =>
       throw _privateConstructorUsedError;
@@ -57,13 +60,15 @@ mixin _$BlueprintItem {
             Event value,
             String id,
             @TimestampConverter() DateTime startTime,
-            @TimestampConverter() DateTime endTime)?
+            @TimestampConverter() DateTime endTime,
+            bool isPreview)?
         event,
     TResult? Function(
             Task value,
             String id,
             @TimestampConverter() DateTime startTime,
-            @TimestampConverter() DateTime endTime)?
+            @TimestampConverter() DateTime endTime,
+            bool isPreview)?
         task,
   }) =>
       throw _privateConstructorUsedError;
@@ -73,13 +78,15 @@ mixin _$BlueprintItem {
             Event value,
             String id,
             @TimestampConverter() DateTime startTime,
-            @TimestampConverter() DateTime endTime)?
+            @TimestampConverter() DateTime endTime,
+            bool isPreview)?
         event,
     TResult Function(
             Task value,
             String id,
             @TimestampConverter() DateTime startTime,
-            @TimestampConverter() DateTime endTime)?
+            @TimestampConverter() DateTime endTime,
+            bool isPreview)?
         task,
     required TResult orElse(),
   }) =>
@@ -118,7 +125,8 @@ abstract class $BlueprintItemCopyWith<$Res> {
   $Res call(
       {String id,
       @TimestampConverter() DateTime startTime,
-      @TimestampConverter() DateTime endTime});
+      @TimestampConverter() DateTime endTime,
+      bool isPreview});
 }
 
 /// @nodoc
@@ -137,6 +145,7 @@ class _$BlueprintItemCopyWithImpl<$Res, $Val extends BlueprintItem>
     Object? id = null,
     Object? startTime = null,
     Object? endTime = null,
+    Object? isPreview = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -151,6 +160,10 @@ class _$BlueprintItemCopyWithImpl<$Res, $Val extends BlueprintItem>
           ? _value.endTime
           : endTime // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      isPreview: null == isPreview
+          ? _value.isPreview
+          : isPreview // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -167,7 +180,8 @@ abstract class _$$EventBlueprintItemImplCopyWith<$Res>
       {Event value,
       String id,
       @TimestampConverter() DateTime startTime,
-      @TimestampConverter() DateTime endTime});
+      @TimestampConverter() DateTime endTime,
+      bool isPreview});
 }
 
 /// @nodoc
@@ -185,6 +199,7 @@ class __$$EventBlueprintItemImplCopyWithImpl<$Res>
     Object? id = null,
     Object? startTime = null,
     Object? endTime = null,
+    Object? isPreview = null,
   }) {
     return _then(_$EventBlueprintItemImpl(
       value: null == value
@@ -203,6 +218,10 @@ class __$$EventBlueprintItemImplCopyWithImpl<$Res>
           ? _value.endTime
           : endTime // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      isPreview: null == isPreview
+          ? _value.isPreview
+          : isPreview // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -215,6 +234,7 @@ class _$EventBlueprintItemImpl extends EventBlueprintItem {
       required this.id,
       @TimestampConverter() required this.startTime,
       @TimestampConverter() required this.endTime,
+      this.isPreview = false,
       final String? $type})
       : $type = $type ?? 'event',
         super._();
@@ -232,13 +252,16 @@ class _$EventBlueprintItemImpl extends EventBlueprintItem {
   @override
   @TimestampConverter()
   final DateTime endTime;
+  @override
+  @JsonKey()
+  final bool isPreview;
 
   @JsonKey(name: 'runtimeType')
   final String $type;
 
   @override
   String toString() {
-    return 'BlueprintItem.event(value: $value, id: $id, startTime: $startTime, endTime: $endTime)';
+    return 'BlueprintItem.event(value: $value, id: $id, startTime: $startTime, endTime: $endTime, isPreview: $isPreview)';
   }
 
   @override
@@ -250,12 +273,15 @@ class _$EventBlueprintItemImpl extends EventBlueprintItem {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.startTime, startTime) ||
                 other.startTime == startTime) &&
-            (identical(other.endTime, endTime) || other.endTime == endTime));
+            (identical(other.endTime, endTime) || other.endTime == endTime) &&
+            (identical(other.isPreview, isPreview) ||
+                other.isPreview == isPreview));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, value, id, startTime, endTime);
+  int get hashCode =>
+      Object.hash(runtimeType, value, id, startTime, endTime, isPreview);
 
   @JsonKey(ignore: true)
   @override
@@ -271,16 +297,18 @@ class _$EventBlueprintItemImpl extends EventBlueprintItem {
             Event value,
             String id,
             @TimestampConverter() DateTime startTime,
-            @TimestampConverter() DateTime endTime)
+            @TimestampConverter() DateTime endTime,
+            bool isPreview)
         event,
     required TResult Function(
             Task value,
             String id,
             @TimestampConverter() DateTime startTime,
-            @TimestampConverter() DateTime endTime)
+            @TimestampConverter() DateTime endTime,
+            bool isPreview)
         task,
   }) {
-    return event(value, id, startTime, endTime);
+    return event(value, id, startTime, endTime, isPreview);
   }
 
   @override
@@ -290,16 +318,18 @@ class _$EventBlueprintItemImpl extends EventBlueprintItem {
             Event value,
             String id,
             @TimestampConverter() DateTime startTime,
-            @TimestampConverter() DateTime endTime)?
+            @TimestampConverter() DateTime endTime,
+            bool isPreview)?
         event,
     TResult? Function(
             Task value,
             String id,
             @TimestampConverter() DateTime startTime,
-            @TimestampConverter() DateTime endTime)?
+            @TimestampConverter() DateTime endTime,
+            bool isPreview)?
         task,
   }) {
-    return event?.call(value, id, startTime, endTime);
+    return event?.call(value, id, startTime, endTime, isPreview);
   }
 
   @override
@@ -309,18 +339,20 @@ class _$EventBlueprintItemImpl extends EventBlueprintItem {
             Event value,
             String id,
             @TimestampConverter() DateTime startTime,
-            @TimestampConverter() DateTime endTime)?
+            @TimestampConverter() DateTime endTime,
+            bool isPreview)?
         event,
     TResult Function(
             Task value,
             String id,
             @TimestampConverter() DateTime startTime,
-            @TimestampConverter() DateTime endTime)?
+            @TimestampConverter() DateTime endTime,
+            bool isPreview)?
         task,
     required TResult orElse(),
   }) {
     if (event != null) {
-      return event(value, id, startTime, endTime);
+      return event(value, id, startTime, endTime, isPreview);
     }
     return orElse();
   }
@@ -366,11 +398,11 @@ class _$EventBlueprintItemImpl extends EventBlueprintItem {
 
 abstract class EventBlueprintItem extends BlueprintItem {
   const factory EventBlueprintItem(
-          {required final Event value,
-          required final String id,
-          @TimestampConverter() required final DateTime startTime,
-          @TimestampConverter() required final DateTime endTime}) =
-      _$EventBlueprintItemImpl;
+      {required final Event value,
+      required final String id,
+      @TimestampConverter() required final DateTime startTime,
+      @TimestampConverter() required final DateTime endTime,
+      final bool isPreview}) = _$EventBlueprintItemImpl;
   const EventBlueprintItem._() : super._();
 
   factory EventBlueprintItem.fromJson(Map<String, dynamic> json) =
@@ -386,6 +418,8 @@ abstract class EventBlueprintItem extends BlueprintItem {
   @override
   @TimestampConverter()
   DateTime get endTime;
+  @override
+  bool get isPreview;
   @override
   @JsonKey(ignore: true)
   _$$EventBlueprintItemImplCopyWith<_$EventBlueprintItemImpl> get copyWith =>
@@ -404,7 +438,8 @@ abstract class _$$TaskBlueprintItemImplCopyWith<$Res>
       {Task value,
       String id,
       @TimestampConverter() DateTime startTime,
-      @TimestampConverter() DateTime endTime});
+      @TimestampConverter() DateTime endTime,
+      bool isPreview});
 }
 
 /// @nodoc
@@ -422,6 +457,7 @@ class __$$TaskBlueprintItemImplCopyWithImpl<$Res>
     Object? id = null,
     Object? startTime = null,
     Object? endTime = null,
+    Object? isPreview = null,
   }) {
     return _then(_$TaskBlueprintItemImpl(
       value: null == value
@@ -440,6 +476,10 @@ class __$$TaskBlueprintItemImplCopyWithImpl<$Res>
           ? _value.endTime
           : endTime // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      isPreview: null == isPreview
+          ? _value.isPreview
+          : isPreview // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -452,6 +492,7 @@ class _$TaskBlueprintItemImpl extends TaskBlueprintItem {
       required this.id,
       @TimestampConverter() required this.startTime,
       @TimestampConverter() required this.endTime,
+      this.isPreview = false,
       final String? $type})
       : $type = $type ?? 'task',
         super._();
@@ -469,13 +510,16 @@ class _$TaskBlueprintItemImpl extends TaskBlueprintItem {
   @override
   @TimestampConverter()
   final DateTime endTime;
+  @override
+  @JsonKey()
+  final bool isPreview;
 
   @JsonKey(name: 'runtimeType')
   final String $type;
 
   @override
   String toString() {
-    return 'BlueprintItem.task(value: $value, id: $id, startTime: $startTime, endTime: $endTime)';
+    return 'BlueprintItem.task(value: $value, id: $id, startTime: $startTime, endTime: $endTime, isPreview: $isPreview)';
   }
 
   @override
@@ -487,12 +531,15 @@ class _$TaskBlueprintItemImpl extends TaskBlueprintItem {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.startTime, startTime) ||
                 other.startTime == startTime) &&
-            (identical(other.endTime, endTime) || other.endTime == endTime));
+            (identical(other.endTime, endTime) || other.endTime == endTime) &&
+            (identical(other.isPreview, isPreview) ||
+                other.isPreview == isPreview));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, value, id, startTime, endTime);
+  int get hashCode =>
+      Object.hash(runtimeType, value, id, startTime, endTime, isPreview);
 
   @JsonKey(ignore: true)
   @override
@@ -508,16 +555,18 @@ class _$TaskBlueprintItemImpl extends TaskBlueprintItem {
             Event value,
             String id,
             @TimestampConverter() DateTime startTime,
-            @TimestampConverter() DateTime endTime)
+            @TimestampConverter() DateTime endTime,
+            bool isPreview)
         event,
     required TResult Function(
             Task value,
             String id,
             @TimestampConverter() DateTime startTime,
-            @TimestampConverter() DateTime endTime)
+            @TimestampConverter() DateTime endTime,
+            bool isPreview)
         task,
   }) {
-    return task(value, id, startTime, endTime);
+    return task(value, id, startTime, endTime, isPreview);
   }
 
   @override
@@ -527,16 +576,18 @@ class _$TaskBlueprintItemImpl extends TaskBlueprintItem {
             Event value,
             String id,
             @TimestampConverter() DateTime startTime,
-            @TimestampConverter() DateTime endTime)?
+            @TimestampConverter() DateTime endTime,
+            bool isPreview)?
         event,
     TResult? Function(
             Task value,
             String id,
             @TimestampConverter() DateTime startTime,
-            @TimestampConverter() DateTime endTime)?
+            @TimestampConverter() DateTime endTime,
+            bool isPreview)?
         task,
   }) {
-    return task?.call(value, id, startTime, endTime);
+    return task?.call(value, id, startTime, endTime, isPreview);
   }
 
   @override
@@ -546,18 +597,20 @@ class _$TaskBlueprintItemImpl extends TaskBlueprintItem {
             Event value,
             String id,
             @TimestampConverter() DateTime startTime,
-            @TimestampConverter() DateTime endTime)?
+            @TimestampConverter() DateTime endTime,
+            bool isPreview)?
         event,
     TResult Function(
             Task value,
             String id,
             @TimestampConverter() DateTime startTime,
-            @TimestampConverter() DateTime endTime)?
+            @TimestampConverter() DateTime endTime,
+            bool isPreview)?
         task,
     required TResult orElse(),
   }) {
     if (task != null) {
-      return task(value, id, startTime, endTime);
+      return task(value, id, startTime, endTime, isPreview);
     }
     return orElse();
   }
@@ -603,11 +656,11 @@ class _$TaskBlueprintItemImpl extends TaskBlueprintItem {
 
 abstract class TaskBlueprintItem extends BlueprintItem {
   const factory TaskBlueprintItem(
-          {required final Task value,
-          required final String id,
-          @TimestampConverter() required final DateTime startTime,
-          @TimestampConverter() required final DateTime endTime}) =
-      _$TaskBlueprintItemImpl;
+      {required final Task value,
+      required final String id,
+      @TimestampConverter() required final DateTime startTime,
+      @TimestampConverter() required final DateTime endTime,
+      final bool isPreview}) = _$TaskBlueprintItemImpl;
   const TaskBlueprintItem._() : super._();
 
   factory TaskBlueprintItem.fromJson(Map<String, dynamic> json) =
@@ -623,6 +676,8 @@ abstract class TaskBlueprintItem extends BlueprintItem {
   @override
   @TimestampConverter()
   DateTime get endTime;
+  @override
+  bool get isPreview;
   @override
   @JsonKey(ignore: true)
   _$$TaskBlueprintItemImplCopyWith<_$TaskBlueprintItemImpl> get copyWith =>

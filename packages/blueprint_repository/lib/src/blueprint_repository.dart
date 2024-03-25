@@ -29,6 +29,7 @@ class BlueprintRepository {
       _currentUserIdStream.add(event);
     });
     _usersCollection = firestore.collection(_usersCollectionName);
+    _previewChanges.value = [];
   }
 
   late final BehaviorSubject<String?> _currentUserIdStream;
@@ -41,6 +42,9 @@ class BlueprintRepository {
   final Stream<Iterable<Platform>> platformsStream;
 
   final BehaviorSubject<List<BlueprintItem>> _blueprintStream =
+      BehaviorSubject<List<BlueprintItem>>();
+
+  final BehaviorSubject<List<BlueprintItem>> _previewChanges =
       BehaviorSubject<List<BlueprintItem>>();
 
   FutureOr<Map<String, dynamic>> _buildAIBlueprintPromptMetadata(
@@ -85,7 +89,7 @@ class BlueprintRepository {
           )
           .toList(),
       'userPrompt': userPrompt,
-      'todaysDate': DateTime.now().startOfDay.toIso8601String(),
+      'todaysDateTime': DateTime.now().toIso8601String(),
     };
   }
 
@@ -118,14 +122,30 @@ class BlueprintRepository {
         ),
       );
 
+      // Data is coming in the following format:
+      // ```json
+      // { ... }
+      // ```
+      // We need to get rid of the ```json and ``` and then parse the JSON.
+      final jsonStart = generateAIResponse.indexOf('{');
+      final jsonEnd = generateAIResponse.lastIndexOf('}');
+      final generateAIResponseJson = generateAIResponse.substring(
+        jsonStart,
+        jsonEnd + 1,
+      );
+
       final decodedResponse =
-          await jsonDecode(generateAIResponse) as Map<String, dynamic>;
+          await jsonDecode(generateAIResponseJson) as Map<String, dynamic>;
 
       final items = (decodedResponse['items'] as List).map(
         (e) => _parseAIResponseItems(e as Map<String, dynamic>, userTasks),
       );
 
+      print('items: $items');
+
       final reason = decodedResponse['reason'] as String;
+
+      print('reason: $reason');
 
       return (items.toList(), reason);
     } catch (error, stackTrace) {
@@ -231,6 +251,67 @@ class BlueprintRepository {
     );
 
     await doc.set(blueprintEvent.toJson());
+  }
+
+  Stream<List<BlueprintItem>> get previewChangesStream =>
+      _previewChanges.stream;
+
+  /// Sets the preview items.
+  void setPreview(List<BlueprintItem> items) {
+    print('setting preview items: $items');
+    _previewChanges.value = items
+        .map(
+          (e) => e.copyWith(isPreview: true),
+        )
+        .toList();
+  }
+
+  /// Clears the preview items.
+  void clearPreview() {
+    _previewChanges.value = [];
+  }
+
+  /// Accepts all the items in the preview and adds them to the blueprint.
+  Future<void> acceptPreview() async {
+    final userId = _currentUserIdStream.value;
+
+    if (userId == null) {
+      return;
+    }
+    final userDoc = _usersCollection.doc(userId);
+    final blueprintSubCollection = userDoc.collection(_blueprintCollectionName);
+
+    for (final item in _previewChanges.value) {
+      final doc = blueprintSubCollection.doc();
+      await doc.set({
+        ...item
+            .copyWith(
+              isPreview: false,
+            )
+            .toJson(),
+        'id': doc.id,
+      });
+    }
+
+    _previewChanges.value = [];
+  }
+
+  /// Updates an item in the preview.
+  void updatePreviewItem(BlueprintItem item) {
+    _previewChanges.value = _previewChanges.value
+        .map(
+          (element) => element.id == item.id ? item : element,
+        )
+        .toList();
+  }
+
+  /// Deletes an item from the preview.
+  void deletePreviewItem(BlueprintItem item) {
+    _previewChanges.value = _previewChanges.value
+        .where(
+          (element) => element.id != item.id,
+        )
+        .toList();
   }
 
   Future<void> updateBlueprintItem(BlueprintItem event) async {

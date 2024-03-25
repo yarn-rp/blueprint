@@ -7,18 +7,21 @@ class AppointmentTile extends StatelessWidget {
     required this.appointment,
     super.key,
     this.actions = const [],
+    this.color,
   });
 
   final TodayEvent appointment;
   final List<Widget> actions;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
     final now = DateTime.now();
 
     final isAfter = appointment.endTime.isAfter(now);
-    final originalColor =
-        appointment.color ?? Theme.of(context).colorScheme.tertiaryContainer;
+    final originalColor = color ??
+        appointment.color ??
+        Theme.of(context).colorScheme.tertiaryContainer;
 
     final startTime = Jiffy(appointment.startTime).format('hh:mm');
     final endTime = Jiffy(appointment.endTime).format('hh:mm a');

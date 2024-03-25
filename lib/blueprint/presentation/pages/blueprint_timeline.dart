@@ -80,6 +80,7 @@ class BlueprintTimeline extends StatelessWidget {
             event: (event) => theme.colorScheme.tertiaryContainer,
             task: (task) => theme.colorScheme.secondaryContainer,
           ),
+          isPreview: false,
           type: e.map(
             event: (event) => event.value.conferenceData != null
                 ? EventType.meeting

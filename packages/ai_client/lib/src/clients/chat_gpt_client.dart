@@ -88,7 +88,6 @@ class ChatGPTAiClient implements AiClient {
     final request = CreateRun(assistantId: _assistantId);
     final metadataSerialized = jsonEncode(metadata);
 
-    print(_threadId.value);
     await addMessageToThread(
       content: '$content\n$metadataSerialized',
       role: _userRole,
