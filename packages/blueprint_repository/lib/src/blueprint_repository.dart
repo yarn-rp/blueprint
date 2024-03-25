@@ -8,6 +8,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:integrations_repository/integrations_repository.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:task_repository/task_repository.dart';
+import 'package:uuid/uuid.dart';
 
 const _usersCollectionName = 'users';
 const _blueprintCollectionName = 'blueprint';
@@ -21,8 +22,10 @@ class BlueprintRepository {
     required Stream<String?> currentUserIdStream,
     required FirebaseFirestore firestore,
     required AiClient aiClient,
+    required Uuid uuid,
     required this.platformsStream,
   }) {
+    _uuid = uuid;
     _aiClient = aiClient;
     _currentUserIdStream = BehaviorSubject<String?>();
     currentUserIdStream.listen((event) {
@@ -37,6 +40,8 @@ class BlueprintRepository {
   late final CollectionReference _usersCollection;
 
   late final AiClient _aiClient;
+
+  late final Uuid _uuid;
 
   /// Stream of all platforms.
   final Stream<Iterable<Platform>> platformsStream;
@@ -160,17 +165,17 @@ class BlueprintRepository {
     Map<String, dynamic> item,
     List<Task> userTasks,
   ) {
-    final id = item['taskId'] as String;
+    final taskId = item['taskId'] as String;
     final startTime = DateTime.parse(item['startTime'] as String);
     final endTime = DateTime.parse(item['endTime'] as String);
 
     final task = userTasks.firstWhere(
-      (element) => element.id == id,
+      (element) => element.id == taskId,
     );
 
     return BlueprintItem.task(
       value: task,
-      id: id,
+      id: _uuid.v4(),
       startTime: startTime,
       endTime: endTime,
     );
@@ -282,18 +287,24 @@ class BlueprintRepository {
     final blueprintSubCollection = userDoc.collection(_blueprintCollectionName);
 
     for (final item in _previewChanges.value) {
-      final doc = blueprintSubCollection.doc();
-      await doc.set({
-        ...item
-            .copyWith(
-              isPreview: false,
-            )
-            .toJson(),
-        'id': doc.id,
-      });
-    }
+      // optimistically updating the preview
+      deletePreviewItem(item);
 
-    _previewChanges.value = [];
+      try {
+        final doc = blueprintSubCollection.doc();
+        await doc.set({
+          ...item
+              .copyWith(
+                isPreview: false,
+              )
+              .toJson(),
+          'id': doc.id,
+        });
+      } catch (e) {
+        // something happened, adding back the item to the preview
+        _previewChanges.value = [..._previewChanges.value, item];
+      }
+    }
   }
 
   /// Updates an item in the preview.

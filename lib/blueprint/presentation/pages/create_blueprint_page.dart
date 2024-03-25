@@ -180,7 +180,7 @@ class _TimelineState extends State<_Timeline> {
 
   void _pasteCopiedEvent() {
     if (_copiedEvent != null) {
-      final event = context.read<BlueprintBloc>().state.items.firstWhere(
+      final event = context.read<BlueprintBloc>().state.allItems.firstWhere(
             (element) => element.id == _copiedEvent!.id,
           );
 
@@ -198,7 +198,7 @@ class _TimelineState extends State<_Timeline> {
 
   void _deleteSelectedEvent() {
     if (_selectedEvent != null) {
-      final item = context.read<BlueprintBloc>().state.items.firstWhere(
+      final item = context.read<BlueprintBloc>().state.allItems.firstWhere(
             (element) =>
                 element.subject == _selectedEvent!.subject &&
                 element.startTime == _selectedEvent!.startTime &&
@@ -291,7 +291,7 @@ class _TimelineState extends State<_Timeline> {
                 task: (task) {
                   context.read<BlueprintBloc>().add(
                         BlueprintItemUpdated(
-                          item: item.copyWith(isPreview: false),
+                          item: item,
                           startTime: startDate,
                           endTime: endDate,
                         ),

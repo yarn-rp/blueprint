@@ -37,7 +37,10 @@ class BlueprintState extends Equatable {
 
   /// Returns event that is happening right now
   Iterable<BlueprintItem> get currentBlueprintItems {
-    return items;
+    final now = DateTime.now();
+    return items.where((event) {
+      return event.startTime.isBefore(now) && event.endTime.isAfter(now);
+    }).toList();
   }
 
   Iterable<BlueprintItem> get upcomingBlueprintItems =>

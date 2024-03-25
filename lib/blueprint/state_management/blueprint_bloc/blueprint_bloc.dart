@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:blueprint_repository/blueprint_repository.dart';
-import 'package:collection/collection.dart';
 import 'package:equatable/equatable.dart';
 import 'package:stream_transform/stream_transform.dart';
 import 'package:task_repository/task_repository.dart';
@@ -122,6 +121,7 @@ class BlueprintBloc extends Bloc<BlueprintEvent, BlueprintState> {
     emit(state.copyWith(status: BlueprintStatus.loading));
 
     if (event.item.isPreview) {
+      print('updating preview item');
       _blueprintRepository.updatePreviewItem(
         event.item.copyWith(
           startTime: event.startTime,
@@ -132,6 +132,7 @@ class BlueprintBloc extends Bloc<BlueprintEvent, BlueprintState> {
     }
 
     try {
+      print('updating blueprint item');
       await _blueprintRepository.updateBlueprintItem(
         event.item.copyWith(
           startTime: event.startTime,
