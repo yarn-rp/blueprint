@@ -96,6 +96,18 @@
         "description": "Free time event subtitle"
     },
     "forgotPassword":"Forgot Password", 
+    "incomingChangesAccept": "Accept incoming changes",
+    "@incomingChangesAccept": {
+        "description": "Accept incoming changes button"
+    },
+    "incomingChangesTitle": "What would you like to do with the incoming changes?",
+    "@incomingChangesTitle": {
+        "description": "Label for incoming changes confirmation dialog"
+    },
+    "incomingChangesReject": "Reject incoming changes",
+    "@incomingChangesReject": {
+        "description": "Reject incoming changes button"
+    },
     "integrateCTA": "Integrate",
     "@integrateCTA": {
         "description": "CTA for integrations buttons"

@@ -106,12 +106,11 @@ class _CreateBlueprintView extends StatelessWidget {
 }
 
 class _ActionBar extends StatelessWidget {
-  const _ActionBar({
-    super.key,
-  });
+  const _ActionBar();
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final theme = Theme.of(context);
     final hasActionItems = context.select(
       (BlueprintBloc bloc) => bloc.state.previewItems.isNotEmpty,
@@ -129,7 +128,7 @@ class _ActionBar extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'What would you like to do with the incoming changes?',
+              l10n.incomingChangesTitle,
               style: Theme.of(context).textTheme.titleMedium,
             ),
             const SizedBox(height: AppSpacing.lg),
@@ -137,20 +136,23 @@ class _ActionBar extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 FilledButton.tonal(
-                  onPressed: () {
-                    context.read<BlueprintBloc>().add(
-                          const PreviewsItemsRejected(),
-                        );
-                  },
-                  child: const Text('Keep current changes'),
+                  onPressed: () => context.read<BlueprintBloc>().add(
+                        const PreviewsItemsRejected(),
+                      ),
+                  child: Text(
+                    l10n.incomingChangesReject,
+                    style: TextStyle(
+                      color: theme.colorScheme.error,
+                    ),
+                  ),
                 ),
                 FilledButton(
-                  onPressed: () {
-                    context.read<BlueprintBloc>().add(
-                          const PreviewItemsAccepted(),
-                        );
-                  },
-                  child: const Text('Accept Incoming Changes'),
+                  onPressed: () => context.read<BlueprintBloc>().add(
+                        const PreviewItemsAccepted(),
+                      ),
+                  child: Text(
+                    l10n.incomingChangesAccept,
+                  ),
                 ),
               ],
             ),
