@@ -20,7 +20,7 @@ type JiraTask = {
     timeestimate: number;
     timespent: number;
     assignee: JiraApiUser;
-    status: any;
+    status: JiraStatus;
     created: string;
     updated: string;
     priority: Record<string, any>;
@@ -31,6 +31,13 @@ type JiraTask = {
     description: string;
   };
 };
+
+interface JiraStatus {
+  name: string;
+  statusCategory: {
+    colorName: string;
+  };
+}
 interface JiraProject {
   id: string;
   uuid: string | null;
@@ -125,13 +132,13 @@ function fromJiraApiPriorityToPriority(priority?: Record<string, string>): Prior
  * @param status - the api status object
  * @returns  a label representing the status of the task.
  */
-function fromJiraApiStatusToStatus(status?: Record<string, any>): Label {
+function fromJiraApiStatusToStatus(status?: JiraStatus): Label {
   if (status == null) {
     return { name: "No Status", colorHex: "#FFC107" };
   }
 
-  const name = status.name ?? "";
-  const colorName = status.statusCategory?.colorName ?? "";
+  const name = status.name || "";
+  const colorName = status.statusCategory.colorName || "";
   // if colorName is string, returning the color associated with that name
   if (typeof colorName === "string") {
     return { name, colorHex: getColorHexByName(colorName) };
@@ -153,10 +160,33 @@ function fromJiraApiStatusToStatus(status?: Record<string, any>): Label {
  * or a default color if the color is not found.
  */
 function getColorHexByName(name: string): string {
-  // TODO(yarn-rp): implement this function properly, maybe calling to a
-  // different service and fetching the color from database or just having
-  // a temporary map of colors.
-  return "#FFC107";
+  // Map of most of the colors used in the Jira Cloud UI,
+  // Jira currently don't have a list of all the colors used in the UI
+  // neither a way to get the hex code of a color given its name.
+  const colorMap: Record<string, string> = {
+    "blue-gray": "#5E6C84",
+    green: "#00875A",
+    yellow: "#FFAB00",
+    blue: "#0747A6",
+    "medium-gray": "#5E6C84",
+    "light-blue": "#2684FF",
+    "warm-red": "#FF7452",
+    purple: "#403294",
+    brown: "#65372F",
+    red: "#BF2600",
+    "dark-blue": "#0847A6",
+    "light-gray": "#DADCDF",
+    teal: "#00875A",
+    "bold-green": "#006644",
+    navy: "#172B4D",
+    orange: "#FF5630",
+    "dark-yellow": "#F6C342",
+    "dark-red": "#DE350A",
+    "dark-green": "#008344",
+    "dark-purple": "#403294",
+  };
+
+  return colorMap[name] ?? "#FFC107";
 }
 
 function fromJiraApiUserToUser(user: JiraApiUser, cloudUrl: string): User {
