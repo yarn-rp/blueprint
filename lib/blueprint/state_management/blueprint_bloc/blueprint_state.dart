@@ -43,8 +43,9 @@ class BlueprintState extends Equatable {
     }).toList();
   }
 
-  Iterable<BlueprintItem> get upcomingBlueprintItems =>
-      items.where((event) => event.startTime.isAfter(updatedAt)).toList();
+  Iterable<BlueprintItem> get upcomingBlueprintItems {
+    return items.where((event) => event.startTime.isAfter(updatedAt)).toList();
+  }
 
   Iterable<BlueprintItem> get pastBlueprintItems =>
       items.where((event) => event.endTime.isBefore(updatedAt)).toList();

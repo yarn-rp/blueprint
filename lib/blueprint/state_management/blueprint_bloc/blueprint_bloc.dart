@@ -58,7 +58,6 @@ class BlueprintBloc extends Bloc<BlueprintEvent, BlueprintState> {
       },
       onError: (error, stackTrace) {
         addError(error, stackTrace);
-
         return state.copyWith(
           status: BlueprintStatus.error,
         );
@@ -139,6 +138,7 @@ class BlueprintBloc extends Bloc<BlueprintEvent, BlueprintState> {
       );
     } catch (error, stackTrace) {
       addError(error, stackTrace);
+
       emit(state.copyWith(status: BlueprintStatus.error));
     }
   }

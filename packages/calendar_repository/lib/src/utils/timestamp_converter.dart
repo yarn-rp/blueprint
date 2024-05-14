@@ -18,6 +18,10 @@ class TimestampConverter implements JsonConverter<DateTime, dynamic> {
       return DateTime.parse(timestamp);
     }
 
+    if (timestamp is int) {
+      return DateTime.fromMillisecondsSinceEpoch(timestamp);
+    }
+
     throw Exception('TimestampConverter: fromJson: unknown type');
   }
 

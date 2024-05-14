@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:ai_client/ai_client.dart';
 import 'package:blueprint_repository/src/entities/entities.dart';
@@ -194,33 +195,41 @@ class BlueprintRepository {
           userDoc.collection(_blueprintCollectionName);
       return platformsStream.switchMap((platforms) {
         return blueprintSubCollection.snapshots().map((snapshot) {
-          return snapshot.docs.map((doc) {
-            final data = doc.data();
+          return snapshot.docs
+              .map((doc) {
+                try {
+                  final data = doc.data();
+                  final blueprintItem = BlueprintItem.fromJson(data);
 
-            final blueprintItem = BlueprintItem.fromJson(data);
+                  final platform = platforms.firstWhere(
+                    (element) =>
+                        element.id ==
+                        blueprintItem.map(
+                          event: (event) => event.value.access.platformId,
+                          task: (task) => task.value.access.platformId,
+                        ),
+                  );
 
-            final platform = platforms.firstWhere(
-              (element) =>
-                  element.id ==
-                  blueprintItem.map(
-                    event: (event) => event.value.access.platformId,
-                    task: (task) => task.value.access.platformId,
-                  ),
-            );
-
-            return blueprintItem.map(
-              event: (event) => event.copyWith(
-                value: event.value.copyWith(
-                  access: event.value.access.withPlatform(platform),
-                ),
-              ),
-              task: (task) => task.copyWith(
-                value: task.value.copyWith(
-                  access: task.value.access.withPlatform(platform),
-                ),
-              ),
-            );
-          }).toList();
+                  return blueprintItem.map(
+                    event: (event) => event.copyWith(
+                      value: event.value.copyWith(
+                        access: event.value.access.withPlatform(platform),
+                      ),
+                    ),
+                    task: (task) => task.copyWith(
+                      value: task.value.copyWith(
+                        access: task.value.access.withPlatform(platform),
+                      ),
+                    ),
+                  );
+                } catch (exception, stackTrace) {
+                  // On error, just skip that element and return null.
+                  log('Error parsing blueprint item: $exception $stackTrace');
+                  return null;
+                }
+              })
+              .whereType<BlueprintItem>()
+              .toList();
         });
       });
     });
