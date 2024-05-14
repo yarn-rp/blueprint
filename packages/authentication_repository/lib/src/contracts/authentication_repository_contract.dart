@@ -36,10 +36,10 @@ abstract class AuthenticationRepositoryContract {
 
   Future<UserModel> signInWithFacebook();
 
-  /// Fetches all providers associated to account with [email].
-  Future<Iterable<OAuthProviderType>> getProvidersAssociatedToEmail({
-    required String email,
-  });
+  // /// Fetches all providers associated to account with [email].
+  // Future<Iterable<OAuthProviderType>> getProvidersAssociatedToEmail({
+  //   required String email,
+  // });
 
   /// Sends a reset password
   Future<void> resetPassword({

@@ -103,11 +103,11 @@ class _AIAssistantChatState extends State<AIAssistantChat> {
     return Scaffold(
       body: Chat(
         theme: DefaultChatTheme(
-          backgroundColor: colorScheme.background,
+          backgroundColor: colorScheme.surface,
           secondaryColor: theme.cardTheme.color!,
           userNameTextStyle: textTheme.bodySmall!,
           typingIndicatorTheme: TypingIndicatorTheme(
-            bubbleColor: colorScheme.background,
+            bubbleColor: colorScheme.surface,
             animatedCircleSize: 14,
             animatedCirclesColor: theme.colorScheme.outline,
             bubbleBorder: BorderRadius.zero,
@@ -181,10 +181,10 @@ class _AIAssistantChatState extends State<AIAssistantChat> {
         height: 50,
         child: FilledButton(
           style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(
+            backgroundColor: WidgetStateProperty.all(
               theme.colorScheme.tertiary,
             ),
-            foregroundColor: MaterialStateProperty.all(
+            foregroundColor: WidgetStateProperty.all(
               theme.colorScheme.onTertiary,
             ),
           ),

@@ -54,7 +54,7 @@ class _CreateBlueprintView extends StatelessWidget {
     );
 
     return Scaffold(
-      backgroundColor: theme.colorScheme.background,
+      backgroundColor: theme.colorScheme.surface,
       appBar: AppBar(
         leading: BackButton(
           onPressed: () async {
@@ -98,7 +98,7 @@ class _CreateBlueprintView extends StatelessWidget {
           },
         ),
         centerTitle: false,
-        backgroundColor: theme.colorScheme.background,
+        backgroundColor: theme.colorScheme.surface,
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -168,7 +168,7 @@ class _ActionBar extends StatelessWidget {
           hasActionItems ? CrossFadeState.showSecond : CrossFadeState.showFirst,
       firstChild: const SizedBox.shrink(),
       secondChild: Container(
-        color: theme.colorScheme.background.withOpacity(.5),
+        color: theme.colorScheme.surface.withOpacity(.5),
         height: 150,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -183,7 +183,7 @@ class _ActionBar extends StatelessWidget {
               children: [
                 FilledButton(
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(
+                    backgroundColor: WidgetStateProperty.all(
                       theme.colorScheme.error,
                     ),
                   ),

@@ -197,7 +197,7 @@ class _SidebarPageState extends State<SidebarPage> {
       showTitle: false,
       iconSize: 28,
       toggleTitle: '',
-      backgroundColor: Theme.of(context).colorScheme.background,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       selectedIconBox: Theme.of(context).colorScheme.primary.withOpacity(0.1),
       selectedIconColor: Theme.of(context).colorScheme.primary,
       selectedTextColor: Theme.of(context).colorScheme.inversePrimary,

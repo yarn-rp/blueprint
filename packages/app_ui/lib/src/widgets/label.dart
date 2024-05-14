@@ -23,7 +23,7 @@ class LabelChip extends StatelessWidget {
 
     return Chip(
       color: foregroundColor != null
-          ? MaterialStateProperty.all(backgroundColor)
+          ? WidgetStateProperty.all(backgroundColor)
           : null,
       label: Text(
         text,

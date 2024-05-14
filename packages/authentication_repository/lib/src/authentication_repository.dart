@@ -257,23 +257,23 @@ class AuthenticationRepository implements AuthenticationRepositoryContract {
     }
   }
 
-  @override
-  Future<Iterable<OAuthProviderType>> getProvidersAssociatedToEmail({
-    required String email,
-  }) async {
-    try {
-      final accountProviderIds =
-          await _firebaseAuth.fetchSignInMethodsForEmail(email);
+  // @override
+  // Future<Iterable<OAuthProviderType>> getProvidersAssociatedToEmail({
+  //   required String email,
+  // }) async {
+  //   try {
+  //     final accountProviderIds =
+  //         await _firebaseAuth.fetchSignInMethodsForEmail(email);
 
-      return accountProviderIds.map(OAuthProviderType.fromRawProvider);
-    } on firebase_auth.FirebaseAuthException catch (e) {
-      if (e.code == ErrorCodes.userNotFound) {
-        throw UserNotFoundException();
-      } else {
-        throw ProvidersException();
-      }
-    } catch (e) {
-      throw ProvidersException();
-    }
-  }
+  //     return accountProviderIds.map(OAuthProviderType.fromRawProvider);
+  //   } on firebase_auth.FirebaseAuthException catch (e) {
+  //     if (e.code == ErrorCodes.userNotFound) {
+  //       throw UserNotFoundException();
+  //     } else {
+  //       throw ProvidersException();
+  //     }
+  //   } catch (e) {
+  //     throw ProvidersException();
+  //   }
+  // }
 }

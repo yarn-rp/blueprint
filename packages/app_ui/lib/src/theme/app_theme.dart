@@ -16,8 +16,8 @@ final lightTheme = ThemeData(
   colorScheme: lightColorScheme,
   textTheme: customTextTheme,
   appBarTheme: AppBarTheme(
-    backgroundColor: lightColorScheme.background,
-    foregroundColor: lightColorScheme.onBackground,
+    backgroundColor: lightColorScheme.surface,
+    foregroundColor: lightColorScheme.onSurface,
     elevation: 0,
     scrolledUnderElevation: 0,
   ),
@@ -67,14 +67,14 @@ final lightTheme = ThemeData(
     elevation: 0,
   ),
   searchBarTheme: SearchBarThemeData(
-    padding: const MaterialStatePropertyAll(
+    padding: const WidgetStatePropertyAll(
       EdgeInsets.symmetric(horizontal: AppSpacing.lg),
     ),
-    backgroundColor: MaterialStateProperty.all(
+    backgroundColor: WidgetStateProperty.all(
       lightColorScheme.outlineVariant.withOpacity(.2),
     ),
-    elevation: MaterialStateProperty.all(0),
-    textStyle: MaterialStateProperty.all(
+    elevation: WidgetStateProperty.all(0),
+    textStyle: WidgetStateProperty.all(
       customTextTheme.bodyLarge,
     ),
   ),
@@ -93,8 +93,8 @@ final darkTheme = ThemeData(
   colorScheme: darkColorScheme,
   textTheme: customTextTheme,
   appBarTheme: AppBarTheme(
-    backgroundColor: darkColorScheme.background,
-    foregroundColor: darkColorScheme.onBackground,
+    backgroundColor: darkColorScheme.surface,
+    foregroundColor: darkColorScheme.onSurface,
     elevation: 0,
     scrolledUnderElevation: 0,
   ),
@@ -146,14 +146,14 @@ final darkTheme = ThemeData(
     elevation: 0,
   ),
   searchBarTheme: SearchBarThemeData(
-    padding: const MaterialStatePropertyAll(
+    padding: const WidgetStatePropertyAll(
       EdgeInsets.symmetric(horizontal: AppSpacing.lg),
     ),
-    backgroundColor: MaterialStateProperty.all(
+    backgroundColor: WidgetStateProperty.all(
       darkColorScheme.outline.withOpacity(0.2),
     ),
-    elevation: MaterialStateProperty.all(0),
-    textStyle: MaterialStateProperty.all(
+    elevation: WidgetStateProperty.all(0),
+    textStyle: WidgetStateProperty.all(
       customTextTheme.bodyLarge,
     ),
   ),

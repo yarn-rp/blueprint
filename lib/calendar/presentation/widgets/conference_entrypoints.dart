@@ -65,7 +65,7 @@ class ConferenceEntryPoints extends StatelessWidget {
                     FilledButton.tonal(
                       style:
                           Theme.of(context).filledButtonTheme.style?.copyWith(
-                                backgroundColor: MaterialStateProperty.all(
+                                backgroundColor: WidgetStateProperty.all(
                                   theme.colorScheme.tertiaryContainer,
                                 ),
                               ),
@@ -83,7 +83,7 @@ class ConferenceEntryPoints extends StatelessWidget {
                     ),
                     IconButton.filledTonal(
                       style: Theme.of(context).iconButtonTheme.style?.copyWith(
-                            backgroundColor: MaterialStateProperty.all(
+                            backgroundColor: WidgetStateProperty.all(
                               theme.colorScheme.tertiaryContainer,
                             ),
                           ),
