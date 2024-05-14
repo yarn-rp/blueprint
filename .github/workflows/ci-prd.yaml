@@ -33,3 +33,4 @@ jobs:
       target: lib/main_production.dart
     secrets:
       FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_PRD }}
+      OPEN_AI_API_KEY: ${{ secrets.OPEN_AI_API_KEY_PRD }}

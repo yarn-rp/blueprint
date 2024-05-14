@@ -15,6 +15,9 @@ on:
       FIREBASE_SERVICE_ACCOUNT:
         description: Firebase Service Account
         required: true
+      OPEN_AI_API_KEY:
+        description: OpenAI API Key
+        required: true
         
 jobs:
   build_and_preview:
@@ -25,7 +28,7 @@ jobs:
         with:
           channel: 'stable'
       - run: flutter pub get
-      - run: flutter build web --target ${{inputs.target}}
+      - run: flutter build web --target ${{inputs.target}} --dart-define=OPEN_AI_API_KEY=${{ secrets.OPEN_AI_API_KEY }}
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
