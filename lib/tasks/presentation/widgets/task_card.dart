@@ -26,11 +26,17 @@ class TaskCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final startTimeJiffy =
+        startTime != null ? Jiffy.parseFromDateTime(startTime!) : null;
+
+    final endTimeJiffy =
+        endTime != null ? Jiffy.parseFromDateTime(endTime!) : null;
+
     return BlueprintEventCard(
       onTap: onTap,
       backgroundColor: backgroundColor,
       dateAndTime: startTime != null && endTime != null
-          ? '${Jiffy(startTime).jm} - ${Jiffy(endTime).jm}'
+          ? '${startTimeJiffy?.jm} - ${endTimeJiffy?.jm}'
           : null,
       labels: [
         ProjectPlatformChip(task: task),

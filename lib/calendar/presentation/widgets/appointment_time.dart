@@ -9,14 +9,16 @@ class BlueprintEventTime extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final startTime = Jiffy.parseFromDateTime(appointment.startTime);
+    final endTime = Jiffy.parseFromDateTime(appointment.endTime);
     return Row(
       children: [
         Text(
-          Jiffy(appointment.startTime).MMMMEEEEd,
+          startTime.MMMMEEEEd,
         ),
         Text(
-          ' : ${Jiffy(appointment.startTime).format('h:mm a')} - '
-          '${Jiffy(appointment.endTime).format('h:mm a')}',
+          ' : ${startTime.format(pattern: 'h:mm a')} - '
+          '${endTime.format(pattern: 'h:mm a')}',
         ),
       ],
     );

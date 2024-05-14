@@ -246,8 +246,8 @@ class _CreatedAndUpdatedDates extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final createdAtFromNow = Jiffy(task.createdAt).fromNow();
-    final updatedAtFromNow = Jiffy(task.updatedAt).fromNow();
+    final createdAtFromNow = Jiffy.parseFromDateTime(task.createdAt).fromNow();
+    final updatedAtFromNow = Jiffy.parseFromDateTime(task.updatedAt).fromNow();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

@@ -26,7 +26,10 @@ class TimeTile extends StatelessWidget {
           width: AppSpacing.sm,
         ),
         Text(
-          time != null ? Jiffy(time).format('dd MMM yyyy - hh: mm a') : '-',
+          time != null
+              ? Jiffy.parseFromDateTime(time!)
+                  .format(pattern: 'dd MMM yyyy - hh: mm a')
+              : '-',
           style: textTheme.bodyMedium,
         ),
       ],

@@ -23,8 +23,10 @@ class AppointmentTile extends StatelessWidget {
         appointment.color ??
         Theme.of(context).colorScheme.tertiaryContainer;
 
-    final startTime = Jiffy(appointment.startTime).format('hh:mm');
-    final endTime = Jiffy(appointment.endTime).format('hh:mm a');
+    final startTime =
+        Jiffy.parseFromDateTime(appointment.startTime).format(pattern: 'hh:mm');
+    final endTime =
+        Jiffy.parseFromDateTime(appointment.endTime).format(pattern: 'hh:mm a');
 
     final title = appointment.subject;
     final subtitle = '$startTime to $endTime';
