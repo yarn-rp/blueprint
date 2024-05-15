@@ -20,6 +20,7 @@ jobs:
     with:
       min_coverage: 0
       flutter_channel: stable
+      package_get_excludes: storybook
 
   spell-check:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/spell_check.yml@v1
@@ -35,3 +36,4 @@ jobs:
       target: lib/main_development.dart
     secrets:  
       FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_DEV }}
+      OPEN_AI_API_KEY: ${{ secrets.OPEN_AI_API_KEY_DEV }}

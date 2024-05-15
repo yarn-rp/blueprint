@@ -1,5 +1,10 @@
+import 'dart:ui';
+
 import 'package:app_ui/app_ui.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:blueprint/ai_assistant_chat/presentation/pages/ai_assistant.dart';
+import 'package:blueprint/ai_assistant_chat/state_management/bloc/ai_assistant_chat_bloc.dart';
+import 'package:blueprint/app/dependency_injection/init.dart';
 import 'package:blueprint/app/routes/router/app_router.dart';
 import 'package:blueprint/blueprint/presentation/widgets/create_event_dialog.dart';
 import 'package:blueprint/blueprint/state_management/blueprint_bloc/blueprint_bloc.dart';
@@ -18,30 +23,82 @@ class CreateBlueprintPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const _CreateBlueprintView();
+    return BlocProvider.value(
+      value: sl<AiAssistantChatBloc>(
+        param1: <String>[
+          "Hello! I'm your AI assistant.",
+          'I can help you create a blueprint for today.',
+        ].reversed.toList(),
+      ),
+      child: const _CreateBlueprintView(),
+    );
   }
 }
 
 class _CreateBlueprintView extends StatelessWidget {
   const _CreateBlueprintView();
 
+  void _navigateToTodaysBlueprint(BuildContext context) {
+    AutoRouter.of(context).navigate(
+      const TodaysBlueprintRoute(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final l10n = context.l10n;
 
+    final hasPreviewItems = context.select(
+      (BlueprintBloc bloc) => bloc.state.previewItems.isNotEmpty,
+    );
+
     return Scaffold(
-      backgroundColor: theme.colorScheme.background,
+      backgroundColor: theme.colorScheme.surface,
       appBar: AppBar(
         leading: BackButton(
-          onPressed: () {
-            AutoRouter.of(context).navigate(
-              const TodaysBlueprintRoute(),
+          onPressed: () async {
+            if (!hasPreviewItems) {
+              _navigateToTodaysBlueprint(context);
+              return;
+            }
+
+            final result = await showActionDialog<bool>(
+              context: context,
+              title: l10n.blueprintPendingChangesDialogTitle,
+              content: l10n.blueprintPendingChangesDialogSubtitle,
+              actions: [
+                (
+                  label: l10n.incomingChangesReject,
+                  callback: (context) => Navigator.of(context).pop(false),
+                  color: theme.colorScheme.error,
+                ),
+                (
+                  label: l10n.incomingChangesAccept,
+                  color: theme.colorScheme.primary,
+                  callback: (context) => Navigator.of(context).pop(true),
+                ),
+              ],
             );
+            if (!context.mounted || result == null) {
+              return;
+            }
+
+            if (result) {
+              context.read<BlueprintBloc>().add(
+                    const PreviewItemsAccepted(),
+                  );
+            } else {
+              context.read<BlueprintBloc>().add(
+                    const PreviewsItemsRejected(),
+                  );
+            }
+
+            _navigateToTodaysBlueprint(context);
           },
         ),
         centerTitle: false,
-        backgroundColor: theme.colorScheme.background,
+        backgroundColor: theme.colorScheme.surface,
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -56,10 +113,98 @@ class _CreateBlueprintView extends StatelessWidget {
           ],
         ),
       ),
-      body: const Padding(
-        padding: EdgeInsets.only(left: AppSpacing.xxlg),
+      body: Padding(
+        padding: const EdgeInsets.only(left: AppSpacing.xxlg),
         child: Portal(
-          child: _Timeline(),
+          child: Row(
+            children: [
+              Expanded(
+                flex: 6,
+                child: Stack(
+                  children: [
+                    const Positioned.fill(
+                      child: _Timeline(),
+                    ),
+                    Positioned(
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      child: ClipRRect(
+                        child: BackdropFilter(
+                          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                          child: const _ActionBar(),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const Expanded(
+                flex: 4,
+                child: AIAssistantChat(),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _ActionBar extends StatelessWidget {
+  const _ActionBar();
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final theme = Theme.of(context);
+    final hasActionItems = context.select(
+      (BlueprintBloc bloc) => bloc.state.previewItems.isNotEmpty,
+    );
+
+    return AnimatedCrossFade(
+      duration: const Duration(milliseconds: 300),
+      crossFadeState:
+          hasActionItems ? CrossFadeState.showSecond : CrossFadeState.showFirst,
+      firstChild: const SizedBox.shrink(),
+      secondChild: Container(
+        color: theme.colorScheme.surface.withOpacity(.5),
+        height: 150,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              l10n.incomingChangesTitle,
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            const SizedBox(height: AppSpacing.lg),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                FilledButton(
+                  style: ButtonStyle(
+                    backgroundColor: WidgetStateProperty.all(
+                      theme.colorScheme.error,
+                    ),
+                  ),
+                  onPressed: () => context.read<BlueprintBloc>().add(
+                        const PreviewsItemsRejected(),
+                      ),
+                  child: Text(
+                    l10n.incomingChangesReject,
+                  ),
+                ),
+                FilledButton(
+                  onPressed: () => context.read<BlueprintBloc>().add(
+                        const PreviewItemsAccepted(),
+                      ),
+                  child: Text(
+                    l10n.incomingChangesAccept,
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );
@@ -85,7 +230,7 @@ class _TimelineState extends State<_Timeline> {
 
   void _pasteCopiedEvent() {
     if (_copiedEvent != null) {
-      final event = context.read<BlueprintBloc>().state.items.firstWhere(
+      final event = context.read<BlueprintBloc>().state.allItems.firstWhere(
             (element) => element.id == _copiedEvent!.id,
           );
 
@@ -103,7 +248,7 @@ class _TimelineState extends State<_Timeline> {
 
   void _deleteSelectedEvent() {
     if (_selectedEvent != null) {
-      final item = context.read<BlueprintBloc>().state.items.firstWhere(
+      final item = context.read<BlueprintBloc>().state.allItems.firstWhere(
             (element) =>
                 element.subject == _selectedEvent!.subject &&
                 element.startTime == _selectedEvent!.startTime &&
@@ -127,6 +272,8 @@ class _TimelineState extends State<_Timeline> {
     return BlocBuilder<BlueprintBloc, BlueprintState>(
       builder: (context, state) {
         final l10n = context.l10n;
+
+        final items = state.allItems;
 
         return CallbackShortcuts(
           bindings: <ShortcutActivator, VoidCallback>{
@@ -175,7 +322,7 @@ class _TimelineState extends State<_Timeline> {
               });
             },
             onEventUpdate: (event, startDate, endDate) {
-              final item = state.items.firstWhere(
+              final item = state.allItems.firstWhere(
                 (element) => element.id == event.id,
               );
 
@@ -203,16 +350,19 @@ class _TimelineState extends State<_Timeline> {
               );
             },
             events: [
-              ...state.items.map(
+              ...items.map(
                 (e) => (
                   id: e.id,
                   subject: e.subject,
                   startTime: e.startTime,
                   endTime: e.endTime,
-                  color: e.map(
-                    event: (event) => theme.colorScheme.tertiaryContainer,
-                    task: (task) => theme.colorScheme.secondaryContainer,
-                  ),
+                  color: e.isPreview
+                      ? theme.colorScheme.primary
+                      : e.map(
+                          event: (event) => theme.colorScheme.tertiaryContainer,
+                          task: (task) => theme.colorScheme.secondaryContainer,
+                        ),
+                  isPreview: e.isPreview,
                   type: e.map(
                     event: (event) => event.value.conferenceData != null
                         ? EventType.meeting

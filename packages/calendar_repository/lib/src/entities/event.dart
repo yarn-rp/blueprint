@@ -1,6 +1,6 @@
 import 'package:calendar_repository/src/entities/entities.dart';
 import 'package:calendar_repository/src/entities/user_with_status.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:calendar_repository/src/utils/timestamp_converter.dart';
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -39,17 +39,11 @@ class Event extends Equatable {
   final Access access;
 
   /// The start time of the event.
-  @JsonKey(
-    fromJson: _timestampFromJson,
-    toJson: _timestampToJson,
-  )
+  @TimestampConverter()
   final DateTime? startTime;
 
   /// The end time of the event.
-  @JsonKey(
-    fromJson: _timestampFromJson,
-    toJson: _timestampToJson,
-  )
+  @TimestampConverter()
   final DateTime? endTime;
 
   /// The subject of the event.
@@ -123,11 +117,4 @@ class Event extends Equatable {
         attendees,
         platformLink,
       ];
-  static DateTime? _timestampFromJson(Timestamp? value) {
-    return value?.toDate();
-  }
-
-  static dynamic _timestampToJson(DateTime? date) {
-    return date != null ? Timestamp.fromDate(date) : null;
-  }
 }

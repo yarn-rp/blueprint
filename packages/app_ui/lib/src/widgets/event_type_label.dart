@@ -48,8 +48,8 @@ class EventTypeLabel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final backgroundColor = theme.colorScheme.background;
-    final foregroundColor = theme.colorScheme.onBackground;
+    final backgroundColor = theme.colorScheme.surface;
+    final foregroundColor = theme.colorScheme.onSurface;
 
     return CircleAvatar(
       backgroundColor: backgroundColor,

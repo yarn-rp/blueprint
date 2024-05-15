@@ -30,6 +30,20 @@ class BlueprintTaskItemCreated extends BlueprintEvent {
       ];
 }
 
+class PreviewItemsAccepted extends BlueprintEvent {
+  const PreviewItemsAccepted();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class PreviewsItemsRejected extends BlueprintEvent {
+  const PreviewsItemsRejected();
+
+  @override
+  List<Object?> get props => [];
+}
+
 class BlueprintItemUpdated extends BlueprintEvent {
   const BlueprintItemUpdated({
     required this.item,

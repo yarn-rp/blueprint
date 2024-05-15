@@ -21,12 +21,15 @@ class AvailableTimeCard extends StatelessWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
+    final startTimeJiffy = Jiffy.parseFromDateTime(startTime);
+    final endTimeJiffy = Jiffy.parseFromDateTime(endTime);
+
     return BlueprintEventCard(
-      backgroundColor: colorScheme.surfaceVariant,
+      backgroundColor: colorScheme.surfaceContainerHighest,
       actions: [
         FilledButton.icon(
           style: Theme.of(context).filledButtonTheme.style?.copyWith(
-                backgroundColor: MaterialStateProperty.all(
+                backgroundColor: WidgetStateProperty.all(
                   colorScheme.onSurface,
                 ),
               ),
@@ -47,7 +50,7 @@ class AvailableTimeCard extends StatelessWidget {
           ),
         ),
       ],
-      dateAndTime: '${Jiffy(startTime).jm} - ${Jiffy(endTime).jm}',
+      dateAndTime: '${startTimeJiffy.jm} - ${endTimeJiffy.jm}',
       title: EventListTile.calendar(
         title: l10n.freeTimeEventTitle,
         subtitle: l10n.freeTimeEventSubtitle,

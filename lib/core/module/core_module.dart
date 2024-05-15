@@ -1,12 +1,34 @@
+import 'package:ai_client/ai_client.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:injectable/injectable.dart';
+import 'package:uuid/uuid.dart';
+
+// const _geminiProModel = 'gemini-pro';
 
 @module
 abstract class CoreModule {
   @lazySingleton
   FlutterSecureStorage flutterSecureStorage() => const FlutterSecureStorage();
+
+  @lazySingleton
+  Uuid uuid() => const Uuid();
+
+  @lazySingleton
+  AiClient aiClient() => ChatGPTAiClient(
+        apiKey: const String.fromEnvironment('OPEN_AI_API_KEY'),
+      );
+
+  // @lazySingleton
+  // AiClient aiClient() => GeminiAiClient(
+  //       generativeModel: GenerativeModel(
+  //         apiKey: 'AIzaSyCF5ytyGfjz_fsZz6EMrH39Q3yLJMUpHSk',
+  //         params: ModelParams(
+  //           model: _geminiProModel,
+  //         ),
+  //       ),
+  //     );
 
   @lazySingleton
   GoogleSignIn googleSignIn() {

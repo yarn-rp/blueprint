@@ -24,6 +24,9 @@ class EventCard extends StatelessWidget {
     final foregroundColor =
         backgroundColor.computeLuminance() > 0.5 ? Colors.black : Colors.white;
 
+    final startTimeJiffy = Jiffy.parseFromDateTime(event.startTime!);
+    final endTimeJiffy = Jiffy.parseFromDateTime(event.endTime!);
+
     return BlueprintEventCard(
       onTap: onTap,
       backgroundColor: backgroundColor,
@@ -36,7 +39,7 @@ class EventCard extends StatelessWidget {
         ),
       ],
       dateAndTime: event.startTime != null && event.endTime != null
-          ? '${Jiffy(event.startTime).jm} - ${Jiffy(event.endTime).jm}'
+          ? '${startTimeJiffy.jm} - ${endTimeJiffy.jm}'
           : null,
       title: event.conferenceData != null
           ? EventListTile.videoConference(

@@ -116,9 +116,13 @@ class EventDetails extends StatelessWidget {
                             width: AppSpacing.xlg,
                           ),
                           Expanded(
-                            child: _EventDetailsSection(
-                              event: event,
-                              isDialog: isDialog,
+                            child: ListView(
+                              children: [
+                                _EventDetailsSection(
+                                  event: event,
+                                  isDialog: isDialog,
+                                ),
+                              ],
                             ),
                           ),
                         ],

@@ -5,9 +5,11 @@ publish_to: none
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
-  flutter: ">=3.10.0"
+  flutter: 3.22.0
 
 dependencies:
+  ai_client: 
+    path: ../ai_client
   calendar_repository:
     path: ../calendar_repository
   cloud_firestore: ^4.9.3
@@ -22,6 +24,7 @@ dependencies:
   stream_transform: ^2.1.0
   task_repository:
     path: ../task_repository
+  uuid: ^4.3.3
 
 dev_dependencies:
   build_runner: ^2.4.6

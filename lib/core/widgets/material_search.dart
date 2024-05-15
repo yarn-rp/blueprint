@@ -16,16 +16,18 @@ class MaterialSearchWidget extends StatelessWidget {
       decoration: InputDecoration(
         hintText: hintText,
         border: InputBorder.none,
-        fillColor: Theme.of(context).colorScheme.surfaceVariant,
+        fillColor: Theme.of(context).colorScheme.surfaceContainerHighest,
         prefixIcon: const Icon(Icons.search),
         focusedBorder: OutlineInputBorder(
-          borderSide:
-              BorderSide(color: Theme.of(context).colorScheme.surfaceVariant),
+          borderSide: BorderSide(
+            color: Theme.of(context).colorScheme.surfaceContainerHighest,
+          ),
           borderRadius: BorderRadius.circular(10),
         ),
         enabledBorder: OutlineInputBorder(
-          borderSide:
-              BorderSide(color: Theme.of(context).colorScheme.surfaceVariant),
+          borderSide: BorderSide(
+            color: Theme.of(context).colorScheme.surfaceContainerHighest,
+          ),
           borderRadius: BorderRadius.circular(10),
         ),
       ),

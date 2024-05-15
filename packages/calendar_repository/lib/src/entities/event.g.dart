@@ -8,8 +8,8 @@ part of 'event.dart';
 
 Event _$EventFromJson(Map<String, dynamic> json) => Event(
       access: Access.fromJson(json['access'] as Map<String, dynamic>),
-      startTime: Event._timestampFromJson(json['startTime'] as Timestamp?),
-      endTime: Event._timestampFromJson(json['endTime'] as Timestamp?),
+      startTime: const TimestampConverter().fromJson(json['startTime']),
+      endTime: const TimestampConverter().fromJson(json['endTime']),
       subject: json['subject'] as String,
       isAllDay: json['isAllDay'] as bool?,
       attendantStatus:
@@ -31,8 +31,10 @@ Event _$EventFromJson(Map<String, dynamic> json) => Event(
 
 Map<String, dynamic> _$EventToJson(Event instance) => <String, dynamic>{
       'access': instance.access.toJson(),
-      'startTime': Event._timestampToJson(instance.startTime),
-      'endTime': Event._timestampToJson(instance.endTime),
+      'startTime': _$JsonConverterToJson<dynamic, DateTime>(
+          instance.startTime, const TimestampConverter().toJson),
+      'endTime': _$JsonConverterToJson<dynamic, DateTime>(
+          instance.endTime, const TimestampConverter().toJson),
       'subject': instance.subject,
       'description': instance.description,
       'isAllDay': instance.isAllDay,
@@ -51,3 +53,9 @@ const _$AttendantStatusEnumMap = {
   AttendantStatus.needsAction: 'needsAction',
   AttendantStatus.none: 'none',
 };
+
+Json? _$JsonConverterToJson<Json, Value>(
+  Value? value,
+  Json? Function(Value value) toJson,
+) =>
+    value == null ? null : toJson(value);

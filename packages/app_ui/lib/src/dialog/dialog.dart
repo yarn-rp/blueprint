@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
+typedef ContextVoidCallback = void Function(BuildContext context);
+
 typedef Action = ({
   String label,
-  VoidCallback callback,
+  ContextVoidCallback callback,
   Color? color,
 });
 
@@ -29,9 +31,9 @@ Future<T?> showActionDialog<T>({
           .map(
             (action) => FilledButton(
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(action.color),
+                backgroundColor: WidgetStateProperty.all(action.color),
               ),
-              onPressed: action.callback,
+              onPressed: () => action.callback(context),
               child: Text(action.label),
             ),
           )
