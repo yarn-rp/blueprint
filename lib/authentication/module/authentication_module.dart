@@ -5,6 +5,7 @@ import 'package:blueprint/authentication/state_management/sign_in_cubit/sign_in_
 import 'package:blueprint/authentication/state_management/sign_out_cubit/sign_out_cubit.dart';
 import 'package:blueprint/authentication/state_management/sign_up_cubit/sign_up_cubit.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:injectable/injectable.dart';
 
 @module
@@ -68,8 +69,12 @@ abstract class AuthenticationModule {
       AppleAuthenticationProvider();
 
   @lazySingleton
-  GoogleAuthenticationProvider googleAuthenticationProvider() =>
-      GoogleAuthenticationProvider();
+  GoogleAuthenticationProvider googleAuthenticationProvider(
+    GoogleSignIn googleSignIn,
+  ) =>
+      GoogleAuthenticationProvider(
+        googleSignIn: googleSignIn,
+      );
 
   @lazySingleton
   FacebookAuthenticationProvider facebookAuthenticationProvider() =>
