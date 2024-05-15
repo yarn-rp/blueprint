@@ -1,3 +1,5 @@
+// ignore_for_file: invalid_annotation_target
+
 import 'package:blueprint/core/env/app_environment.dart';
 import 'package:blueprint/core/firebase_options/firebase_options_dev.dart'
     as firebase_dev_options;
