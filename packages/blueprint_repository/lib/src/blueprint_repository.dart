@@ -62,38 +62,42 @@ class BlueprintRepository {
       'blueprintItems': currentBlueprint
           .map(
             (e) => {
-              'runtimeType': e.map(
-                event: (event) => 'event',
-                task: (task) => 'task',
-              ),
               'startTime': e.startTime.toIso8601String(),
               'endTime': e.endTime.toIso8601String(),
               'value': e.map(
-                event: (e) => {
-                  'description': e.value.description,
+                event: (event) => {
+                  'type': 'event',
+                  'value': {
+                    'subject': event.value.subject,
+                    'description': event.value.description,
+                  },
                 },
-                task: (e) => {
-                  'id': e.value.id,
-                  'description': e.value.description,
+                task: (task) => {
+                  'type': 'task',
+                  'value': {
+                    'subject': task.value.title,
+                    'description': task.value.description,
+                  },
                 },
               ),
             },
           )
-          .toList(),
+          .toList()
+          .toString(),
       'tasks': userTasks
           .map(
             (e) => {
               'id': e.id,
+              'title': e.title,
               'description': e.description,
-              'startTime': e.startDate?.toIso8601String(),
-              'endTime': e.dueDate?.toIso8601String(),
-              'additionalDetails': {
-                'priority': e.priority,
-                'labels': e.labels.map((e) => e.toJson()).toList(),
-              },
+              'duration': e.estimatedTime?.inMinutes,
+              'startDate': e.startDate?.toIso8601String(),
+              'dueDate': e.dueDate?.toIso8601String(),
+              'priority': e.priority,
             },
           )
-          .toList(),
+          .toList()
+          .toString(),
       'userPrompt': userPrompt,
       'todaysDateTime': DateTime.now().toIso8601String(),
     };
