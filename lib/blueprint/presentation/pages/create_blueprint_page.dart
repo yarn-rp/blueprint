@@ -8,8 +8,10 @@ import 'package:blueprint/app/dependency_injection/init.dart';
 import 'package:blueprint/app/routes/router/app_router.dart';
 import 'package:blueprint/blueprint/presentation/widgets/create_event_dialog.dart';
 import 'package:blueprint/blueprint/state_management/blueprint_bloc/blueprint_bloc.dart';
+import 'package:blueprint/calendar/presentation/views/event_details.dart';
 import 'package:blueprint/core/l10n/l10n.dart';
 import 'package:blueprint/core/utils/datetime/datetime_utils.dart';
+import 'package:blueprint/tasks/presentation/widgets/task_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -317,6 +319,58 @@ class _TimelineState extends State<_Timeline> {
             },
             intervalHeight: 140,
             onEventTap: (event) {
+              if (_selectedEvent == event) {
+                // User wants to see details of the event
+                final item = state.allItems.firstWhere(
+                  (element) => element.id == event.id,
+                );
+                return item.map<void>(
+                  event: (event) => showDialog<void>(
+                    context: context,
+                    builder: (context) {
+                      return Dialog(
+                        surfaceTintColor: Theme.of(context).canvasColor,
+                        child: Builder(
+                          builder: (context) {
+                            return ConstrainedBox(
+                              constraints: BoxConstraints(
+                                maxWidth: 1200,
+                                maxHeight: MediaQuery.of(context).size.height,
+                              ),
+                              child: EventDetails.dialog(
+                                event: event.value,
+                                onClose: () => Navigator.of(context).pop(),
+                              ),
+                            );
+                          },
+                        ),
+                      );
+                    },
+                  ),
+                  task: (task) => showDialog<void>(
+                    context: context,
+                    builder: (context) {
+                      return Dialog(
+                        surfaceTintColor: Theme.of(context).canvasColor,
+                        child: Builder(
+                          builder: (context) {
+                            return ConstrainedBox(
+                              constraints: BoxConstraints(
+                                maxWidth: 1200,
+                                maxHeight: MediaQuery.of(context).size.height,
+                              ),
+                              child: TaskDetails.dialog(
+                                task: task.value,
+                                onClose: () => Navigator.of(context).pop(),
+                              ),
+                            );
+                          },
+                        ),
+                      );
+                    },
+                  ),
+                );
+              }
               setState(() {
                 _selectedEvent = event;
               });
