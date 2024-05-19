@@ -37,18 +37,28 @@ class BlueprintState extends Equatable {
 
   /// Returns event that is happening right now
   Iterable<BlueprintItem> get currentBlueprintItems {
-    final now = DateTime.now();
-    return items.where((event) {
-      return event.startTime.isBefore(now) && event.endTime.isAfter(now);
-    }).toList();
+    return items
+        .where(
+          (event) =>
+              event.startTime.isBefore(updatedAt) &&
+              event.endTime.isAfter(
+                updatedAt,
+              ),
+        )
+        .toList()
+      ..sort((a, b) => a.startTime.compareTo(b.startTime));
   }
 
   Iterable<BlueprintItem> get upcomingBlueprintItems {
-    return items.where((event) => event.startTime.isAfter(updatedAt)).toList();
+    return items.where((event) => event.startTime.isAfter(updatedAt)).toList()
+      ..sort((a, b) => a.startTime.compareTo(b.startTime));
   }
 
   Iterable<BlueprintItem> get pastBlueprintItems =>
-      items.where((event) => event.endTime.isBefore(updatedAt)).toList();
+      items.where((event) => event.endTime.isBefore(updatedAt)).toList()
+        ..sort(
+          (a, b) => b.endTime.compareTo(a.endTime),
+        );
 
   @override
   List<Object?> get props => [items, status, updatedAt];
