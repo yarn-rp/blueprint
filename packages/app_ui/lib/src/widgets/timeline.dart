@@ -80,12 +80,14 @@ class _TodaysBlueprintState extends State<TodayTimeline>
       blackoutDatesTextStyle: textTheme.bodyMedium,
       headerStyle: CalendarHeaderStyle(
         textStyle: textTheme.titleLarge,
+        backgroundColor: Colors.transparent,
       ),
       viewHeaderStyle: ViewHeaderStyle(
         dayTextStyle: textTheme.labelLarge,
         dateTextStyle: textTheme.labelLarge,
       ),
       headerHeight: 80,
+      headerDateFormat: 'MMMM EEEE d',
       onTap: (calendarTapDetails) async {
         if (calendarTapDetails.targetElement == CalendarElement.appointment) {
           final appointment = calendarTapDetails.appointments?.first;
@@ -409,6 +411,7 @@ class _EditableTimelineState extends State<EditableTimeline>
           blackoutDatesTextStyle: textTheme.bodyMedium,
           headerStyle: CalendarHeaderStyle(
             textStyle: textTheme.titleLarge,
+            backgroundColor: Colors.transparent,
           ),
           viewHeaderStyle: ViewHeaderStyle(
             dayTextStyle: textTheme.labelLarge,
