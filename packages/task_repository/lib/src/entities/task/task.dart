@@ -18,7 +18,6 @@ class Task {
     required this.createdAt,
     required this.updatedAt,
     required this.id,
-    required this.project,
     required this.taskURL,
     required this.title,
     required this.description,
@@ -31,6 +30,7 @@ class Task {
     required this.isCompleted,
     required this.labels,
     required this.priority,
+    this.project,
   });
 
   /// Converts a [Map<String, dynamic>] into a [Task].
@@ -54,7 +54,7 @@ class Task {
   final String id;
 
   /// Project to which the task belongs
-  final Project project;
+  final Project? project;
 
   /// The url of the task in the platform
   final Uri taskURL;

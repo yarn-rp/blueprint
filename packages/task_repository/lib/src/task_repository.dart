@@ -7,6 +7,32 @@ import 'package:rxdart/rxdart.dart';
 import 'package:task_repository/src/entities/entities.dart';
 
 const _usersCollectionName = 'users';
+const _tasksCollectionName = 'tasks';
+
+final blueprintPlatform = PlatformData(
+  id: 'blueprint',
+  displayName: 'Blueprint',
+  iconUrl: 'assets/icons/blueprint.svg',
+);
+
+class BlueprintPlatformAccess extends Access {
+  BlueprintPlatformAccess._({
+    required String email,
+    required String gid,
+    required String name,
+  }) : super(
+          platformId: blueprintPlatform.id,
+          userAccessData: UserAccessData(email: email, gid: gid, name: name),
+        );
+
+  factory BlueprintPlatformAccess.fromBlueprintUser(Map<String, dynamic> map) {
+    return BlueprintPlatformAccess._(
+      email: map['email'] as String,
+      gid: map['gid'] as String,
+      name: map['name'] as String,
+    );
+  }
+}
 
 /// [Task] converter for firestore
 final taskConverter = (
@@ -26,22 +52,24 @@ final taskConverter = (
 class TaskRepository {
   /// {@macro task_repository}
   TaskRepository({
-    required this.currentUserIdStream,
+    required Stream<String?> currentUserIdStream,
     required this.platformsStream,
     required FirebaseFirestore firestore,
   }) {
     _usersCollection = firestore.collection(_usersCollectionName);
     _allUserTasks = BehaviorSubject<Iterable<Task>>();
+    _currentUserIdStream = BehaviorSubject<String>();
+    currentUserIdStream.listen(_currentUserIdStream.add);
   }
-
-  /// Stream of the current user id.
-  final Stream<String?> currentUserIdStream;
 
   /// Stream of all supported platforms.
   final Stream<Iterable<Platform>> platformsStream;
 
   /// The collection of users.
   late final CollectionReference _usersCollection;
+
+  /// The current user id.
+  late final BehaviorSubject<String?> _currentUserIdStream;
 
   /// The tasks
   late final BehaviorSubject<Iterable<Task>> _allUserTasks;
@@ -50,12 +78,69 @@ class TaskRepository {
   // ignore: cancel_subscriptions
   StreamSubscription<Iterable<Task>>? _tasksSubscription;
 
+  static String platformId = 'blueprint';
+
+  Future<void> createBlueprintTask({
+    required String title,
+    required String description,
+    DateTime? startDate,
+    DateTime? dueDate,
+    Duration? estimatedTime,
+    Iterable<Label> labels = const [],
+    int priority = 0,
+  }) async {
+    final userId = _currentUserIdStream.value;
+
+    if (userId == null) {
+      throw Exception('User not logged in');
+    }
+
+    final userRef = _usersCollection.doc(userId);
+    final userData = await userRef
+        .get()
+        .then((value) => value.data()! as Map<String, dynamic>);
+
+    final creator = User(
+      userData['email'] as String,
+      userData['name'] as String,
+      userData['photoURL'] as String,
+    );
+
+    final tasksSubCollection =
+        userRef.collection(_tasksCollectionName).withConverter<Task>(
+              fromFirestore: taskConverter.fromFirestore,
+              toFirestore: taskConverter.toFirestore,
+            );
+    final taskRef = tasksSubCollection.doc();
+
+    final task = Task(
+      id: taskRef.id,
+      access: BlueprintPlatformAccess.fromBlueprintUser(userData),
+      title: title,
+      description: description,
+      startDate: startDate,
+      dueDate: dueDate,
+      estimatedTime: estimatedTime,
+      labels: labels,
+      priority: priority,
+      creator: creator,
+      createdAt: DateTime.now(),
+      updatedAt: DateTime.now(),
+      taskURL: Uri.parse('https://blueprint.com/task/${taskRef.id}'),
+      assigned: [],
+      loggedTime: null,
+      isCompleted: false,
+    );
+
+    await taskRef.set(task);
+  }
+
   Stream<Iterable<Task>> _getAllTasksRelatedToMe() {
     if (_tasksSubscription != null) {
       return _allUserTasks.stream;
     }
 
-    _tasksSubscription = currentUserIdStream.switchMap<Iterable<Task>>(
+    _tasksSubscription = _currentUserIdStream.switchMap<Iterable<Task>>(
       (userId) {
         if (userId == null) {
           return const Stream.empty();
@@ -64,7 +149,7 @@ class TaskRepository {
         // TODO(yarn-rp): change this for plans when plan oriented DB is
         // implemented
         final tasksSubCollection =
-            userData.collection('tasks').withConverter<Task>(
+            userData.collection(_tasksCollectionName).withConverter<Task>(
                   fromFirestore: taskConverter.fromFirestore,
                   toFirestore: taskConverter.toFirestore,
                 );

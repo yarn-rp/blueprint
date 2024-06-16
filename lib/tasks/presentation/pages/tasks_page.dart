@@ -66,6 +66,10 @@ class _WideTaskPageState extends State<_WideTaskPage> {
                 flex: 5,
                 child: _SearchTasksInputs(),
               ),
+              OutlinedButton(
+                onPressed: () {},
+                child: Text(l10n.createTaskButtonLabel),
+              ),
             ],
           ),
           const SizedBox(

@@ -49,6 +49,10 @@
     "@create": {
         "description": "Create word"
     },
+    "createTaskButtonLabel": "Create Task",
+    "@createTaskButtonLabel": {
+        "description": "Create Task button label"
+    },
     "createTodaysBlueprintCTA": "Create Today's blueprint",
     "@createTodaysBlueprintCTA": {
         "description": "CTA for edit today blueprint button"

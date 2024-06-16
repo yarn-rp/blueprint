@@ -11,7 +11,6 @@ Task _$TaskFromJson(Map<String, dynamic> json) => Task(
       createdAt: const TimestampConverter().fromJson(json['createdAt']),
       updatedAt: const TimestampConverter().fromJson(json['updatedAt']),
       id: json['id'] as String,
-      project: Project.fromJson(json['project'] as Map<String, dynamic>),
       taskURL: Uri.parse(json['taskURL'] as String),
       title: json['title'] as String,
       description: json['description'] as String,
@@ -19,10 +18,10 @@ Task _$TaskFromJson(Map<String, dynamic> json) => Task(
       dueDate: const TimestampConverter().fromJson(json['dueDate']),
       estimatedTime: json['estimatedTime'] == null
           ? null
-          : Duration(microseconds: json['estimatedTime'] as int),
+          : Duration(microseconds: (json['estimatedTime'] as num).toInt()),
       loggedTime: json['loggedTime'] == null
           ? null
-          : Duration(microseconds: json['loggedTime'] as int),
+          : Duration(microseconds: (json['loggedTime'] as num).toInt()),
       assigned: (json['assigned'] as List<dynamic>)
           .map((e) => User.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -30,7 +29,10 @@ Task _$TaskFromJson(Map<String, dynamic> json) => Task(
       isCompleted: json['isCompleted'] as bool,
       labels: (json['labels'] as List<dynamic>)
           .map((e) => Label.fromJson(e as Map<String, dynamic>)),
-      priority: json['priority'] as int,
+      priority: (json['priority'] as num).toInt(),
+      project: json['project'] == null
+          ? null
+          : Project.fromJson(json['project'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$TaskToJson(Task instance) => <String, dynamic>{
@@ -38,7 +40,7 @@ Map<String, dynamic> _$TaskToJson(Task instance) => <String, dynamic>{
       'createdAt': const TimestampConverter().toJson(instance.createdAt),
       'updatedAt': const TimestampConverter().toJson(instance.updatedAt),
       'id': instance.id,
-      'project': instance.project.toJson(),
+      'project': instance.project?.toJson(),
       'taskURL': instance.taskURL.toString(),
       'title': instance.title,
       'description': instance.description,
