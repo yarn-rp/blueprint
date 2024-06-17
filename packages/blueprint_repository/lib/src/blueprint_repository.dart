@@ -205,13 +205,24 @@ class BlueprintRepository {
                   final data = doc.data();
                   final blueprintItem = BlueprintItem.fromJson(data);
 
+                  final platformId = blueprintItem.map(
+                    event: (event) => event.value.access.platformId,
+                    task: (task) => task.value.access.platformId,
+                  );
+
                   final platform = platforms.firstWhere(
-                    (element) =>
-                        element.id ==
-                        blueprintItem.map(
-                          event: (event) => event.value.access.platformId,
-                          task: (task) => task.value.access.platformId,
-                        ),
+                    (element) => element.id == platformId,
+                    orElse: () {
+                      if (platformId == blueprintPlatform.id) {
+                        return Platform(
+                          id: blueprintPlatform.id,
+                          displayName: blueprintPlatform.displayName,
+                          iconUrl: blueprintPlatform.iconUrl,
+                          authentication: const NoAuthentication(),
+                        );
+                      }
+                      throw Exception('Platform not found');
+                    },
                   );
 
                   return blueprintItem.map(
