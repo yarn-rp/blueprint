@@ -12,11 +12,11 @@ import 'package:ai_client/ai_client.dart' as _i6;
 import 'package:authentication_repository/authentication_repository.dart'
     as _i8;
 import 'package:blueprint/ai_assistant_chat/module/ai_assistant_chat_module.dart'
-    as _i37;
+    as _i38;
 import 'package:blueprint/ai_assistant_chat/state_management/bloc/ai_assistant_chat_bloc.dart'
     as _i26;
 import 'package:blueprint/authentication/module/authentication_module.dart'
-    as _i30;
+    as _i31;
 import 'package:blueprint/authentication/state_management/authentication_cubit/authentication_cubit.dart'
     as _i14;
 import 'package:blueprint/authentication/state_management/forgot_password_cubit/forgot_password_cubit.dart'
@@ -27,22 +27,24 @@ import 'package:blueprint/authentication/state_management/sign_out_cubit/sign_ou
     as _i17;
 import 'package:blueprint/authentication/state_management/sign_up_cubit/sign_up_cubit.dart'
     as _i16;
-import 'package:blueprint/blueprint/module/blueprint_module.dart' as _i34;
+import 'package:blueprint/blueprint/module/blueprint_module.dart' as _i35;
 import 'package:blueprint/blueprint/state_management/blueprint_bloc/blueprint_bloc.dart'
     as _i22;
-import 'package:blueprint/calendar/module/calendar_module.dart' as _i36;
-import 'package:blueprint/core/module/core_module.dart' as _i29;
-import 'package:blueprint/core/module/firebase_module.dart' as _i31;
-import 'package:blueprint/integrations/module/integrations_module.dart' as _i33;
+import 'package:blueprint/calendar/module/calendar_module.dart' as _i37;
+import 'package:blueprint/core/module/core_module.dart' as _i30;
+import 'package:blueprint/core/module/firebase_module.dart' as _i32;
+import 'package:blueprint/integrations/module/integrations_module.dart' as _i34;
 import 'package:blueprint/integrations/state_management/integrations_repository/integrations_cubit.dart'
     as _i23;
-import 'package:blueprint/settings/module/settings_module.dart' as _i28;
+import 'package:blueprint/settings/module/settings_module.dart' as _i29;
 import 'package:blueprint/settings/state_management/bloc/settings_bloc.dart'
     as _i3;
-import 'package:blueprint/tasks/module/task_module.dart' as _i35;
-import 'package:blueprint/tasks/state_management/cubit/tasks_cubit.dart'
+import 'package:blueprint/tasks/module/task_module.dart' as _i36;
+import 'package:blueprint/tasks/state_management/bloc/create_task_bloc.dart'
     as _i27;
-import 'package:blueprint/users/module/user_module.dart' as _i32;
+import 'package:blueprint/tasks/state_management/cubit/tasks_cubit.dart'
+    as _i28;
+import 'package:blueprint/users/module/user_module.dart' as _i33;
 import 'package:blueprint/users/state_management/cubit/user_cubit.dart' as _i21;
 import 'package:blueprint_repository/blueprint_repository.dart' as _i20;
 import 'package:calendar_repository/calendar_repository.dart' as _i25;
@@ -187,7 +189,9 @@ extension GetItInjectableX on _i1.GetIt {
           gh<_i5.Uuid>(),
           initialBotMessages,
         ));
-    gh.factory<_i27.TasksCubit>(() => taskModule.taskCubit(
+    gh.factory<_i27.CreateTaskBloc>(
+        () => _i27.CreateTaskBloc(taskRepository: gh<_i24.TaskRepository>()));
+    gh.factory<_i28.TasksCubit>(() => taskModule.taskCubit(
           gh<_i24.TaskRepository>(),
           gh<_i19.IntegrationsRepository>(),
         ));
@@ -195,22 +199,22 @@ extension GetItInjectableX on _i1.GetIt {
   }
 }
 
-class _$SettingsModule extends _i28.SettingsModule {}
+class _$SettingsModule extends _i29.SettingsModule {}
 
-class _$CoreModule extends _i29.CoreModule {}
+class _$CoreModule extends _i30.CoreModule {}
 
-class _$AuthenticationModule extends _i30.AuthenticationModule {}
+class _$AuthenticationModule extends _i31.AuthenticationModule {}
 
-class _$FirebaseModule extends _i31.FirebaseModule {}
+class _$FirebaseModule extends _i32.FirebaseModule {}
 
-class _$UserModule extends _i32.UserModule {}
+class _$UserModule extends _i33.UserModule {}
 
-class _$IntegrationsModule extends _i33.IntegrationsModule {}
+class _$IntegrationsModule extends _i34.IntegrationsModule {}
 
-class _$BlueprintModule extends _i34.BlueprintModule {}
+class _$BlueprintModule extends _i35.BlueprintModule {}
 
-class _$TaskModule extends _i35.TaskModule {}
+class _$TaskModule extends _i36.TaskModule {}
 
-class _$CalendarModule extends _i36.CalendarModule {}
+class _$CalendarModule extends _i37.CalendarModule {}
 
-class _$AIAssistantChatModule extends _i37.AIAssistantChatModule {}
+class _$AIAssistantChatModule extends _i38.AIAssistantChatModule {}

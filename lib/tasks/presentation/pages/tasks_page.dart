@@ -3,10 +3,12 @@ import 'package:auto_route/auto_route.dart';
 import 'package:blueprint/core/l10n/l10n.dart';
 import 'package:blueprint/tasks/presentation/widgets/task_card.dart';
 import 'package:blueprint/tasks/presentation/widgets/task_details.dart';
+import 'package:blueprint/tasks/presentation/widgets/widgets.dart';
 import 'package:blueprint/tasks/state_management/cubit/tasks_cubit.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_portal/flutter_portal.dart';
 
 @RoutePage()
 class TasksPage extends StatefulWidget {
@@ -56,19 +58,45 @@ class _WideTaskPageState extends State<_WideTaskPage> {
     return Padding(
       padding: const EdgeInsets.all(AppSpacing.xlg),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Text(l10n.tasksPageTitle, style: textTheme.titleLarge),
+          const SizedBox(
+            height: AppSpacing.xlg,
+          ),
           Row(
             children: [
-              Expanded(
-                child: Text(l10n.tasksPageTitle, style: textTheme.titleLarge),
+              Flexible(
+                child: FilledButton.icon(
+                  onPressed: () {
+                    showDialog<void>(
+                      context: context,
+                      builder: (context) {
+                        return Dialog(
+                          surfaceTintColor: Theme.of(context).canvasColor,
+                          child: Builder(
+                            builder: (context) {
+                              return ConstrainedBox(
+                                constraints: BoxConstraints(
+                                  maxWidth: 1200,
+                                  maxHeight: 600,
+                                ),
+                                child: const CreateTaskPage(),
+                              );
+                            },
+                          ),
+                        );
+                      },
+                    );
+                  },
+                  icon: const Icon(Icons.add),
+                  label: Text(l10n.createTaskButtonLabel),
+                ),
               ),
+              const SizedBox(width: AppSpacing.xlg),
               const Expanded(
                 flex: 5,
                 child: _SearchTasksInputs(),
-              ),
-              OutlinedButton(
-                onPressed: () {},
-                child: Text(l10n.createTaskButtonLabel),
               ),
             ],
           ),

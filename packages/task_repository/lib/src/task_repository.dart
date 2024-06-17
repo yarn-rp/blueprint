@@ -28,8 +28,8 @@ class BlueprintPlatformAccess extends Access {
   factory BlueprintPlatformAccess.fromBlueprintUser(Map<String, dynamic> map) {
     return BlueprintPlatformAccess._(
       email: map['email'] as String,
-      gid: map['gid'] as String,
-      name: map['name'] as String,
+      gid: '',
+      name: map['displayName'] as String? ?? map['email'] as String,
     );
   }
 }
@@ -80,6 +80,23 @@ class TaskRepository {
 
   static String platformId = 'blueprint';
 
+  Future<void> deleteTask(Task task) {
+    final userId = _currentUserIdStream.value;
+
+    if (userId == null) {
+      throw Exception('User not logged in');
+    }
+
+    final userRef = _usersCollection.doc(userId);
+    final tasksSubCollection =
+        userRef.collection(_tasksCollectionName).withConverter<Task>(
+              fromFirestore: taskConverter.fromFirestore,
+              toFirestore: taskConverter.toFirestore,
+            );
+
+    return tasksSubCollection.doc(task.id).delete();
+  }
+
   Future<void> createBlueprintTask({
     required String title,
     required String description,
@@ -89,50 +106,59 @@ class TaskRepository {
     Iterable<Label> labels = const [],
     int priority = 0,
   }) async {
-    final userId = _currentUserIdStream.value;
+    try {
+      print('Creating task: $title');
+      final userId = _currentUserIdStream.value;
 
-    if (userId == null) {
-      throw Exception('User not logged in');
+      if (userId == null) {
+        throw Exception('User not logged in');
+      }
+
+      final userRef = _usersCollection.doc(userId);
+      final userData = await userRef
+          .get()
+          .then((value) => value.data()! as Map<String, dynamic>);
+
+      final creator = User(
+        userData['email'] as String,
+        userData['email'] as String,
+        userData['photoURL'] as String? ?? '',
+      );
+
+      final tasksSubCollection =
+          userRef.collection(_tasksCollectionName).withConverter<Task>(
+                fromFirestore: taskConverter.fromFirestore,
+                toFirestore: taskConverter.toFirestore,
+              );
+      final taskRef = tasksSubCollection.doc();
+
+      final task = Task(
+        id: taskRef.id,
+        access: BlueprintPlatformAccess.fromBlueprintUser(userData),
+        title: title,
+        description: description,
+        startDate: startDate,
+        dueDate: dueDate,
+        estimatedTime: estimatedTime,
+        labels: labels,
+        priority: priority,
+        creator: creator,
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
+        taskURL: Uri.parse('https://blueprint.com/task/${taskRef.id}'),
+        assigned: [creator],
+        loggedTime: null,
+        isCompleted: false,
+      );
+
+      await taskRef.set(task);
+      print('Task created: ${taskRef.id}');
+    } catch (error, stackTrace) {
+      print('Error creating task: $error at ${stackTrace.toString()}');
+      print(stackTrace);
+
+      rethrow;
     }
-
-    final userRef = _usersCollection.doc(userId);
-    final userData = await userRef
-        .get()
-        .then((value) => value.data()! as Map<String, dynamic>);
-
-    final creator = User(
-      userData['email'] as String,
-      userData['name'] as String,
-      userData['photoURL'] as String,
-    );
-
-    final tasksSubCollection =
-        userRef.collection(_tasksCollectionName).withConverter<Task>(
-              fromFirestore: taskConverter.fromFirestore,
-              toFirestore: taskConverter.toFirestore,
-            );
-    final taskRef = tasksSubCollection.doc();
-
-    final task = Task(
-      id: taskRef.id,
-      access: BlueprintPlatformAccess.fromBlueprintUser(userData),
-      title: title,
-      description: description,
-      startDate: startDate,
-      dueDate: dueDate,
-      estimatedTime: estimatedTime,
-      labels: labels,
-      priority: priority,
-      creator: creator,
-      createdAt: DateTime.now(),
-      updatedAt: DateTime.now(),
-      taskURL: Uri.parse('https://blueprint.com/task/${taskRef.id}'),
-      assigned: [],
-      loggedTime: null,
-      isCompleted: false,
-    );
-
-    await taskRef.set(task);
   }
 
   Stream<Iterable<Task>> _getAllTasksRelatedToMe() {
@@ -161,6 +187,18 @@ class TaskRepository {
 
                   final taskPlatform = platforms.firstWhere(
                     (platform) => platform.id == taskEntity.access.platformId,
+                    orElse: () {
+                      if (taskEntity.access.platformId ==
+                          blueprintPlatform.id) {
+                        return Platform(
+                          id: blueprintPlatform.id,
+                          displayName: blueprintPlatform.displayName,
+                          iconUrl: blueprintPlatform.iconUrl,
+                          authentication: NoAuthentication(),
+                        );
+                      }
+                      throw Exception('Platform not found');
+                    },
                   );
 
                   return taskEntity.copyWith(

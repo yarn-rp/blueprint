@@ -55,6 +55,7 @@ sealed class Authentication {
 
   static Map<String, dynamic> toJson(Authentication authentication) {
     return switch (authentication) {
+      NoAuthentication() => {},
       Basic() => {
           'type': 'basic',
           ...authentication.toJson(),
@@ -65,6 +66,10 @@ sealed class Authentication {
         },
     };
   }
+}
+
+class NoAuthentication extends Authentication {
+  const NoAuthentication();
 }
 
 @JsonSerializable()

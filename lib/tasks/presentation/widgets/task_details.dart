@@ -2,6 +2,7 @@ import 'package:app_ui/app_ui.dart';
 import 'package:blueprint/blueprint/state_management/blueprint_bloc/blueprint_bloc.dart';
 import 'package:blueprint/core/l10n/l10n.dart';
 import 'package:blueprint/tasks/presentation/widgets/widgets.dart';
+import 'package:blueprint/tasks/state_management/cubit/tasks_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:jiffy/jiffy.dart';
@@ -90,9 +91,7 @@ class TaskDetails extends StatelessWidget {
         backgroundColor: Theme.of(context).canvasColor,
         appBar: _TaskDetailsAppBar(
           onClose: onClose,
-          platformTaskUrl: task.taskURL,
-          platformName: task.access.platform!.displayName,
-          taskTitle: task.title,
+          task: task,
         ),
         body: isDialog
             ? Column(
@@ -279,11 +278,21 @@ class _TaskCreatedBy extends StatelessWidget {
 
     return Section.mini(
       title: l10n.createdBy,
-      child: UserTile(
-        platformUrl: creator.platformURL,
-        avatarUrl: creator.avatarUrl,
-        displayName: creator.displayName,
-        // TODO(yarn-rp): add email to user entity
+      child: Builder(
+        builder: (context) {
+          if (task.isBlueprintTask) {
+            return UserTile.customLeading(
+              displayName: creator.displayName,
+              leading: AvatarIcon(text: creator.displayName[0]),
+            );
+          }
+          return UserTile(
+            platformUrl: creator.platformURL,
+            avatarUrl: creator.avatarUrl,
+            displayName: creator.displayName,
+            // TODO(yarn-rp): add email to user entity
+          );
+        },
       ),
     );
   }
@@ -303,15 +312,23 @@ class _TaskAssignees extends StatelessWidget {
     return Section.mini(
       title: l10n.assignees,
       child: Wrap(
-        children: task.assigned
-            .map(
-              (e) => UserTile(
-                platformUrl: e.platformURL,
-                avatarUrl: e.avatarUrl,
+        children: task.assigned.map(
+          (e) {
+            if (task.isBlueprintTask) {
+              // add check in here to see if the user is the current user
+              return UserTile.customLeading(
                 displayName: e.displayName,
-              ),
-            )
-            .toList(),
+                leading: AvatarIcon(text: e.displayName[0]),
+              );
+            }
+            return UserTile(
+              platformUrl: e.platformURL,
+              avatarUrl: e.avatarUrl,
+              displayName: e.displayName,
+              leading: task.isBlueprintTask ? const BlueprintIcon() : null,
+            );
+          },
+        ).toList(),
       ),
     );
   }
@@ -453,18 +470,15 @@ class _TaskDetailsAppBar extends StatelessWidget
     implements PreferredSizeWidget {
   const _TaskDetailsAppBar({
     required this.onClose,
-    required this.platformTaskUrl,
-    required this.platformName,
-    required this.taskTitle,
+    required this.task,
   });
 
-  final Uri platformTaskUrl;
-  final String platformName;
-  final String taskTitle;
+  final Task task;
   final VoidCallback onClose;
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     final l10n = context.l10n;
     return AppBar(
       automaticallyImplyLeading: false,
@@ -473,23 +487,47 @@ class _TaskDetailsAppBar extends StatelessWidget
       centerTitle: false,
       leadingWidth: double.infinity,
       actions: [
-        FilledButton.tonalIcon(
-          onPressed: () => launchUrl(platformTaskUrl),
-          icon: const Icon(Icons.link),
-          label: Text(
-            l10n.viewInPlatformCTA(platformName),
+        if (task.isBlueprintTask)
+          FilledButton.icon(
+            onPressed: () => context.read<TasksCubit>().deleteTask(task),
+            icon: const Icon(Icons.delete),
+            style: ButtonStyle(
+              backgroundColor: WidgetStateProperty.all(
+                theme.colorScheme.error,
+              ),
+            ),
+            label: Text(
+              'Delete Task',
+            ),
+          )
+        else
+          FilledButton.tonalIcon(
+            onPressed: () => launchUrl(task.taskURL),
+            icon: const Icon(Icons.link),
+            label: Text(
+              l10n.viewInPlatformCTA(task.access.platform!.displayName),
+            ),
           ),
-        ),
         IconButton(
           onPressed: onClose,
           icon: const Icon(Icons.close),
         ),
       ],
-      title: Text(
-        taskTitle,
-        style: Theme.of(context).textTheme.headlineMedium,
-        maxLines: 2,
-        overflow: TextOverflow.ellipsis,
+      title: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            task.title,
+            style: Theme.of(context).textTheme.headlineMedium,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
+          if (task.isBlueprintTask)
+            Text(
+              'Made with Blueprint',
+              style: theme.textTheme.bodySmall,
+            ),
+        ],
       ),
     );
   }

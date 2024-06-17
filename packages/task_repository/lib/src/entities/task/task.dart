@@ -3,6 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:task_repository/src/entities/access/access.dart';
 import 'package:task_repository/src/entities/entities.dart';
 import 'package:task_repository/src/utils/timestamp_converter.dart';
+import 'package:task_repository/task_repository.dart';
 
 part 'task.g.dart';
 
@@ -95,6 +96,9 @@ class Task {
   /// This is an int between 1 and 5. 1 being the highest priority and 5 being
   /// the lowest priority.
   final int priority;
+
+  /// Weather the task was created inside of blueprint or not.
+  bool get isBlueprintTask => access.platform?.id == blueprintPlatform.id;
 
   Task copyWith({
     Access? access,

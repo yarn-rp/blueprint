@@ -10,6 +10,8 @@ class ProjectPlatformChip extends LabelChip {
           text: task.access.userAccessData.email ??
               task.access.platform!.displayName,
           backgroundColor: null,
-          avatar: Image.network(task.access.platform!.iconUrl),
+          avatar: task.isBlueprintTask
+              ? const BlueprintIcon()
+              : Image.network(task.access.platform!.iconUrl),
         );
 }

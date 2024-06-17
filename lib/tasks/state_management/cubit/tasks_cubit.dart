@@ -29,6 +29,15 @@ class TasksCubit extends Cubit<TasksState> {
     emit(state.copyWith(selectedTask: task));
   }
 
+  Future<void> deleteTask(Task task) async {
+    try {
+      await _taskRepository.deleteTask(task);
+      await unselectTask();
+    } catch (error) {
+      addError(error);
+    }
+  }
+
   Future<void> unselectTask() async {
     emit(
       TasksState(
@@ -102,6 +111,7 @@ class TasksCubit extends Cubit<TasksState> {
           );
         },
         onError: (Object error, Object stackTrace) {
+          print('Error fetching tasks: $error at $stackTrace');
           addError(error);
           emit(state.copyWith(status: TasksStatus.error));
         },
