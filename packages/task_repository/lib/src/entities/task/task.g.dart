@@ -14,8 +14,8 @@ Task _$TaskFromJson(Map<String, dynamic> json) => Task(
       taskURL: Uri.parse(json['taskURL'] as String),
       title: json['title'] as String,
       description: json['description'] as String,
-      startDate: const TimestampConverter().fromJson(json['startDate']),
-      dueDate: const TimestampConverter().fromJson(json['dueDate']),
+      startDate: const TimestampNullableConverter().fromJson(json['startDate']),
+      dueDate: const TimestampNullableConverter().fromJson(json['dueDate']),
       estimatedTime: json['estimatedTime'] == null
           ? null
           : Duration(microseconds: (json['estimatedTime'] as num).toInt()),
@@ -44,10 +44,9 @@ Map<String, dynamic> _$TaskToJson(Task instance) => <String, dynamic>{
       'taskURL': instance.taskURL.toString(),
       'title': instance.title,
       'description': instance.description,
-      'startDate': _$JsonConverterToJson<dynamic, DateTime>(
-          instance.startDate, const TimestampConverter().toJson),
-      'dueDate': _$JsonConverterToJson<dynamic, DateTime>(
-          instance.dueDate, const TimestampConverter().toJson),
+      'startDate':
+          const TimestampNullableConverter().toJson(instance.startDate),
+      'dueDate': const TimestampNullableConverter().toJson(instance.dueDate),
       'estimatedTime': instance.estimatedTime?.inMicroseconds,
       'loggedTime': instance.loggedTime?.inMicroseconds,
       'assigned': instance.assigned.map((e) => e.toJson()).toList(),
@@ -56,9 +55,3 @@ Map<String, dynamic> _$TaskToJson(Task instance) => <String, dynamic>{
       'labels': instance.labels.map((e) => e.toJson()).toList(),
       'priority': instance.priority,
     };
-
-Json? _$JsonConverterToJson<Json, Value>(
-  Value? value,
-  Json? Function(Value value) toJson,
-) =>
-    value == null ? null : toJson(value);

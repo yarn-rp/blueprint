@@ -15,6 +15,12 @@ class CreateTaskState extends Equatable {
   final int? priority;
   final Duration? estimatedTime;
 
+  bool get isValid =>
+      title != null &&
+      title!.isNotEmpty &&
+      description != null &&
+      description!.isNotEmpty;
+
   CreateTaskState copyWith({
     String? title,
     String? description,

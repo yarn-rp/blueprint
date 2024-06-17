@@ -67,11 +67,12 @@ class Task {
   final String description;
 
   /// start date of the task
-  @TimestampConverter()
+  @JsonKey()
+  @TimestampNullableConverter()
   final DateTime? startDate;
 
   /// due date of the task
-  @TimestampConverter()
+  @TimestampNullableConverter()
   final DateTime? dueDate;
 
   /// estimated time to complete the task

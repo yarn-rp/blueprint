@@ -15,7 +15,7 @@ dependencies:
   flutter:
     sdk: flutter
   responsive_framework: ^1.4.0
-  storybook_flutter: ^0.14.1
+  storybook_flutter: ^0.11.2+1
 dev_dependencies:
   flutter_test:
     sdk: flutter

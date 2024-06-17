@@ -39,6 +39,7 @@ class CreateTaskBloc extends Bloc<CreateTaskEvent, CreateTaskState> {
     DueDateChanged event,
     Emitter<CreateTaskState> emit,
   ) {
+    print('Due date changed: ${event.dueDate}');
     emit(state.copyWith(dueDate: event.dueDate));
   }
 
@@ -46,6 +47,7 @@ class CreateTaskBloc extends Bloc<CreateTaskEvent, CreateTaskState> {
     PriorityChanged event,
     Emitter<CreateTaskState> emit,
   ) {
+    print('Priority changed: ${event.priority}');
     emit(state.copyWith(priority: event.priority));
   }
 
@@ -53,6 +55,7 @@ class CreateTaskBloc extends Bloc<CreateTaskEvent, CreateTaskState> {
     EstimatedTimeChanged event,
     Emitter<CreateTaskState> emit,
   ) {
+    print('Estimated time changed: ${event.estimatedTime}');
     emit(state.copyWith(estimatedTime: event.estimatedTime));
   }
 
@@ -60,14 +63,15 @@ class CreateTaskBloc extends Bloc<CreateTaskEvent, CreateTaskState> {
     CreateTaskSubmitted event,
     Emitter<CreateTaskState> emit,
   ) async {
-    print('Creating task: ${state.title}');
     try {
+      print(
+          'Creating task with title: ${state.title} and description: ${state.description} and due date: ${state.dueDate} and estimated time: ${state.estimatedTime} and priority: ${state.priority}');
       await _taskRepository.createBlueprintTask(
         title: state.title!,
         description: state.description!,
-        startDate: DateTime.now(),
         dueDate: state.dueDate,
-        priority: state.priority!,
+        estimatedTime: state.estimatedTime,
+        priority: state.priority ?? 3,
       );
     } catch (error, stackTrace) {
       print('Error creating task: $error');

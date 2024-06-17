@@ -100,11 +100,10 @@ class TaskRepository {
   Future<void> createBlueprintTask({
     required String title,
     required String description,
-    DateTime? startDate,
     DateTime? dueDate,
     Duration? estimatedTime,
     Iterable<Label> labels = const [],
-    int priority = 0,
+    int priority = 3,
   }) async {
     try {
       print('Creating task: $title');
@@ -137,7 +136,7 @@ class TaskRepository {
         access: BlueprintPlatformAccess.fromBlueprintUser(userData),
         title: title,
         description: description,
-        startDate: startDate,
+        startDate: DateTime.now(),
         dueDate: dueDate,
         estimatedTime: estimatedTime,
         labels: labels,

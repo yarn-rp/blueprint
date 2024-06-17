@@ -1,9 +1,12 @@
+import 'dart:math';
+
 import 'package:app_ui/app_ui.dart';
 import 'package:blueprint/app/dependency_injection/init.dart';
 import 'package:blueprint/core/l10n/l10n.dart';
 import 'package:blueprint/tasks/presentation/widgets/widgets.dart';
 import 'package:blueprint/tasks/state_management/bloc/create_task_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CreateTaskPage extends StatelessWidget {
@@ -13,7 +16,7 @@ class CreateTaskPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => sl<CreateTaskBloc>(),
-      child: _CreateTaskView(
+      child: _CreateTaskView.dialog(
         onClose: () {
           Navigator.of(context).pop();
         },
@@ -89,25 +92,38 @@ class _CreateTaskView extends StatelessWidget {
       margin: EdgeInsets.zero,
       child: Scaffold(
         backgroundColor: Theme.of(context).canvasColor,
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          toolbarHeight: kToolbarHeight + kMinInteractiveDimension,
-          backgroundColor: Colors.transparent,
-          centerTitle: false,
-          leadingWidth: double.infinity,
-          actions: [
-            IconButton(
-              onPressed: onClose,
-              icon: const Icon(Icons.close),
-            ),
-          ],
-          title: Text(
-            context.l10n.createTaskButtonLabel,
-            style: Theme.of(context).textTheme.headlineMedium,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ),
+        appBar: isDialog
+            ? AppBar(
+                backgroundColor: theme.colorScheme.secondaryContainer,
+                elevation: 0,
+                leading: const SizedBox(),
+                actions: [
+                  CloseButton(
+                    color: theme.colorScheme.onSecondaryContainer,
+                    onPressed: onClose,
+                  ),
+                ],
+              )
+            : null,
+        // AppBar(
+        //   automaticallyImplyLeading: false,
+        //   toolbarHeight: kToolbarHeight + kMinInteractiveDimension,
+        //   backgroundColor: Colors.transparent,
+        //   centerTitle: false,
+        //   leadingWidth: double.infinity,
+        //   actions: [
+        //     IconButton(
+        //       onPressed: onClose,
+        //       icon: const Icon(Icons.close),
+        //     ),
+        //   ],
+        //   title: Text(
+        //     context.l10n.createTaskButtonLabel,
+        //     style: Theme.of(context).textTheme.headlineMedium,
+        //     maxLines: 2,
+        //     overflow: TextOverflow.ellipsis,
+        //   ),
+        // ),
         bottomNavigationBar: const Padding(
           padding: EdgeInsets.all(AppSpacing.lg),
           child: Row(
@@ -127,12 +143,9 @@ class _CreateTaskView extends StatelessWidget {
                   _buildDivider(),
                   const _TaskDescriptionInput(),
                   _buildDivider(),
-                  const Row(
-                    children: [
-                      _TaskDueDateInput(),
-                      _TaskPriorityInput(),
-                    ],
-                  ),
+                  const _TaskDueDateAndEstimatedTimeInput(),
+                  _buildDivider(),
+                  const _TaskPriorityInput(),
                 ],
               ),
             ),
@@ -148,14 +161,27 @@ class _TaskTitleInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      onChanged: (value) => context.read<CreateTaskBloc>().add(
-            TitleChanged(value),
+    final theme = Theme.of(context);
+    final l10n = context.l10n;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Title *',
+          style: theme.textTheme.titleMedium,
+        ),
+        const SizedBox(height: AppSpacing.md),
+        TextField(
+          onChanged: (value) => context.read<CreateTaskBloc>().add(
+                TitleChanged(value),
+              ),
+          decoration: const InputDecoration(
+            hintText: 'Write a title for the task',
+            border: OutlineInputBorder(),
           ),
-      decoration: InputDecoration(
-        labelText: 'Title',
-        border: OutlineInputBorder(),
-      ),
+        ),
+      ],
     );
   }
 }
@@ -164,48 +190,129 @@ class _TaskDescriptionInput extends StatelessWidget {
   const _TaskDescriptionInput();
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      onChanged: (value) => context.read<CreateTaskBloc>().add(
-            DescriptionChanged(value),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Description *',
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
+        const SizedBox(height: AppSpacing.md),
+        TextField(
+          onChanged: (value) => context.read<CreateTaskBloc>().add(
+                DescriptionChanged(value),
+              ),
+          decoration: const InputDecoration(
+            hintText: 'Write a description for the task',
+            border: OutlineInputBorder(),
           ),
-      decoration: InputDecoration(
-        labelText: 'Description',
-        border: OutlineInputBorder(),
-      ),
-      maxLines: 3,
+          maxLines: 5,
+        ),
+      ],
     );
   }
 }
 
-class _TaskDueDateInput extends StatelessWidget {
-  const _TaskDueDateInput();
+class _TaskDueDateAndEstimatedTimeInput extends StatelessWidget {
+  const _TaskDueDateAndEstimatedTimeInput();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Row(
+      children: [
+        Flexible(child: _DueDateInput()),
+        SizedBox(width: AppSpacing.lg),
+        Flexible(child: _EstimatedTimeInput()),
+      ],
+    );
+  }
+}
+
+class _EstimatedTimeInput extends StatelessWidget {
+  const _EstimatedTimeInput({super.key});
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    return Row(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Icon(Icons.calendar_today),
-        const SizedBox(width: AppSpacing.sm),
-        TextButton(
-          onPressed: () async {
-            final selectedDate = await showDatePicker(
-              context: context,
-              initialDate: DateTime.now(),
-              firstDate: DateTime.now(),
-              lastDate: DateTime(DateTime.now().year + 1),
-            );
+        Text(
+          'Estimated Time',
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
+        Text('Optional', style: theme.textTheme.labelSmall),
+        const SizedBox(height: AppSpacing.md),
+        SizedBox(
+          width: 64,
+          child: TextField(
+            onChanged: (value) {
+              final duration = Duration(hours: double.parse(value).toInt());
 
-            if (selectedDate != null) {
               context.read<CreateTaskBloc>().add(
-                    DueDateChanged(selectedDate),
+                    EstimatedTimeChanged(duration),
                   );
-            }
-          },
-          child: Text(
-            'Due Date',
-            style: theme.textTheme.bodyMedium,
+            },
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+              suffixText: 'h',
+            ),
+            keyboardType: TextInputType.number,
+            inputFormatters: [
+              FilteringTextInputFormatter.digitsOnly,
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _DueDateInput extends StatelessWidget {
+  const _DueDateInput({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Due Date',
+          style: Theme.of(context).textTheme.titleMedium,
+        ),
+        Text('Optional', style: theme.textTheme.labelSmall),
+        const SizedBox(height: AppSpacing.md),
+        SizedBox(
+          width: 200,
+          child: TextField(
+            onChanged: (value) {
+              final valueSplit = value.split('/');
+
+              if (valueSplit.length != 3) {
+                return;
+              }
+
+              final date = DateTime.tryParse(
+                '${valueSplit[2]}-${valueSplit[0]}-${valueSplit[1]}',
+              );
+
+              if (date != null) {
+                context.read<CreateTaskBloc>().add(
+                      DueDateChanged(date),
+                    );
+              }
+            },
+            inputFormatters: [
+              DateTextFormatter(),
+            ],
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+              hintText: 'MM/DD/YYYY',
+            ),
+            keyboardType: TextInputType.datetime,
           ),
         ),
       ],
@@ -219,32 +326,48 @@ class _TaskPriorityInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final value = context.select((CreateTaskBloc bloc) => bloc.state.priority);
+    final selectedPriority = context.select(
+      (CreateTaskBloc bloc) => bloc.state.priority,
+    );
 
-    return Row(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Icon(Icons.flag),
-        const SizedBox(width: AppSpacing.sm),
-        DropdownButton<int>(
-          value: value,
-          icon: const Icon(Icons.arrow_drop_down),
-          elevation: 16,
-          style: theme.textTheme.bodyMedium,
-          underline: Container(
-            height: 2,
-            color: theme.colorScheme.secondary,
-          ),
-          onChanged: (int? newValue) {
-            if (newValue != null) {
-              context.read<CreateTaskBloc>().add(PriorityChanged(newValue));
-            }
-          },
-          items: List<DropdownMenuItem<int>>.generate(
+        Text(
+          'Priority',
+          style: theme.textTheme.titleMedium,
+        ),
+        Text('Optional', style: theme.textTheme.labelSmall),
+        const SizedBox(height: AppSpacing.md),
+        Row(
+          children: List.generate(
             5,
-            (index) => DropdownMenuItem<int>(
-              value: index + 1,
-              child: Text('${index + 1}'),
-            ),
+            (index) {
+              final priority = 5 - index;
+              return Padding(
+                padding: const EdgeInsets.all(4.0),
+                child: IconButton.filled(
+                  style: selectedPriority == priority
+                      ? ButtonStyle(
+                          backgroundColor: WidgetStateProperty.all(
+                            theme.colorScheme.primaryFixed,
+                          ),
+                        )
+                      : ButtonStyle(
+                          backgroundColor: WidgetStateProperty.all(
+                            getPriorityColor(priority),
+                          ),
+                        ),
+                  icon: Icon(getPriorityIcon(priority)),
+                  onPressed: () {
+                    context.read<CreateTaskBloc>().add(
+                          PriorityChanged(priority),
+                        );
+                  },
+                  iconSize: 32,
+                ),
+              );
+            },
           ),
         ),
       ],
@@ -258,16 +381,46 @@ class _TaskSubmitButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final isValid = context.select(
+      (CreateTaskBloc bloc) => bloc.state.isValid,
+    );
 
     return FilledButton(
-      onPressed: () {
-        context.read<CreateTaskBloc>().add(
-              CreateTaskSubmitted(),
-            );
-      },
-      child: Text(
-        'Submit',
-      ),
+      onPressed: isValid
+          ? () => context.read<CreateTaskBloc>().add(
+                CreateTaskSubmitted(),
+              )
+          : null,
+      child: Text('Create'),
     );
+  }
+}
+
+class DateTextFormatter extends TextInputFormatter {
+  static const _maxChars = 8;
+
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    var text = _format(newValue.text, '/');
+    return newValue.copyWith(text: text, selection: updateCursorPosition(text));
+  }
+
+  String _format(String value, String seperator) {
+    value = value.replaceAll(seperator, '');
+    var newString = '';
+
+    for (int i = 0; i < min(value.length, _maxChars); i++) {
+      newString += value[i];
+      if ((i == 1 || i == 3) && i != value.length - 1) {
+        newString += seperator;
+      }
+    }
+
+    return newString;
+  }
+
+  TextSelection updateCursorPosition(String text) {
+    return TextSelection.fromPosition(TextPosition(offset: text.length));
   }
 }

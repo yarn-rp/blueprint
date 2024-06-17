@@ -26,3 +26,33 @@ class TimestampConverter implements JsonConverter<DateTime, dynamic> {
     return date.toIso8601String();
   }
 }
+
+class TimestampNullableConverter implements JsonConverter<DateTime?, dynamic> {
+  const TimestampNullableConverter();
+
+  @override
+  DateTime? fromJson(dynamic timestamp) {
+    if (timestamp == null) {
+      return null;
+    }
+
+    if (timestamp is Timestamp) {
+      return timestamp.toDate();
+    }
+
+    if (timestamp is DateTime) {
+      return timestamp;
+    }
+
+    if (timestamp is String) {
+      return DateTime.parse(timestamp);
+    }
+
+    throw Exception('TimestampNullableConverter: fromJson: unknown type');
+  }
+
+  @override
+  dynamic toJson(DateTime? date) {
+    return date?.toIso8601String();
+  }
+}

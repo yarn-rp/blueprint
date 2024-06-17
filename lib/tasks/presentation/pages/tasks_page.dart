@@ -73,17 +73,17 @@ class _WideTaskPageState extends State<_WideTaskPage> {
                       context: context,
                       builder: (context) {
                         return Dialog(
-                          surfaceTintColor: Theme.of(context).canvasColor,
-                          child: Builder(
-                            builder: (context) {
-                              return ConstrainedBox(
-                                constraints: BoxConstraints(
-                                  maxWidth: 1200,
-                                  maxHeight: 600,
-                                ),
-                                child: const CreateTaskPage(),
-                              );
-                            },
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(AppSpacing.md),
+                          ),
+                          child: ConstrainedBox(
+                            constraints: const BoxConstraints(
+                              maxWidth: 700,
+                              maxHeight: 700,
+                            ),
+                            child: const MaterialDialog(
+                              child: CreateTaskPage(),
+                            ),
                           ),
                         );
                       },
