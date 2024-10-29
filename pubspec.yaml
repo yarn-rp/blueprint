@@ -37,6 +37,7 @@ dependencies:
   flutter_chat_types: ^3.6.2
   flutter_chat_ui: ^1.6.12
   flutter_html: ^3.0.0-beta.2
+  flutter_local_notifications: ^17.2.4
   flutter_localizations:
     sdk: flutter
   flutter_markdown: ^0.7.1
@@ -56,6 +57,8 @@ dependencies:
   intl: ^0.19.0
   jiffy: ^6.3.0
   json_annotation: ^4.8.0
+  local_notifications:
+    path: ./packages/local_notifications
   markdown: ^7.1.1
   meta: ^1.15.0
   path_provider: ^2.0.14
