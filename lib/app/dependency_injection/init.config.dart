@@ -33,6 +33,7 @@ import 'package:blueprint/blueprint/state_management/blueprint_bloc/blueprint_bl
 import 'package:blueprint/calendar/module/calendar_module.dart' as _i179;
 import 'package:blueprint/core/module/core_module.dart' as _i324;
 import 'package:blueprint/core/module/firebase_module.dart' as _i730;
+import 'package:blueprint/core/module/local_notifications.dart' as _i574;
 import 'package:blueprint/integrations/module/integrations_module.dart' as _i65;
 import 'package:blueprint/integrations/state_management/integrations_repository/integrations_cubit.dart'
     as _i527;
@@ -53,11 +54,14 @@ import 'package:cloud_firestore/cloud_firestore.dart' as _i974;
 import 'package:cloud_functions/cloud_functions.dart' as _i809;
 import 'package:firebase_auth/firebase_auth.dart' as _i59;
 import 'package:firebase_core/firebase_core.dart' as _i982;
+import 'package:flutter_local_notifications/flutter_local_notifications.dart'
+    as _i163;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i558;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:google_sign_in/google_sign_in.dart' as _i116;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:integrations_repository/integrations_repository.dart' as _i327;
+import 'package:local_notifications/local_notifications.dart' as _i115;
 import 'package:task_repository/task_repository.dart' as _i0;
 import 'package:user_repository/user_repository.dart' as _i164;
 import 'package:uuid/uuid.dart' as _i706;
@@ -80,6 +84,7 @@ extension GetItInjectableX on _i174.GetIt {
     );
     final settingsModule = _$SettingsModule();
     final coreModule = _$CoreModule();
+    final localNotificationsModule = _$LocalNotificationsModule();
     final authenticationModule = _$AuthenticationModule();
     final firebaseModule = _$FirebaseModule();
     final userModule = _$UserModule();
@@ -94,6 +99,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i706.Uuid>(() => coreModule.uuid());
     gh.lazySingleton<_i150.AiClient>(() => coreModule.aiClient());
     gh.lazySingleton<_i116.GoogleSignIn>(() => coreModule.googleSignIn());
+    gh.lazySingleton<_i163.FlutterLocalNotificationsPlugin>(
+        () => localNotificationsModule.flutterLocalNotificationsPlugin());
     gh.lazySingleton<_i223.AppleAuthenticationProvider>(
         () => authenticationModule.appleAuthenticationProvider());
     gh.lazySingleton<_i223.FacebookAuthenticationProvider>(
@@ -123,6 +130,8 @@ extension GetItInjectableX on _i174.GetIt {
       () => firebaseModule.productionFirebaseOptions,
       registerFor: {_prod},
     );
+    gh.lazySingleton<_i115.LocalNotifications>(() => localNotificationsModule
+        .localNotifications(gh<_i163.FlutterLocalNotificationsPlugin>()));
     gh.singleton<_i982.FirebaseOptions>(
       () => firebaseModule.stagingFirebaseOptions,
       registerFor: {_stg},
@@ -164,8 +173,6 @@ extension GetItInjectableX on _i174.GetIt {
             ));
     gh.lazySingleton<_i515.UserCubit>(
         () => userModule.userCubit(gh<_i164.UserRepository>()));
-    gh.lazySingleton<_i462.BlueprintBloc>(
-        () => blueprintModule.blueprintBloc(gh<_i581.BlueprintRepository>()));
     gh.lazySingleton<_i527.IntegrationsCubit>(() => integrationsModule
         .integrationsCubit(gh<_i327.IntegrationsRepository>()));
     gh.singleton<_i0.TaskRepository>(() => taskModule.taskRepository(
@@ -192,6 +199,10 @@ extension GetItInjectableX on _i174.GetIt {
         ));
     gh.factory<_i427.CreateTaskBloc>(
         () => _i427.CreateTaskBloc(taskRepository: gh<_i0.TaskRepository>()));
+    gh.lazySingleton<_i462.BlueprintBloc>(() => blueprintModule.blueprintBloc(
+          gh<_i581.BlueprintRepository>(),
+          gh<_i115.LocalNotifications>(),
+        ));
     gh.factory<_i91.TasksCubit>(() => taskModule.taskCubit(
           gh<_i0.TaskRepository>(),
           gh<_i327.IntegrationsRepository>(),
@@ -203,6 +214,8 @@ extension GetItInjectableX on _i174.GetIt {
 class _$SettingsModule extends _i382.SettingsModule {}
 
 class _$CoreModule extends _i324.CoreModule {}
+
+class _$LocalNotificationsModule extends _i574.LocalNotificationsModule {}
 
 class _$AuthenticationModule extends _i688.AuthenticationModule {}
 

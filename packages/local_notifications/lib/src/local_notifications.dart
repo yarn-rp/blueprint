@@ -11,14 +11,18 @@ import 'package:timezone/timezone.dart' as tz;
 class LocalNotifications {
   /// {@macro local_notifications}
   LocalNotifications({
-    required this.flutterLocalNotificationsPlugin,
-  });
+    required FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin,
+    required NotificationSchedulesResource notificationSchedulesResource,
+  })  : _flutterLocalNotificationsPlugin = flutterLocalNotificationsPlugin,
+        _notificationSchedulesResource = notificationSchedulesResource;
 
   /// The [FlutterLocalNotificationsPlugin] used to schedule notifications.
-  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
+  final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin;
 
   final BehaviorSubject<LocalNotification?> _receivedNotifications =
       BehaviorSubject();
+
+  final NotificationSchedulesResource _notificationSchedulesResource;
 
   void _onDidReceiveLocalNotification(
     int id,
@@ -55,10 +59,11 @@ class LocalNotifications {
     final initializationSettings = InitializationSettings(
       android: initializationSettingsAndroid,
       iOS: initializationSettingsDarwin,
+      macOS: initializationSettingsDarwin,
       linux: initializationSettingsLinux,
     );
 
-    return flutterLocalNotificationsPlugin.initialize(initializationSettings);
+    return _flutterLocalNotificationsPlugin.initialize(initializationSettings);
   }
 
   NotificationDetails get _defaultNotificationDetails {
@@ -70,19 +75,94 @@ class LocalNotifications {
     );
   }
 
-  /// Schedule a notification for a specific [dateTime].
-  Future<void> scheduleLocalNotification(
-    DateTime dateTime,
+  /// Updates an already scheduled notification for an specific [dateTime].
+  /// This will update both the resource and the native plugin.
+  Future<void> _updateNotificationSchedule(
+    tz.TZDateTime dateTime,
     LocalNotification notification,
   ) async {
-    await flutterLocalNotificationsPlugin.zonedSchedule(
+    // Cancel the notification with native plugin.
+    await _cancelLocalNotificationWithPlugin(notification.id);
+
+    // Schedule a new notification with the new date.
+    await _scheduleLocalNotificationWithPlugin(dateTime, notification);
+
+    // Finally, update the resource with the new date.
+    await _notificationSchedulesResource.updateNotificationSchedule(
+      dateTime,
       notification.id,
-      notification.title,
-      notification.description,
-      tz.TZDateTime.from(dateTime, tz.local),
-      _defaultNotificationDetails,
-      uiLocalNotificationDateInterpretation:
-          UILocalNotificationDateInterpretation.absoluteTime,
     );
   }
+
+  /// Creates a new notification schedule for a specific [dateTime].
+  /// This will schedule the notification with the native plugin and store the
+  /// schedule in the resource.
+  Future<void> _createNotificationSchedule(
+    tz.TZDateTime dateTime,
+    LocalNotification notification,
+  ) async {
+    await _scheduleLocalNotificationWithPlugin(dateTime, notification);
+
+    await _notificationSchedulesResource.storeNotificationSchedule(
+      dateTime,
+      notification.id,
+    );
+  }
+
+  /// Handles the scheduling of a local notification. This will check if the
+  /// notification is already scheduled and act accordingly, updating or
+  /// creating a new schedule. Use the [anticipation] parameter to schedule
+  /// the notification with anticipation.
+  ///
+  /// If the [localDateTime] is in the past, the notification will not be
+  /// scheduled.
+  Future<void> requestLocalNotificationSchedule({
+    required DateTime localDateTime,
+    required LocalNotification notification,
+    Duration? anticipation,
+  }) async {
+    final dateTime = tz.TZDateTime.from(localDateTime, tz.local)
+        .subtract(anticipation ?? Duration.zero);
+
+    final isNotificationTimePast = localDateTime.isBefore(DateTime.now());
+
+    if (isNotificationTimePast) {
+      // If the notification time is in the past, do not schedule it.
+      return;
+    }
+
+    final isNotificationScheduled = await _notificationSchedulesResource
+        .isNotificationScheduled(notification.id);
+
+    return switch (isNotificationScheduled) {
+      // If the notification is already scheduled, update it with the new
+      // date. This will mean updating both the resource and the native
+      // plugin.
+      true => _updateNotificationSchedule(dateTime, notification),
+
+      // If the notification is not scheduled, create a new schedule. This
+      // will mean scheduling the notification with the native plugin and
+      // storing the schedule in the resource.
+      false => _createNotificationSchedule(dateTime, notification),
+    };
+  }
+
+  /// Cancels a notification with the given [id].
+  Future<void> _cancelLocalNotificationWithPlugin(int id) =>
+      _flutterLocalNotificationsPlugin.cancel(id);
+
+  /// Schedules a notification with the given [dateTime] and [notification].
+  Future<void> _scheduleLocalNotificationWithPlugin(
+    tz.TZDateTime dateTime,
+    LocalNotification notification,
+  ) =>
+      _flutterLocalNotificationsPlugin.zonedSchedule(
+        notification.id,
+        notification.title,
+        notification.description,
+        dateTime,
+        _defaultNotificationDetails,
+        uiLocalNotificationDateInterpretation:
+            UILocalNotificationDateInterpretation.absoluteTime,
+      );
 }

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:blueprint_repository/blueprint_repository.dart';
 import 'package:equatable/equatable.dart';
+import 'package:local_notifications/local_notifications.dart';
 import 'package:stream_transform/stream_transform.dart';
 import 'package:task_repository/task_repository.dart';
 
@@ -12,7 +13,9 @@ part 'blueprint_state.dart';
 class BlueprintBloc extends Bloc<BlueprintEvent, BlueprintState> {
   BlueprintBloc({
     required BlueprintRepository blueprintRepository,
+    required LocalNotifications localNotifications,
   })  : _blueprintRepository = blueprintRepository,
+        _localNotifications = localNotifications,
         super(BlueprintState()) {
     on<BlueprintRequested>(_onGetBlueprint);
     on<BlueprintTaskItemCreated>(_onBlueprintTaskItemCreated);
@@ -23,6 +26,7 @@ class BlueprintBloc extends Bloc<BlueprintEvent, BlueprintState> {
   }
 
   final BlueprintRepository _blueprintRepository;
+  final LocalNotifications _localNotifications;
 
   Future<void> _onGetBlueprint(
     BlueprintRequested event,
@@ -45,6 +49,17 @@ class BlueprintBloc extends Bloc<BlueprintEvent, BlueprintState> {
             ),
           ),
       onData: (value) {
+        for (final item in value.items) {
+          _localNotifications.requestLocalNotificationSchedule(
+            localDateTime: item.startTime,
+            anticipation: const Duration(minutes: 2),
+            notification: LocalNotification(
+              id: item.id.hashCode,
+              title: 'Event starting in 2 minutes',
+              description: item.subject,
+            ),
+          );
+        }
         return state.copyWith(
           items: value.items,
           previewItems: value.previewItems
