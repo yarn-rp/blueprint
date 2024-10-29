@@ -84,6 +84,9 @@ class _$SignInStateCopyWithImpl<$Res, $Val extends SignInState>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of SignInState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -100,6 +103,9 @@ class __$$InitialImplCopyWithImpl<$Res>
   __$$InitialImplCopyWithImpl(
       _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of SignInState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -214,6 +220,9 @@ class __$$SignInProcessingImplCopyWithImpl<$Res>
   __$$SignInProcessingImplCopyWithImpl(_$SignInProcessingImpl _value,
       $Res Function(_$SignInProcessingImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of SignInState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -328,6 +337,9 @@ class __$$SignInSuccessfulImplCopyWithImpl<$Res>
   __$$SignInSuccessfulImplCopyWithImpl(_$SignInSuccessfulImpl _value,
       $Res Function(_$SignInSuccessfulImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of SignInState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -445,6 +457,8 @@ class __$$SignInErrorImplCopyWithImpl<$Res>
       _$SignInErrorImpl _value, $Res Function(_$SignInErrorImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of SignInState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -481,7 +495,9 @@ class _$SignInErrorImpl implements SignInError {
   int get hashCode =>
       Object.hash(runtimeType, const DeepCollectionEquality().hash(failure));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of SignInState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$SignInErrorImplCopyWith<_$SignInErrorImpl> get copyWith =>
@@ -566,7 +582,10 @@ abstract class SignInError implements SignInState {
   const factory SignInError(final Object failure) = _$SignInErrorImpl;
 
   Object get failure;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of SignInState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SignInErrorImplCopyWith<_$SignInErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

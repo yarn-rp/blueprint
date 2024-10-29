@@ -25,10 +25,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -76,5 +73,17 @@ class DefaultFirebaseOptions {
     iosClientId:
         '333437725100-gedi3r0oh08vad1f3c6elp4ep8j2vjg6.apps.googleusercontent.com',
     iosBundleId: 'com.yarn.blueprint',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyBMkEuCELz3ERI8Qih2epyjmDnzCuxv4dw',
+    appId: '1:333437725100:ios:8e1085afcbafb89ab03209',
+    messagingSenderId: '333437725100',
+    projectId: 'polletask-dev',
+    databaseURL: 'https://polletask-dev-default-rtdb.firebaseio.com',
+    storageBucket: 'polletask-dev.appspot.com',
+    iosClientId:
+        '333437725100-3vjf64sklpsbblachkvtunl58scftn03.apps.googleusercontent.com',
+    iosBundleId: 'com.yarn.blueprint.blueprint.RunnerTests',
   );
 }

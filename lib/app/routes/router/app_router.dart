@@ -16,7 +16,7 @@ import 'package:flutter/foundation.dart';
 part 'app_router.gr.dart';
 
 @AutoRouterConfig()
-class AppRouter extends _$AppRouter {
+class AppRouter extends RootStackRouter {
   AppRouter({
     required AuthenticationCubit authenticationCubit,
   }) : authenticationGuard = AuthGuard(authenticationCubit);

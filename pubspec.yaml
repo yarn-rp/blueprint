@@ -5,7 +5,7 @@ publish_to: none
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
-  flutter: 3.22.0
+  flutter: 3.24.2
 
 dependencies:
   ai_client:
@@ -14,23 +14,23 @@ dependencies:
     path: ./packages/app_ui
   authentication_repository:
     path: ./packages/authentication_repository
-  auto_route: ^8.1.3
+  auto_route: ^9.2.2
   bloc: ^8.1.1
   blueprint_repository:
     path: ./packages/blueprint_repository
   cached_network_image: ^3.2.3
   calendar_repository:
     path: ./packages/calendar_repository
-  chat_gpt_sdk: ^3.0.4
-  cloud_firestore: ^4.12.1
-  cloud_functions: ^4.5.2
+  chat_gpt_sdk: ^3.1.2
+  cloud_firestore: ^5.4.4
+  cloud_functions: ^5.1.3
   collapsible_sidebar: ^2.0.3+3
-  collection: ^1.17.0
+  collection: ^1.18.0
   dropdown_button2: ^2.3.9
   dynamic_color: ^1.6.3
   equatable: ^2.0.5
-  firebase_auth: ^4.12.0
-  firebase_core: ^2.20.0
+  firebase_auth: ^5.3.1
+  firebase_core: ^3.6.0
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.2
@@ -42,11 +42,11 @@ dependencies:
   flutter_markdown: ^0.7.1
   flutter_portal: ^1.1.4
   flutter_secure_storage: ^9.0.0
-  flutter_web_auth: ^0.5.0
+  flutter_web_auth: ^0.6.0
   freezed: ^2.3.2
   freezed_annotation: ^2.2.0
   generative_ai_dart: ^0.1.2
-  get_it: ^7.6.0
+  get_it: ^8.0.1
   google_sign_in: ^6.1.5
   hydrated_bloc: ^9.1.0
   image_network: ^2.5.6
@@ -57,23 +57,23 @@ dependencies:
   jiffy: ^6.3.0
   json_annotation: ^4.8.0
   markdown: ^7.1.1
-  meta: ^1.9.1
+  meta: ^1.15.0
   path_provider: ^2.0.14
-  share_plus: ^9.0.0
+  share_plus: ^10.1.1
   sidebarx: ^0.17.1
   stream_transform: ^2.1.0
-  syncfusion_flutter_calendar: ^25.2.4
+  syncfusion_flutter_calendar: ^27.1.56
   task_repository:
     path: ./packages/task_repository
   universal_html: ^2.2.4
   url_launcher: ^6.1.10
-  url_strategy: ^0.2.0
+  url_strategy: ^0.3.0
   user_repository:
     path: ./packages/user_repository
   uuid: ^4.3.2
 
 dev_dependencies:
-  auto_route_generator: ^8.0.0
+  auto_route_generator: ^9.0.0
   bloc_test: ^9.1.4
   build_runner: ^2.3.3
   flutter_test:
@@ -81,7 +81,7 @@ dev_dependencies:
   injectable_generator: ^2.1.5
   json_serializable: ^6.6.1
   mocktail: ^1.0.1
-  very_good_analysis: ^5.1.0
+  very_good_analysis: ^6.0.0
 
 flutter:
   assets:

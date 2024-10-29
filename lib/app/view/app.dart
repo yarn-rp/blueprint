@@ -56,7 +56,7 @@ class AppView extends StatelessWidget {
         return BlocListener<AuthenticationCubit, AuthenticationState>(
           listenWhen: (previous, current) =>
               previous is AuthenticatedState && current is UnAuthenticatedState,
-          listener: (context, state) => appRouter.push(
+          listener: (context, state) => appRouter.navigate(
             SignInRoute(
               onResult: ({
                 bool? result,
