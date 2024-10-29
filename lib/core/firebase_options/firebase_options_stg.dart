@@ -72,13 +72,12 @@ class DefaultFirebaseOptions {
     iosBundleId: 'com.blueprint.app.stg',
   );
 
-
   static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyDka1DYkHemByTlNa-CBh9c5Lldjc8ScMc',
     appId: '1:960695221560:ios:3a43f2049b1af9f5edd5cd',
     messagingSenderId: '960695221560',
     projectId: 'blueprint-stg',
     storageBucket: 'blueprint-stg.appspot.com',
-    iosBundleId: 'com.yarn.blueprint.blueprint.RunnerTests',
+    iosBundleId: 'com.yarn.blueprint.RunnerTests',
   );
 }

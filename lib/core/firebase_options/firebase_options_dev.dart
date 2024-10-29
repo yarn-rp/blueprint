@@ -84,6 +84,6 @@ class DefaultFirebaseOptions {
     storageBucket: 'polletask-dev.appspot.com',
     iosClientId:
         '333437725100-3vjf64sklpsbblachkvtunl58scftn03.apps.googleusercontent.com',
-    iosBundleId: 'com.yarn.blueprint.blueprint.RunnerTests',
+    iosBundleId: 'com.yarn.blueprint.RunnerTests',
   );
 }
