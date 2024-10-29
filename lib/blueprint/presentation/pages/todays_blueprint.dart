@@ -29,8 +29,10 @@ class TodaysBlueprintPage extends StatelessWidget {
     return Scaffold(
       body: Row(
         children: [
-          Flexible(
-            flex: 2,
+          ConstrainedBox(
+            constraints: const BoxConstraints(
+              maxWidth: 600,
+            ),
             child: ListView(
               padding: const EdgeInsetsDirectional.all(16),
               children: [

@@ -106,9 +106,11 @@ class _WideTaskPageState extends State<_WideTaskPage> {
           Expanded(
             child: Row(
               children: [
-                const Expanded(
-                  flex: 2,
-                  child: _TasksList(),
+                ConstrainedBox(
+                  constraints: const BoxConstraints(
+                    maxWidth: 600,
+                  ),
+                  child: const _TasksList(),
                 ),
                 const SizedBox(width: AppSpacing.xlg),
                 if (selectedTask != null)
