@@ -73,7 +73,7 @@
     "@createdBy": {
         "description": "Refers to created by section"
     },
-    "currentEventGlanceTitle": "Now on blueprint",
+    "currentEventGlanceTitle": "Now",
     "@currentEventGlanceTitle": {
         "description": "Title for the now on blueprint glance event"
     },

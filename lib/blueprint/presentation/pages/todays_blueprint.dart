@@ -30,7 +30,7 @@ class TodaysBlueprintPage extends StatelessWidget {
       body: Row(
         children: [
           Flexible(
-            flex: 4,
+            flex: 2,
             child: ListView(
               padding: const EdgeInsetsDirectional.all(16),
               children: [
@@ -73,17 +73,17 @@ class _UpcomingEvents extends StatelessWidget {
     );
     return Column(
       children: [
-        ...nextEvents.take(min(nextEvents.length, 3)).map(
-              (event) => Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 8,
-                ),
-                child: BlueprintItemTile(
-                  item: event,
-                  showSmallVersions: true,
-                ),
-              ),
+        ...nextEvents.map(
+          (event) => Padding(
+            padding: const EdgeInsets.symmetric(
+              vertical: 8,
             ),
+            child: BlueprintItemTile(
+              item: event,
+              showSmallVersions: true,
+            ),
+          ),
+        ),
       ],
     );
   }
