@@ -124,13 +124,6 @@ class LocalNotifications {
     final dateTime = tz.TZDateTime.from(localDateTime, tz.local)
         .subtract(anticipation ?? Duration.zero);
 
-    final isNotificationTimePast = localDateTime.isBefore(DateTime.now());
-
-    if (isNotificationTimePast) {
-      // If the notification time is in the past, do not schedule it.
-      return;
-    }
-
     final isNotificationScheduled = await _notificationSchedulesResource
         .isNotificationScheduled(notification.id);
 
@@ -155,14 +148,21 @@ class LocalNotifications {
   Future<void> _scheduleLocalNotificationWithPlugin(
     tz.TZDateTime dateTime,
     LocalNotification notification,
-  ) =>
-      _flutterLocalNotificationsPlugin.zonedSchedule(
-        notification.id,
-        notification.title,
-        notification.description,
-        dateTime,
-        _defaultNotificationDetails,
-        uiLocalNotificationDateInterpretation:
-            UILocalNotificationDateInterpretation.absoluteTime,
-      );
+  ) async {
+    final isNotificationTimePast = dateTime.isBefore(DateTime.now());
+
+    if (isNotificationTimePast) {
+      // If the notification time is in the past, do not schedule it.
+      return;
+    }
+    return _flutterLocalNotificationsPlugin.zonedSchedule(
+      notification.id,
+      notification.title,
+      notification.description,
+      dateTime,
+      _defaultNotificationDetails,
+      uiLocalNotificationDateInterpretation:
+          UILocalNotificationDateInterpretation.absoluteTime,
+    );
+  }
 }
