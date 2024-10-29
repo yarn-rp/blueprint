@@ -39,14 +39,14 @@ class TaskCard extends StatelessWidget {
           ? '${startTimeJiffy?.jm} - ${endTimeJiffy?.jm}'
           : null,
       labels: [
-        ProjectPlatformChip(task: task),
-        PriorityChip(task: task),
-        ...task.labels.map(
-          (e) => LabelChip(
-            text: e.name,
-            backgroundColor: HexColor.fromHex(e.colorHex),
-          ),
-        ),
+        // ProjectPlatformChip(task: task),
+        // PriorityChip(task: task),
+        // ...task.labels.map(
+        //   (e) => LabelChip(
+        //     text: e.name,
+        //     backgroundColor: HexColor.fromHex(e.colorHex),
+        //   ),
+        // ),
       ],
       title: EventListTile.task(
         title: task.title,
