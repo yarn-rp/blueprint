@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:app_ui/app_ui.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:blueprint/app/routes/routes.dart';
@@ -9,16 +8,65 @@ import 'package:blueprint/calendar/presentation/widgets/available_time_card.dart
 import 'package:blueprint/core/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:multi_split_view/multi_split_view.dart';
 
 @RoutePage()
-class TodaysBlueprintPage extends StatelessWidget {
+class TodaysBlueprintPage extends StatefulWidget {
   const TodaysBlueprintPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    // final isPhone = MediaQuery.of(context).size.width < 600;
-    final isWide = MediaQuery.of(context).size.width >= 1150;
+  State<TodaysBlueprintPage> createState() => _TodaysBlueprintPageState();
+}
 
+class _TodaysBlueprintPageState extends State<TodaysBlueprintPage> {
+  final MultiSplitViewController _controller = MultiSplitViewController();
+
+  @override
+  void initState() {
+    super.initState();
+    _controller.areas = [
+      Area(
+        data: 'glance',
+        size: 600,
+        min: 300,
+        builder: (context, area) => const _GlanceView(),
+      ),
+      Area(
+        data: 'timeline',
+        flex: 1,
+        builder: (context, area) => const BlueprintTimeline(),
+      ),
+    ];
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: MultiSplitView(
+          controller: _controller,
+          builder: (BuildContext context, Area area) => area.builder!(
+            context,
+            area,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _GlanceView extends StatelessWidget {
+  const _GlanceView();
+
+  @override
+  Widget build(BuildContext context) {
     final currentEvents = context.select(
       (BlueprintBloc bloc) => bloc.state.currentBlueprintItems,
     );
@@ -26,41 +74,20 @@ class TodaysBlueprintPage extends StatelessWidget {
       (BlueprintBloc bloc) => bloc.state.upcomingBlueprintItems,
     );
 
-    return Scaffold(
-      body: Row(
-        children: [
-          ConstrainedBox(
-            constraints: const BoxConstraints(
-              maxWidth: 600,
-            ),
-            child: ListView(
-              padding: const EdgeInsetsDirectional.all(16),
-              children: [
-                if (currentEvents.isEmpty && nextEvents.isEmpty)
-                  const _BlueprintEmpty()
-                else ...[
-                  const _CurrentEvent(),
-                  if (nextEvents.isNotEmpty) ...[
-                    const SizedBox(height: 32),
-                    const _NextOnBlueprint(),
-                    const _UpcomingEvents(),
-                  ],
-                ],
-                if (!isWide)
-                  const SizedBox(
-                    height: 2480,
-                    child: BlueprintTimeline(),
-                  ),
-              ],
-            ),
-          ),
-          if (isWide)
-            const Flexible(
-              flex: 3,
-              child: BlueprintTimeline(),
-            ),
+    return ListView(
+      padding: const EdgeInsetsDirectional.all(16),
+      children: [
+        if (currentEvents.isEmpty && nextEvents.isEmpty)
+          const _BlueprintEmpty()
+        else ...[
+          const _CurrentEvent(),
+          if (nextEvents.isNotEmpty) ...[
+            const SizedBox(height: 32),
+            const _NextOnBlueprint(),
+            const _UpcomingEvents(),
+          ],
         ],
-      ),
+      ],
     );
   }
 }

@@ -64,13 +64,16 @@ class AppView extends StatelessWidget {
             ),
           ),
           child: Portal(
-            child: MaterialApp.router(
-              theme: lightTheme,
-              themeMode: brightness.themeMode,
-              darkTheme: darkTheme,
-              localizationsDelegates: AppLocalizations.localizationsDelegates,
-              supportedLocales: AppLocalizations.supportedLocales,
-              routerConfig: appRouter.config(),
+            child: buildMultiSplitViewTheme(
+              context: context,
+              child: MaterialApp.router(
+                theme: lightTheme,
+                themeMode: brightness.themeMode,
+                darkTheme: darkTheme,
+                localizationsDelegates: AppLocalizations.localizationsDelegates,
+                supportedLocales: AppLocalizations.supportedLocales,
+                routerConfig: appRouter.config(),
+              ),
             ),
           ),
         );
