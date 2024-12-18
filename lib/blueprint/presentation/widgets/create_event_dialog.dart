@@ -81,7 +81,6 @@ class _CreateEventViewState extends State<_CreateEventView> {
         child: Scaffold(
           bottomNavigationBar: _ActionsBar(
             onCancelPressed: widget.hidePortal,
-            // ignore: unnecessary_lambdas
             onAddPressed: () {
               final selectedTask =
                   context.read<TasksCubit>().state.selectedTask;

@@ -56,7 +56,7 @@ class AppView extends StatelessWidget {
         return BlocListener<AuthenticationCubit, AuthenticationState>(
           listenWhen: (previous, current) =>
               previous is AuthenticatedState && current is UnAuthenticatedState,
-          listener: (context, state) => appRouter.push(
+          listener: (context, state) => appRouter.navigate(
             SignInRoute(
               onResult: ({
                 bool? result,
@@ -64,13 +64,16 @@ class AppView extends StatelessWidget {
             ),
           ),
           child: Portal(
-            child: MaterialApp.router(
-              theme: lightTheme,
-              themeMode: brightness.themeMode,
-              darkTheme: darkTheme,
-              localizationsDelegates: AppLocalizations.localizationsDelegates,
-              supportedLocales: AppLocalizations.supportedLocales,
-              routerConfig: appRouter.config(),
+            child: buildMultiSplitViewTheme(
+              context: context,
+              child: MaterialApp.router(
+                theme: lightTheme,
+                themeMode: brightness.themeMode,
+                darkTheme: darkTheme,
+                localizationsDelegates: AppLocalizations.localizationsDelegates,
+                supportedLocales: AppLocalizations.supportedLocales,
+                routerConfig: appRouter.config(),
+              ),
             ),
           ),
         );

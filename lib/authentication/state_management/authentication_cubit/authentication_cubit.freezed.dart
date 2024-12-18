@@ -78,6 +78,9 @@ class _$AuthenticationStateCopyWithImpl<$Res, $Val extends AuthenticationState>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of AuthenticationState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -94,6 +97,9 @@ class __$$InitialImplCopyWithImpl<$Res>
   __$$InitialImplCopyWithImpl(
       _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of AuthenticationState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -202,6 +208,9 @@ class __$$AuthenticatedStateImplCopyWithImpl<$Res>
   __$$AuthenticatedStateImplCopyWithImpl(_$AuthenticatedStateImpl _value,
       $Res Function(_$AuthenticatedStateImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of AuthenticationState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -310,6 +319,9 @@ class __$$UnAuthenticatedStateImplCopyWithImpl<$Res>
   __$$UnAuthenticatedStateImplCopyWithImpl(_$UnAuthenticatedStateImpl _value,
       $Res Function(_$UnAuthenticatedStateImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of AuthenticationState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc

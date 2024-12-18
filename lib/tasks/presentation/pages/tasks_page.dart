@@ -1,14 +1,11 @@
 import 'package:app_ui/app_ui.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:blueprint/core/l10n/l10n.dart';
-import 'package:blueprint/tasks/presentation/widgets/task_card.dart';
-import 'package:blueprint/tasks/presentation/widgets/task_details.dart';
 import 'package:blueprint/tasks/presentation/widgets/widgets.dart';
 import 'package:blueprint/tasks/state_management/cubit/tasks_cubit.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_portal/flutter_portal.dart';
 
 @RoutePage()
 class TasksPage extends StatefulWidget {
@@ -45,15 +42,37 @@ class _WideTaskPage extends StatefulWidget {
 }
 
 class _WideTaskPageState extends State<_WideTaskPage> {
+  final MultiSplitViewController _controller = MultiSplitViewController();
+
+  @override
+  void initState() {
+    super.initState();
+    _controller.areas = [
+      Area(
+        data: 'tasks',
+        size: 600,
+        min: 300,
+        builder: (context, area) => const _TasksList(),
+      ),
+      Area(
+        data: 'taskDetails',
+        flex: 1,
+        builder: (context, area) => const _SelectedTaskDetails(),
+      ),
+    ];
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
-
-    final selectedTask = context.select(
-      (TasksCubit cubit) => cubit.state.selectedTask,
-    );
 
     return Padding(
       padding: const EdgeInsets.all(AppSpacing.xlg),
@@ -104,19 +123,9 @@ class _WideTaskPageState extends State<_WideTaskPage> {
             height: AppSpacing.xlg,
           ),
           Expanded(
-            child: Row(
-              children: [
-                const Expanded(
-                  flex: 2,
-                  child: _TasksList(),
-                ),
-                const SizedBox(width: AppSpacing.xlg),
-                if (selectedTask != null)
-                  const Expanded(
-                    flex: 3,
-                    child: _SelectedTaskDetails(),
-                  ),
-              ],
+            child: MultiSplitView(
+              controller: _controller,
+              builder: (context, area) => area.builder!(context, area),
             ),
           ),
         ],

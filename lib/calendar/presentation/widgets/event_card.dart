@@ -31,12 +31,12 @@ class EventCard extends StatelessWidget {
       onTap: onTap,
       backgroundColor: backgroundColor,
       foregroundColor: foregroundColor,
-      labels: [
-        LabelChip(
-          avatar: Image.network(event.access.platform!.iconUrl),
-          text: event.access.userAccessData.email ??
-              event.access.platform!.displayName,
-        ),
+      labels: const [
+        // LabelChip(
+        //   avatar: Image.network(event.access.platform!.iconUrl),
+        //   text: event.access.userAccessData.email ??
+        //       event.access.platform!.displayName,
+        // ),
       ],
       dateAndTime: event.startTime != null && event.endTime != null
           ? '${startTimeJiffy.jm} - ${endTimeJiffy.jm}'

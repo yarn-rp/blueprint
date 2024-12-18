@@ -84,6 +84,9 @@ class _$SignOutStateCopyWithImpl<$Res, $Val extends SignOutState>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of SignOutState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -100,6 +103,9 @@ class __$$InitialImplCopyWithImpl<$Res>
   __$$InitialImplCopyWithImpl(
       _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of SignOutState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -214,6 +220,9 @@ class __$$SignOutProcessingImplCopyWithImpl<$Res>
   __$$SignOutProcessingImplCopyWithImpl(_$SignOutProcessingImpl _value,
       $Res Function(_$SignOutProcessingImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of SignOutState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -328,6 +337,9 @@ class __$$SignOutSuccessfulImplCopyWithImpl<$Res>
   __$$SignOutSuccessfulImplCopyWithImpl(_$SignOutSuccessfulImpl _value,
       $Res Function(_$SignOutSuccessfulImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of SignOutState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -445,6 +457,8 @@ class __$$SignOutErrorImplCopyWithImpl<$Res>
       _$SignOutErrorImpl _value, $Res Function(_$SignOutErrorImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of SignOutState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -481,7 +495,9 @@ class _$SignOutErrorImpl implements SignOutError {
   int get hashCode =>
       Object.hash(runtimeType, const DeepCollectionEquality().hash(failure));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of SignOutState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$SignOutErrorImplCopyWith<_$SignOutErrorImpl> get copyWith =>
@@ -566,7 +582,10 @@ abstract class SignOutError implements SignOutState {
   const factory SignOutError(final Object failure) = _$SignOutErrorImpl;
 
   Object get failure;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of SignOutState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SignOutErrorImplCopyWith<_$SignOutErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

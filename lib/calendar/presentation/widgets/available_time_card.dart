@@ -25,7 +25,7 @@ class AvailableTimeCard extends StatelessWidget {
     final endTimeJiffy = Jiffy.parseFromDateTime(endTime);
 
     return BlueprintEventCard(
-      backgroundColor: colorScheme.surfaceContainerHighest,
+      backgroundColor: theme.cardTheme.color,
       actions: [
         FilledButton.icon(
           style: Theme.of(context).filledButtonTheme.style?.copyWith(

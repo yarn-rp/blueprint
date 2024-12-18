@@ -109,7 +109,9 @@ mixin _$IntegrationsState {
   }) =>
       throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of IntegrationsState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $IntegrationsStateCopyWith<IntegrationsState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -135,6 +137,8 @@ class _$IntegrationsStateCopyWithImpl<$Res, $Val extends IntegrationsState>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of IntegrationsState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -175,6 +179,8 @@ class __$$IntegrationsInitialImplCopyWithImpl<$Res>
       $Res Function(_$IntegrationsInitialImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of IntegrationsState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -226,7 +232,9 @@ class _$IntegrationsInitialImpl implements IntegrationsInitial {
       const DeepCollectionEquality().hash(availablePlatforms),
       const DeepCollectionEquality().hash(authenticators));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of IntegrationsState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$IntegrationsInitialImplCopyWith<_$IntegrationsInitialImpl> get copyWith =>
@@ -354,8 +362,11 @@ abstract class IntegrationsInitial implements IntegrationsState {
   Iterable<Platform> get availablePlatforms;
   @override
   Iterable<Authenticator> get authenticators;
+
+  /// Create a copy of IntegrationsState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$IntegrationsInitialImplCopyWith<_$IntegrationsInitialImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -381,6 +392,8 @@ class __$$IntegrationsLoadingImplCopyWithImpl<$Res>
       $Res Function(_$IntegrationsLoadingImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of IntegrationsState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -432,7 +445,9 @@ class _$IntegrationsLoadingImpl implements IntegrationsLoading {
       const DeepCollectionEquality().hash(availablePlatforms),
       const DeepCollectionEquality().hash(authenticators));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of IntegrationsState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$IntegrationsLoadingImplCopyWith<_$IntegrationsLoadingImpl> get copyWith =>
@@ -560,8 +575,11 @@ abstract class IntegrationsLoading implements IntegrationsState {
   Iterable<Platform> get availablePlatforms;
   @override
   Iterable<Authenticator> get authenticators;
+
+  /// Create a copy of IntegrationsState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$IntegrationsLoadingImplCopyWith<_$IntegrationsLoadingImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -587,6 +605,8 @@ class __$$IntegrationsLoadedImplCopyWithImpl<$Res>
       $Res Function(_$IntegrationsLoadedImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of IntegrationsState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -638,7 +658,9 @@ class _$IntegrationsLoadedImpl implements IntegrationsLoaded {
       const DeepCollectionEquality().hash(availablePlatforms),
       const DeepCollectionEquality().hash(authenticators));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of IntegrationsState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$IntegrationsLoadedImplCopyWith<_$IntegrationsLoadedImpl> get copyWith =>
@@ -766,8 +788,11 @@ abstract class IntegrationsLoaded implements IntegrationsState {
   Iterable<Platform> get availablePlatforms;
   @override
   Iterable<Authenticator> get authenticators;
+
+  /// Create a copy of IntegrationsState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$IntegrationsLoadedImplCopyWith<_$IntegrationsLoadedImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -794,6 +819,8 @@ class __$$IntegratedPlatformImplCopyWithImpl<$Res>
       $Res Function(_$IntegratedPlatformImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of IntegrationsState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -856,7 +883,9 @@ class _$IntegratedPlatformImpl implements IntegratedPlatform {
       const DeepCollectionEquality().hash(availablePlatforms),
       const DeepCollectionEquality().hash(authenticators));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of IntegrationsState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$IntegratedPlatformImplCopyWith<_$IntegratedPlatformImpl> get copyWith =>
@@ -988,8 +1017,11 @@ abstract class IntegratedPlatform implements IntegrationsState {
   Iterable<Platform> get availablePlatforms;
   @override
   Iterable<Authenticator> get authenticators;
+
+  /// Create a copy of IntegrationsState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$IntegratedPlatformImplCopyWith<_$IntegratedPlatformImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1016,6 +1048,8 @@ class __$$IntegrationsErrorImplCopyWithImpl<$Res>
       $Res Function(_$IntegrationsErrorImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of IntegrationsState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1077,7 +1111,9 @@ class _$IntegrationsErrorImpl implements IntegrationsError {
       const DeepCollectionEquality().hash(authenticators),
       message);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of IntegrationsState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$IntegrationsErrorImplCopyWith<_$IntegrationsErrorImpl> get copyWith =>
@@ -1208,8 +1244,11 @@ abstract class IntegrationsError implements IntegrationsState {
   @override
   Iterable<Authenticator> get authenticators;
   String get message;
+
+  /// Create a copy of IntegrationsState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$IntegrationsErrorImplCopyWith<_$IntegrationsErrorImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

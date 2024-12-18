@@ -41,6 +41,24 @@ class NavigationPageData<T> {
   final PageRouteInfo<T> route;
 }
 
+class NavigationArea extends Area {
+  NavigationArea({
+    required this.routerBuilder,
+    super.size,
+    super.flex,
+    super.min,
+    super.max,
+    super.id,
+    super.data,
+  });
+
+  final Widget Function(
+    BuildContext context,
+    NavigationArea area,
+    TabsRouter route,
+  ) routerBuilder;
+}
+
 // An scaffold with a material side bar with the navigation options in case
 // is not in mobile. If mobile, then is a bottom app bar with the navigation
 // options.
@@ -54,11 +72,38 @@ class InitialPage extends StatefulWidget {
 
 class _InitialPageState extends State<InitialPage> {
   late int currentIndex;
+  final MultiSplitViewController _controller = MultiSplitViewController();
 
   @override
   void initState() {
-    currentIndex = 0;
     super.initState();
+    currentIndex = 0;
+    _controller.areas = [
+      NavigationArea(
+        data: 'tasks',
+        size: 250,
+        min: 200,
+        max: 300,
+        routerBuilder: (context, area, tabsRouter) => DesktopNavigationBar(
+          onDestinationSelected: tabsRouter.setActiveIndex,
+          destinations: navigationPages
+              .map(
+                (e) => (label: e.text, icon: e.icon),
+              )
+              .toList(),
+        ),
+      ),
+      Area(
+        data: 'taskDetails',
+        flex: 1,
+      ),
+    ];
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -114,18 +159,19 @@ class _InitialPageState extends State<InitialPage> {
                 ),
                 body: isPhone
                     ? child
-                    : Row(
-                        children: [
-                          DesktopNavigationBar(
-                            onDestinationSelected: tabsRouter.setActiveIndex,
-                            destinations: navigationPages
-                                .map(
-                                  (e) => (label: e.text, icon: e.icon),
-                                )
-                                .toList(),
-                          ),
-                          Expanded(child: child),
-                        ],
+                    : MultiSplitView(
+                        controller: _controller,
+                        builder: (context, area) {
+                          if (area is NavigationArea) {
+                            return area.routerBuilder(
+                              context,
+                              area,
+                              tabsRouter,
+                            );
+                          } else {
+                            return child;
+                          }
+                        },
                       ),
               );
             },
@@ -198,7 +244,8 @@ class _SidebarPageState extends State<SidebarPage> {
       iconSize: 28,
       toggleTitle: '',
       backgroundColor: Theme.of(context).colorScheme.surface,
-      selectedIconBox: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+      selectedIconBox:
+          Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
       selectedIconColor: Theme.of(context).colorScheme.primary,
       selectedTextColor: Theme.of(context).colorScheme.inversePrimary,
       unselectedIconColor: Theme.of(context).colorScheme.outline,

@@ -1,3 +1,5 @@
+export 'package:multi_split_view/multi_split_view.dart';
+
 export 'src/colors/colors.dart';
 export 'src/dialog/dialog.dart';
 export 'src/spacing/app_spacing.dart';

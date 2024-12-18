@@ -75,6 +75,9 @@ class _$SettingsEventCopyWithImpl<$Res, $Val extends SettingsEvent>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of SettingsEvent
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -94,6 +97,8 @@ class __$$ChangeWorkingHoursImplCopyWithImpl<$Res>
       $Res Function(_$ChangeWorkingHoursImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of SettingsEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -148,7 +153,9 @@ class _$ChangeWorkingHoursImpl implements ChangeWorkingHours {
   int get hashCode => Object.hash(
       runtimeType, day, const DeepCollectionEquality().hash(_workingHours));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of SettingsEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ChangeWorkingHoursImplCopyWith<_$ChangeWorkingHoursImpl> get copyWith =>
@@ -228,7 +235,10 @@ abstract class ChangeWorkingHours implements SettingsEvent {
 
   DaysOfWeek get day;
   List<WorkTime> get workingHours;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of SettingsEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ChangeWorkingHoursImplCopyWith<_$ChangeWorkingHoursImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -250,6 +260,8 @@ class __$$ChangeBrightnessImplCopyWithImpl<$Res>
       $Res Function(_$ChangeBrightnessImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of SettingsEvent
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -289,7 +301,9 @@ class _$ChangeBrightnessImpl implements ChangeBrightness {
   @override
   int get hashCode => Object.hash(runtimeType, brightness);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of SettingsEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ChangeBrightnessImplCopyWith<_$ChangeBrightnessImpl> get copyWith =>
@@ -367,7 +381,10 @@ abstract class ChangeBrightness implements SettingsEvent {
       _$ChangeBrightnessImpl;
 
   AppBrightness get brightness;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of SettingsEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ChangeBrightnessImplCopyWith<_$ChangeBrightnessImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

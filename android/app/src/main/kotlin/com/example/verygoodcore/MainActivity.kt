@@ -1,4 +1,4 @@
-package com.yarn.blueprint
+package me.blueprint.app
 
 import io.flutter.embedding.android.FlutterActivity
 

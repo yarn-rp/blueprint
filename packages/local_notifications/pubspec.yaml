@@ -1,0 +1,22 @@
+name: local_notifications
+description: A Very Good Project created by Very Good CLI.
+version: 0.1.0+1
+publish_to: none
+
+environment:
+  flutter: ^3.27.1
+  sdk: ^3.4.0
+
+dependencies:
+  equatable: ^2.0.5
+  flutter:
+    sdk: flutter
+  flutter_local_notifications: ^17.2.4
+  rxdart: ^0.28.0
+  timezone: ^0.9.4
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  mocktail: ^1.0.4
+  very_good_analysis: ^6.0.0

@@ -9,104 +9,6 @@
 
 part of 'app_router.dart';
 
-abstract class _$AppRouter extends RootStackRouter {
-  // ignore: unused_element
-  _$AppRouter({super.navigatorKey});
-
-  @override
-  final Map<String, PageFactory> pagesMap = {
-    BlueprintRouterRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const BlueprintRouterPage(),
-      );
-    },
-    CreateBlueprintRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const CreateBlueprintPage(),
-      );
-    },
-    ForgotPasswordRoute.name: (routeData) {
-      final args = routeData.argsAs<ForgotPasswordRouteArgs>();
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: ForgotPasswordPage(
-          onResult: args.onResult,
-          key: args.key,
-        ),
-      );
-    },
-    InitialRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const InitialPage(),
-      );
-    },
-    IntegrateWithPlatformRoute.name: (routeData) {
-      final pathParams = routeData.inheritedPathParams;
-      final queryParams = routeData.queryParams;
-      final args = routeData.argsAs<IntegrateWithPlatformRouteArgs>(
-          orElse: () => IntegrateWithPlatformRouteArgs(
-                platformId: pathParams.getString('platformId'),
-                code: queryParams.optString('code'),
-              ));
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: IntegrateWithPlatformPage(
-          platformId: args.platformId,
-          code: args.code,
-          key: args.key,
-        ),
-      );
-    },
-    IntegrationsRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const IntegrationsPage(),
-      );
-    },
-    SettingsRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const SettingsPage(),
-      );
-    },
-    SignInRoute.name: (routeData) {
-      final args = routeData.argsAs<SignInRouteArgs>();
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: SignInPage(
-          onResult: args.onResult,
-          key: args.key,
-        ),
-      );
-    },
-    SignUpRoute.name: (routeData) {
-      final args = routeData.argsAs<SignUpRouteArgs>();
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: SignUpPage(
-          onResult: args.onResult,
-          key: args.key,
-        ),
-      );
-    },
-    TasksRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const TasksPage(),
-      );
-    },
-    TodaysBlueprintRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const TodaysBlueprintPage(),
-      );
-    },
-  };
-}
-
 /// generated route for
 /// [BlueprintRouterPage]
 class BlueprintRouterRoute extends PageRouteInfo<void> {
@@ -118,7 +20,12 @@ class BlueprintRouterRoute extends PageRouteInfo<void> {
 
   static const String name = 'BlueprintRouterRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const BlueprintRouterPage();
+    },
+  );
 }
 
 /// generated route for
@@ -132,14 +39,19 @@ class CreateBlueprintRoute extends PageRouteInfo<void> {
 
   static const String name = 'CreateBlueprintRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const CreateBlueprintPage();
+    },
+  );
 }
 
 /// generated route for
 /// [ForgotPasswordPage]
 class ForgotPasswordRoute extends PageRouteInfo<ForgotPasswordRouteArgs> {
   ForgotPasswordRoute({
-    required void Function({bool? result}) onResult,
+    required AuthenticationResultFunction onResult,
     Key? key,
     List<PageRouteInfo>? children,
   }) : super(
@@ -153,8 +65,16 @@ class ForgotPasswordRoute extends PageRouteInfo<ForgotPasswordRouteArgs> {
 
   static const String name = 'ForgotPasswordRoute';
 
-  static const PageInfo<ForgotPasswordRouteArgs> page =
-      PageInfo<ForgotPasswordRouteArgs>(name);
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<ForgotPasswordRouteArgs>();
+      return ForgotPasswordPage(
+        onResult: args.onResult,
+        key: args.key,
+      );
+    },
+  );
 }
 
 class ForgotPasswordRouteArgs {
@@ -163,7 +83,7 @@ class ForgotPasswordRouteArgs {
     this.key,
   });
 
-  final void Function({bool? result}) onResult;
+  final AuthenticationResultFunction onResult;
 
   final Key? key;
 
@@ -184,7 +104,12 @@ class InitialRoute extends PageRouteInfo<void> {
 
   static const String name = 'InitialRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const InitialPage();
+    },
+  );
 }
 
 /// generated route for
@@ -210,8 +135,23 @@ class IntegrateWithPlatformRoute
 
   static const String name = 'IntegrateWithPlatformRoute';
 
-  static const PageInfo<IntegrateWithPlatformRouteArgs> page =
-      PageInfo<IntegrateWithPlatformRouteArgs>(name);
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final pathParams = data.inheritedPathParams;
+      final queryParams = data.queryParams;
+      final args = data.argsAs<IntegrateWithPlatformRouteArgs>(
+          orElse: () => IntegrateWithPlatformRouteArgs(
+                platformId: pathParams.getString('platformId'),
+                code: queryParams.optString('code'),
+              ));
+      return IntegrateWithPlatformPage(
+        platformId: args.platformId,
+        code: args.code,
+        key: args.key,
+      );
+    },
+  );
 }
 
 class IntegrateWithPlatformRouteArgs {
@@ -244,7 +184,12 @@ class IntegrationsRoute extends PageRouteInfo<void> {
 
   static const String name = 'IntegrationsRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const IntegrationsPage();
+    },
+  );
 }
 
 /// generated route for
@@ -258,14 +203,19 @@ class SettingsRoute extends PageRouteInfo<void> {
 
   static const String name = 'SettingsRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const SettingsPage();
+    },
+  );
 }
 
 /// generated route for
 /// [SignInPage]
 class SignInRoute extends PageRouteInfo<SignInRouteArgs> {
   SignInRoute({
-    required void Function({bool? result}) onResult,
+    required AuthenticationResultFunction onResult,
     Key? key,
     List<PageRouteInfo>? children,
   }) : super(
@@ -279,7 +229,16 @@ class SignInRoute extends PageRouteInfo<SignInRouteArgs> {
 
   static const String name = 'SignInRoute';
 
-  static const PageInfo<SignInRouteArgs> page = PageInfo<SignInRouteArgs>(name);
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<SignInRouteArgs>();
+      return SignInPage(
+        onResult: args.onResult,
+        key: args.key,
+      );
+    },
+  );
 }
 
 class SignInRouteArgs {
@@ -288,7 +247,7 @@ class SignInRouteArgs {
     this.key,
   });
 
-  final void Function({bool? result}) onResult;
+  final AuthenticationResultFunction onResult;
 
   final Key? key;
 
@@ -302,7 +261,7 @@ class SignInRouteArgs {
 /// [SignUpPage]
 class SignUpRoute extends PageRouteInfo<SignUpRouteArgs> {
   SignUpRoute({
-    required void Function({bool? result}) onResult,
+    required AuthenticationResultFunction onResult,
     Key? key,
     List<PageRouteInfo>? children,
   }) : super(
@@ -316,7 +275,16 @@ class SignUpRoute extends PageRouteInfo<SignUpRouteArgs> {
 
   static const String name = 'SignUpRoute';
 
-  static const PageInfo<SignUpRouteArgs> page = PageInfo<SignUpRouteArgs>(name);
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<SignUpRouteArgs>();
+      return SignUpPage(
+        onResult: args.onResult,
+        key: args.key,
+      );
+    },
+  );
 }
 
 class SignUpRouteArgs {
@@ -325,7 +293,7 @@ class SignUpRouteArgs {
     this.key,
   });
 
-  final void Function({bool? result}) onResult;
+  final AuthenticationResultFunction onResult;
 
   final Key? key;
 
@@ -346,7 +314,12 @@ class TasksRoute extends PageRouteInfo<void> {
 
   static const String name = 'TasksRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const TasksPage();
+    },
+  );
 }
 
 /// generated route for
@@ -360,5 +333,10 @@ class TodaysBlueprintRoute extends PageRouteInfo<void> {
 
   static const String name = 'TodaysBlueprintRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static PageInfo page = PageInfo(
+    name,
+    builder: (data) {
+      return const TodaysBlueprintPage();
+    },
+  );
 }

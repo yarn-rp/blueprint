@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:injectable/injectable.dart';
@@ -11,7 +13,7 @@ class CreateTaskBloc extends Bloc<CreateTaskEvent, CreateTaskState> {
   CreateTaskBloc({
     required TaskRepository taskRepository,
   })  : _taskRepository = taskRepository,
-        super(CreateTaskState()) {
+        super(const CreateTaskState()) {
     on<TitleChanged>(_onTitleChanged);
     on<DescriptionChanged>(_onDescriptionChanged);
     on<DueDateChanged>(_onDueDateChanged);
@@ -23,7 +25,6 @@ class CreateTaskBloc extends Bloc<CreateTaskEvent, CreateTaskState> {
   final TaskRepository _taskRepository;
 
   void _onTitleChanged(TitleChanged event, Emitter<CreateTaskState> emit) {
-    print('Title changed: ${event.title}');
     emit(state.copyWith(title: event.title));
   }
 
@@ -31,7 +32,6 @@ class CreateTaskBloc extends Bloc<CreateTaskEvent, CreateTaskState> {
     DescriptionChanged event,
     Emitter<CreateTaskState> emit,
   ) {
-    print('Title changed: ${event.description}');
     emit(state.copyWith(description: event.description));
   }
 
@@ -39,7 +39,6 @@ class CreateTaskBloc extends Bloc<CreateTaskEvent, CreateTaskState> {
     DueDateChanged event,
     Emitter<CreateTaskState> emit,
   ) {
-    print('Due date changed: ${event.dueDate}');
     emit(state.copyWith(dueDate: event.dueDate));
   }
 
@@ -47,7 +46,6 @@ class CreateTaskBloc extends Bloc<CreateTaskEvent, CreateTaskState> {
     PriorityChanged event,
     Emitter<CreateTaskState> emit,
   ) {
-    print('Priority changed: ${event.priority}');
     emit(state.copyWith(priority: event.priority));
   }
 
@@ -55,7 +53,6 @@ class CreateTaskBloc extends Bloc<CreateTaskEvent, CreateTaskState> {
     EstimatedTimeChanged event,
     Emitter<CreateTaskState> emit,
   ) {
-    print('Estimated time changed: ${event.estimatedTime}');
     emit(state.copyWith(estimatedTime: event.estimatedTime));
   }
 
@@ -64,8 +61,6 @@ class CreateTaskBloc extends Bloc<CreateTaskEvent, CreateTaskState> {
     Emitter<CreateTaskState> emit,
   ) async {
     try {
-      print(
-          'Creating task with title: ${state.title} and description: ${state.description} and due date: ${state.dueDate} and estimated time: ${state.estimatedTime} and priority: ${state.priority}');
       await _taskRepository.createBlueprintTask(
         title: state.title!,
         description: state.description!,
@@ -74,7 +69,7 @@ class CreateTaskBloc extends Bloc<CreateTaskEvent, CreateTaskState> {
         priority: state.priority ?? 3,
       );
     } catch (error, stackTrace) {
-      print('Error creating task: $error');
+      log('Error creating task: $error');
       addError(error, stackTrace);
     }
   }

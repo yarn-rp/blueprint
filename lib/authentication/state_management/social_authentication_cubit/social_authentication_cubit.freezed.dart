@@ -89,6 +89,9 @@ class _$SocialAuthenticationStateCopyWithImpl<$Res,
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of SocialAuthenticationState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -104,6 +107,9 @@ class __$$IDLEImplCopyWithImpl<$Res>
     implements _$$IDLEImplCopyWith<$Res> {
   __$$IDLEImplCopyWithImpl(_$IDLEImpl _value, $Res Function(_$IDLEImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of SocialAuthenticationState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -228,6 +234,8 @@ class __$$SocialAuthenticationProcessingImplCopyWithImpl<$Res>
       $Res Function(_$SocialAuthenticationProcessingImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of SocialAuthenticationState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -268,7 +276,9 @@ class _$SocialAuthenticationProcessingImpl
   @override
   int get hashCode => Object.hash(runtimeType, provider);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of SocialAuthenticationState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$SocialAuthenticationProcessingImplCopyWith<
@@ -362,7 +372,10 @@ abstract class SocialAuthenticationProcessing
       _$SocialAuthenticationProcessingImpl;
 
   SocialAuthenticationProvider get provider;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of SocialAuthenticationState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SocialAuthenticationProcessingImplCopyWith<
           _$SocialAuthenticationProcessingImpl>
       get copyWith => throw _privateConstructorUsedError;
@@ -388,6 +401,8 @@ class __$$SocialAuthenticationSuccessImplCopyWithImpl<$Res>
       $Res Function(_$SocialAuthenticationSuccessImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of SocialAuthenticationState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -427,7 +442,9 @@ class _$SocialAuthenticationSuccessImpl implements SocialAuthenticationSuccess {
   @override
   int get hashCode => Object.hash(runtimeType, provider);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of SocialAuthenticationState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$SocialAuthenticationSuccessImplCopyWith<_$SocialAuthenticationSuccessImpl>
@@ -520,7 +537,10 @@ abstract class SocialAuthenticationSuccess
       _$SocialAuthenticationSuccessImpl;
 
   SocialAuthenticationProvider get provider;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of SocialAuthenticationState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SocialAuthenticationSuccessImplCopyWith<_$SocialAuthenticationSuccessImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -545,6 +565,8 @@ class __$$SocialAuthenticationErrorImplCopyWithImpl<$Res>
       $Res Function(_$SocialAuthenticationErrorImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of SocialAuthenticationState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -590,7 +612,9 @@ class _$SocialAuthenticationErrorImpl implements SocialAuthenticationError {
   int get hashCode => Object.hash(
       runtimeType, const DeepCollectionEquality().hash(failure), provider);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of SocialAuthenticationState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$SocialAuthenticationErrorImplCopyWith<_$SocialAuthenticationErrorImpl>
@@ -683,7 +707,10 @@ abstract class SocialAuthenticationError implements SocialAuthenticationState {
 
   Object get failure;
   SocialAuthenticationProvider get provider;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of SocialAuthenticationState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SocialAuthenticationErrorImplCopyWith<_$SocialAuthenticationErrorImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

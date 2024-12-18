@@ -86,6 +86,9 @@ class _$ForgotPasswordStateCopyWithImpl<$Res, $Val extends ForgotPasswordState>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  /// Create a copy of ForgotPasswordState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -102,6 +105,9 @@ class __$$InitialImplCopyWithImpl<$Res>
   __$$InitialImplCopyWithImpl(
       _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
       : super(_value, _then);
+
+  /// Create a copy of ForgotPasswordState
+  /// with the given fields replaced by the non-null parameter values.
 }
 
 /// @nodoc
@@ -224,6 +230,8 @@ class __$$ResettingPasswordStateImplCopyWithImpl<$Res>
       $Res Function(_$ResettingPasswordStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of ForgotPasswordState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -262,7 +270,9 @@ class _$ResettingPasswordStateImpl implements ResettingPasswordState {
   @override
   int get hashCode => Object.hash(runtimeType, email);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ForgotPasswordState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ResettingPasswordStateImplCopyWith<_$ResettingPasswordStateImpl>
@@ -351,7 +361,10 @@ abstract class ResettingPasswordState implements ForgotPasswordState {
       _$ResettingPasswordStateImpl;
 
   String get email;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of ForgotPasswordState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ResettingPasswordStateImplCopyWith<_$ResettingPasswordStateImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
@@ -373,6 +386,8 @@ class __$$PasswordResetStateImplCopyWithImpl<$Res>
       $Res Function(_$PasswordResetStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of ForgotPasswordState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -411,7 +426,9 @@ class _$PasswordResetStateImpl implements PasswordResetState {
   @override
   int get hashCode => Object.hash(runtimeType, email);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ForgotPasswordState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$PasswordResetStateImplCopyWith<_$PasswordResetStateImpl> get copyWith =>
@@ -500,7 +517,10 @@ abstract class PasswordResetState implements ForgotPasswordState {
       _$PasswordResetStateImpl;
 
   String get email;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of ForgotPasswordState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$PasswordResetStateImplCopyWith<_$PasswordResetStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -525,6 +545,8 @@ class __$$ErrorResettingPasswordStateImplCopyWithImpl<$Res>
       $Res Function(_$ErrorResettingPasswordStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of ForgotPasswordState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -561,7 +583,9 @@ class _$ErrorResettingPasswordStateImpl implements ErrorResettingPasswordState {
   int get hashCode =>
       Object.hash(runtimeType, const DeepCollectionEquality().hash(failure));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ForgotPasswordState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ErrorResettingPasswordStateImplCopyWith<_$ErrorResettingPasswordStateImpl>
@@ -650,7 +674,10 @@ abstract class ErrorResettingPasswordState implements ForgotPasswordState {
       _$ErrorResettingPasswordStateImpl;
 
   Object get failure;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of ForgotPasswordState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ErrorResettingPasswordStateImplCopyWith<_$ErrorResettingPasswordStateImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

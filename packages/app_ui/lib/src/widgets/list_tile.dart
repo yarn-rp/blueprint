@@ -143,35 +143,21 @@ class EventListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     if (isMini) {
       return ListTile(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Flexible(
-              flex: 4,
-              child: Text(
-                title,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      color: textColor,
-                    ),
+        title: Text(
+          title,
+          overflow: TextOverflow.ellipsis,
+          maxLines: 1,
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: textColor,
               ),
-            ),
-            if (subtitle != null) ...[
-              const Spacer(),
-              Flexible(
-                flex: 4,
-                child: Text(
-                  subtitle!,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: textColor,
-                      ),
-                ),
+        ),
+        subtitle: Text(
+          subtitle!,
+          overflow: TextOverflow.ellipsis,
+          maxLines: 1,
+          style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                color: textColor,
               ),
-            ],
-          ],
         ),
       );
     }

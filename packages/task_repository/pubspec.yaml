@@ -5,17 +5,17 @@ publish_to: none
 
 environment:
   sdk: ">=3.0.0 <4.0.0"
-  flutter: 3.22.0
+  flutter: 3.27.1
 
 dependencies:
-  cloud_firestore: ^4.9.3
+  cloud_firestore: ^5.4.4
   collection: ^1.17.2
   flutter:
     sdk: flutter
   integrations_repository:
     path: ../integrations_repository
   json_annotation: ^4.8.1
-  rxdart: ^0.27.7
+  rxdart: ^0.28.0
   stream_transform: ^2.1.0
 
 dev_dependencies:

@@ -65,41 +65,43 @@ class BlueprintEventCard extends StatelessWidget {
                 ),
               ],
               const SizedBox(height: AppSpacing.md),
-              ConstrainedBox(
-                constraints: const BoxConstraints(
-                  maxHeight: AppSpacing.xxxxlg,
-                  minHeight: AppSpacing.xxxlg,
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AppSpacing.lg,
-                    vertical: AppSpacing.md,
+              if (labels.isNotEmpty || actions.isNotEmpty)
+                ConstrainedBox(
+                  constraints: const BoxConstraints(
+                    maxHeight: AppSpacing.xxxxlg,
+                    minHeight: AppSpacing.xxxlg,
                   ),
-                  child: Flex(
-                    direction: Axis.horizontal,
-                    children: [
-                      Expanded(
-                        child: Wrap(
-                          spacing: AppSpacing.lg,
-                          runSpacing: AppSpacing.lg,
-                          children: labels.sublist(
-                            0,
-                            min(labels.length, 3),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: AppSpacing.lg,
+                      vertical: AppSpacing.md,
+                    ),
+                    child: Flex(
+                      direction: Axis.horizontal,
+                      children: [
+                        if (labels.isNotEmpty)
+                          Expanded(
+                            child: Wrap(
+                              spacing: AppSpacing.lg,
+                              runSpacing: AppSpacing.lg,
+                              children: labels.sublist(
+                                0,
+                                min(labels.length, 3),
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                      if (actions.isNotEmpty) ...[
-                        Expanded(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: actions,
+                        if (actions.isNotEmpty) ...[
+                          Expanded(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: actions,
+                            ),
                           ),
-                        ),
+                        ],
                       ],
-                    ],
+                    ),
                   ),
                 ),
-              ),
             ],
           ),
         ),

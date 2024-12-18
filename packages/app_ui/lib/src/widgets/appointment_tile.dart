@@ -32,34 +32,33 @@ class AppointmentTile extends StatelessWidget {
     final subtitle = '$startTime to $endTime';
     final duration = appointment.endTime.difference(appointment.startTime);
     final backgroundColor =
-        isAfter ? originalColor : originalColor.withOpacity(0.5);
+        isAfter ? originalColor : originalColor.withValues(alpha: 0.5);
 
     final foregroundColor =
         backgroundColor.computeLuminance() > 0.5 ? Colors.black : Colors.white;
 
-    final label = switch (appointment.type) {
-      EventType.calendar => EventTypeLabel.calendar(),
-      EventType.meeting => EventTypeLabel.videoConference(),
-      EventType.task => EventTypeLabel.task(),
-    };
-
     return Card(
       margin: EdgeInsets.zero,
       color: backgroundColor,
-      child: Column(
-        children: [
-          EventListTile(
-            isMini: duration.inMinutes <= 30,
-            leading: label,
-            title: title,
-            subtitle: subtitle,
-            textColor: foregroundColor,
-            trailing: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: actions,
-            ),
-          ),
-        ],
+      child: ListTile(
+        title: Text(
+          title,
+          overflow: TextOverflow.ellipsis,
+          maxLines: 1,
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: foregroundColor,
+              ),
+        ),
+        subtitle: duration.inMinutes <= 15
+            ? null
+            : Text(
+                subtitle,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: foregroundColor,
+                    ),
+              ),
       ),
     );
   }

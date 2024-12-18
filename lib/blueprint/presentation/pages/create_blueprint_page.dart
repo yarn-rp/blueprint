@@ -37,8 +37,56 @@ class CreateBlueprintPage extends StatelessWidget {
   }
 }
 
-class _CreateBlueprintView extends StatelessWidget {
+class _CreateBlueprintView extends StatefulWidget {
   const _CreateBlueprintView();
+
+  @override
+  State<_CreateBlueprintView> createState() => _CreateBlueprintViewState();
+}
+
+class _CreateBlueprintViewState extends State<_CreateBlueprintView> {
+  final MultiSplitViewController _controller = MultiSplitViewController();
+
+  @override
+  void initState() {
+    super.initState();
+    _controller.areas = [
+      Area(
+        data: 'blueprint',
+        flex: 1,
+        builder: (context, area) => Stack(
+          children: [
+            const Positioned.fill(
+              child: _Timeline(),
+            ),
+            Positioned(
+              left: 0,
+              right: 0,
+              bottom: 0,
+              child: ClipRRect(
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                  child: const _ActionBar(),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+      Area(
+        data: 'assistant',
+        size: 600,
+        min: 300,
+        builder: (context, area) => const AIAssistantChat(),
+      ),
+    ];
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   void _navigateToTodaysBlueprint(BuildContext context) {
     AutoRouter.of(context).navigate(
@@ -118,34 +166,9 @@ class _CreateBlueprintView extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.only(left: AppSpacing.xxlg),
         child: Portal(
-          child: Row(
-            children: [
-              Expanded(
-                flex: 6,
-                child: Stack(
-                  children: [
-                    const Positioned.fill(
-                      child: _Timeline(),
-                    ),
-                    Positioned(
-                      left: 0,
-                      right: 0,
-                      bottom: 0,
-                      child: ClipRRect(
-                        child: BackdropFilter(
-                          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                          child: const _ActionBar(),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const Expanded(
-                flex: 4,
-                child: AIAssistantChat(),
-              ),
-            ],
+          child: MultiSplitView(
+            controller: _controller,
+            builder: (context, area) => area.builder!(context, area),
           ),
         ),
       ),
@@ -170,7 +193,7 @@ class _ActionBar extends StatelessWidget {
           hasActionItems ? CrossFadeState.showSecond : CrossFadeState.showFirst,
       firstChild: const SizedBox.shrink(),
       secondChild: Container(
-        color: theme.colorScheme.surface.withOpacity(.5),
+        color: theme.colorScheme.surface.withValues(alpha: .5),
         height: 150,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

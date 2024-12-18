@@ -1,27 +1,36 @@
 import 'package:flutter/material.dart';
 
 extension HexColor on Color {
-  /// String is in the format "aabbcc" or "ffaabbcc" with an optional leading
-  /// "#".
+  /// Converts a hexadecimal string to a [Color] object.
+  ///
+  /// The [hexString] should be in the format "aabbcc" or "ffaabbcc" with an
+  /// optional leading "#". Returns `null` if the input is `null` or invalid.
   static Color? fromHex(String? hexString) {
-    if (hexString == null) return null;
+    if (hexString == null) {
+      return null;
+    }
     try {
       final buffer = StringBuffer();
-      if (hexString.length == 6 || hexString.length == 7) buffer.write('ff');
+      if (hexString.length == 6 || hexString.length == 7) {
+        buffer.write('ff');
+      }
       buffer.write(hexString.replaceFirst('#', ''));
-      return Color(
-        int.parse(buffer.toString(), radix: 16),
-      );
+      return Color(int.parse(buffer.toString(), radix: 16));
     } catch (e) {
       return null;
     }
   }
 
-  /// Prefixes a hash sign if [leadingHashSign] is set to `true` (default is
-  /// `true`).
-  String toHex({bool leadingHashSign = true}) => '${leadingHashSign ? '#' : ''}'
-      '${alpha.toRadixString(16).padLeft(2, '0')}'
-      '${red.toRadixString(16).padLeft(2, '0')}'
-      '${green.toRadixString(16).padLeft(2, '0')}'
-      '${blue.toRadixString(16).padLeft(2, '0')}';
+  /// Converts this [Color] object to a hexadecimal string representation.
+  ///
+  /// The returned string is in the format "#aarrggbb" if [leadingHashSign] is
+  /// `true`, otherwise "aarrggbb".
+  String toHex({bool leadingHashSign = true}) {
+    final hexA = (a * 255).round().toRadixString(16).padLeft(2, '0');
+    final hexR = (r * 255).round().toRadixString(16).padLeft(2, '0');
+    final hexG = (g * 255).round().toRadixString(16).padLeft(2, '0');
+    final hexB = (b * 255).round().toRadixString(16).padLeft(2, '0');
+
+    return '${leadingHashSign ? '#' : ''}$hexA$hexR$hexG$hexB';
+  }
 }

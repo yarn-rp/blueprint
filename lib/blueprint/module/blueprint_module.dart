@@ -5,6 +5,7 @@ import 'package:blueprint_repository/blueprint_repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:injectable/injectable.dart';
 import 'package:integrations_repository/integrations_repository.dart';
+import 'package:local_notifications/local_notifications.dart';
 import 'package:uuid/uuid.dart';
 
 @module
@@ -12,9 +13,11 @@ abstract class BlueprintModule {
   @lazySingleton
   BlueprintBloc blueprintBloc(
     BlueprintRepository blueprintRepository,
+    LocalNotifications localNotifications,
   ) =>
       BlueprintBloc(
         blueprintRepository: blueprintRepository,
+        localNotifications: localNotifications,
       );
 
   @lazySingleton

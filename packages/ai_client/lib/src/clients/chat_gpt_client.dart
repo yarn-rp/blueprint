@@ -31,7 +31,7 @@ class ChatGPTAiClient implements AiClient {
   /// Creates a thread for the session.
   Future<void> startChat() async {
     try {
-      final thread = await _openAI.threads.createThread(
+      final thread = await _openAI.threads.v2.createThread(
         request: ThreadRequest(messages: []),
       );
 
@@ -52,7 +52,7 @@ class ChatGPTAiClient implements AiClient {
       await startChat();
     }
 
-    await _openAI.threads.messages.createMessage(
+    await _openAI.threads.v2.messages.createMessage(
       threadId: _threadId.value!,
       request: CreateMessage(
         role: role,
@@ -62,13 +62,13 @@ class ChatGPTAiClient implements AiClient {
   }
 
   Future<String> _getLastMessage() async {
-    final messages = await _openAI.threads.messages.listMessage(
+    final messages = await _openAI.threads.v2.messages.listMessage(
       threadId: _threadId.value!,
     );
 
     return messages.data.first.content.fold(
       '',
-      (previousValue, element) => '$previousValue\n ${element.text!.value}',
+      (previousValue, element) => '$previousValue\n ${element.text.value}',
     );
   }
 
