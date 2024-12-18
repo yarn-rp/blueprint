@@ -193,7 +193,7 @@ class TaskRepository {
                           id: blueprintPlatform.id,
                           displayName: blueprintPlatform.displayName,
                           iconUrl: blueprintPlatform.iconUrl,
-                          authentication: NoAuthentication(),
+                          authentication: const NoAuthentication(),
                         );
                       }
                       throw Exception('Platform not found');

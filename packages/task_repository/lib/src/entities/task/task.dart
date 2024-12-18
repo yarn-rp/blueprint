@@ -1,7 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:json_annotation/json_annotation.dart';
-import 'package:task_repository/src/entities/access/access.dart';
-import 'package:task_repository/src/entities/entities.dart';
 import 'package:task_repository/src/utils/timestamp_converter.dart';
 import 'package:task_repository/task_repository.dart';
 
