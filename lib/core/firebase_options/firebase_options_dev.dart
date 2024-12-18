@@ -72,7 +72,7 @@ class DefaultFirebaseOptions {
     storageBucket: 'polletask-dev.appspot.com',
     iosClientId:
         '333437725100-gedi3r0oh08vad1f3c6elp4ep8j2vjg6.apps.googleusercontent.com',
-    iosBundleId: 'com.yarn.blueprint',
+    iosBundleId: 'me.blueprint.app',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
@@ -84,6 +84,6 @@ class DefaultFirebaseOptions {
     storageBucket: 'polletask-dev.appspot.com',
     iosClientId:
         '333437725100-3vjf64sklpsbblachkvtunl58scftn03.apps.googleusercontent.com',
-    iosBundleId: 'com.yarn.blueprint.RunnerTests',
+    iosBundleId: 'me.blueprint.app.RunnerTests',
   );
 }

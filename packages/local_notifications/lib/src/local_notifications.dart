@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:local_notifications/local_notifications.dart';
 import 'package:rxdart/rxdart.dart';
@@ -68,6 +69,13 @@ class LocalNotifications {
 
   NotificationDetails get _defaultNotificationDetails {
     return const NotificationDetails(
+      iOS: DarwinNotificationDetails(
+        presentSound: true,
+        presentAlert: true,
+        presentBadge: true,
+        presentBanner: true,
+        presentList: true,
+      ),
       android: AndroidNotificationDetails(
         'your channel id',
         'your channel name',
@@ -124,19 +132,22 @@ class LocalNotifications {
     final dateTime = tz.TZDateTime.from(localDateTime, tz.local)
         .subtract(anticipation ?? Duration.zero);
 
-    final isNotificationScheduled = await _notificationSchedulesResource
-        .isNotificationScheduled(notification.id);
+    final notificationSchedule = await _notificationSchedulesResource
+        .getNotificationSchedule(notification.id);
 
-    return switch (isNotificationScheduled) {
-      // If the notification is already scheduled, update it with the new
-      // date. This will mean updating both the resource and the native
-      // plugin.
-      true => _updateNotificationSchedule(dateTime, notification),
-
+    return switch (notificationSchedule) {
       // If the notification is not scheduled, create a new schedule. This
       // will mean scheduling the notification with the native plugin and
       // storing the schedule in the resource.
-      false => _createNotificationSchedule(dateTime, notification),
+      null => _createNotificationSchedule(dateTime, notification),
+      // If the notification is already scheduled, update it with the new
+      // date. This will mean updating both the resource and the native
+      // plugin.
+      final notificationSchedule when notificationSchedule != dateTime =>
+        _updateNotificationSchedule(dateTime, notification),
+      // If the notification is already scheduled and the date is the same,
+      // do nothing.
+      _ => null,
     };
   }
 
@@ -149,6 +160,7 @@ class LocalNotifications {
     tz.TZDateTime dateTime,
     LocalNotification notification,
   ) async {
+    if (kIsWeb) {}
     final isNotificationTimePast = dateTime.isBefore(DateTime.now());
 
     if (isNotificationTimePast) {
@@ -163,6 +175,7 @@ class LocalNotifications {
       _defaultNotificationDetails,
       uiLocalNotificationDateInterpretation:
           UILocalNotificationDateInterpretation.absoluteTime,
+      payload: notification.payload,
     );
   }
 }

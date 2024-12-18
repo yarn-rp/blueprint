@@ -8,6 +8,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_portal/flutter_portal.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
+const double timeDensityUnit = 40;
+
+enum TimeDensity {
+  low(timeDensityUnit * 2),
+  medium(timeDensityUnit * 3),
+  high(timeDensityUnit * 4);
+
+  const TimeDensity(this.value);
+
+  final double value;
+}
+
 enum VerticalDirection {
   up,
   down,
@@ -16,7 +28,7 @@ enum VerticalDirection {
 class TodayTimeline extends StatefulWidget {
   const TodayTimeline({
     required this.events,
-    this.intervalHeight = 180,
+    this.timeDensity = TimeDensity.medium,
     this.onEventTap,
     this.createEventDialogBuilder,
     super.key,
@@ -32,7 +44,7 @@ class TodayTimeline extends StatefulWidget {
   )? createEventDialogBuilder;
   final ValueChanged<TodayEvent>? onEventTap;
 
-  final double intervalHeight;
+  final TimeDensity timeDensity;
 
   @override
   State<TodayTimeline> createState() => _TodaysBlueprintState();
@@ -49,12 +61,13 @@ class _TodaysBlueprintState extends State<TodayTimeline>
   /// Refers to the minimum duration you can move in the timeline.
   late int dragUnit;
 
-  /// Refers to the height of the unit in the timeline.
-  late double unitHeight;
+  /// Refers to the visibility of the create event dialog.
+  late TimeDensity selectedDensity;
+
   @override
   void initState() {
     dragUnit = 5;
-    unitHeight = widget.intervalHeight / 60;
+    selectedDensity = widget.timeDensity;
 
     _calendarController = CalendarController();
     super.initState();
@@ -67,63 +80,160 @@ class _TodaysBlueprintState extends State<TodayTimeline>
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
 
-    return SfCalendar(
-      controller: _calendarController,
-      dataSource: TodayEventSource(widget.events),
-      appointmentTextStyle: textTheme.bodyMedium!,
-      todayTextStyle: textTheme.titleLarge?.copyWith(
-        color: switch (theme.colorScheme.brightness) {
-          Brightness.light => Colors.white,
-          Brightness.dark => Colors.black,
-        },
-      ),
-      blackoutDatesTextStyle: textTheme.bodyMedium,
-      headerStyle: CalendarHeaderStyle(
-        textStyle: textTheme.titleLarge,
-        backgroundColor: Colors.transparent,
-      ),
-      viewHeaderStyle: ViewHeaderStyle(
-        dayTextStyle: textTheme.labelLarge,
-        dateTextStyle: textTheme.labelLarge,
-      ),
-      headerHeight: 80,
-      headerDateFormat: 'MMMM EEEE d',
-      onTap: (calendarTapDetails) async {
-        if (calendarTapDetails.targetElement == CalendarElement.appointment) {
-          final appointment = calendarTapDetails.appointments?.first;
-          if (appointment is! TodayEvent) {
-            return;
-          }
+    return Column(
+      children: [
+        CalendarControls(
+          calendarController: _calendarController,
+          selectedDensity: selectedDensity,
+          onDensityChange: (value) {
+            setState(() {
+              selectedDensity = value;
+            });
+          },
+        ),
+        Expanded(
+          child: SfCalendar(
+            controller: _calendarController,
+            dataSource: TodayEventSource(widget.events),
+            viewNavigationMode: ViewNavigationMode.none,
+            appointmentTextStyle: textTheme.bodyMedium!,
+            todayTextStyle: textTheme.titleLarge?.copyWith(
+              color: switch (theme.colorScheme.brightness) {
+                Brightness.light => Colors.white,
+                Brightness.dark => Colors.black,
+              },
+            ),
+            blackoutDatesTextStyle: textTheme.bodyMedium,
+            headerStyle: CalendarHeaderStyle(
+              textStyle: textTheme.titleLarge,
+              backgroundColor: Colors.transparent,
+            ),
+            viewHeaderStyle: ViewHeaderStyle(
+              dayTextStyle: textTheme.labelLarge,
+              dateTextStyle: textTheme.labelLarge,
+            ),
+            headerHeight: 80,
+            headerDateFormat: 'MMMM EEEE d',
+            onTap: (calendarTapDetails) async {
+              if (calendarTapDetails.targetElement ==
+                  CalendarElement.appointment) {
+                final appointment = calendarTapDetails.appointments?.first;
+                if (appointment is! TodayEvent) {
+                  return;
+                }
 
-          widget.onEventTap?.call(appointment);
-        }
-      },
-      appointmentBuilder: (
-        BuildContext context,
-        CalendarAppointmentDetails calendarAppointmentDetails,
-      ) {
-        final appointment = calendarAppointmentDetails.appointments.last;
-        if (appointment is! TodayEvent) {
-          return const SizedBox();
-        }
+                widget.onEventTap?.call(appointment);
+              }
+            },
+            appointmentBuilder: (
+              BuildContext context,
+              CalendarAppointmentDetails calendarAppointmentDetails,
+            ) {
+              final appointment = calendarAppointmentDetails.appointments.last;
+              if (appointment is! TodayEvent) {
+                return const SizedBox();
+              }
 
-        final appointmentTile = AppointmentTile(
-          appointment: appointment,
-        );
+              final appointmentTile = AppointmentTile(
+                appointment: appointment,
+              );
 
-        return appointmentTile;
-      },
-      timeSlotViewSettings: TimeSlotViewSettings(
-        timeTextStyle: textTheme.labelMedium,
-        minimumAppointmentDuration: const Duration(minutes: 15),
-        timeIntervalHeight: widget.intervalHeight,
-      ),
-      todayHighlightColor: theme.colorScheme.tertiary,
+              return appointmentTile;
+            },
+            timeSlotViewSettings: TimeSlotViewSettings(
+              timeTextStyle: textTheme.labelMedium,
+              minimumAppointmentDuration: const Duration(minutes: 15),
+              timeIntervalHeight: selectedDensity.value,
+            ),
+            todayHighlightColor: theme.colorScheme.tertiary,
+          ),
+        ),
+      ],
     );
   }
 
   @override
   bool get wantKeepAlive => true;
+}
+
+///
+class CalendarControls extends StatelessWidget {
+  const CalendarControls({
+    super.key,
+    required this.calendarController,
+    required this.selectedDensity,
+    required this.onDensityChange,
+  });
+
+  final CalendarController calendarController;
+  final TimeDensity selectedDensity;
+  final ValueChanged<TimeDensity> onDensityChange;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        // Date Navigation and Range Picker
+
+        IconButton.filledTonal(
+          color: Colors.red,
+          icon: const Text('T'),
+          onPressed: () {
+            calendarController.displayDate = DateTime.now();
+          },
+        ),
+        IconButton(
+          icon: const Icon(Icons.chevron_left),
+          onPressed: () {
+            calendarController.backward?.call();
+          },
+        ),
+        IconButton(
+          icon: const Icon(Icons.chevron_right),
+          onPressed: () {
+            calendarController.forward?.call();
+            // Handle next month navigation
+          },
+        ),
+        DropdownButton<CalendarView>(
+          value: calendarController.view ?? CalendarView.day,
+          items: [CalendarView.day, CalendarView.week, CalendarView.workWeek]
+              .map(
+                (e) => DropdownMenuItem<CalendarView>(
+                  value: e,
+                  child: Text(e.name),
+                ),
+              )
+              .toList(),
+          onChanged: (CalendarView? newValue) {
+            if (newValue == null) {
+              return;
+            }
+            calendarController.view = newValue;
+          },
+        ),
+        DropdownButton<TimeDensity>(
+          value: selectedDensity,
+          items: TimeDensity.values
+              .map(
+                (e) => DropdownMenuItem<TimeDensity>(
+                  value: e,
+                  child: Text(e.name),
+                ),
+              )
+              .toList(),
+          onChanged: (value) {
+            if (value == null) {
+              return;
+            }
+
+            onDensityChange(value);
+          },
+        ),
+      ],
+    );
+  }
 }
 
 class EditableTimeline extends StatefulWidget {
@@ -199,68 +309,76 @@ class _EditableTimelineState extends State<EditableTimeline>
     });
   }
 
-  void _onTemporaryEventDragStart(Offset localPosition) {
+  /// Returns the date at the offset position. If the calendar details provided
+  /// by the controller is null, it will return the last appointment's start
+  /// time.
+  DateTime? _getCalendarStartDateTimeAtOffset(Offset localPosition) {
     final calendarDetails =
-        _calendarController.getCalendarDetailsAtOffset?.call(
-      Offset(localPosition.dx, localPosition.dy),
+        _calendarController.getCalendarDetailsAtOffset?.call(localPosition);
+
+    // Call to getCalendarDetailsAtOffset might return date as null when
+    // there are already appointments for that slot. In that case, we can
+    // use the last appointment's start time as the date.
+    return calendarDetails?.date ??
+        (calendarDetails?.appointments?.last as TodayEvent?)?.startTime;
+  }
+
+  void _onTemporaryEventDragStart(Offset localPosition) {
+    final originalDate = _getCalendarStartDateTimeAtOffset(
+      localPosition,
     );
 
-    if (calendarDetails == null || calendarDetails.date == null) {
+    if (originalDate == null) {
       return;
     }
-    final originalDate = calendarDetails.date!;
 
     var startingHourDetails = (
       date: originalDate,
       localPosition: localPosition,
     );
 
-    // Original Date can be 10:00, but the user can start creating the event
-    // at 10:30 and the getCalendarDetailsAtOffset will return 10:00. So we
-    // need to find out the exact time the user stated creating the event. For
-    // that we are going to ask the calendarController to find out the time
-    // at the current offset, resting the unitHeight, until we get a different
-    // date.
+    // Adjust the loop to increment by unitHeight
     while (startingHourDetails.date == originalDate) {
-      final roundedCalendarDetails =
-          _calendarController.getCalendarDetailsAtOffset?.call(
+      final roundedCalendarDetailsDate = _getCalendarStartDateTimeAtOffset(
         Offset(localPosition.dx, startingHourDetails.localPosition.dy),
       );
 
-      if (roundedCalendarDetails == null ||
-          roundedCalendarDetails.date == null) {
+      if (roundedCalendarDetailsDate == null) {
         break;
       }
 
       startingHourDetails = (
-        date: roundedCalendarDetails.date!,
-        localPosition:
-            Offset(localPosition.dx, startingHourDetails.localPosition.dy + 1),
+        date: roundedCalendarDetailsDate,
+        localPosition: Offset(
+          localPosition.dx,
+          startingHourDetails.localPosition.dy + unitHeight,
+        ),
       );
     }
 
-    // At this point, startingHourDetails.date will be have the real position
-    // of the rounded hour, so we can calculate given the localPosition, the
-    // time that corresponds to the current offset.
+    // Calculate the current offset in minutes
     final currentOffset = localPosition.dy;
 
     final currentOffsetInMinutes =
         (startingHourDetails.localPosition.dy - currentOffset).abs() /
             unitHeight;
 
+    // Adjust the current date by subtracting the calculated minutes
     final currentDate = startingHourDetails.date.subtract(
       Duration(
         minutes: currentOffsetInMinutes.toInt(),
       ),
     );
 
+    final tmpEvent = (
+      startTime: currentDate.truncate(minutes: dragUnit),
+      startOffset: localPosition.dy,
+      endTime: currentDate,
+      endOffset: localPosition.dy,
+    );
+
     setState(() {
-      temporaryEvent = (
-        startTime: currentDate.truncate(minutes: dragUnit),
-        startOffset: localPosition.dy,
-        endTime: currentDate,
-        endOffset: localPosition.dy,
-      );
+      temporaryEvent = tmpEvent;
     });
   }
 
@@ -347,13 +465,7 @@ class _EditableTimelineState extends State<EditableTimeline>
 
     // using the details of the screen and the calendarController, find out
     // at what time the user started creating the event.
-    final calendarDetails =
-        _calendarController.getCalendarDetailsAtOffset?.call(
-      Offset(localPosition.dx, localPosition.dy),
-    );
-
-    final date = calendarDetails?.date ??
-        (calendarDetails?.appointments?.last as TodayEvent?)?.startTime;
+    final date = _getCalendarStartDateTimeAtOffset(localPosition);
 
     if (date == null) {
       return;
@@ -369,225 +481,239 @@ class _EditableTimelineState extends State<EditableTimeline>
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
 
-    return LayoutBuilder(
-      builder: (context, constraints) => GestureDetector(
-        onVerticalDragStart: _selectedEvent != null
-            ? null
-            : (details) => _onTemporaryEventDragStart(details.localPosition),
-        onVerticalDragUpdate: _onTemporaryEventDragUpdate,
-        onVerticalDragEnd: (details) async {
-          if (temporaryEvent == null) {
-            return;
-          }
-
-          setState(() {
-            _isCreateEventDialogVisible = true;
-          });
-        },
-        child: SfCalendar(
-          controller: _calendarController,
-          dataSource: TodayEventSource([
-            if (temporaryEvent != null)
-              (
-                id: 'temporary',
-                subject: widget.newEventTemporaryName,
-                startTime: temporaryEvent!.startTime,
-                endTime: temporaryEvent!.endTime,
-                color: theme.colorScheme.secondary,
-                type: EventType.task,
-                isPreview: true,
-              ),
-            ...widget.events,
-          ]),
-          allowDragAndDrop: true,
-          allowAppointmentResize: true,
-          appointmentTextStyle: textTheme.bodyMedium!,
-          todayTextStyle: textTheme.titleLarge?.copyWith(
-            color: switch (theme.colorScheme.brightness) {
-              Brightness.light => Colors.white,
-              Brightness.dark => Colors.black,
-            },
-          ),
-          blackoutDatesTextStyle: textTheme.bodyMedium,
-          headerStyle: CalendarHeaderStyle(
-            textStyle: textTheme.titleLarge,
-            backgroundColor: Colors.transparent,
-          ),
-          viewHeaderStyle: ViewHeaderStyle(
-            dayTextStyle: textTheme.labelLarge,
-            dateTextStyle: textTheme.labelLarge,
-          ),
-          headerHeight: 80,
-          onTap: (calendarTapDetails) async {
-            if (calendarTapDetails.targetElement ==
-                CalendarElement.appointment) {
-              final appointment = calendarTapDetails.appointments?.first;
-              if (appointment is! TodayEvent) {
-                return;
-              }
-
-              setState(() {
-                _selectedEvent = appointment;
-              });
-              widget.onEventTap?.call(appointment);
-              return;
-            }
-
-            setState(() {
-              _selectedEvent = null;
-            });
-          },
-
-          onDragUpdate: (AppointmentDragUpdateDetails details) {
-            final appointment = details.appointment;
-
-            if (appointment is! TodayEvent) {
-              return;
-            }
-          },
-          onDragStart: (AppointmentDragStartDetails details) {
-            final appointment = details.appointment;
-
-            if (appointment is! TodayEvent) {
-              return;
-            }
-          },
-          // Rounds the new appointment time to the nearest 15 minutes interval.
-          // For example, if the appointment is dragged to 10:05, the
-          // appointment time will be rounded to 10:00. If the appointment is
-          // dragged to 10:07, the appointment time will be rounded to 10:15.
-          // If the appointment is dragged to 10:27, the appointment time will
-          // be rounded to 10:30. If the appointment is dragged to 10:16, the
-          // appointment time will be rounded
-          // to 10:15.
-          onDragEnd: (AppointmentDragEndDetails details) {
-            final appointment = details.appointment;
-
-            if (appointment == null) {
-              return;
-            }
-
-            if (appointment is! TodayEvent) {
-              return;
-            }
-            final startTime = appointment.startTime;
-            final endTime = appointment.endTime;
-
-            widget.onEventUpdate(
-              appointment,
-              startTime.copyWith(
-                minute: (startTime.minute / dragUnit).round() * dragUnit,
-              ),
-              endTime.copyWith(
-                minute: (endTime.minute / dragUnit).round() * dragUnit,
-              ),
-            );
-          },
-          onAppointmentResizeEnd: (appointmentResizeEndDetails) {
-            final appointment = appointmentResizeEndDetails.appointment;
-            if (appointment is! TodayEvent) {
-              return;
-            }
-
-            final startTime = appointment.startTime;
-            final endTime = appointment.endTime;
-
-            widget.onEventUpdate(
-              appointment,
-              startTime.copyWith(
-                minute: (startTime.minute / dragUnit).round() * dragUnit,
-              ),
-              endTime.copyWith(
-                minute: (endTime.minute / dragUnit).round() * dragUnit,
-              ),
-            );
-          },
-
-          appointmentBuilder: (
-            BuildContext context,
-            CalendarAppointmentDetails calendarAppointmentDetails,
-          ) {
-            final appointment = calendarAppointmentDetails.appointments.last;
-            if (appointment is! TodayEvent) {
-              return const SizedBox();
-            }
-
-            final isTemporaryEvent =
-                appointment.startTime == temporaryEvent?.startTime &&
-                    appointment.endTime == temporaryEvent?.endTime &&
-                    _isCreateEventDialogVisible;
-
-            final appointmentTile = AppointmentTile(
-              appointment: (
-                id: appointment.id,
-                color: appointment.color,
-                subject: appointment.subject,
-                type: appointment.type,
-                startTime: appointment.startTime.round(minutes: dragUnit),
-                endTime: appointment.endTime.round(minutes: dragUnit),
-                isPreview: appointment.isPreview,
-              ),
-              color: appointment.color,
-            );
-
-            if (!isTemporaryEvent) {
-              return appointmentTile;
-            }
-
-            return PortalTarget(
-              fit: StackFit.expand,
-              visible: _isCreateEventDialogVisible,
-              closeDuration: kThemeAnimationDuration,
-              portalFollower: Stack(
-                children: [
-                  Barrier(
-                    visible: _isCreateEventDialogVisible,
-                    onClose: hidePortal,
-                  ),
-                  Builder(
-                    builder: (context) {
-                      return Positioned(
-                        left: constraints.maxWidth / 5,
-                        top: min(constraints.maxHeight / 5, 0),
-                        width: constraints.maxWidth,
-                        height: max(constraints.maxHeight / 5, 200) * 3,
-                        child: TweenAnimationBuilder<double>(
-                          duration: kThemeAnimationDuration,
-                          curve: Curves.easeOut,
-                          tween: Tween(
-                            begin: 0,
-                            end: _isCreateEventDialogVisible ? 1 : 0,
-                          ),
-                          builder: (context, opacity, _) => Opacity(
-                            opacity: opacity,
-                            child: SizedBox(
-                              height: constraints.maxHeight / 5 * 3,
-                              width: constraints.maxWidth,
-                              child: widget.createEventDialogBuilder?.call(
-                                    context,
-                                    appointment,
-                                    hidePortal,
-                                  ) ??
-                                  const SizedBox(),
-                            ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ],
-              ),
-              child: appointmentTile,
-            );
-          },
-          timeSlotViewSettings: TimeSlotViewSettings(
-            timeTextStyle: textTheme.labelMedium,
-            minimumAppointmentDuration: const Duration(minutes: 15),
-            timeIntervalHeight: widget.intervalHeight,
-          ),
-          todayHighlightColor: theme.colorScheme.tertiary,
+    return Column(
+      children: [
+        CalendarControls(
+          calendarController: _calendarController,
+          selectedDensity: TimeDensity.medium,
+          onDensityChange: (value) {},
         ),
-      ),
+        Expanded(
+          child: LayoutBuilder(
+            builder: (context, constraints) => GestureDetector(
+              onVerticalDragStart: _selectedEvent != null
+                  ? null
+                  : (details) =>
+                      _onTemporaryEventDragStart(details.localPosition),
+              onVerticalDragUpdate: _onTemporaryEventDragUpdate,
+              onVerticalDragEnd: (details) async {
+                if (temporaryEvent == null) {
+                  return;
+                }
+
+                setState(() {
+                  _isCreateEventDialogVisible = true;
+                });
+              },
+              child: SfCalendar(
+                controller: _calendarController,
+                dataSource: TodayEventSource([
+                  if (temporaryEvent != null)
+                    (
+                      id: 'temporary',
+                      subject: widget.newEventTemporaryName,
+                      startTime: temporaryEvent!.startTime,
+                      endTime: temporaryEvent!.endTime,
+                      color: theme.colorScheme.secondary,
+                      type: EventType.task,
+                      isPreview: true,
+                    ),
+                  ...widget.events,
+                ]),
+                allowDragAndDrop: true,
+                allowAppointmentResize: true,
+                appointmentTextStyle: textTheme.bodyMedium!,
+                todayTextStyle: textTheme.titleLarge?.copyWith(
+                  color: switch (theme.colorScheme.brightness) {
+                    Brightness.light => Colors.white,
+                    Brightness.dark => Colors.black,
+                  },
+                ),
+                blackoutDatesTextStyle: textTheme.bodyMedium,
+                headerStyle: CalendarHeaderStyle(
+                  textStyle: textTheme.titleLarge,
+                  backgroundColor: Colors.transparent,
+                ),
+                viewHeaderStyle: ViewHeaderStyle(
+                  dayTextStyle: textTheme.labelLarge,
+                  dateTextStyle: textTheme.labelLarge,
+                ),
+                headerHeight: 80,
+                onTap: (calendarTapDetails) async {
+                  if (calendarTapDetails.targetElement ==
+                      CalendarElement.appointment) {
+                    final appointment = calendarTapDetails.appointments?.first;
+                    if (appointment is! TodayEvent) {
+                      return;
+                    }
+
+                    setState(() {
+                      _selectedEvent = appointment;
+                    });
+                    widget.onEventTap?.call(appointment);
+                    return;
+                  }
+
+                  setState(() {
+                    _selectedEvent = null;
+                  });
+                },
+
+                onDragUpdate: (AppointmentDragUpdateDetails details) {
+                  final appointment = details.appointment;
+
+                  if (appointment is! TodayEvent) {
+                    return;
+                  }
+                },
+                onDragStart: (AppointmentDragStartDetails details) {
+                  final appointment = details.appointment;
+
+                  if (appointment is! TodayEvent) {
+                    return;
+                  }
+                },
+                // Rounds the new appointment time to the nearest 15 minutes interval.
+                // For example, if the appointment is dragged to 10:05, the
+                // appointment time will be rounded to 10:00. If the appointment is
+                // dragged to 10:07, the appointment time will be rounded to 10:15.
+                // If the appointment is dragged to 10:27, the appointment time will
+                // be rounded to 10:30. If the appointment is dragged to 10:16, the
+                // appointment time will be rounded
+                // to 10:15.
+                onDragEnd: (AppointmentDragEndDetails details) {
+                  final appointment = details.appointment;
+
+                  if (appointment == null) {
+                    return;
+                  }
+
+                  if (appointment is! TodayEvent) {
+                    return;
+                  }
+                  final startTime = appointment.startTime;
+                  final endTime = appointment.endTime;
+
+                  widget.onEventUpdate(
+                    appointment,
+                    startTime.copyWith(
+                      minute: (startTime.minute / dragUnit).round() * dragUnit,
+                    ),
+                    endTime.copyWith(
+                      minute: (endTime.minute / dragUnit).round() * dragUnit,
+                    ),
+                  );
+                },
+                onAppointmentResizeEnd: (appointmentResizeEndDetails) {
+                  final appointment = appointmentResizeEndDetails.appointment;
+                  if (appointment is! TodayEvent) {
+                    return;
+                  }
+
+                  final startTime = appointment.startTime;
+                  final endTime = appointment.endTime;
+
+                  widget.onEventUpdate(
+                    appointment,
+                    startTime.copyWith(
+                      minute: (startTime.minute / dragUnit).round() * dragUnit,
+                    ),
+                    endTime.copyWith(
+                      minute: (endTime.minute / dragUnit).round() * dragUnit,
+                    ),
+                  );
+                },
+
+                appointmentBuilder: (
+                  BuildContext context,
+                  CalendarAppointmentDetails calendarAppointmentDetails,
+                ) {
+                  final appointment =
+                      calendarAppointmentDetails.appointments.last;
+                  if (appointment is! TodayEvent) {
+                    return const SizedBox();
+                  }
+
+                  final isTemporaryEvent =
+                      appointment.startTime == temporaryEvent?.startTime &&
+                          appointment.endTime == temporaryEvent?.endTime &&
+                          _isCreateEventDialogVisible;
+
+                  final appointmentTile = AppointmentTile(
+                    appointment: (
+                      id: appointment.id,
+                      color: appointment.color,
+                      subject: appointment.subject,
+                      type: appointment.type,
+                      startTime: appointment.startTime.round(minutes: dragUnit),
+                      endTime: appointment.endTime.round(minutes: dragUnit),
+                      isPreview: appointment.isPreview,
+                    ),
+                    color: appointment.color,
+                  );
+
+                  if (!isTemporaryEvent) {
+                    return appointmentTile;
+                  }
+
+                  return PortalTarget(
+                    fit: StackFit.expand,
+                    visible: _isCreateEventDialogVisible,
+                    closeDuration: kThemeAnimationDuration,
+                    portalFollower: Stack(
+                      children: [
+                        Barrier(
+                          visible: _isCreateEventDialogVisible,
+                          onClose: hidePortal,
+                        ),
+                        Builder(
+                          builder: (context) {
+                            return Positioned(
+                              left: constraints.maxWidth / 5,
+                              top: min(constraints.maxHeight / 5, 0),
+                              width: constraints.maxWidth,
+                              height: max(constraints.maxHeight / 5, 200) * 3,
+                              child: TweenAnimationBuilder<double>(
+                                duration: kThemeAnimationDuration,
+                                curve: Curves.easeOut,
+                                tween: Tween(
+                                  begin: 0,
+                                  end: _isCreateEventDialogVisible ? 1 : 0,
+                                ),
+                                builder: (context, opacity, _) => Opacity(
+                                  opacity: opacity,
+                                  child: SizedBox(
+                                    height: constraints.maxHeight / 5 * 3,
+                                    width: constraints.maxWidth,
+                                    child:
+                                        widget.createEventDialogBuilder?.call(
+                                              context,
+                                              appointment,
+                                              hidePortal,
+                                            ) ??
+                                            const SizedBox(),
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                    child: appointmentTile,
+                  );
+                },
+                timeSlotViewSettings: TimeSlotViewSettings(
+                  timeTextStyle: textTheme.labelMedium,
+                  minimumAppointmentDuration: const Duration(minutes: 15),
+                  timeIntervalHeight: widget.intervalHeight,
+                ),
+                todayHighlightColor: theme.colorScheme.tertiary,
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 

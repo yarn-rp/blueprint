@@ -78,6 +78,6 @@ class DefaultFirebaseOptions {
     messagingSenderId: '364868056134',
     projectId: 'blueprint-384623',
     storageBucket: 'blueprint-384623.appspot.com',
-    iosBundleId: 'com.yarn.blueprint.RunnerTests',
+    iosBundleId: 'me.blueprint.app.RunnerTests',
   );
 }

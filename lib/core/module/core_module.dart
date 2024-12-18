@@ -20,16 +20,6 @@ abstract class CoreModule {
         apiKey: const String.fromEnvironment('OPEN_AI_API_KEY'),
       );
 
-  // @lazySingleton
-  // AiClient aiClient() => GeminiAiClient(
-  //       generativeModel: GenerativeModel(
-  //         apiKey: 'AIzaSyCF5ytyGfjz_fsZz6EMrH39Q3yLJMUpHSk',
-  //         params: ModelParams(
-  //           model: _geminiProModel,
-  //         ),
-  //       ),
-  //     );
-
   @lazySingleton
   GoogleSignIn googleSignIn() {
     try {

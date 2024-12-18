@@ -35,8 +35,9 @@ abstract class NotificationSchedulesResource {
 
   /// {@macro scheduled_notifications_resource}
   ///
-  /// Returns `true` if a notification is scheduled with the [id].
-  Future<bool> isNotificationScheduled(int id);
+  /// Returns a TZDateTime object if a notification is scheduled for the [id].
+  /// Returns null if no notification is scheduled for the [id].
+  Future<tz.TZDateTime?> getNotificationSchedule(int id);
 }
 
 class InMemoryNotificationSchedulesResource
@@ -63,7 +64,9 @@ class InMemoryNotificationSchedulesResource
     tz.TZDateTime dateTime,
     int id,
   ) async {
-    if (await isNotificationScheduled(id)) {
+    final notificationSchedule = await getNotificationSchedule(id);
+
+    if (notificationSchedule != null) {
       _schedules[id] = dateTime;
     } else {
       throw StateError('Notification schedule with id $id does not exist.');
@@ -71,7 +74,7 @@ class InMemoryNotificationSchedulesResource
   }
 
   @override
-  Future<bool> isNotificationScheduled(int id) async {
-    return _schedules.containsKey(id);
+  Future<tz.TZDateTime?> getNotificationSchedule(int id) async {
+    return _schedules[id];
   }
 }
