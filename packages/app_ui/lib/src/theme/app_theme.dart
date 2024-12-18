@@ -71,7 +71,7 @@ final lightTheme = ThemeData(
       EdgeInsets.symmetric(horizontal: AppSpacing.lg),
     ),
     backgroundColor: WidgetStateProperty.all(
-      lightColorScheme.outlineVariant.withOpacity(.2),
+      lightColorScheme.outlineVariant.withValues(alpha: .2),
     ),
     elevation: WidgetStateProperty.all(0),
     textStyle: WidgetStateProperty.all(
@@ -79,10 +79,10 @@ final lightTheme = ThemeData(
     ),
   ),
   cardTheme: CardTheme(
-    color: lightColorScheme.outlineVariant.withOpacity(.2),
+    color: lightColorScheme.outlineVariant.withValues(alpha: .2),
     elevation: 0,
   ),
-  cardColor: lightColorScheme.outlineVariant.withOpacity(.2),
+  cardColor: lightColorScheme.outlineVariant.withValues(alpha: .2),
 );
 
 /// {@template app_theme}
@@ -150,7 +150,7 @@ final darkTheme = ThemeData(
       EdgeInsets.symmetric(horizontal: AppSpacing.lg),
     ),
     backgroundColor: WidgetStateProperty.all(
-      darkColorScheme.outline.withOpacity(0.2),
+      darkColorScheme.outline.withValues(alpha: 0.2),
     ),
     elevation: WidgetStateProperty.all(0),
     textStyle: WidgetStateProperty.all(
@@ -158,8 +158,8 @@ final darkTheme = ThemeData(
     ),
   ),
   cardTheme: CardTheme(
-    color: darkColorScheme.outline.withOpacity(0.2),
+    color: darkColorScheme.outline.withValues(alpha: 0.2),
     elevation: 0,
   ),
-  cardColor: darkColorScheme.outline.withOpacity(0.2),
+  cardColor: darkColorScheme.outline.withValues(alpha: 0.2),
 );

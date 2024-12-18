@@ -40,6 +40,10 @@ abstract class NotificationSchedulesResource {
   Future<tz.TZDateTime?> getNotificationSchedule(int id);
 }
 
+/// {@template in_memory_scheduled_notifications_resource}
+/// An implementation of [NotificationSchedulesResource] that stores
+/// notification in memory.
+/// {@endtemplate}
 class InMemoryNotificationSchedulesResource
     extends NotificationSchedulesResource {
   final HashMap<int, tz.TZDateTime> _schedules = HashMap();

@@ -193,7 +193,7 @@ class _ActionBar extends StatelessWidget {
           hasActionItems ? CrossFadeState.showSecond : CrossFadeState.showFirst,
       firstChild: const SizedBox.shrink(),
       secondChild: Container(
-        color: theme.colorScheme.surface.withOpacity(.5),
+        color: theme.colorScheme.surface.withValues(alpha: .5),
         height: 150,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

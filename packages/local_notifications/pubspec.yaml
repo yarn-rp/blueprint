@@ -4,16 +4,16 @@ version: 0.1.0+1
 publish_to: none
 
 environment:
+  flutter: ^3.27.1
   sdk: ^3.4.0
-  flutter: ^3.22.0
 
 dependencies:
+  equatable: ^2.0.5
   flutter:
     sdk: flutter
-  equatable: ^2.0.5
   flutter_local_notifications: ^17.2.4
-  timezone: ^0.9.4
   rxdart: ^0.28.0
+  timezone: ^0.9.4
 
 dev_dependencies:
   flutter_test:

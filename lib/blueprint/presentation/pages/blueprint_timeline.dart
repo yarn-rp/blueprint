@@ -2,7 +2,6 @@ import 'package:app_ui/app_ui.dart';
 import 'package:blueprint/blueprint/presentation/widgets/widgets.dart';
 import 'package:blueprint/blueprint/state_management/blueprint_bloc/blueprint_bloc.dart';
 import 'package:blueprint/calendar/presentation/views/event_details.dart';
-import 'package:blueprint/core/l10n/l10n.dart';
 import 'package:blueprint/core/utils/datetime/datetime_utils.dart';
 import 'package:blueprint/tasks/presentation/widgets/task_details.dart';
 import 'package:flutter/material.dart';
@@ -71,8 +70,6 @@ class BlueprintTimelineState extends State<BlueprintTimeline> {
 
     return BlocBuilder<BlueprintBloc, BlueprintState>(
       builder: (context, state) {
-        final l10n = context.l10n;
-
         final items = state.allItems;
 
         return CallbackShortcuts(
@@ -173,34 +170,6 @@ class BlueprintTimelineState extends State<BlueprintTimeline> {
                 _selectedEvent = event;
               });
             },
-            // onEventUpdate: (event, startDate, endDate) {
-            //   final item = state.allItems.firstWhere(
-            //     (element) => element.id == event.id,
-            //   );
-
-            //   return item.map<void>(
-            //     event: (event) {
-            //       //show error dialog
-            //       showErrorDialog(
-            //         context: context,
-            //         title: 'We are really sorry',
-            //         content:
-            //             'We are working on this feature, but unfortunately you '
-            //             'cannot edit events yet.',
-            //         dismissText: 'Ok',
-            //       );
-            //     },
-            //     task: (task) {
-            //       context.read<BlueprintBloc>().add(
-            //             BlueprintItemUpdated(
-            //               item: item,
-            //               startTime: startDate,
-            //               endTime: endDate,
-            //             ),
-            //           );
-            //     },
-            //   );
-            // },
             events: [
               ...items.map(
                 (e) => (

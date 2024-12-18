@@ -10,7 +10,6 @@ import 'package:collapsible_sidebar/collapsible_sidebar.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:multi_split_view/multi_split_view.dart';
 
 final navigationPages = [
   NavigationPageData(
@@ -44,13 +43,13 @@ class NavigationPageData<T> {
 
 class NavigationArea extends Area {
   NavigationArea({
+    required this.routerBuilder,
     super.size,
     super.flex,
     super.min,
     super.max,
     super.id,
     super.data,
-    required this.routerBuilder,
   });
 
   final Widget Function(
@@ -245,7 +244,8 @@ class _SidebarPageState extends State<SidebarPage> {
       iconSize: 28,
       toggleTitle: '',
       backgroundColor: Theme.of(context).colorScheme.surface,
-      selectedIconBox: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+      selectedIconBox:
+          Theme.of(context).colorScheme.primary.withValues(alpha: 0.1),
       selectedIconColor: Theme.of(context).colorScheme.primary,
       selectedTextColor: Theme.of(context).colorScheme.inversePrimary,
       unselectedIconColor: Theme.of(context).colorScheme.outline,

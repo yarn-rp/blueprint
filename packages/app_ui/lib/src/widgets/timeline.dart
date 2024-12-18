@@ -159,10 +159,10 @@ class _TodaysBlueprintState extends State<TodayTimeline>
 ///
 class CalendarControls extends StatelessWidget {
   const CalendarControls({
-    super.key,
     required this.calendarController,
     required this.selectedDensity,
     required this.onDensityChange,
+    super.key,
   });
 
   final CalendarController calendarController;
@@ -573,14 +573,14 @@ class _EditableTimelineState extends State<EditableTimeline>
                     return;
                   }
                 },
-                // Rounds the new appointment time to the nearest 15 minutes interval.
-                // For example, if the appointment is dragged to 10:05, the
-                // appointment time will be rounded to 10:00. If the appointment is
-                // dragged to 10:07, the appointment time will be rounded to 10:15.
-                // If the appointment is dragged to 10:27, the appointment time will
-                // be rounded to 10:30. If the appointment is dragged to 10:16, the
-                // appointment time will be rounded
-                // to 10:15.
+                // Rounds the new appointment time to the nearest 15 minutes
+                // interval. For example, if the appointment is dragged to
+                // 10:05, the appointment time will be rounded to 10:00. If
+                // the appointment is dragged to 10:07, the appointment time
+                // will be rounded to 10:15. If the appointment is dragged to
+                // 10:27, the appointment time will be rounded to 10:30. If
+                // the appointment is dragged to 10:16, the appointment time
+                // will be rounded to 10:15.
                 onDragEnd: (AppointmentDragEndDetails details) {
                   final appointment = details.appointment;
 

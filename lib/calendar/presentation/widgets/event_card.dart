@@ -31,7 +31,7 @@ class EventCard extends StatelessWidget {
       onTap: onTap,
       backgroundColor: backgroundColor,
       foregroundColor: foregroundColor,
-      labels: [
+      labels: const [
         // LabelChip(
         //   avatar: Image.network(event.access.platform!.iconUrl),
         //   text: event.access.userAccessData.email ??

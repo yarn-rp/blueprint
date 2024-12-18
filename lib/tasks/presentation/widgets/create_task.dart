@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:app_ui/app_ui.dart';
 import 'package:blueprint/app/dependency_injection/init.dart';
-import 'package:blueprint/core/l10n/l10n.dart';
 import 'package:blueprint/tasks/presentation/widgets/widgets.dart';
 import 'package:blueprint/tasks/state_management/bloc/create_task_bloc.dart';
 import 'package:flutter/material.dart';
@@ -162,7 +161,6 @@ class _TaskTitleInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final l10n = context.l10n;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -229,7 +227,7 @@ class _TaskDueDateAndEstimatedTimeInput extends StatelessWidget {
 }
 
 class _EstimatedTimeInput extends StatelessWidget {
-  const _EstimatedTimeInput({super.key});
+  const _EstimatedTimeInput();
 
   @override
   Widget build(BuildContext context) {
@@ -270,7 +268,7 @@ class _EstimatedTimeInput extends StatelessWidget {
 }
 
 class _DueDateInput extends StatelessWidget {
-  const _DueDateInput({super.key});
+  const _DueDateInput();
 
   @override
   Widget build(BuildContext context) {
@@ -345,7 +343,7 @@ class _TaskPriorityInput extends StatelessWidget {
             (index) {
               final priority = 5 - index;
               return Padding(
-                padding: const EdgeInsets.all(4.0),
+                padding: const EdgeInsets.all(4),
                 child: IconButton.filled(
                   style: selectedPriority == priority
                       ? ButtonStyle(
@@ -380,7 +378,6 @@ class _TaskSubmitButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     final isValid = context.select(
       (CreateTaskBloc bloc) => bloc.state.isValid,
     );
@@ -388,10 +385,10 @@ class _TaskSubmitButton extends StatelessWidget {
     return FilledButton(
       onPressed: isValid
           ? () => context.read<CreateTaskBloc>().add(
-                CreateTaskSubmitted(),
+                const CreateTaskSubmitted(),
               )
           : null,
-      child: Text('Create'),
+      child: const Text('Create'),
     );
   }
 }
@@ -401,23 +398,26 @@ class DateTextFormatter extends TextInputFormatter {
 
   @override
   TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
-    var text = _format(newValue.text, '/');
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
+    final text = _format(newValue.text, '/');
     return newValue.copyWith(text: text, selection: updateCursorPosition(text));
   }
 
-  String _format(String value, String seperator) {
-    value = value.replaceAll(seperator, '');
-    var newString = '';
+  String _format(String value, String separator) {
+    final formattedValue = value.replaceAll(separator, '');
+    final newString = StringBuffer();
 
-    for (int i = 0; i < min(value.length, _maxChars); i++) {
-      newString += value[i];
-      if ((i == 1 || i == 3) && i != value.length - 1) {
-        newString += seperator;
+    for (var i = 0; i < min(formattedValue.length, _maxChars); i++) {
+      // ignore: use_string_buffers
+      newString.write(formattedValue[i]);
+      if ((i == 1 || i == 3) && i != formattedValue.length - 1) {
+        newString.write(separator);
       }
     }
 
-    return newString;
+    return newString.toString();
   }
 
   TextSelection updateCursorPosition(String text) {

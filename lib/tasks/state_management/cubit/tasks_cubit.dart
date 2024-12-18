@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:collection/collection.dart';
@@ -111,7 +112,7 @@ class TasksCubit extends Cubit<TasksState> {
           );
         },
         onError: (Object error, Object stackTrace) {
-          print('Error fetching tasks: $error at $stackTrace');
+          log('Error fetching tasks: $error at $stackTrace');
           addError(error);
           emit(state.copyWith(status: TasksStatus.error));
         },

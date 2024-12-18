@@ -8,7 +8,6 @@ import 'package:blueprint/calendar/presentation/widgets/available_time_card.dart
 import 'package:blueprint/core/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:multi_split_view/multi_split_view.dart';
 
 @RoutePage()
 class TodaysBlueprintPage extends StatefulWidget {

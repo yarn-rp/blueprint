@@ -32,7 +32,7 @@ class AppointmentTile extends StatelessWidget {
     final subtitle = '$startTime to $endTime';
     final duration = appointment.endTime.difference(appointment.startTime);
     final backgroundColor =
-        isAfter ? originalColor : originalColor.withOpacity(0.5);
+        isAfter ? originalColor : originalColor.withValues(alpha: 0.5);
 
     final foregroundColor =
         backgroundColor.computeLuminance() > 0.5 ? Colors.black : Colors.white;

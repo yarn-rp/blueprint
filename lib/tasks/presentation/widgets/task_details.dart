@@ -496,7 +496,7 @@ class _TaskDetailsAppBar extends StatelessWidget
                 theme.colorScheme.error,
               ),
             ),
-            label: Text(
+            label: const Text(
               'Delete Task',
             ),
           )
