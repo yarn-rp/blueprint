@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collection/collection.dart';
@@ -106,7 +107,7 @@ class TaskRepository {
     int priority = 3,
   }) async {
     try {
-      print('Creating task: $title');
+      log('Creating task: $title');
       final userId = _currentUserIdStream.value;
 
       if (userId == null) {
@@ -151,10 +152,9 @@ class TaskRepository {
       );
 
       await taskRef.set(task);
-      print('Task created: ${taskRef.id}');
+      log('Task created: ${taskRef.id}');
     } catch (error, stackTrace) {
-      print('Error creating task: $error at ${stackTrace.toString()}');
-      print(stackTrace);
+      log('Error creating task: $error at $stackTrace');
 
       rethrow;
     }
