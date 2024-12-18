@@ -15,7 +15,7 @@ jobs:
   build_flutter_storybook:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/flutter_package.yml@v1
     with:
-      flutter_version: 3.22.0
+      flutter_version: 3.24.2
       flutter_channel: stable
       working_directory: packages/app_ui/storybook
       min_coverage: 0
