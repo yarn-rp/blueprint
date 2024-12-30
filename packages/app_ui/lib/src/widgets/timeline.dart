@@ -196,41 +196,55 @@ class CalendarControls extends StatelessWidget {
             // Handle next month navigation
           },
         ),
-        DropdownButton<CalendarView>(
-          value: calendarController.view ?? CalendarView.day,
-          items: [CalendarView.day, CalendarView.week, CalendarView.workWeek]
-              .map(
-                (e) => DropdownMenuItem<CalendarView>(
-                  value: e,
-                  child: Text(e.name),
-                ),
-              )
-              .toList(),
-          onChanged: (CalendarView? newValue) {
-            if (newValue == null) {
-              return;
-            }
-            calendarController.view = newValue;
+        CalendarSettings(
+          onCalendarViewChanged: (value) {
+            calendarController.view = value;
           },
-        ),
-        DropdownButton<TimeDensity>(
-          value: selectedDensity,
-          items: TimeDensity.values
-              .map(
-                (e) => DropdownMenuItem<TimeDensity>(
-                  value: e,
-                  child: Text(e.name),
-                ),
-              )
-              .toList(),
-          onChanged: (value) {
+          onTimeDensityChanged: (value) {
             if (value == null) {
               return;
             }
-
             onDensityChange(value);
           },
+          selectedCalendarView: calendarController.view ?? CalendarView.day,
+          selectedTimeDensity: selectedDensity,
         ),
+
+        // DropdownButton<CalendarView>(
+        //   value: calendarController.view ?? CalendarView.day,
+        //   items: [CalendarView.day, CalendarView.week, CalendarView.workWeek]
+        //       .map(
+        //         (e) => DropdownMenuItem<CalendarView>(
+        //           value: e,
+        //           child: Text(e.name),
+        //         ),
+        //       )
+        //       .toList(),
+        //   onChanged: (CalendarView? newValue) {
+        //     if (newValue == null) {
+        //       return;
+        //     }
+        //     calendarController.view = newValue;
+        //   },
+        // ),
+        // DropdownButton<TimeDensity>(
+        //   value: selectedDensity,
+        //   items: TimeDensity.values
+        //       .map(
+        //         (e) => DropdownMenuItem<TimeDensity>(
+        //           value: e,
+        //           child: Text(e.name),
+        //         ),
+        //       )
+        //       .toList(),
+        //   onChanged: (value) {
+        //     if (value == null) {
+        //       return;
+        //     }
+
+        //     onDensityChange(value);
+        //   },
+        // ),
       ],
     );
   }
