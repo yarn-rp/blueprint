@@ -18,5 +18,6 @@ export 'section.dart';
 export 'time_selector_dropdown.dart';
 export 'time_tile.dart';
 export 'timeline.dart';
+export 'timeline_settings.dart';
 export 'top_app_bar.dart';
 export 'user_tile.dart';
