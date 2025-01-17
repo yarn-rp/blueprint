@@ -10,6 +10,28 @@ import { taskConverter } from "./converters/task-converter";
 export class FirestoreTasksRepository implements TasksRepository {
   constructor(@inject("firestore") private readonly firestore: Firestore) {}
 
+  async get(taskId: string, uid: string): Promise<Task | undefined> {
+    const task = await this.firestore
+      .collection("users")
+      .doc(uid)
+      .collection("tasks")
+      .doc(taskId)
+      .withConverter(taskConverter)
+      .get();
+
+    return task.data();
+  }
+
+  async save(task: Task, uid: string): Promise<void> {
+    await this.firestore
+      .collection("users")
+      .doc(uid)
+      .collection("tasks")
+      .doc(task.taskId)
+      .withConverter(taskConverter)
+      .set(task);
+  }
+
   async add(tasks: Task[], uid: string): Promise<void> {
     const batch = this.firestore.batch();
     tasks.forEach((task) => {

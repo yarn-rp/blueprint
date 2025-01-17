@@ -10,6 +10,8 @@ describe("AddTask", () => {
   const tasksRepoMock: TasksRepository = {
     add: jest.fn(),
     fetchLastFromPlatform: jest.fn(),
+    save: jest.fn(),
+    get: jest.fn(),
   };
 
   let addTask: AddTask;
