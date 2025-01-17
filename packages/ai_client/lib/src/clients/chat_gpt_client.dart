@@ -68,7 +68,7 @@ class ChatGPTAiClient implements AiClient {
 
     return messages.data.first.content.fold(
       '',
-      (previousValue, element) => '$previousValue\n ${element.text.value}',
+      (previousValue, element) => '$previousValue\n ${element.text?.value}',
     );
   }
 
@@ -91,14 +91,14 @@ class ChatGPTAiClient implements AiClient {
       role: _userRole,
     );
 
-    final createRun = await _openAI.threads.runs.createRun(
+    final createRun = await _openAI.threads.v2.runs.createRun(
       threadId: _threadId.value!,
       request: request,
     );
 
     final runId = createRun.id;
     while (true) {
-      final run = await _openAI.threads.runs.retrieveRun(
+      final run = await _openAI.threads.v2.runs.retrieveRun(
         threadId: _threadId.value!,
         runId: runId,
       );
