@@ -7,7 +7,8 @@ class TasksState extends Equatable {
     this.sortBy,
     this.platforms,
     this.selectedPlatform,
-    this.tasks = const [],
+    this.todoTasks = const [],
+    this.completedTasks = const [],
     this.status = TasksStatus.initial,
     this.selectedTask,
     this.lastQuery,
@@ -17,7 +18,8 @@ class TasksState extends Equatable {
     ],
   });
 
-  final Iterable<Task> tasks;
+  final Iterable<Task> completedTasks;
+  final Iterable<Task> todoTasks;
   final TasksStatus status;
   final Task? selectedTask;
   final SortBy? sortBy;
@@ -27,7 +29,8 @@ class TasksState extends Equatable {
   final String? lastQuery;
 
   TasksState copyWith({
-    Iterable<Task>? tasks,
+    Iterable<Task>? completedTasks,
+    Iterable<Task>? todoTasks,
     TasksStatus? status,
     Task? selectedTask,
     SortBy? sortBy,
@@ -37,7 +40,8 @@ class TasksState extends Equatable {
     String? lastQuery,
   }) {
     return TasksState(
-      tasks: tasks ?? this.tasks,
+      completedTasks: completedTasks ?? this.completedTasks,
+      todoTasks: todoTasks ?? this.todoTasks,
       status: status ?? this.status,
       selectedTask: selectedTask ?? this.selectedTask,
       sortBy: sortBy ?? this.sortBy,
@@ -50,7 +54,8 @@ class TasksState extends Equatable {
 
   TasksState withoutSelectedTask() {
     return TasksState(
-      tasks: tasks,
+      completedTasks: completedTasks,
+      todoTasks: todoTasks,
       status: status,
       sortBy: sortBy,
       sortOptions: sortOptions,
@@ -62,7 +67,8 @@ class TasksState extends Equatable {
 
   @override
   List<Object?> get props => [
-        tasks,
+        completedTasks,
+        todoTasks,
         status,
         selectedTask,
         sortBy,

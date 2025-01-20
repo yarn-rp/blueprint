@@ -87,6 +87,31 @@ class TaskRepository {
 
   static String platformId = 'blueprint';
 
+  Future<void> reopenTask(Task task) {
+    // Gets the task directly from the collection and updates the isCompleted
+    // field to false.
+
+    final userId = _currentUserIdStream.value;
+
+    if (userId == null) {
+      throw Exception('User not logged in');
+    }
+
+    final userRef = _usersCollection.doc(userId);
+
+    final tasksSubCollection =
+        userRef.collection(_tasksCollectionName).withConverter<Task>(
+              fromFirestore: taskConverter.fromFirestore,
+              toFirestore: taskConverter.toFirestore,
+            );
+
+    return tasksSubCollection.doc(task.id).update(
+      <String, dynamic>{
+        'isCompleted': false,
+      },
+    );
+  }
+
   Future<void> completeTask(Task task) {
     print('Completing task: ${task.id}');
 

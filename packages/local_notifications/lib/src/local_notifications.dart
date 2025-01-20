@@ -46,6 +46,9 @@ class LocalNotifications {
     required String androidAppIcon,
     required String linuxDefaultActionName,
   }) {
+    if (kIsWeb) {
+      return Future.value(true);
+    }
     final initializationSettingsAndroid = AndroidInitializationSettings(
       androidAppIcon,
     );
