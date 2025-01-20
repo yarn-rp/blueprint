@@ -21,7 +21,8 @@ export const taskConverter = {
       taskId: task.taskId,
       createdAt: createAtTimestamp,
       updatedAt: updatedAtTimestamp,
-      id: task.id,
+      // Document Id is a combination of platformId, projectId and taskId.
+      id: `${task.access.platformId}-${task.project.platformId || "no_project"}-${task.taskId}`,
       project: {
         ...task.project,
         platformURL: task.project.platformURL.href,
@@ -81,9 +82,7 @@ export const taskConverter = {
       labels: data.labels.map((label: any) => ({
         ...label,
       })),
-      priority: {
-        ...data.priority,
-      },
+      priority: data.priority,
     };
   },
 
