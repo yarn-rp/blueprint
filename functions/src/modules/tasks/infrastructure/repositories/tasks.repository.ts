@@ -23,13 +23,7 @@ export class FirestoreTasksRepository implements TasksRepository {
   }
 
   async save(task: Task, uid: string): Promise<void> {
-    await this.firestore
-      .collection("users")
-      .doc(uid)
-      .collection("tasks")
-      .doc(task.taskId)
-      .withConverter(taskConverter)
-      .set(task);
+    await this.add([task], uid);
   }
 
   async add(tasks: Task[], uid: string): Promise<void> {

@@ -1,5 +1,5 @@
 /* eslint-disable require-jsdoc */
-import { FieldPath, Firestore } from "firebase-admin/firestore";
+import { FieldPath, Firestore, Timestamp } from "firebase-admin/firestore";
 import { inject, injectable } from "tsyringe";
 import { Event } from "../../../events/domain/entities/event.entity";
 import { Task } from "../../../tasks/domain/entities/task.entity";
@@ -82,24 +82,23 @@ export class FirestoreBlueprintLocalRepository implements BlueprintLocalReposito
   async updateTasks(items: Task[], uid: string): Promise<void> {
     const batch = this.firestore.batch();
     const taskIdFieldRef = new FieldPath("value", "taskId");
-    items.forEach((item) => {
-      const matchingTasksOnBlueprint = this.firestore
+
+    const promises = items.map(async (item) => {
+      const matchingTasksOnBlueprint = await this.firestore
         .collection("users")
         .doc(uid)
         .collection("blueprint")
         .where(taskIdFieldRef, "==", item.taskId)
         .get();
 
-      matchingTasksOnBlueprint.then((snapshot) => {
-        snapshot.docs.forEach((doc) => {
-          batch.update(doc.ref, { value: item });
-        });
+      matchingTasksOnBlueprint.docs.forEach((doc) => {
+        batch.update(doc.ref, { value: item });
       });
     });
 
+    await Promise.all(promises);
     await batch.commit();
   }
-
   async deleteTasks(items: Task[], uid: string): Promise<void> {
     const batch = this.firestore.batch();
     const taskIdFieldRef = new FieldPath("value", "taskId");
@@ -118,6 +117,32 @@ export class FirestoreBlueprintLocalRepository implements BlueprintLocalReposito
       });
     });
 
+    await batch.commit();
+  }
+
+  async deleteFutureTasks(items: Task[], uid: string): Promise<void> {
+    const batch = this.firestore.batch();
+    const taskIdFieldRef = new FieldPath("value", "taskId");
+    console.log(
+      "Deleting future tasks that match with",
+      items.map((item) => item.taskId),
+    );
+
+    const promises = items.map(async (item) => {
+      const matchingTasksOnBlueprint = await this.firestore
+        .collection("users")
+        .doc(uid)
+        .collection("blueprint")
+        .where(taskIdFieldRef, "==", item.taskId)
+        .where("startTime", ">", Timestamp.now())
+        .get();
+
+      matchingTasksOnBlueprint.docs.forEach((doc) => {
+        batch.delete(doc.ref);
+      });
+    });
+
+    await Promise.all(promises);
     await batch.commit();
   }
 }

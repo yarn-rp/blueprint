@@ -18,6 +18,7 @@ export const taskConverter = {
 
     return {
       access: task.access,
+      taskId: task.taskId,
       createdAt: createAtTimestamp,
       updatedAt: updatedAtTimestamp,
       id: task.id,
@@ -48,10 +49,12 @@ export const taskConverter = {
     };
   },
 
-  fromFirestore(snapshot: FirebaseFirestore.QueryDocumentSnapshot) {
+  fromFirestore(snapshot: FirebaseFirestore.QueryDocumentSnapshot): Task {
     const data = snapshot.data();
 
     return {
+      access: data.access,
+      taskId: data.taskId,
       createdAt: data.createdAt.toDate(),
       updatedAt: data.updatedAt.toDate(),
       id: data.id,
@@ -81,7 +84,7 @@ export const taskConverter = {
       priority: {
         ...data.priority,
       },
-    } as Task;
+    };
   },
 
   /**

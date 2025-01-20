@@ -22,7 +22,6 @@ export class UpdateBlueprintItemController {
   ): Promise<void> {
     const { uid } = context.params;
     const data = change.data();
-    console.log("update blueprint for data:", data);
 
     const { taskId } = data;
     const isTask = !!taskId;
