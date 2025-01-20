@@ -27,6 +27,7 @@ describe("FirestoreAccessRepository", () => {
       platformId: "jira",
       type: AuthenticatorType.Task,
       user: { gid: "gid" },
+      status: "connected",
     };
     firestoreMock.add.mockResolvedValue(undefined);
 

@@ -41,7 +41,11 @@ export class PullEventsUseCase {
   async execute(platform: PlatformId, uid: string, authenticatorId: string): Promise<void> {
     console.log("Pulling events for platform: ", platform);
     const remoteRepo = this.remoteFactory.buildFor(platform);
-    await this.refreshToken.execute(uid, authenticatorId);
+    const newAccess = await this.refreshToken.execute(uid, authenticatorId);
+    if (newAccess.status === "requires_reauth") {
+      console.error("Authenticator requires re-authentication");
+      return;
+    }
 
     const oldEvents = await this.eventRepository.fetchFromAuthenticator(uid, authenticatorId);
     const events: Event[] = await remoteRepo.pull(uid, authenticatorId, undefined);

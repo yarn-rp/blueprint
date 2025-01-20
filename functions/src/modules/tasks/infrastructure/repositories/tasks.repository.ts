@@ -57,4 +57,32 @@ export class FirestoreTasksRepository implements TasksRepository {
     const taskOrUndefined = !taskQuerySnapshot.empty ? (taskQuerySnapshot.docs[0] as unknown as Task) : undefined;
     return taskOrUndefined;
   }
+
+  async remove(tasks: Task[], uid: string): Promise<void> {
+    const batch = this.firestore.batch();
+    tasks.forEach((task) => {
+      const taskRef = this.firestore
+        .collection("users")
+        .doc(uid)
+        .collection("tasks")
+        .withConverter(taskConverter)
+        .doc(`${task.access.platformId}-${task.project.platformId || "no_project"}-${task.taskId}`);
+      batch.delete(taskRef);
+    });
+
+    await batch.commit();
+  }
+
+  async fetchFromAuthenticator(uid: string, authenticatorId: string): Promise<Task[]> {
+    const taskQuerySnapshot = await this.firestore
+      .collection("users")
+      .doc(uid)
+      .collection("tasks")
+      .withConverter(taskConverter)
+      .where("access.authenticatorId", "==", authenticatorId)
+      .get();
+
+    const tasks = taskQuerySnapshot.docs.map((doc) => doc.data() as Task);
+    return tasks;
+  }
 }

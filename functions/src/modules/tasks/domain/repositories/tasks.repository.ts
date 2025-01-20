@@ -6,4 +6,6 @@ export interface TasksRepository {
   fetchLastFromPlatform(platform: PlatformId, uid: string): Promise<Task | undefined>;
   get(taskId: string, uid: string): Promise<Task | undefined>;
   save(task: Task, uid: string): Promise<void>;
+  remove(tasks: Task[], uid: string): Promise<void>;
+  fetchFromAuthenticator(uid: string, authenticatorId: string): Promise<Task[]>;
 }

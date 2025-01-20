@@ -12,6 +12,8 @@ describe("AddTask", () => {
     fetchLastFromPlatform: jest.fn(),
     save: jest.fn(),
     get: jest.fn(),
+    remove: jest.fn(),
+    fetchFromAuthenticator: jest.fn(),
   };
 
   let addTask: AddTask;

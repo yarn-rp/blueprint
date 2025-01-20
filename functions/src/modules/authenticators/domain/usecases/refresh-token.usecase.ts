@@ -14,11 +14,22 @@ export class RefreshToken {
     console.log(`Refreshing token for ${uid} ${authenticatorId}`);
     const access = await this.accessRepo.getById(uid, authenticatorId);
     console.log({ oldAccess: access });
-    const newAccess = await this.oauthRepo.refreshToken(access);
-    console.log({ newAccess });
+    try {
+      const newAccess = await this.oauthRepo.refreshToken(access);
+      console.log({ newAccess });
 
-    await this.accessRepo.save({ ...newAccess, user: access.user }, uid);
-    console.log(`Token refreshed for ${uid} ${authenticatorId}`);
-    return newAccess;
+      await this.accessRepo.save({ ...newAccess, user: access.user }, uid);
+      console.log(`Token refreshed for ${uid} ${authenticatorId}`);
+
+      return newAccess;
+    } catch {
+      console.log("Error refreshing token");
+      await this.oauthRepo.wipeOut({ user: access.user });
+
+      const failedAccess = { ...access, status: "requires_reauth" } satisfies Access;
+
+      await this.accessRepo.save({ ...failedAccess, user: access.user }, uid);
+      return failedAccess;
+    }
   }
 }

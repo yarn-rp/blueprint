@@ -12,6 +12,10 @@ import { OAuth2Repository } from "../../domain/repositories/oauth2.repository";
 export class GithubOAuthStrategy implements OAuth2Repository {
   constructor(private readonly config: ConfigService) {}
 
+  async wipeOut(_access: Pick<Access, "user">): Promise<void> {
+    console.log("Wiping out access (No action needed)");
+  }
+
   /**
    * Claims access to Github.
    *
@@ -37,6 +41,7 @@ export class GithubOAuthStrategy implements OAuth2Repository {
       accessToken: data.access_token,
       platformId: "github",
       type: AuthenticatorType.Task,
+      status: "connected",
     };
   }
 

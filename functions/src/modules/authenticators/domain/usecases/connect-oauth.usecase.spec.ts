@@ -18,6 +18,7 @@ describe("ConnectOAuth", () => {
     accessToken: "test-token",
     platformId: "jira",
     type: AuthenticatorType.Task,
+    status: "connected",
   };
   const user: UserData = {
     gid: "test-jira-gid",

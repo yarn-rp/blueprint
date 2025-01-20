@@ -70,4 +70,8 @@ export class OAuth2RepositoryContext implements OAuth2Repository {
     this.setStrategy(oldAuth.platformId);
     return this.strategy.refreshToken(oldAuth);
   }
+
+  async wipeOut(access: Pick<Access, "user">): Promise<void> {
+    return this.strategy.wipeOut(access);
+  }
 }
