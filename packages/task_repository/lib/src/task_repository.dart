@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:collection/collection.dart';
 import 'package:integrations_repository/integrations_repository.dart';
 import 'package:rxdart/rxdart.dart';
@@ -56,12 +57,17 @@ class TaskRepository {
     required Stream<String?> currentUserIdStream,
     required this.platformsStream,
     required FirebaseFirestore firestore,
+    required FirebaseFunctions firebaseFunctions,
   }) {
+    _firebaseFunctions = firebaseFunctions;
     _usersCollection = firestore.collection(_usersCollectionName);
     _allUserTasks = BehaviorSubject<Iterable<Task>>();
     _currentUserIdStream = BehaviorSubject<String>();
     currentUserIdStream.listen(_currentUserIdStream.add);
   }
+
+  /// The firebase functions instance.
+  late final FirebaseFunctions _firebaseFunctions;
 
   /// Stream of all supported platforms.
   final Stream<Iterable<Platform>> platformsStream;
@@ -80,6 +86,22 @@ class TaskRepository {
   StreamSubscription<Iterable<Task>>? _tasksSubscription;
 
   static String platformId = 'blueprint';
+
+  Future<void> completeTask(Task task) {
+    print('Completing task: ${task.id}');
+
+    try {
+      // Call tasks.completeTask cloud function passing the necessary data
+      return _firebaseFunctions.httpsCallable('tasks-completeTask').call<void>(
+        <String, dynamic>{
+          'taskId': task.id,
+        },
+      );
+    } catch (e) {
+      print('Error completing task: $e');
+      rethrow;
+    }
+  }
 
   Future<void> deleteTask(Task task) {
     final userId = _currentUserIdStream.value;
@@ -220,6 +242,7 @@ class TaskRepository {
     String? query,
     String? platformId,
     SortBy? sortBy,
+    bool includeCompleted = false,
   }) =>
       _getAllTasksRelatedToMe().map((event) {
         // This is a big tech debt, but for now we will filter the tasks here
@@ -245,6 +268,10 @@ class TaskRepository {
                 (task) => task.access.platformId == platformId,
               )
               .toList();
+        }
+
+        if (!includeCompleted) {
+          taskList = taskList.where((task) => !task.isCompleted).toList();
         }
         if (sortBy != null) {
           taskList = switch (sortBy.field) {

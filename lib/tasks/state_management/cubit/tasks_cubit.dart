@@ -39,6 +39,15 @@ class TasksCubit extends Cubit<TasksState> {
     }
   }
 
+  Future<void> completeTask(Task task) async {
+    try {
+      await _taskRepository.completeTask(task);
+      await unselectTask();
+    } catch (error) {
+      addError(error);
+    }
+  }
+
   Future<void> unselectTask() async {
     emit(
       TasksState(

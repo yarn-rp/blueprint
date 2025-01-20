@@ -68,7 +68,7 @@ class ChatGPTAiClient implements AiClient {
 
     return messages.data.first.content.fold(
       '',
-      (previousValue, element) => '$previousValue\n ${element.text.value}',
+      (previousValue, element) => '$previousValue\n ${element.text?.value}',
     );
   }
 

@@ -1,6 +1,6 @@
 {
     "@@locale": "en",
-    "accept":"Accept",
+    "accept": "Accept",
     "addNewTaskCTA": "Add new tasks",
     "@addNewTaskCTA": {
         "description": "CTA for adding a new task"
@@ -41,6 +41,10 @@
     "@closeTabCTA": {
         "description": "CTA for closing a tab"
     },
+    "completeTask": "Complete Task",
+    "@completeTask": {
+        "description": "Complete Task button label"
+    },
     "counterAppBarTitle": "Counter",
     "@counterAppBarTitle": {
         "description": "Text shown in the AppBar of the Counter Page"
@@ -77,6 +81,10 @@
     "@currentEventGlanceTitle": {
         "description": "Title for the now on blueprint glance event"
     },
+    "deleteTask": "Delete Task",
+    "@deleteTask": {
+        "description": "Delete Task button label"
+    },
     "details": "Details",
     "@details": {
         "description": "Details word"
@@ -85,7 +93,7 @@
     "@description": {
         "description": "Description word"
     },
-    "doNotHaveAccount":"Don't have an account?",
+    "doNotHaveAccount": "Don't have an account?",
     "dueDate": "Due Date",
     "@dueDate": {
         "description": "Due date for an event or task"
@@ -94,7 +102,7 @@
     "@editBlueprintCTA": {
         "description": "CTA for edit today blueprint button"
     },
-    "email":"Email",
+    "email": "Email",
     "endTime": "End Time",
     "@endTime": {
         "description": "End time for an event or task"
@@ -107,7 +115,7 @@
     "@freeTimeEventSubtitle": {
         "description": "Free time event subtitle"
     },
-    "forgotPassword":"Forgot Password", 
+    "forgotPassword": "Forgot Password",
     "incomingChangesAccept": "Accept incoming changes",
     "@incomingChangesAccept": {
         "description": "Accept incoming changes button"
@@ -199,10 +207,10 @@
     "@selectTask": {
         "description": "Select a Task title"
     },
-    "signIn":"Sign In",
-    "signUp" :"Sign Up",
-    "password":"Password",
-    "passwordDontMatch":"Passwords don't match",
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "password": "Password",
+    "passwordDontMatch": "Passwords don't match",
     "removeCTA": "Remove",
     "@removeCTA": {
         "description": "CTA for Remove action"
@@ -211,15 +219,15 @@
     "@removeAuthenticatorConfirmationTitle": {
         "description": "Title for removing authenticator dialog"
     },
-     "removeAuthenticatorConfirmationContent": "Are you sure you want to remove your integration? This action will delete the integration from this account and you won't be able to see any content related to that account.",
+    "removeAuthenticatorConfirmationContent": "Are you sure you want to remove your integration? This action will delete the integration from this account and you won't be able to see any content related to that account.",
     "@removeAuthenticatorConfirmationContent": {
         "description": "Content for removing authenticator dialog"
     },
-    "repeatPassword":"Repeat Password",
-    "resetPasswordMessage":"Enter email address that you used to register. We'll send you an email with link to reset your password.",
-    "sendEmail":"Send Email",
-    "resetPasswordDialogMessege":"An email has been sent with instructions to reset your password. Please check your inbox and spam folder",
-    "passwordRcovery":"Password Recovery",
+    "repeatPassword": "Repeat Password",
+    "resetPasswordMessage": "Enter email address that you used to register. We'll send you an email with link to reset your password.",
+    "sendEmail": "Send Email",
+    "resetPasswordDialogMessege": "An email has been sent with instructions to reset your password. Please check your inbox and spam folder",
+    "passwordRcovery": "Password Recovery",
     "search": "Search",
     "@search": {
         "description": "Search word"
@@ -228,7 +236,7 @@
     "@shareVideoConferenceLinkMessage": {
         "description": "Message for sharing a link"
     },
-    "signOut":"Sign Out",
+    "signOut": "Sign Out",
     "sortByDropdownHint": "Sort By",
     "@sortByDropdownHint": {
         "description": "Sort By word dropdown title"
@@ -274,6 +282,6 @@
             }
         }
     },
-    "darkMode":"Dark Mode",
-    "lightMode":"Light Mode"
+    "darkMode": "Dark Mode",
+    "lightMode": "Light Mode"
 }
