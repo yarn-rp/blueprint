@@ -328,7 +328,7 @@ function fromJiraApiIssueToTask(jiraIssue: JiraTask): Omit<Task, "access"> {
     taskURL: getTaskUrl(jiraIssue) || new URL(""),
     title,
     description,
-    dueDate: dueDate.getTime() === 0 ? undefined : dueDate,
+    dueDate,
     estimatedTime,
     loggedTime,
     assigned: [userAssigned] || [],
