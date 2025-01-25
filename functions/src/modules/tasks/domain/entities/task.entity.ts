@@ -134,12 +134,12 @@ export interface Task {
   dueDate?: Date;
 
   /**
-   * Estimated time to complete the ticket
+   * Estimated time(in seconds) to complete the ticket
    */
   estimatedTime?: number;
 
   /**
-   * Time logged in the ticket
+   * Time logged(in seconds) in the ticket
    */
   loggedTime?: number;
 

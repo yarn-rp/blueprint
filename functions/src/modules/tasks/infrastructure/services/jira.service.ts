@@ -15,8 +15,7 @@ type JiraTask = {
   fields: {
     summary: string;
     description: JiraDescription;
-    startDate: string;
-    dueDate: string;
+    duedate: string;
     timeestimate: number;
     timespent: number;
     assignee: JiraApiUser;
@@ -306,10 +305,9 @@ function fromJiraApiIssueToTask(jiraIssue: JiraTask): Omit<Task, "access"> {
 
   const title = fields.summary || "";
   const description = jiraIssue.renderedFields?.description || "";
-  const startDate = new Date(fields.startDate as string);
-  const dueDate = new Date(fields.dueDate as string);
-  const estimatedTime = fields.timeestimate as number | undefined;
-  const loggedTime = fields.timespent as number | undefined;
+  const dueDate = fields.duedate ? new Date(fields.duedate) : undefined;
+  const estimatedTime = fields.timeestimate;
+  const loggedTime = fields.timespent || 0;
   const assigned = fields.assignee;
   const { creator } = fields;
   const isCompleted = false;
@@ -330,7 +328,6 @@ function fromJiraApiIssueToTask(jiraIssue: JiraTask): Omit<Task, "access"> {
     taskURL: getTaskUrl(jiraIssue) || new URL(""),
     title,
     description,
-    startDate: startDate.getTime() === 0 ? undefined : startDate,
     dueDate: dueDate.getTime() === 0 ? undefined : dueDate,
     estimatedTime,
     loggedTime,
