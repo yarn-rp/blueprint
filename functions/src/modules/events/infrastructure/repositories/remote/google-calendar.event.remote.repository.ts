@@ -31,11 +31,11 @@ export class GoogleCalendarEventRemoteRepository extends BaseEventRemoteReposito
   async getEvents(accessToken: string): Promise<GoogleCalendarEvent[]> {
     const calendarAPIClient = this._getCalendarAPIClient(accessToken);
     try {
+      // Get events from the primary calendar, from today till next week
       const response = await calendarAPIClient.events.list({
         calendarId: "primary",
-        // Yes, this is the nicest way I found without importing third party libs
         timeMin: new Date(new Date().setHours(0, 0, 0, 0)).toISOString(),
-        maxResults: 10,
+        timeMax: new Date(new Date().setHours(0, 0, 0, 0) + 7 * 24 * 60 * 60 * 1000).toISOString(),
         singleEvents: true,
         orderBy: "startTime",
       });
