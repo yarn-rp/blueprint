@@ -17,8 +17,13 @@ class TimestampConverter implements JsonConverter<DateTime, dynamic> {
     if (timestamp is String) {
       return DateTime.parse(timestamp);
     }
+    if (timestamp is int) {
+      return DateTime.fromMillisecondsSinceEpoch(timestamp);
+    }
 
-    throw Exception('TimestampConverter: fromJson: unknown type');
+    throw Exception(
+      'TimestampConverter: fromJson: unknown type ${timestamp.runtimeType}',
+    );
   }
 
   @override
@@ -53,6 +58,9 @@ class TimestampNullableConverter implements JsonConverter<DateTime?, dynamic> {
 
   @override
   dynamic toJson(DateTime? date) {
-    return date?.toIso8601String();
+    if (date == null) {
+      return null;
+    }
+    return Timestamp.fromDate(date.toUtc());
   }
 }
