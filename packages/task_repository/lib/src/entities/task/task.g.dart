@@ -16,12 +16,9 @@ Task _$TaskFromJson(Map<String, dynamic> json) => Task(
       description: json['description'] as String,
       startDate: const TimestampNullableConverter().fromJson(json['startDate']),
       dueDate: const TimestampNullableConverter().fromJson(json['dueDate']),
-      estimatedTime: json['estimatedTime'] == null
-          ? null
-          : Duration(microseconds: (json['estimatedTime'] as num).toInt()),
-      loggedTime: json['loggedTime'] == null
-          ? null
-          : Duration(microseconds: (json['loggedTime'] as num).toInt()),
+      estimatedTime:
+          durationFromSeconds((json['estimatedTime'] as num?)?.toInt()),
+      loggedTime: durationFromSeconds((json['loggedTime'] as num?)?.toInt()),
       assigned: (json['assigned'] as List<dynamic>)
           .map((e) => User.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -47,8 +44,8 @@ Map<String, dynamic> _$TaskToJson(Task instance) => <String, dynamic>{
       'startDate':
           const TimestampNullableConverter().toJson(instance.startDate),
       'dueDate': const TimestampNullableConverter().toJson(instance.dueDate),
-      'estimatedTime': instance.estimatedTime?.inMicroseconds,
-      'loggedTime': instance.loggedTime?.inMicroseconds,
+      'estimatedTime': durationToSeconds(instance.estimatedTime),
+      'loggedTime': durationToSeconds(instance.loggedTime),
       'assigned': instance.assigned.map((e) => e.toJson()).toList(),
       'creator': instance.creator.toJson(),
       'isCompleted': instance.isCompleted,

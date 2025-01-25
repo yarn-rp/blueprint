@@ -113,8 +113,6 @@ class TaskRepository {
   }
 
   Future<void> completeTask(Task task) {
-    print('Completing task: ${task.id}');
-
     try {
       // Call tasks.completeTask cloud function passing the necessary data
       return _firebaseFunctions.httpsCallable('tasks-completeTask').call<void>(
@@ -123,7 +121,6 @@ class TaskRepository {
         },
       );
     } catch (e) {
-      print('Error completing task: $e');
       rethrow;
     }
   }

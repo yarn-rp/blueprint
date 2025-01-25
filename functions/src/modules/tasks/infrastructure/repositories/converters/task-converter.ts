@@ -91,8 +91,8 @@ export const taskConverter = {
    * @param {Date} date the date to convert to timestamp
    * @return {Timestamp} timestamp from the date or 0 if the date is invalid
    */
-  getTimestamp(date?: Date): Timestamp {
-    if (!date) return Timestamp.fromMillis(0);
+  getTimestamp(date?: Date): Timestamp | undefined {
+    if (!date) return undefined;
     try {
       const time = date.getTime();
       if (time == 0) {
