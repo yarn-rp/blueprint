@@ -73,10 +73,12 @@ class Task {
   @TimestampNullableConverter()
   final DateTime? dueDate;
 
-  /// estimated time to complete the task
+  /// estimated time to complete the task in seconds
+  @JsonKey(fromJson: durationFromSeconds, toJson: durationToSeconds)
   final Duration? estimatedTime;
 
-  /// time logged in the task
+  /// time logged in the task in seconds
+  @JsonKey(fromJson: durationFromSeconds, toJson: durationToSeconds)
   final Duration? loggedTime;
 
   /// assigned users including me
@@ -138,4 +140,20 @@ class Task {
       priority: priority ?? this.priority,
     );
   }
+}
+
+/// Converts a duration in seconds to a [Duration].
+Duration durationFromSeconds(int? seconds) {
+  if (seconds == null) {
+    return Duration.zero;
+  }
+  return Duration(seconds: seconds);
+}
+
+/// Converts a [Duration] to seconds.
+int? durationToSeconds(Duration? duration) {
+  if (duration == null) {
+    return null;
+  }
+  return duration.inSeconds;
 }
