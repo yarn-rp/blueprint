@@ -91,7 +91,7 @@ class BlueprintRepository {
               'title': e.title,
               'description': e.description,
               'duration': e.estimatedTime?.inMinutes,
-              'startDate': e.startDate?.toIso8601String(),
+              'startDate': (e.startDate ?? DateTime.now()).toIso8601String(),
               'dueDate': e.dueDate?.toIso8601String(),
               'priority': e.priority,
             },
@@ -306,19 +306,19 @@ class BlueprintRepository {
     final blueprintSubCollection = userDoc.collection(_blueprintCollectionName);
 
     for (final item in _previewChanges.value) {
-      // optimistically updating the preview
-      deletePreviewItem(item);
-
       try {
         final doc = blueprintSubCollection.doc();
-        await doc.set({
+        final docData = {
           ...item
               .copyWith(
                 isPreview: false,
               )
               .toJson(),
           'id': doc.id,
-        });
+        };
+        await doc.set(docData);
+
+        deletePreviewItem(item);
       } catch (e) {
         // something happened, adding back the item to the preview
         _previewChanges.value = [..._previewChanges.value, item];

@@ -49,13 +49,20 @@ class AiAssistantChatBloc
           ),
         ) {
     on<UserTextMessageSent>(_onUserTextMessageSent);
-    _taskRepository.getTasks().listen((event) => _tasks = event);
+    _taskRepository.getTasks().listen(onTasksChanged);
   }
 
   final Uuid _uuid;
   final BlueprintRepository _blueprintRepository;
   final TaskRepository _taskRepository;
   Iterable<Task> _tasks;
+
+  void onTasksChanged(Iterable<Task> eventTasks) {
+    _tasks = eventTasks.where(
+      // Only include tasks that are not completed and are not blueprints
+      (tasks) => !tasks.isCompleted,
+    );
+  }
 
   Future<void> _onUserTextMessageSent(
     UserTextMessageSent event,
