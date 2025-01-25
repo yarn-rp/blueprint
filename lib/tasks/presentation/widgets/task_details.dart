@@ -500,7 +500,9 @@ class _TaskDetailsAppBar extends StatelessWidget
         else
           // Reopen task button in blue primary color
           FilledButton.icon(
-            onPressed: () {},
+            onPressed: () {
+              context.read<TasksCubit>().reopenTask(task);
+            },
             icon: const Icon(Icons.check),
             label: const Text('Reopen task'),
           ),

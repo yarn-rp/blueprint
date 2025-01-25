@@ -162,7 +162,7 @@ class TasksList extends StatelessWidget {
     final textTheme = theme.textTheme;
 
     final tasks = context.select(
-      (TasksCubit cubit) => cubit.state.tasks,
+      (TasksCubit cubit) => cubit.state.todoTasks,
     );
 
     final selectedTask = context.select(
