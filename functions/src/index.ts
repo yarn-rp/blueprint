@@ -16,6 +16,10 @@ export const authenticators = authRoutes;
 import userRoutes from "./modules/users/users.module";
 export const users = userRoutes;
 
+// BlueprintModule
+import blueprintRoutes from "./modules/blueprint/blueprint.module";
+export const blueprint = blueprintRoutes;
+
 // TasksModule
 import tasksRoutes from "./modules/tasks/tasks.module";
 export const tasks = tasksRoutes;
@@ -23,7 +27,3 @@ export const tasks = tasksRoutes;
 // EventsModule
 import eventsRoutes from "./modules/events/events.module";
 export const events = eventsRoutes;
-
-// BlueprintModule
-import blueprintRoutes from "./modules/blueprint/blueprint.module";
-export const blueprint = blueprintRoutes;

@@ -21,6 +21,7 @@ export class RefreshTasksController {
         .collection("users")
         .doc(user.id)
         .collection("authenticators")
+        .where("status", "==", "connected")
         .get();
 
       const authenticators = authenticatorsDoc.docs

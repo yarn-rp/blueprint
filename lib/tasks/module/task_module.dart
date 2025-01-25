@@ -26,6 +26,7 @@ abstract class TaskModule {
     AuthenticationRepositoryContract authenticationRepository,
   ) =>
       TaskRepository(
+        firebaseFunctions: functions,
         firestore: firestore,
         currentUserIdStream: authenticationRepository.authenticationStream
             .map((user) => user?.id),

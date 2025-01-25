@@ -21,7 +21,11 @@ export class UpdateBlueprintTaskUseCase {
    * @return {Promise<void>} A Promise that resolves when the event
    * has been added to the repository.
    */
-  async execute(event: Task, uid: string): Promise<void> {
-    await this.blueprintLocalRepository.updateTasks([event], uid);
+  async execute(task: Task, uid: string): Promise<void> {
+    if (task.isCompleted) {
+      console.log("deleteFutureTasks");
+      await this.blueprintLocalRepository.deleteFutureTasks([task], uid);
+    }
+    await this.blueprintLocalRepository.updateTasks([task], uid);
   }
 }

@@ -480,6 +480,7 @@ class _TaskDetailsAppBar extends StatelessWidget
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final l10n = context.l10n;
+
     return AppBar(
       automaticallyImplyLeading: false,
       toolbarHeight: kToolbarHeight + kMinInteractiveDimension,
@@ -487,27 +488,30 @@ class _TaskDetailsAppBar extends StatelessWidget
       centerTitle: false,
       leadingWidth: double.infinity,
       actions: [
-        if (task.isBlueprintTask)
+        // Complete task button in green success color
+        if (!task.isCompleted)
           FilledButton.icon(
-            onPressed: () => context.read<TasksCubit>().deleteTask(task),
-            icon: const Icon(Icons.delete),
-            style: ButtonStyle(
-              backgroundColor: WidgetStateProperty.all(
-                theme.colorScheme.error,
-              ),
-            ),
-            label: const Text(
-              'Delete Task',
-            ),
+            onPressed: () {
+              context.read<TasksCubit>().completeTask(task);
+            },
+            icon: const Icon(Icons.check),
+            label: Text(l10n.completeTask),
           )
         else
-          FilledButton.tonalIcon(
-            onPressed: () => launchUrl(task.taskURL),
-            icon: const Icon(Icons.link),
-            label: Text(
-              l10n.viewInPlatformCTA(task.access.platform!.displayName),
-            ),
+          // Reopen task button in blue primary color
+          FilledButton.icon(
+            onPressed: () {
+              context.read<TasksCubit>().reopenTask(task);
+            },
+            icon: const Icon(Icons.check),
+            label: const Text('Reopen task'),
           ),
+
+        // Vertical dots menu that opens a modal with more options
+        // like delete and link to the task in the platform using PortalTarget
+        _VerticalDotsMenu(
+          task: task,
+        ),
         IconButton(
           onPressed: onClose,
           icon: const Icon(Icons.close),
@@ -536,4 +540,60 @@ class _TaskDetailsAppBar extends StatelessWidget
   Size get preferredSize => const Size.fromHeight(
         kToolbarHeight + kMinInteractiveDimension,
       );
+}
+
+enum _VerticalDotsMenuOptions {
+  delete,
+  linkToTaskInPlatform,
+}
+
+class _VerticalDotsMenu extends StatelessWidget {
+  const _VerticalDotsMenu({
+    required this.task,
+  });
+
+  final Task task;
+
+  void _onDeleteTask(BuildContext context) {
+    context.read<TasksCubit>().deleteTask(task);
+  }
+
+  void _onLinkToTaskInPlatform(BuildContext context) {
+    launchUrl(task.taskURL);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
+    return PopupMenuButton<_VerticalDotsMenuOptions>(
+      icon: const Icon(Icons.more_vert),
+      onSelected: (value) => switch (value) {
+        _VerticalDotsMenuOptions.delete => _onDeleteTask(context),
+        _VerticalDotsMenuOptions.linkToTaskInPlatform =>
+          _onLinkToTaskInPlatform(context),
+      },
+      itemBuilder: (context) {
+        return [
+          PopupMenuItem(
+            value: _VerticalDotsMenuOptions.delete,
+            child: ListTile(
+              leading: const Icon(Icons.delete),
+              title: Text(l10n.deleteTask),
+            ),
+          ),
+          if (!task.isBlueprintTask)
+            PopupMenuItem(
+              value: _VerticalDotsMenuOptions.linkToTaskInPlatform,
+              child: ListTile(
+                leading: const Icon(Icons.link),
+                title: Text(
+                  l10n.viewInPlatformCTA(task.access.platform!.displayName),
+                ),
+              ),
+            ),
+        ];
+      },
+    );
+  }
 }

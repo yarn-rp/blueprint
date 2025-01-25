@@ -39,4 +39,11 @@ export interface BlueprintLocalRepository {
    * @param uid user id to associate with the item
    */
   deleteTasks(items: Task[], uid: string): Promise<void>;
+
+  /**
+   * Delete the future tasks that are in the blueprint collection that match with the tasks
+   * @param tasks tasks to create
+   * @param uid user id to associate with the item
+   */
+  deleteFutureTasks(items: Task[], uid: string): Promise<void>;
 }

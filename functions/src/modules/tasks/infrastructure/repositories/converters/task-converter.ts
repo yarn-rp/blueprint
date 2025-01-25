@@ -18,9 +18,11 @@ export const taskConverter = {
 
     return {
       access: task.access,
+      taskId: task.taskId,
       createdAt: createAtTimestamp,
       updatedAt: updatedAtTimestamp,
-      id: task.id,
+      // Document Id is a combination of platformId, projectId and taskId.
+      id: `${task.access.platformId}-${task.project.platformId || "no_project"}-${task.taskId}`,
       project: {
         ...task.project,
         platformURL: task.project.platformURL.href,
@@ -48,10 +50,12 @@ export const taskConverter = {
     };
   },
 
-  fromFirestore(snapshot: FirebaseFirestore.QueryDocumentSnapshot) {
+  fromFirestore(snapshot: FirebaseFirestore.QueryDocumentSnapshot): Task {
     const data = snapshot.data();
 
     return {
+      access: data.access,
+      taskId: data.taskId,
       createdAt: data.createdAt.toDate(),
       updatedAt: data.updatedAt.toDate(),
       id: data.id,
@@ -78,10 +82,8 @@ export const taskConverter = {
       labels: data.labels.map((label: any) => ({
         ...label,
       })),
-      priority: {
-        ...data.priority,
-      },
-    } as Task;
+      priority: data.priority,
+    };
   },
 
   /**

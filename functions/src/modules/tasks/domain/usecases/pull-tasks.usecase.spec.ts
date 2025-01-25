@@ -13,6 +13,8 @@ describe("PullTasks", () => {
   const tasksRepoMock = {
     add: jest.fn(),
     fetchLastFromPlatform: jest.fn(),
+    save: jest.fn(),
+    get: jest.fn(),
   };
 
   const remoteRepoMock = {

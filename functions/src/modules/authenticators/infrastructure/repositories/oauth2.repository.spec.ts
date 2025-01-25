@@ -37,6 +37,7 @@ describe("OAuth2RepositoryContext", () => {
         accessToken: "test-token",
         platformId: "jira",
         type: AuthenticatorType.Task,
+        status: "connected",
       };
 
       await repoContext.claimAccess(claim);
@@ -58,6 +59,7 @@ describe("OAuth2RepositoryContext", () => {
         accessToken: "test-token",
         platformId: "asana",
         type: AuthenticatorType.Task,
+        status: "connected",
       };
 
       await repoContext.claimAccess(claim);
@@ -79,6 +81,7 @@ describe("OAuth2RepositoryContext", () => {
         accessToken: "test-token",
         platformId: "github",
         type: AuthenticatorType.Task,
+        status: "connected",
       };
 
       await repoContext.claimAccess(claim);

@@ -39,12 +39,25 @@ class TasksCubit extends Cubit<TasksState> {
     }
   }
 
+  Future<void> reopenTask(Task task) async {
+    try {
+      await _taskRepository.reopenTask(task);
+    } catch (error) {
+      addError(error);
+    }
+  }
+
+  Future<void> completeTask(Task task) async {
+    try {
+      await _taskRepository.completeTask(task);
+    } catch (error) {
+      addError(error);
+    }
+  }
+
   Future<void> unselectTask() async {
     emit(
-      TasksState(
-        tasks: state.tasks,
-        status: state.status,
-      ),
+      state.withoutSelectedTask(),
     );
   }
 
@@ -87,6 +100,7 @@ class TasksCubit extends Cubit<TasksState> {
         query: query ?? state.lastQuery,
         sortBy: sortBy ?? state.sortBy,
         platformId: platform?.id ?? state.selectedPlatform?.id,
+        includeCompleted: true,
       );
 
       _tasksSubscription = tasksStream.listen(
@@ -101,8 +115,12 @@ class TasksCubit extends Cubit<TasksState> {
                 )
               : tasks.firstOrNull;
 
+          final completedTasks = tasks.where((task) => task.isCompleted);
+          final todoTasks = tasks.where((task) => !task.isCompleted);
+
           final nextState = state.copyWith(
-            tasks: tasks,
+            completedTasks: completedTasks,
+            todoTasks: todoTasks,
             status: TasksStatus.loaded,
             selectedTask: selectedTask,
           );

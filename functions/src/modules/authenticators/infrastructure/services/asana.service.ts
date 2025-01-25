@@ -12,6 +12,10 @@ import { OAuth2Repository } from "../../domain/repositories/oauth2.repository";
 export class AsanaOAuthStrategy implements OAuth2Repository {
   constructor(private readonly config: ConfigService) {}
 
+  async wipeOut(_access: Pick<Access, "user">): Promise<void> {
+    console.log("Wiping out access (No action needed)");
+  }
+
   /**
    * Claims access to Asana.
    *
@@ -39,6 +43,7 @@ export class AsanaOAuthStrategy implements OAuth2Repository {
       refreshToken: data.refresh_token,
       platformId: "asana",
       type: AuthenticatorType.Task,
+      status: "connected",
     };
   }
 

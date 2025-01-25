@@ -166,50 +166,78 @@ class _TasksList extends StatelessWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final textTheme = theme.textTheme;
-    final tasks = context.select(
-      (TasksCubit cubit) => cubit.state.tasks,
+
+    // Split the tasks between completed and todo tasks
+    final todoTasks = context.select(
+      (TasksCubit cubit) => cubit.state.todoTasks,
+    );
+    final completedTasks = context.select(
+      (TasksCubit cubit) => cubit.state.completedTasks,
     );
 
     final selectedTask = context.select(
       (TasksCubit cubit) => cubit.state.selectedTask,
     );
 
-    if (tasks.isEmpty) {
-      return Align(
-        alignment: Alignment.topCenter,
-        child: Column(
-          children: [
-            Icon(
-              Icons.cancel_outlined,
-              size: 120,
-              color: theme.disabledColor,
-            ),
-            Text(
-              context.l10n.noTaskMatchesTitle,
-              style: textTheme.headlineSmall,
-            ),
-            const SizedBox(height: AppSpacing.sm),
-            Text(
-              context.l10n.noTaskMatchesSubtitle,
-              style: textTheme.bodyLarge,
-            ),
-          ],
-        ),
-      );
-    }
-
     return AnimatedSize(
       curve: Curves.fastLinearToSlowEaseIn,
       duration: const Duration(milliseconds: 1200),
       child: ListView(
         children: [
-          ...tasks.map(
-            (task) => TaskCard(
-              backgroundColor:
-                  selectedTask == task ? colorScheme.secondaryContainer : null,
-              task: task,
-              onTap: () => context.read<TasksCubit>().selectTask(task),
+          if (todoTasks.isEmpty)
+            Align(
+              alignment: Alignment.topCenter,
+              child: Column(
+                children: [
+                  Icon(
+                    Icons.cancel_outlined,
+                    size: 120,
+                    color: theme.disabledColor,
+                  ),
+                  Text(
+                    context.l10n.noTaskMatchesTitle,
+                    style: textTheme.headlineSmall,
+                  ),
+                  const SizedBox(height: AppSpacing.sm),
+                  Text(
+                    context.l10n.noTaskMatchesSubtitle,
+                    style: textTheme.bodyLarge,
+                  ),
+                ],
+              ),
+            )
+          else
+            ...todoTasks.map(
+              (task) => TaskCard(
+                backgroundColor: selectedTask == task
+                    ? colorScheme.secondaryContainer
+                    : null,
+                task: task,
+                onTap: () => context.read<TasksCubit>().selectTask(task),
+              ),
             ),
+          // Completed tasks divider
+
+          if (completedTasks.isNotEmpty) ...[
+            const SizedBox(height: AppSpacing.xlg),
+            Text('Completed Tasks', style: textTheme.labelLarge),
+            const SizedBox(height: AppSpacing.sm),
+            const Divider(),
+            const SizedBox(height: AppSpacing.xlg),
+          ],
+          ...completedTasks.map(
+            (task) {
+              final backgroundColor = selectedTask == task
+                  ? colorScheme.secondaryContainer
+                  : task.isCompleted
+                      ? Theme.of(context).disabledColor
+                      : null;
+              return TaskCard(
+                backgroundColor: backgroundColor,
+                task: task,
+                onTap: () => context.read<TasksCubit>().selectTask(task),
+              );
+            },
           ),
         ],
       ),
@@ -222,13 +250,55 @@ class _NarrowTaskPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tasks = context.select(
-      (TasksCubit cubit) => cubit.state.tasks,
+    // Split the tasks between completed and todo tasks
+    final todoTasks = context.select(
+      (TasksCubit cubit) => cubit.state.todoTasks,
+    );
+    final completedTasks = context.select(
+      (TasksCubit cubit) => cubit.state.completedTasks,
     );
 
     return ListView(
       children: [
-        ...tasks.map(
+        ...todoTasks.map(
+          (task) => TaskCard(
+            task: task,
+            onTap: () async {
+              await showDialog<void>(
+                context: context,
+                builder: (context) {
+                  return Dialog(
+                    surfaceTintColor: Theme.of(context).canvasColor,
+                    child: Builder(
+                      builder: (context) {
+                        return ConstrainedBox(
+                          constraints: BoxConstraints(
+                            maxWidth: 1200,
+                            maxHeight: MediaQuery.of(context).size.height,
+                          ),
+                          child: TaskDetails.dialog(
+                            task: task,
+                            onClose: () => Navigator.of(context).pop(),
+                          ),
+                        );
+                      },
+                    ),
+                  );
+                },
+              );
+            },
+          ),
+        ),
+
+        // Completed tasks divider
+
+        if (completedTasks.isNotEmpty) ...[
+          const SizedBox(height: AppSpacing.xlg),
+          const Divider(),
+          const SizedBox(height: AppSpacing.xlg),
+        ],
+
+        ...completedTasks.map(
           (task) => TaskCard(
             task: task,
             onTap: () async {

@@ -5,6 +5,7 @@ export interface Access {
   accessToken: string;
   refreshToken?: string;
   platformId: string;
+  status: "connected" | "requires_reauth";
   user: UserData;
   type: AuthenticatorType;
 }
@@ -12,4 +13,6 @@ export interface Access {
 /**
  * Public access information to fetch data from platformId.
  */
-export type AccessPublicData = Omit<Access, "accessToken" | "refreshToken" | "type"> & { authenticatorId: string };
+export type AccessPublicData = Omit<Access, "accessToken" | "refreshToken" | "type" | "status"> & {
+  authenticatorId: string;
+};

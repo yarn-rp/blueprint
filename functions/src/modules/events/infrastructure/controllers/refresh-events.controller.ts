@@ -22,6 +22,7 @@ export class RefreshEventsController {
         .collection("users")
         .doc(user.id)
         .collection("authenticators")
+        .where("status", "==", "connected")
         .get();
 
       // get tasks for every authenticator

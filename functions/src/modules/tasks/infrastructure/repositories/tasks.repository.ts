@@ -10,6 +10,22 @@ import { taskConverter } from "./converters/task-converter";
 export class FirestoreTasksRepository implements TasksRepository {
   constructor(@inject("firestore") private readonly firestore: Firestore) {}
 
+  async get(taskId: string, uid: string): Promise<Task | undefined> {
+    const task = await this.firestore
+      .collection("users")
+      .doc(uid)
+      .collection("tasks")
+      .doc(taskId)
+      .withConverter(taskConverter)
+      .get();
+
+    return task.data();
+  }
+
+  async save(task: Task, uid: string): Promise<void> {
+    await this.add([task], uid);
+  }
+
   async add(tasks: Task[], uid: string): Promise<void> {
     const batch = this.firestore.batch();
     tasks.forEach((task) => {
@@ -40,5 +56,33 @@ export class FirestoreTasksRepository implements TasksRepository {
 
     const taskOrUndefined = !taskQuerySnapshot.empty ? (taskQuerySnapshot.docs[0] as unknown as Task) : undefined;
     return taskOrUndefined;
+  }
+
+  async remove(tasks: Task[], uid: string): Promise<void> {
+    const batch = this.firestore.batch();
+    tasks.forEach((task) => {
+      const taskRef = this.firestore
+        .collection("users")
+        .doc(uid)
+        .collection("tasks")
+        .withConverter(taskConverter)
+        .doc(`${task.access.platformId}-${task.project.platformId || "no_project"}-${task.taskId}`);
+      batch.delete(taskRef);
+    });
+
+    await batch.commit();
+  }
+
+  async fetchFromAuthenticator(uid: string, authenticatorId: string): Promise<Task[]> {
+    const taskQuerySnapshot = await this.firestore
+      .collection("users")
+      .doc(uid)
+      .collection("tasks")
+      .withConverter(taskConverter)
+      .where("access.authenticatorId", "==", authenticatorId)
+      .get();
+
+    const tasks = taskQuerySnapshot.docs.map((doc) => doc.data() as Task);
+    return tasks;
   }
 }
