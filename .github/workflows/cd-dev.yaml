@@ -12,13 +12,13 @@ on:
   push:
     branches:
       - develop
-      
+
 jobs:
   build_and_deploy:
     uses: ./.github/workflows/firebase-hosting-live.yml
     with:
       project_id: polletask-dev
       target: lib/main_development.dart
-    secrets:  
+    secrets:
       FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_DEV }}
       OPEN_AI_API_KEY: ${{ secrets.OPEN_AI_API_KEY_DEV }}
