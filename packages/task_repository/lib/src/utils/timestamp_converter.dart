@@ -28,7 +28,7 @@ class TimestampConverter implements JsonConverter<DateTime, dynamic> {
 
   @override
   dynamic toJson(DateTime date) {
-    return date.toIso8601String();
+    return Timestamp.fromDate(date.toUtc());
   }
 }
 
