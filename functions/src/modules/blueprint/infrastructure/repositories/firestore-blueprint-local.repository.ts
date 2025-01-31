@@ -8,7 +8,7 @@ import { BlueprintLocalRepository } from "../../domain/repositories/blueprint.lo
 
 @injectable()
 export class FirestoreBlueprintLocalRepository implements BlueprintLocalRepository {
-  constructor(@inject("firestore") private readonly firestore: Firestore) { }
+  constructor(@inject("firestore") private readonly firestore: Firestore) {}
 
   async createEvents(items: Event[], uid: string): Promise<void> {
     const batch = this.firestore.batch();

@@ -21,7 +21,7 @@ export interface WebConfig {
 
 export interface Config {
   web: WebConfig;
-  jira: OAuth2Config;
+  jira: OAuth2Config | { ownerEmail: string };
   github: OAuth2Config;
   asana: OAuth2Config;
   google: OAuth2Config;
@@ -38,6 +38,7 @@ export function configFactory(): ConfigService {
       clientId: env.JIRA_CLIENT_ID || "",
       clientSecret: env.JIRA_CLIENT_SECRET || "",
       redirectURI: env.JIRA_REDIRECT_URI || "",
+      ownerEmail: env.JIRA_OWNER_EMAIL || "",
     },
     github: {
       clientId: env.GITHUB_CLIENT_ID || "",

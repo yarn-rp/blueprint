@@ -1,4 +1,4 @@
-import { Firestore } from "firebase-admin/firestore";
+import { Firestore, Timestamp } from "firebase-admin/firestore";
 import { inject, injectable } from "tsyringe";
 import { Access } from "../../domain/entities/access.entity";
 import { AccessRepository } from "../../domain/repositories/access.repository";
@@ -34,7 +34,7 @@ export class FirestoreAccessRepository implements AccessRepository {
       // prevent multiple authenticators creation,
       // not sure if multiple authenticators must trigger tasksClone
       .doc(`${access.platformId}-${access.user.gid}`)
-      .set(access);
+      .set({ ...access, fetchedAt: Timestamp.now() });
   }
 
   async getById(uid: string, authenticatorId: string): Promise<Access> {

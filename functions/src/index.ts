@@ -27,3 +27,7 @@ export const tasks = tasksRoutes;
 // EventsModule
 import eventsRoutes from "./modules/events/events.module";
 export const events = eventsRoutes;
+
+// ScheduledTasks
+import scheduledTasks from "./scheduled-tasks";
+export const scheduled = scheduledTasks;
