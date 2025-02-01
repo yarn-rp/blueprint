@@ -94,6 +94,7 @@
         "description": "Description word"
     },
     "doNotHaveAccount": "Don't have an account?",
+    "haveAccount": "Already have an account?",
     "dueDate": "Due Date",
     "@dueDate": {
         "description": "Due date for an event or task"
