@@ -158,7 +158,7 @@ class _SignUpViewState extends State<_SignUpView> {
                         },
                       ),
                       const SizedBox(height: AppSpacing.xlg),
-                      Text(l10n.doNotHaveAccount),
+                      Text(l10n.haveAccount),
                       const SizedBox(height: AppSpacing.md),
                       TextButton(
                         child: Text(l10n.signIn),

@@ -5,7 +5,8 @@
         "description": "Texto mostrado en la AppBar de la página del contador"
     },
     "doNotHaveAccount":"Don't have an account?",
-    "forgotPassword":"Forgot Password", 
+    "haveAccount": "Already have an account?",
+    "forgotPassword":"Forgot Password",
     "signIn":"Sign In",
     "signUp" :"Sign Up",
     "email":"Email",
